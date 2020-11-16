@@ -1,0 +1,33 @@
+@import '../abstracts/variables';
+
+.navbar{
+    min-height: $navbar-ht;
+    background: $body-bg;
+
+    .nav-link{
+        font-weight: 700;
+        cursor: pointer;
+    }
+}
+
+.user-full-name{
+    // font-size: 1.4rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
+}
+
+
+
+@media (max-width: 768px) {
+    .navbar-bg-gray{
+        background: $body-bg;
+        height: 100vh;
+        transition: height .4s ease-in;
+    }
+    
+    .user-full-name-li{
+        order: -1;
+    }
+}

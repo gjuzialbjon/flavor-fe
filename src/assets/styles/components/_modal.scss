@@ -1,0 +1,27 @@
+@import '../../../assets/styles/abstracts/variables';
+
+/* CUSTOM DARK MODAL STYLING */
+.dark-modal  {
+    .modal-header, .modal-footer{
+        border: none;
+    }
+
+    .modal-title{
+        text-align: center;
+    }
+
+    .modal-content{
+        background-color: $header-bg;
+        color: $text-color;
+    }
+
+    .close {
+        color: $text-color;
+    }
+
+    .modal-footer{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}

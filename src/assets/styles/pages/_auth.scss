@@ -1,0 +1,51 @@
+@import '../abstracts/variables';
+
+.auth-image {
+    background: $green;
+    background-image: url('../../media/auth/login.jpg');
+    background-position: center;
+    background-repeat: repeat;
+    background-size: cover;
+    object-fit: cover;
+}
+
+.auth-form{
+    width: 450px;
+}
+
+.btn-google{
+    background: rgb(1,99,255);
+    background: linear-gradient(90deg, rgba(1,99,255,1) 0%, rgba(101,119,255,1) 66%, rgba(210,141,255,1) 100%);
+    background-size: 400% 400%;
+    color: white;
+
+    -webkit-animation: MoveBackground 15s ease infinite;
+    -moz-animation: MoveBackground 15s ease infinite;
+    animation: MoveBackground 15s ease infinite;
+
+    &:hover{
+        background: linear-gradient(90deg, rgba(1,99,255,1) 0%, rgba(1,99,255,1) 66%, rgba(1,99,255,1) 100%);
+        color: white;
+    }
+}
+
+@media only screen and ( min-width: 1024px ){
+    
+}
+
+/* MOVE BUTTON BACKGROUND ANIMATION */
+@-webkit-keyframes MoveBackground {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+@-moz-keyframes MoveBackground {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+@keyframes MoveBackground {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}

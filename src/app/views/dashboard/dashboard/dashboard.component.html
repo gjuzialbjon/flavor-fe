@@ -1,0 +1,84 @@
+<div class="row">
+    <div class="col-xl-7 mb-4">
+      <div class="card h-100">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-7">
+                    <div class="font-weight-bold text-muted mb-3">Main account</div> 
+                    <h4 class="card-title font-weight-bold mb-2">NewBank Savings Account</h4>
+                    <div class="mb-3">
+                      <span class="text-muted">23 3232 32322 32323 22323 2332</span>
+                      <span class="text-success ml-2" style="cursor: pointer;">
+                        <fa-icon [icon]="['fas', 'arrow-right']"></fa-icon>
+                      </span>
+                    </div>
+                    <div class="btn btn-success mr-2 p-2">
+                      Transfer money
+                    </div>
+                    <div class="btn btn-light p-2">
+                      Link accounts
+                    </div>
+                </div>
+                <div class="col-md-5 text-md-right text-muted">
+                  <div class="font-weight-bold mt-md-0 mt-5 mb-3">Available funds</div> 
+                  <h1 class="text-dark">12.233,43 $</h1>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-5 mb-4">
+      <div class="card bg-success text-white h-100 ">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-7">
+                <h4 class="card-title font-weight-bold mb-2">Define standing orders</h4>
+                <p class="card-text">
+                  ajhdasjhd asjdhsajhdjsa asjdhasjjsahd asjhadsjdhjsah asdjashjdash
+                </p>
+                <div class="btn btn-light p-2">
+                  Define standing order
+                </div>
+            </div>
+            <div class="col-md-5 text-md-right">
+              <div class="font-weight-bold mt-md-0 mt-5 mb-3">. . .</div> 
+              IMAGE HERE
+            </div>
+        </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+<div class="row">
+    <div *ngFor="let h of hmm" class="col-xl-3 col-lg-6 mb-4">
+        <app-credit-card></app-credit-card>
+    </div>
+</div>
+
+<div class="row">
+  <div class="col-xl-7 mb-4">
+    <div class="card h-100">
+      <div class="card-body">
+        <div class="row no-gutters justify-content-between">
+          <h4 class="card-title font-weight-bold mb-2">Latest transactions</h4>
+          <button class="btn btn-success">
+            <fa-icon [icon]="['fas', 'arrow-right']"></fa-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-5 mb-4">
+    <div class="card h-100 ">
+      <div class="card-body">
+        <div class="row no-gutters justify-content-between">
+          <h4 class="card-title font-weight-bold mb-2">All Expenses</h4>
+          <button class="btn btn-success">
+            <fa-icon [icon]="['fas', 'arrow-right']"></fa-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

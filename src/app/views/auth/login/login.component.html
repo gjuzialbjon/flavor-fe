@@ -1,0 +1,22 @@
+<div class="row no-gutters px-3 pt-5 pb-2 h-100 align-items-center justify-content-center">
+    <form class="auth-form">
+        <h1 class="text-center font-weight-bold mb-4">Welcome</h1>
+        <div class="form-group">
+          <input type="email" class="form-control form-control-lg" placeholder="Email" >
+          <small class="form-text text-danger">Error message in case.</small>
+        </div>
+        <div class="form-group">
+          <input type="password" class="form-control form-control-lg" placeholder="Password">
+          <small class="form-text text-danger">Error message in case.</small>
+        </div>
+        <div class="text-center">
+            <button type="button" class="btn btn-info font-weight-bold rounded-0 px-5 py-3 mb-3" (click)="login()">LOGIN</button> <br>
+            <span class="font-weight-bold">OR</span> <br>
+            <button type="button" class="btn btn-google btn-block font-weight-bold border-0 rounded-0 px-5 py-3 mt-3" (click)="loginWithGoogle()">
+                <img class="google-icon" width="30px" src="../../../../assets/media/auth/google.svg"/>
+                &nbsp; LOGIN WITH GOOGLE
+            </button>
+        </div>
+    </form>
+</div>
+
