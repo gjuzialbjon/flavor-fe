@@ -2,5 +2,31 @@
 
 
 .main-content {
-    padding-top: $navbar-ht;
+    // padding-top: $navbar-ht;
+    background-color: $body-bg;
+    border-bottom-left-radius: 24px;
+    border-bottom-right-radius: 24px;
+    min-height: 70%;
+    z-index: 3;
 }
+
+.main-backgrounds{
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+
+    .bg-1{
+        margin-left: 4rem;
+        width: calc(100% - 8rem);
+        background-color: #DCDEE7;
+        border-radius: 24px;  
+        z-index: 2;  
+    }
+    
+    .bg-2{
+        margin-top: -33%;
+        background-color: #293b92;
+    }
+}
+

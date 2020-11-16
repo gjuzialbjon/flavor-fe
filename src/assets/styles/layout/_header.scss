@@ -18,7 +18,12 @@
     max-width: 200px;
 }
 
-
+@media (min-width: 1024px){
+    .navbar{
+        border-top-left-radius: 24px;
+        border-top-right-radius: 24px;
+    }
+}
 
 @media (max-width: 768px) {
     .navbar-bg-gray{
