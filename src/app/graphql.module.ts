@@ -53,11 +53,11 @@ export function createApollo(httpLink: HttpLink) {
   const httpsLink = ApolloLink.from(
     [
       basic, 
-      auth, 
+      // auth, 
       errorHandler,
       httpLink.create({
         uri: httpsUri,
-        withCredentials: true
+        // withCredentials: true
       }),
     ]);
 
@@ -75,7 +75,7 @@ export function createApollo(httpLink: HttpLink) {
     httpsLink,
   );
 
-  const cache = new InMemoryCache();
+  const cache = new InMemoryCache({ addTypename: false });
 
   return {
     link,

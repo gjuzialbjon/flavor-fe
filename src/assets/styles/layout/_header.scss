@@ -3,6 +3,7 @@
 .navbar{
     min-height: $navbar-ht;
     background: $body-bg;
+    transition: height .4s ease-in;
 
     .nav-link{
         font-weight: 700;
@@ -28,8 +29,8 @@
 @media (max-width: 768px) {
     .navbar-bg-gray{
         background: $body-bg;
-        height: 100vh;
-        transition: height .4s ease-in;
+        height: fit-content;
+        transition: height .4s ease-in-out;
     }
     
     .user-full-name-li{

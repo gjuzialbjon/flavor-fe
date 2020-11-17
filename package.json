@@ -27,10 +27,12 @@
     "@fortawesome/free-regular-svg-icons": "^5.15.1",
     "@fortawesome/free-solid-svg-icons": "^5.15.1",
     "@ng-bootstrap/ng-bootstrap": "^8.0.0",
+    "@types/ws": "^7.4.0",
     "apollo-angular": "^2.1.0",
     "bootstrap": "^4.5.0",
     "graphql": "^15.0.0",
     "rxjs": "~6.6.0",
+    "subscriptions-transport-ws": "^0.9.18",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"
   },

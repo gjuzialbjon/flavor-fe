@@ -1,15 +1,17 @@
 <div class="main-app p-lg-5 h-100">
     <div class="main-backgrounds h-100 w-100">
-        <div class="bg-1 h-50">
-        </div>
-        <div class="bg-2 h-100 w-100">
+        <div class="bg-1 h-100">
+            <div class="bg-2 h-50">
+            </div>
         </div>
     </div>
 
-    <app-header></app-header>
+    <div class="content-shadow">
+        <app-header></app-header>
 
-    <div class="container main-content">
-        <router-outlet></router-outlet>
+        <div class="container main-content">
+            <router-outlet></router-outlet>
+        </div>
     </div>
 </div>
 

@@ -2,31 +2,50 @@
 
 
 .main-content {
-    // padding-top: $navbar-ht;
+    position: relative;
     background-color: $body-bg;
     border-bottom-left-radius: 24px;
     border-bottom-right-radius: 24px;
     min-height: 70%;
-    z-index: 3;
+    padding: 1.5rem 2rem;
+}
+
+.content-shadow {
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 }
 
 .main-backgrounds{
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 1;
 
+    // WHOLE DISPLAY BG
     .bg-1{
-        margin-left: 4rem;
-        width: calc(100% - 8rem);
-        background-color: #DCDEE7;
-        border-radius: 24px;  
-        z-index: 2;  
+        background-color: $main-bg-2;
+        // background-image: url('../../media/backgrounds/field.jpeg');
+        // background-position: center;
+        // background-repeat: no-repeat;
+        // background-size: cover;
     }
     
+    // ROUNDED CARD ON TOP
     .bg-2{
-        margin-top: -33%;
-        background-color: #293b92;
+        background-color: $main-bg-1;
+        // background-image: url('../../media/backgrounds/concrete.jpg');
+        // background-position: center;
+        // background-repeat: no-repeat;
+        // background-size: cover;
+        // margin-left: 4rem;
+        // border-radius: 0 0 24px 24px;  
+        // width: calc( 100% - 8rem);
+    }
+}
+
+
+@media (max-width: 768px){
+    .main-content{
+        min-height: calc(100% - #{$navbar-ht});
+        padding: 1.5rem 1rem;
     }
 }
 

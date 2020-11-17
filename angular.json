@@ -48,6 +48,11 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "aot": true,
+            "allowedCommonJsDependencies": [
+              "graphql-tag",
+              "subscriptions-transport-ws",
+              "zen-observable"
+            ],
             "assets": [
               "src/favicon.ico",
               {
