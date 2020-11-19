@@ -11,7 +11,7 @@
 }
 
 .content-shadow {
-    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+    // box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 }
 
 .main-backgrounds{
@@ -23,14 +23,14 @@
     .bg-1{
         background-color: $main-bg-2;
         // background-image: url('../../media/backgrounds/field.jpeg');
-        @include image-cover;
+        // @include image-cover;
     }
     
     // ROUNDED CARD ON TOP
     .bg-2{
         background-color: $main-bg-1;
         // background-image: url('../../media/backgrounds/concrete.jpg');
-        @include image-cover;
+        // @include image-cover;
 
         margin-left: 4rem;
         border-radius: 0 0 24px 24px;  
@@ -41,8 +41,9 @@
 
 @media (max-width: 768px){
     .main-content{
-        min-height: calc(100% - #{$navbar-ht});
+        min-height: calc(100vh - #{$navbar-ht});
         padding: 1.5rem 1rem;
+        border-radius: 0;
     }
 }
 
