@@ -9,12 +9,14 @@ import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontaweso
 import { faArrowRight, faBell, faCog, faCopy, faHome, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { HttpClientModule } from '@angular/common/http';
 import { GraphQLModule } from './graphql.module';
+import { NotificationsComponent } from './theme/notifications/notifications.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     BaseComponent,
+    NotificationsComponent
   ],
   imports: [
     BrowserModule,

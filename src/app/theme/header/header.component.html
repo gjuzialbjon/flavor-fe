@@ -7,7 +7,7 @@
     </a>
     <div [ngbCollapse]="isNavbarCollapsed" class="navbar-collapse" [ngClass]="{'navbar-bg-gray': !isNavbarCollapsed}" id="navbarSupportedContent">
       <ul class="navbar-nav ml-md-5 mr-auto">
-        <li class="nav-item">
+        <li class="nav-item mt-md-0 mt-sm-4 mt-4">
           <a class="nav-link" routerLink="/dashboard" routerLinkActive="active" (click)="isNavbarCollapsed = true">Dashboard</a>
         </li>
         <li class="nav-item">
@@ -20,26 +20,29 @@
       <ul class="navbar-nav align-items-md-center">
         <li class="nav-item">
           <a class="nav-link active">
-            <fa-layers >
-              <fa-icon [icon]="['fas', 'bell']"></fa-icon>
+            <fa-layers class="d-md-inline-block d-sm-none d-none">
+              <fa-icon [icon]="['fas', 'bell']" ></fa-icon>
               <fa-layers-counter content=""></fa-layers-counter>
             </fa-layers>
             <span class="d-md-none"> Notifications</span>
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" (click)="isNavbarCollapsed = true">
-            <fa-icon [icon]="['fas', 'cog']"></fa-icon>
+          <a class="nav-link active">
+            <fa-icon [icon]="['fas', 'cog']" class="d-md-inline d-sm-none d-none"></fa-icon>
             <span class="d-md-none"> Settings</span>
-          </a>
+        </a>
         </li>
-        <li class="nav-item ml-md-4 mr-md-4 py-md-0 py-2 user-full-name-li">
+        <li class="nav-item">
+
+        </li>
+        <li class="nav-item ml-md-4 mr-md-4 mt-md-0 mt-sm-4 mt-4 user-full-name-li">
           <a class="nav-link active user-full-name" (click)="isNavbarCollapsed = true"> {{ fullName | titlecase }} </a>
         </li>
         <li class="nav-item ">
           <a class="nav-link active" routerLink="/auth/login" (click)="isNavbarCollapsed = true">
-            <fa-icon [icon]="['fas', 'sign-out-alt']" ></fa-icon>
-            <span class="d-md-none"> Logout</span>
+            <fa-icon [icon]="['fas', 'sign-out-alt']" class="d-md-inline d-sm-none d-none"></fa-icon>
+            <span class="d-md-none text-info"> Logout</span>
           </a>
         </li>
       </ul>
