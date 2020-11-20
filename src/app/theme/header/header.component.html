@@ -37,7 +37,10 @@
 
         </li>
         <li class="nav-item ml-md-4 mr-md-4 mt-md-0 mt-sm-4 mt-4 user-full-name-li">
-          <a class="nav-link active user-full-name" (click)="isNavbarCollapsed = true"> {{ fullName | titlecase }} </a>
+          <a class="nav-link active user-full-name" 
+            (click)="isNavbarCollapsed = true"> 
+            {{ fullName | titlecase }} 
+          </a>
         </li>
         <li class="nav-item ">
           <a class="nav-link active" routerLink="/auth/login" (click)="isNavbarCollapsed = true">

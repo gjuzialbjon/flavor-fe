@@ -3,3 +3,9 @@
     background-repeat: no-repeat;
     background-size: cover;
 }
+
+@mixin text-ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

@@ -1,5 +1,3 @@
-@import '../abstracts/variables';
-
 .navbar{
     min-height: $navbar-ht;
     background: $body-bg;
@@ -12,9 +10,7 @@
 }
 
 .user-full-name{
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    @include text-ellipsis;
     max-width: 200px;
 }
 
