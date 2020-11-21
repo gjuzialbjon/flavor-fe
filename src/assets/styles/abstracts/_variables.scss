@@ -15,12 +15,20 @@ $navbar-light-hover-color: #292828;
 $enable-responsive-font-sizes: true;
 
 /* CONTAINER SIZES */ 
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1250px
+);
+
 $container-max-widths: (
   sm: 540px,
   md: 720px,
   lg: 960px,
   xl: 1340px
-) !default;
+);
 
 /* OVERALL RADIUS OF COMPONENTS */
 $border-radius: .7rem;
@@ -31,15 +39,32 @@ $card-spacer-y: 1.7rem;
 $card-spacer-x: 1.7rem;
 
 /* COLORS */
-$green: #107f72;
+// $green: #107f72;
+$primary:#7764CA;
+// $secondary: #adb5bd;
+
+$custom-green: #107f72;
+
+// Add "custom color" styles to the generated classes
+// $colors: (
+//   "dgreen": $custom-green,
+// );
+
+$theme-colors: (
+  "dark-green": $custom-green,
+);
 
 /* SCROLLBAR */
 $scrollbar-wd: 5px;
-$scrollbar-cl: $green;
+$scrollbar-cl: $custom-green;
 $scrollbar-bg: $body-bg;
 
 /* NAVBAR */
 $navbar-ht: 80px;
+
+
+/* BUTTONS */
+
 
 ///////////////////////////////////////////////
 //////////* BOOSTRAP OVERRIDE VARIABLES *//////

@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { SocialUser } from 'angularx-social-login';
 import { Subscription } from 'rxjs';
-import { UserService } from 'src/app/services/user.service';
+import { UserService } from 'src/app/core/services/user.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,24 +10,21 @@ import { UserService } from 'src/app/services/user.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DashboardComponent implements OnInit, OnDestroy {
-  hmm = [1,2,3]
   subs: Subscription = new Subscription()
+
+  hmm = [1,2,3]
   user = 'albjon'
 
   constructor( private userService: UserService, private chRef: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.subs.add(this.userService.Users.subscribe(
-      res => {
+      (res ) => {
         console.log(res);
         this.user = 'next user'
       },
       e => { console.error(e)}))
   } 
-
-  ngDoCheck(){
-    console.log('ngDoCheck child DASHBOARD');
-  }
 
   ngOnDestroy() {
     this.subs.unsubscribe()

@@ -3,7 +3,7 @@
         <h1 class="text-center font-weight-bold mb-4">Welcome</h1>
         <div class="form-group">
           <input type="email" class="form-control form-control-lg" [class.is-invalid]="l.email.touched && l.email.errors" formControlName="email" placeholder="Email" >
-          <small *ngIf="l.email.touched && l.email.errors" class="form-text text-danger">Please enter your email.</small>
+          <small *ngIf="l.email.touched && l.email.errors" class="form-text text-danger">Please enter a valid email.</small>
         </div>
         <div class="form-group">
           <input type="password" class="form-control form-control-lg" [class.is-invalid]="l.password.touched && l.password.errors" formControlName="password" placeholder="Password">
