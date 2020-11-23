@@ -3,7 +3,7 @@
         <div class="card-body">
             <div class="row align-items-center">
                 <div class="col-xl-1 col-lg-4 mb-xl-0 mb-3">
-                    <div class="btn btn-secondary rounded-pill">
+                    <div class="btn btn-light-gray rounded-pill">
                         PDF
                         <fa-icon [icon]="['fas', 'arrow-down']"></fa-icon>
                     </div>
@@ -15,21 +15,21 @@
                 <div class="col-xl-2 col-lg-4 mb-xl-0 mb-3 text-secondary font-weight-bold">
                     UAN WE ARE FIBER
                 </div>
-                <div class="col-xl-2 col-lg-4 mb-xl-0 mb-3">
+                <div class="col-xl-2 col-lg-4 mb-lg-0 mb-3">
                     <div class="transaction-value font-weight-bold text-secondary">232332 $</div>
                     <div class="transaction-value-text text-secondary">Transaction value</div>
                 </div>
-                <div class="col-xl-2 col-lg-4 mb-xl-0 mb-3">
+                <div class="col-xl-2 col-lg-4 mb-lg-0 mb-3">
                     <div class="transaction-after-tax-value font-weight-bold text-secondary">545454 $</div>
                     <div class="transaction-after-tax-value-text text-secondary">After tax</div>
                 </div>
-                <div class="col-xl-3 col-lg-4">
+                <div class="col-xl-3 col-lg-4 mb-lg-0 mb-md-0 mb-0">
                     <span *ngIf="!paid">
                         <button class="btn btn-primary rounded-pill mr-2 py-2 px-3">
                             <fa-icon [icon]="['fas', 'plus']" class="mr-1"></fa-icon>
                             Fix payment
                         </button>
-                        <button class="btn btn-secondary rounded-circle mr-2" style="width: 42px; height: 42px;" placement="top" ngbTooltip="Edit transaction">
+                        <button class="btn btn-light-gray rounded-circle mr-2" style="width: 42px; height: 42px;" placement="top" ngbTooltip="Edit transaction">
                             <fa-icon [icon]="['fas', 'pen']"></fa-icon>
                         </button>
                     </span>

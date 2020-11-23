@@ -1,6 +1,6 @@
 <div class="row no-gutters px-3 pt-md-3 pt-3 pb-2 h-100 align-items-center justify-content-center">
     <form class="auth-form" [formGroup]="loginForm">
-        <h1 class="text-center font-weight-bold mb-4">Welcome</h1>
+        <h1 class="text-center font-weight-bold mb-5">Welcome</h1>
         <div class="form-group">
           <input type="email" class="form-control form-control-lg" [class.is-invalid]="l.email.touched && l.email.errors" formControlName="email" placeholder="Email" >
           <small *ngIf="l.email.touched && l.email.errors" class="form-text text-danger">Please enter a valid email.</small>
@@ -10,9 +10,19 @@
           <small *ngIf="l.password.touched && l.password.errors" class="form-text text-danger">Password is at least 6 characters long in this app.</small>
         </div>
         <div class="text-center">
-            <button type="button" class="btn btn-info font-weight-bold rounded-0 px-5 py-3 mb-3" (click)="login()" [disabled]="loginForm.invalid">LOGIN</button> <br>
-            <span class="font-weight-bold">OR</span> <br>
-            <button type="button" class="btn btn-google btn-block font-weight-bold border-0 rounded-0 px-1 py-3 mt-3" (click)="loginWithGoogle()">
+            <button type="button" class="btn btn-info font-weight-bold rounded-pill px-5 py-3 mb-3" (click)="login()" [disabled]="loginForm.invalid">LOGIN</button> <br>
+            <div class="row">
+              <div class="col-5">
+                <hr style="border-top: 1px solid rgb(44, 78, 170);">
+              </div>
+              <div class="col-2 font-weight-bold">
+                OR 
+              </div>
+              <div class="col-5">
+                <hr style="border-top: 1px solid rgb(44, 78, 170);">
+              </div>
+            </div>
+            <button type="button" class="btn btn-google btn-block font-weight-bold border-0 rounded-pill px-1 py-3 mt-3" (click)="loginWithGoogle()">
                 <img class="google-icon" width="30px" src="../../../../assets/media/auth/google.svg"/>
                 &nbsp; LOGIN WITH GOOGLE
             </button>

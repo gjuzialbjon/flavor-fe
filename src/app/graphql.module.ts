@@ -14,7 +14,7 @@ const httpsUri = 'https' + environment.API_URL + 'graphql' // URL TO ENDPOINT FO
 const wsUri = new WebSocketLink({
   uri: `wss${environment.API_URL}graphql`,
   options: {
-    reconnect: true,
+    reconnect: false, //TO DO CHANGE TO TRUE
   },
 });
 

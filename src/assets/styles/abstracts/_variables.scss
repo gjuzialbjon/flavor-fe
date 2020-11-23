@@ -40,18 +40,17 @@ $card-spacer-x: 1.7rem;
 
 /* COLORS */
 // $green: #107f72;
-$primary:#7764CA;
-// $secondary: #adb5bd;
+$cyan: #056AFF;
+$primary:#7562CA;
+
 
 $custom-green: #107f72;
+$custom-gray: #EBF0F5;
 
 // Add "custom color" styles to the generated classes
-// $colors: (
-//   "dgreen": $custom-green,
-// );
-
 $theme-colors: (
   "dark-green": $custom-green,
+  "light-gray": $custom-gray,
 );
 
 /* SCROLLBAR */

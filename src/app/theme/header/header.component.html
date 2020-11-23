@@ -43,7 +43,7 @@
           </a>
         </li>
         <li class="nav-item ">
-          <a class="nav-link active" routerLink="/auth/login" (click)="isNavbarCollapsed = true">
+          <a class="nav-link active" (click)="[isNavbarCollapsed = true, signOut()]">
             <fa-icon [icon]="['fas', 'sign-out-alt']" class="d-md-inline d-none"></fa-icon>
             <span class="d-md-none text-info"> Logout</span>
           </a>

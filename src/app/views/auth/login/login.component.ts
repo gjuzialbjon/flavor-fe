@@ -31,19 +31,7 @@ export class LoginComponent implements OnInit {
   }
 
   loginWithGoogle(){
-    console.log('Login with Google');
-    this.msg.success('Message', 'Title')
-    this.msg.info('Message', 'Title')
-    this.msg.warning('Message', 'Title')
-    this.msg.error('Message', 'Title')
-
-    // this.authService.signInWithGoogle().then(
-    //   res => {
-    //     console.log('Logged in with google ', res)
-    //     this.router.navigate(['dashboard'])
-    //   }
-    // ).catch( e => { console.error(e)})
-
+    this.authService.signInWithGoogle()
   }
 
   get l() { return this.loginForm.controls }

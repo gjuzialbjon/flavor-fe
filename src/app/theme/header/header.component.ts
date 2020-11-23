@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { AuthenticationService } from 'src/app/core/services/authentication.service';
 
 @Component({
   selector: 'app-header',
@@ -9,9 +10,12 @@ export class HeaderComponent implements OnInit {
   isNavbarCollapsed = true;
   fullName = 'albjon gjuzi'
 
-  constructor() { }
+  constructor(private authService: AuthenticationService) { }
 
   ngOnInit(): void {
   }
 
+  signOut(){
+    this.authService.signOut()
+  }
 }

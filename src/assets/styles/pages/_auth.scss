@@ -1,15 +1,11 @@
-@import '../abstracts/variables';
-
 .auth-image {
-    background: $green;
+    background: $custom-green;
     background-image: url('../../media/auth/login.jpg');
-    background-position: center;
-    background-repeat: repeat;
-    background-size: cover;
-    object-fit: cover;
+    @include image-cover;
 }
 
 .auth-form{
+    margin-top: -3rem;
     width: 450px;
 }
 

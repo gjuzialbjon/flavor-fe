@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './theme/header/header.component';
 import { BaseComponent } from './theme/base/base.component';
 import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome'; 
-import { faArrowDown, faArrowRight, faBell, faCheck, faChevronUp, faCog, faCopy, faHome, faPen, faPlus, faSignOutAlt, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faArrowDown, faArrowLeft, faArrowRight, faBell, faCheck, faChevronUp, faCog, faCopy, faHome, faPen, faPlus, faSignOutAlt, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { HttpClientModule } from '@angular/common/http';
 import { GraphQLModule } from './graphql.module';
 import { NotificationsComponent } from './theme/notifications/notifications.component';
@@ -14,6 +14,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgModule } from '@angular/core';
 import { ScrollTopComponent } from './theme/scroll-top/scroll-top.component';
 import { ToastrModule } from 'ngx-toastr';
+import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { ToastrModule } from 'ngx-toastr';
       // preventDuplicates: true,
       timeOut: 4000,
       positionClass: 'toast-top-center'
-    }), // ToastrModule added
+    }),
+    LoadingBarRouterModule
   ],
   providers: [
     {
@@ -60,6 +62,6 @@ import { ToastrModule } from 'ngx-toastr';
 export class AppModule {
   constructor(library: FaIconLibrary) {
     // Add multiple icons to the library
-    library.addIcons(faHome, faBell, faCog, faSignOutAlt, faArrowRight, faArrowDown, faCheck, faChevronUp, faCopy, faPlus, faPen, faTimes);
+    library.addIcons(faHome, faBell, faCog, faSignOutAlt, faArrowRight, faArrowDown, faArrowLeft, faCheck, faChevronUp, faCopy, faPlus, faPen, faTimes);
   }
 }
