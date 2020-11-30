@@ -1,21 +1,20 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { CurrenciesComponent } from './currencies/currencies.component';
 import { RouterModule } from '@angular/router';
-import { ProfileComponent } from './profile/profile.component';
 
 
 
 @NgModule({
-  declarations: [ProfileComponent],
+  declarations: [CurrenciesComponent],
   imports: [
     CommonModule,
     RouterModule.forChild([
       {
         path: '',
-        component: ProfileComponent,
-        pathMatch: 'full'
+        component: CurrenciesComponent
       }
     ])
   ]
 })
-export class ProfileModule { }
+export class SettingsModule { }

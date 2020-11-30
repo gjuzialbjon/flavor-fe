@@ -1,7 +1,5 @@
-@import '../../../assets/styles/abstracts/variables';
-
-/* CUSTOM DARK MODAL STYLING */
-.dark-modal  {
+/* CUSTOM MODAL STYLING */
+.clean-modal  {
     .modal-header, .modal-footer{
         border: none;
     }
@@ -11,12 +9,13 @@
     }
 
     .modal-content{
-        background-color: $header-bg;
-        color: $text-color;
+        background-color: $body-bg;
     }
 
-    .close {
-        color: $text-color;
+    .close{
+        &:focus{
+            outline: none;
+        }
     }
 
     .modal-footer{

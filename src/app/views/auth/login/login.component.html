@@ -10,7 +10,7 @@
           <small *ngIf="l.password.touched && l.password.errors" class="form-text text-danger">Password is at least 6 characters long in this app.</small>
         </div>
         <div class="text-center">
-            <button type="button" class="btn btn-info font-weight-bold rounded-pill px-5 py-3 mb-3" (click)="login()" [disabled]="loginForm.invalid">LOGIN</button> <br>
+            <button type="button" class="btn btn-info font-weight-bold rounded-0 px-5 py-3 mb-3" (click)="login()" [disabled]="loginForm.invalid">LOGIN</button> <br>
             <div class="row">
               <div class="col-5">
                 <hr style="border-top: 1px solid rgb(44, 78, 170);">
@@ -22,7 +22,7 @@
                 <hr style="border-top: 1px solid rgb(44, 78, 170);">
               </div>
             </div>
-            <button type="button" class="btn btn-google btn-block font-weight-bold border-0 rounded-pill px-1 py-3 mt-3" (click)="loginWithGoogle()">
+            <button type="button" class="btn btn-google btn-block font-weight-bold border-0 rounded-0 px-1 py-3 mt-3" (click)="loginWithGoogle()">
                 <img class="google-icon" width="30px" src="../../../../assets/media/auth/google.svg"/>
                 &nbsp; LOGIN WITH GOOGLE
             </button>

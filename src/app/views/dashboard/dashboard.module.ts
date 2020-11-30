@@ -12,7 +12,8 @@ import { CreditCardComponent } from './helpers/credit-card/credit-card.component
     RouterModule.forChild([
       {
         path: '',
-        component: DashboardComponent
+        component: DashboardComponent,
+        pathMatch: 'full'
       }
     ]),
     FontAwesomeModule

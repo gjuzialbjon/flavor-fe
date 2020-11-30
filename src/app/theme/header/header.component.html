@@ -7,7 +7,10 @@
     </a>
     <div [ngbCollapse]="isNavbarCollapsed" class="navbar-collapse" [ngClass]="{'navbar-bg-gray': !isNavbarCollapsed}" id="navbarSupportedContent">
       <ul class="navbar-nav ml-md-5 mr-auto">
-        <li class="nav-item mt-md-0 mt-sm-4 mt-4">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/stores" routerLinkActive="active" (click)="isNavbarCollapsed = true">Stores</a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link" routerLink="/dashboard" routerLinkActive="active" (click)="isNavbarCollapsed = true">Dashboard</a>
         </li>
         <li class="nav-item">
@@ -18,7 +21,7 @@
         </li>
       </ul>
       <ul class="navbar-nav align-items-md-center">
-        <li class="nav-item">
+        <li class="nav-item" routerLink="/notifications" (click)="isNavbarCollapsed = true">
           <a class="nav-link active">
             <fa-layers class="d-md-inline-block d-none">
               <fa-icon [icon]="['fas', 'bell']" ></fa-icon>
@@ -27,23 +30,20 @@
             <span class="d-md-none"> Notifications</span>
           </a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" routerLink="/settings" (click)="isNavbarCollapsed = true">
           <a class="nav-link active">
             <fa-icon [icon]="['fas', 'cog']" class="d-md-inline d-none"></fa-icon>
             <span class="d-md-none"> Settings</span>
-        </a>
+          </a>
         </li>
-        <li class="nav-item">
-
-        </li>
-        <li class="nav-item ml-md-4 mr-md-4 mt-md-0 mt-sm-4 mt-4 user-full-name-li">
-          <a class="nav-link active user-full-name" 
-            (click)="isNavbarCollapsed = true"> 
+        <li class="nav-item ml-md-4 mr-md-4 mt-md-0 mt-sm-4 mt-4 user-full-name-li" routerLink="/profile"
+          (click)="isNavbarCollapsed = true">
+          <a class="nav-link active user-full-name" > 
             {{ fullName | titlecase }} 
           </a>
         </li>
-        <li class="nav-item ">
-          <a class="nav-link active" (click)="[isNavbarCollapsed = true, signOut()]">
+        <li class="nav-item" (click)="[isNavbarCollapsed = true, signOut()]">
+          <a class="nav-link active" >
             <fa-icon [icon]="['fas', 'sign-out-alt']" class="d-md-inline d-none"></fa-icon>
             <span class="d-md-none text-info"> Logout</span>
           </a>

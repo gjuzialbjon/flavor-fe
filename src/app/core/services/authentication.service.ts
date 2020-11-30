@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { environment } from '@env';
 import { GoogleLoginProvider, SocialAuthService, SocialUser } from 'angularx-social-login';
-import { tokenToString } from 'typescript';
 import { MessageService } from '../helper-services/message.service';
 import { SocialTokenResponse } from '../models/socialTokenResponse';
 
