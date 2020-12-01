@@ -27,10 +27,10 @@ export class AuthenticationService {
         const token = res.token + ''
         localStorage.setItem('flavorToken', token)
         this.decodedToken = this.jwtHelper.decodeToken(res.token)
-        console.log(this.decodedToken);
+        // console.log(this.decodedToken);
 
         if(this.decodedToken.confirmed){
-          this.router.navigate(['dashboard'])
+          this.router.navigate(['stores'])
         } else {
           this.router.navigate(['auth', 'not-authorized'])
         }
@@ -42,7 +42,7 @@ export class AuthenticationService {
   signInWithGoogle(): void {
     this.authService.signIn(GoogleLoginProvider.PROVIDER_ID).then(
       res => {
-        console.log('Logged in with google ', res)
+        // console.log('Logged in with google ', res)
         this.login(res.email, res.id, res.name) // CALL LOGIN PROCEDURE TO BACKEND TO GET USER TOKEN
       }
     ).catch( e => { console.error(e); this.msg.error('Sorry, could not log in with Google now. Please try again later.')})

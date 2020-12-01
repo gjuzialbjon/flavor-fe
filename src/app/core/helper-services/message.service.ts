@@ -26,4 +26,8 @@ export class MessageService {
   warning(msg: string, title?: string, config?: Partial<IndividualConfig> ) {
     this.toastr.warning(msg, title, config);
   }
+
+  defaultError(){
+    this.toastr.error('Sorry, something went wrong. Please try again later or contact support.');
+  }
 }

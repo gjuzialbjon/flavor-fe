@@ -3,7 +3,7 @@ import { APOLLO_OPTIONS} from 'apollo-angular';
 import { ApolloLink, InMemoryCache, split} from '@apollo/client/core';
 import { HttpLink } from 'apollo-angular/http';
 import { setContext } from '@apollo/client/link/context';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { environment } from '@env';
 import { WebSocketLink } from '@apollo/client/link/ws';
 import { getMainDefinition } from '@apollo/client/utilities';
@@ -25,19 +25,11 @@ export function createApollo(httpLink: HttpLink) {
     }
   }));
 
-  const auth = setContext((operation, context) => {
-    const token = localStorage.getItem('token');
-
-    if (token === null) {
-      return {};
-    } else {
-      return {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      };
-    }
-  });
+  const auth = setContext((operation, context) => ({
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('flavorToken')}`
+    },
+  }));
 
   const errorHandler = onError(({ graphQLErrors, networkError }) => {
     if (graphQLErrors)
@@ -53,7 +45,7 @@ export function createApollo(httpLink: HttpLink) {
   const httpsLink = ApolloLink.from(
     [
       basic, 
-      // auth, 
+      auth,
       errorHandler,
       httpLink.create({
         uri: httpsUri,
@@ -77,14 +69,24 @@ export function createApollo(httpLink: HttpLink) {
 
   const cache = new InMemoryCache({ addTypename: false });
 
+  const defaultOptions = {
+    watchQuery: {
+      fetchPolicy: 'cache-and-network',
+      errorPolicy: 'all',
+    },
+    query: {
+      fetchPolicy: 'cache-and-network',
+      errorPolicy: 'all',
+    },
+    mutate: {
+      errorPolicy: 'all',
+    },
+  };
+
   return {
     link,
     cache,
-    defaultOptions: {
-      watchQuery: {
-        errorPolicy: 'all'
-      }
-    }
+    defaultOptions
   }
 }
 

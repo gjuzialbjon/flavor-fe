@@ -2,6 +2,7 @@
     min-height: $navbar-ht;
     background: $body-bg;
     transition: height .4s ease-in;
+    z-index: 1080;
 
     .nav-link{
         font-weight: 700;
