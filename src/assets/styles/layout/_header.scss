@@ -2,11 +2,15 @@
     min-height: $navbar-ht;
     background: $body-bg;
     transition: height .4s ease-in;
-    z-index: 1080;
+    z-index: 1040;
 
     .nav-link{
         font-weight: 700;
         cursor: pointer;
+    }
+
+    .dropdown-toggle::after{
+        display:none;
     }
 }
 

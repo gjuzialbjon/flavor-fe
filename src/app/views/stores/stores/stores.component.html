@@ -8,14 +8,14 @@
           <p class="store-currency mb-3">
             Currency: <span class="font-weight-bold h5">{{ store.default_currency.symbol }}</span>
           </p>
-          <button class="store-main-btn px-3" (click)="openStore(store)">Open store</button>
+          <button class="store-main-btn px-3" routerLink="/dashboard/{{store._id}}">Open store</button>
           <hr class="store-hr">
           <div class="row no-gutters">
             <div class="col-4">
               <button class="btn store-stat-btn store-stat-1-btn rounded-circle">
                 <fa-icon [icon]="['fas', 'balance-scale']" class="fa-lg"></fa-icon>
               </button>
-              <!-- <h2 class="mt-2" [ngClass]="{ 'text-success':store.balance >  0, 'text-danger':store.balance < 0}"  [countUp]="store.balance" [options]="countUpOptions">{{ store.balance }}</h2> -->
+              <!-- <h2 class="mt-2" [ngClass]="{ 'text-success': store.balance >  0, 'text-danger':store.balance < 0}"  [countUp]="store.balance" [options]="countUpOptions">{{ store.balance }}</h2> -->
               <h2 class="mt-2"> 0 </h2>
               <p class="text-muted">Balance</p>
             </div>

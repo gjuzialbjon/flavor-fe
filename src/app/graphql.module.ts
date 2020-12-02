@@ -45,7 +45,7 @@ export function createApollo(httpLink: HttpLink) {
   const httpsLink = ApolloLink.from(
     [
       basic, 
-      auth,
+      // auth,
       errorHandler,
       httpLink.create({
         uri: httpsUri,

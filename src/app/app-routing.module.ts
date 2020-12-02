@@ -13,12 +13,8 @@ const routes: Routes = [
         loadChildren: () => import('./views/stores/stores.module').then(m => m.StoresModule),
       },
       { 
-        path: 'dashboard', 
+        path: 'dashboard/:id', 
         loadChildren: () => import('./views/dashboard/dashboard.module').then(m => m.DashboardModule),
-      },
-      { 
-        path: 'users', 
-        loadChildren: () => import('./views/users/users.module').then(m => m.UsersModule),
       },
       { 
         path: 'transactions', 
@@ -32,11 +28,6 @@ const routes: Routes = [
         path: 'profile', 
         loadChildren: () => import('./views/profile/profile.module').then(m => m.ProfileModule),
       },
-      {
-        path: '',
-        redirectTo: 'dashboard',
-        pathMatch: 'full'
-      }
     ]
   },
   { 
@@ -45,10 +36,10 @@ const routes: Routes = [
   },
 
   // TO DO - NOT FOUND PAGE
-
   // {
   //   path: '**',
-  //   component: 
+  //   redirectTo: 'auth',
+  //   pathMatch: 'full'
   // }
 ];
 

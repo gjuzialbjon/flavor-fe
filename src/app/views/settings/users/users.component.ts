@@ -16,10 +16,11 @@ export class UsersComponent implements OnInit, OnDestroy {
   constructor(private userService: UserService,) { }
 
   ngOnInit(): void {
+    console.log('Init users')
     this.subs.add(this.userService.Users.subscribe(
-      ({ data } ) => {
-        console.log(data);
-        this.user = 'next user'
+      (res: any) => {
+        console.log(res);
+        // this.user = 'next user'
         
       },
       e => { console.error(e)}))

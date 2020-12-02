@@ -55,11 +55,6 @@ export class AuthenticationService {
       this.authService.signOut().then(
         res => { }
       ).catch( e => { console.error(e)})
-      .finally( () => {
-        this.router.navigate(['auth', 'login'])
-      })
-    } else {
-      this.router.navigate(['auth', 'login'])
     }
   }
 }

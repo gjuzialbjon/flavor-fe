@@ -1,0 +1,11 @@
+<!-- your navs bound to current route fragments -->
+<ul ngbNav class="nav-tabs">
+    <li [ngbNavItem]="link.route" *ngFor="let link of links">
+      <a ngbNavLink routerLink="{{link.route}}" class="font-weight-bold">{{ link.title }}</a>
+    </li>
+</ul>
+
+<!-- and an actual outlet elsewhere -->
+<div class="p-3">
+    <router-outlet></router-outlet>
+</div>

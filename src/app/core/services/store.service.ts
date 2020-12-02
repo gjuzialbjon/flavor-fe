@@ -38,8 +38,7 @@ export class StoreService {
             }
           }
         }
-        `,
-        fetchPolicy:"network-only"
+        `
       },
     )
   }

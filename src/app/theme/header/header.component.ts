@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { Apollo } from 'apollo-angular';
 import { AuthenticationService } from 'src/app/core/services/authentication.service';
 
 @Component({
@@ -13,13 +12,8 @@ export class HeaderComponent implements OnInit {
 
   constructor(
     private authService: AuthenticationService,
-    private apollo:Apollo) { }
+    ) { }
 
   ngOnInit(): void {
-  }
-
-  signOut(){
-    this.authService.signOut()
-    this.apollo.client.resetStore()
   }
 }

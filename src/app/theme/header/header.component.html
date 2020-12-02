@@ -2,16 +2,13 @@
     <button class="navbar-toggler navbar-toggler-right" type="button" (click)="isNavbarCollapsed = !isNavbarCollapsed" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <a class="navbar-brand" style="cursor: pointer;" routerLink="/dashboard">
+    <a class="navbar-brand" style="cursor: pointer;">
       <fa-icon [icon]="['fas', 'home']"></fa-icon>
     </a>
     <div [ngbCollapse]="isNavbarCollapsed" class="navbar-collapse" [ngClass]="{'navbar-bg-gray': !isNavbarCollapsed}" id="navbarSupportedContent">
       <ul class="navbar-nav ml-md-5 mr-auto">
         <li class="nav-item">
           <a class="nav-link" routerLink="/stores" routerLinkActive="active" (click)="isNavbarCollapsed = true">Stores</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/dashboard" routerLinkActive="active" (click)="isNavbarCollapsed = true">Dashboard</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" routerLink="/transactions" routerLinkActive="active" (click)="isNavbarCollapsed = true">Transactions</a>
@@ -39,7 +36,7 @@
             {{ fullName | titlecase }} 
           </a>
         </li>
-        <li class="nav-item" (click)="[isNavbarCollapsed = true, signOut()]">
+        <li class="nav-item" (click)="isNavbarCollapsed = true" routerLink="/auth/login">
           <a class="nav-link active" >
             <fa-icon [icon]="['fas', 'sign-out-alt']" class="d-md-inline d-none"></fa-icon>
             <span class="d-md-none text-info"> Logout</span>
