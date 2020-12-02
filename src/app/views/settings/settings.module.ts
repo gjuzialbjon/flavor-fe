@@ -7,7 +7,7 @@ import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { UsersComponent } from './users/users.component';
 
 @NgModule({
-  declarations: [CurrenciesComponent, SettingsComponent],
+  declarations: [CurrenciesComponent, SettingsComponent, UsersComponent],
   imports: [
     CommonModule,
     RouterModule.forChild([

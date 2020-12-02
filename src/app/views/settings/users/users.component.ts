@@ -9,15 +9,20 @@ import { UserService } from 'src/app/core/services/user.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UsersComponent implements OnInit, OnDestroy {
+  private subscriptions = new Subscription();
 
-  subs: Subscription = new Subscription()
-  user: string | undefined
+  constructor(
+    private userService: UserService,
+    ) {
 
-  constructor(private userService: UserService,) { }
+    }
 
   ngOnInit(): void {
-    console.log('Init users')
-    this.subs.add(this.userService.Users.subscribe(
+    this.getUsers()
+  }
+
+  getUsers(){
+    this.subscriptions.add(this.userService.Users.subscribe(
       (res: any) => {
         console.log(res);
         // this.user = 'next user'
@@ -28,6 +33,6 @@ export class UsersComponent implements OnInit, OnDestroy {
 
   
   ngOnDestroy() {
-    this.subs.unsubscribe()
+    this.subscriptions.unsubscribe()
   }
 }
