@@ -1,5 +1,3 @@
-@import '../components/scrollbar';
-
 body {
     height: 100vh;
     @include scrollbars($scrollbar-wd, $scrollbar-cl, $scrollbar-bg);

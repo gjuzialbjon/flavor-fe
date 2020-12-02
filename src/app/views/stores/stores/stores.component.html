@@ -1,14 +1,14 @@
 <div class="row mb-4 justify-content-center">
   <div class="col-xl-4 col-lg-6 p-3" *ngFor="let store of stores">
-    <div class="card h-100 rounded store-card-shadow" placement="top" ngbTooltip="{{store.description}}">
+    <div class="card h-100 rounded store-card-shadow">
       <div class="card-body p-3">
         <div class="text-center">
-          <h1 class="display-4 mb-3 text-capitalize font-weight-bold">{{ store.name }}</h1>
-          <h2 class="store-location mb-2 text-secondary text-capitalize">{{ store.location }}</h2>
+          <h1 class="mb-3 text-capitalize font-weight-bold" placement="bottom" ngbTooltip="{{store.description}}">{{ store.name }}</h1>
+          <h3 class="store-location mb-2 text-secondary text-truncate text-capitalize">{{ store.location }}</h3>
           <p class="store-currency mb-3">
-            Currency: <span class="font-weight-bold h5">{{ store.default_currency.symbol }}</span>
+            {{ store.default_currency.name }}: <span class="font-weight-bold">{{ store.default_currency.symbol }}</span>
           </p>
-          <button class="store-main-btn px-3" routerLink="/dashboard/{{store._id}}">Open store</button>
+          <button class="store-main-btn px-3" routerLink="{{store._id}}">Open store</button>
           <hr class="store-hr">
           <div class="row no-gutters">
             <div class="col-4">
@@ -69,10 +69,16 @@
       <div class="form-group">
         <input type="text" class="form-control"  formControlName="description" placeholder="Description">
       </div>
+      <div class="form-group">
+        <ng-select formControlName="default_currency" class="my-ng-select" [clearable]="false">
+          <ng-option [value]="0">Default currency</ng-option>
+          <ng-option *ngFor="let currency of currencies" [value]="currency._id">{{currency.name}}</ng-option>
+       </ng-select> 
+      </div>
     </form>
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-secondary mr-3" (click)="modal.close('Cancel click')">Cancel</button>
-    <button type="button" class="btn btn-success" (click)="createStore(modal)" [disabled]="loading">Save</button>
+    <button type="button" class="btn btn-dark-green px-4" (click)="createStore(modal)" [disabled]="loading">Save</button>
   </div>
 </ng-template>

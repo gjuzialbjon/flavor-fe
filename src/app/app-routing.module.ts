@@ -13,10 +13,6 @@ const routes: Routes = [
         loadChildren: () => import('./views/stores/stores.module').then(m => m.StoresModule),
       },
       { 
-        path: 'dashboard/:id', 
-        loadChildren: () => import('./views/dashboard/dashboard.module').then(m => m.DashboardModule),
-      },
-      { 
         path: 'transactions', 
         loadChildren: () => import('./views/transactions/transactions.module').then(m => m.TransactionsModule),
       },
@@ -27,6 +23,11 @@ const routes: Routes = [
       { 
         path: 'profile', 
         loadChildren: () => import('./views/profile/profile.module').then(m => m.ProfileModule),
+      },
+      { 
+        path: '', 
+        redirectTo: 'stores',
+        pathMatch: 'full'
       },
     ]
   },

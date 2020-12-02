@@ -4,7 +4,7 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-md-7">
-                    <div class="font-weight-bold text-muted mb-3">{{ user }}</div> 
+                    <div class="font-weight-bold text-muted mb-3">Data</div> 
                     <h4 class="card-title font-weight-bold mb-2">NewBank Savings Account</h4>
                     <div class="mb-3">
                       <span class="text-muted">23 3232 32322 32323 22323 2332</span>
@@ -82,3 +82,35 @@
     </div>
   </div>
 </div>
+
+<ng-template #newClientContent let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">New Store</h4>
+    <button type="button" class="close text-dark" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="newClientForm">
+      <div class="form-group">
+        <input type="text" class="form-control" [class.is-invalid]="n.name.touched && n.name.errors" formControlName="name" placeholder="Name *" >
+        <small *ngIf="n.name.touched && n.name.errors" class="form-text text-danger">Please enter a name for your new client.</small>
+      </div>
+      <div class="form-group">
+        <input type="text" class="form-control" [class.is-invalid]="n.surname.touched && n.surname.errors" formControlName="surname" placeholder="Surname *" >
+        <small *ngIf="n.surname.touched && n.surname.errors" class="form-text text-danger">Please enter a surname for your new client.</small>
+      </div>
+      <div class="form-group">
+        <input type="text" class="form-control" [class.is-invalid]="n.location.touched && n.location.errors" formControlName="location" placeholder="Location *">
+        <small *ngIf="n.location.touched && n.location.errors" class="form-text text-danger">Please enter a location.</small>
+      </div>
+      <div class="form-group">
+        <input type="text" class="form-control"  formControlName="description" placeholder="Description">
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary mr-3" (click)="modal.close('Cancel click')">Cancel</button>
+    <button type="button" class="btn btn-success" (click)="createClient(modal)" [disabled]="loading">Save</button>
+  </div>
+</ng-template>

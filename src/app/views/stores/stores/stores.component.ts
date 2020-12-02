@@ -4,7 +4,9 @@ import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
 import { ConfigsService } from 'src/app/core/helper-services/configs.service';
 import { MessageService } from 'src/app/core/helper-services/message.service';
+import { Currency } from 'src/app/core/models/currency';
 import { Store } from 'src/app/core/models/store';
+import { CurrencyService } from 'src/app/core/services/currency.service';
 import { StoreService } from 'src/app/core/services/store.service';
 
 @Component({
@@ -16,7 +18,8 @@ import { StoreService } from 'src/app/core/services/store.service';
 export class StoresComponent implements OnInit {
   private subscriptions = new Subscription();
   stores: Store[] = []
-  loading = false // Prevent duplicate store adding
+  currencies: Currency[] = []
+  loading = false // Prevent duplicate store creation
   countUpOptions
   modalConfig
   newStoreForm!: FormGroup;
@@ -27,15 +30,17 @@ export class StoresComponent implements OnInit {
     private fb: FormBuilder,
     private msg: MessageService,
     private storeService: StoreService,
+    private currencyService: CurrencyService,
     private chRef: ChangeDetectorRef
     ) {
       this.countUpOptions = this.configsService.getCountUpOptions()
       this.modalConfig = this.configsService.getCleanModalOptions()
-      this.initNewStoreForm()
   }
 
   ngOnInit(): void {
     this.getStores()
+    this.getCurrencies()
+    this.initNewStoreForm()
   }
 
   getStores(){
@@ -52,6 +57,18 @@ export class StoresComponent implements OnInit {
     ))
   }
 
+  getCurrencies(){
+    this.subscriptions.add(
+      this.currencyService.Currencies.subscribe(
+        (res:any) => { 
+          this.currencies = res.data.currencyMany as Currency[]
+        },
+        e => { 
+          console.error(e);
+        }
+    ))
+  }
+
   openNewStoreModal(newModalContent: TemplateRef<any>){
     this.initNewStoreForm()
     this.modalService.open(newModalContent, this.modalConfig)
@@ -59,6 +76,8 @@ export class StoresComponent implements OnInit {
 
   createStore(modal: NgbActiveModal) {
     if(this.newStoreForm.invalid){
+      console.log(this.newStoreForm.value);
+      
       this.newStoreForm.markAllAsTouched()
       this.msg.error('Make sure to complete the form before proceeding.', 'Form Invalid!')
       return
@@ -85,7 +104,7 @@ export class StoresComponent implements OnInit {
       name: ['', [Validators.required]],
       location: ['', [Validators.required]],
       description: ['', []],
-      default_currency: ['', []],
+      default_currency: [0, []],
     })
   }
 

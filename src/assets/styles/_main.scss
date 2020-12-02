@@ -1,6 +1,8 @@
 @import 'abstracts/variables';
 @import 'abstracts/mixins';
 
+@import 'components/scrollbar';
+
 @import 'base/reset';
 @import 'base/typography';
 
@@ -11,6 +13,7 @@
 @import 'components/buttons';
 @import 'components/modal';
 @import 'components/cards';
+@import 'components/selects';
 
 @import 'pages/auth';
 @import 'pages/dashboard';
