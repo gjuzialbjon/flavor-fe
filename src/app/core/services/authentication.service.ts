@@ -33,6 +33,7 @@ export class AuthenticationService {
     if(!!this.token){
       this.decodedToken = this.jwtHelper.decodeToken(this.token)
       this.role = this.decodedToken.role
+      this.username = localStorage.getItem('flavorUsername') + ''
     }
   }
 

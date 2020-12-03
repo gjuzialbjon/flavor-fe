@@ -18,4 +18,6 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     this.fullName = this.authService.username
   }
+
+  
 }

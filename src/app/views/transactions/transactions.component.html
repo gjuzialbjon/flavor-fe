@@ -1,11 +1,13 @@
-<h4 class="font-weight-bold mb-3">Title of group</h4>
+<h4 class="font-weight-bold mb-3">Pending transactions</h4>
 <app-transaction [paid]="false"></app-transaction>
-<app-transaction [paid]="true"></app-transaction>
-<app-transaction [paid]="true"></app-transaction>
 <app-transaction [paid]="false"></app-transaction>
+<app-transaction [paid]="false"></app-transaction>
+<app-transaction [paid]="false"></app-transaction>
+<p class="text-center text-info font-weight-bold" style="cursor: pointer;"><u>See all pending transactions</u></p>
 
-<h4 class="font-weight-bold mt-4 mb-3">Title of group 2</h4>
-<app-transaction></app-transaction>
-<app-transaction></app-transaction>
-<app-transaction></app-transaction>
-<app-transaction></app-transaction>
+<h4 class="font-weight-bold mt-4 mb-3">Latest transactions</h4>
+<app-transaction [paid]="true"></app-transaction>
+<app-transaction [paid]="true"></app-transaction>
+<app-transaction [paid]="true"></app-transaction>
+<app-transaction [paid]="true"></app-transaction>
+<p class="text-center text-info font-weight-bold" style="cursor: pointer;"><u>See all transactions</u></p>
