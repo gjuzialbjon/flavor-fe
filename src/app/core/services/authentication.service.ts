@@ -15,10 +15,25 @@ export class AuthenticationService {
   decodedToken: any
   googleUser: SocialUser | undefined
   user: any
+  token: any
+  role!: string;
+  username!: string
 
-  constructor(private authService: SocialAuthService, private router: Router, private msg: MessageService, private http: HttpClient) { 
-    this.jwtHelper = new JwtHelperService()
+  constructor(
+    private authService: SocialAuthService, 
+    private router: Router, 
+    private msg: MessageService, 
+    private http: HttpClient) { 
+      this.jwtHelper = new JwtHelperService()
+      this.token = localStorage.getItem('flavorToken')
+      this.initTokenAndRole()
+  }
 
+  initTokenAndRole() {
+    if(!!this.token){
+      this.decodedToken = this.jwtHelper.decodeToken(this.token)
+      this.role = this.decodedToken.role
+    }
   }
 
   login(email:string, id:string, name:string){    
@@ -27,10 +42,9 @@ export class AuthenticationService {
         const token = res.token + ''
         localStorage.setItem('flavorToken', token)
         this.decodedToken = this.jwtHelper.decodeToken(res.token)
-        // console.log(this.decodedToken);
-
         if(this.decodedToken.confirmed){
           this.router.navigate(['stores'])
+          this.msg.success('Welcome back')
         } else {
           this.router.navigate(['auth', 'not-authorized'])
         }
@@ -44,12 +58,14 @@ export class AuthenticationService {
       res => {
         // console.log('Logged in with google ', res)
         this.login(res.email, res.id, res.name) // CALL LOGIN PROCEDURE TO BACKEND TO GET USER TOKEN
+        localStorage.setItem('flavorUsername', res.name)
+        this.username = res.name
       }
     ).catch( e => { console.error(e); this.msg.error('Sorry, could not log in with Google now. Please try again later.')})
   }
  
   signOut(): void {
-    // Log out from google if user has logged in, otherwise simply navigate to login page
+    // Log out from google if user has logged in with google, otherwise simply navigate to login page
     localStorage.clear()
     if(this.googleUser){
       this.authService.signOut().then(

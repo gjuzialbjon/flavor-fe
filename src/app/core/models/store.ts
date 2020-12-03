@@ -4,12 +4,13 @@ import { Account } from './account';
 import { User } from './user';
 
 export interface Store {
-    name: String
-    location: String
-    description: String
+    name: string
+    location: string
+    description: string
     default_currency: Currency
     users: [User]
     clients: [Client]
     accounts: [Account]
+    createdAt: string
     _id: string
 }

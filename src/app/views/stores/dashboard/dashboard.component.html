@@ -1,40 +1,41 @@
+<h4 class="font-weight-bold mt-4 mb-3">General</h4>
 <div class="row">
     <div class="col-xl-7 mb-4">
       <div class="card h-100">
         <div class="card-body">
             <div class="row">
                 <div class="col-md-7">
-                    <div class="font-weight-bold text-muted mb-3">Data</div> 
-                    <h4 class="card-title font-weight-bold mb-2">NewBank Savings Account</h4>
+                    <div class="font-weight-bold text-capitalize text-muted mb-3">{{ store?.location }}</div> 
+                    <h4 class="card-title text-capitalize font-weight-bold mb-2">{{ store?.name }}</h4>
                     <div class="mb-3">
-                      <span class="text-muted">23 3232 32322 32323 22323 2332</span>
-                      <span class="text-dark-green ml-2" style="cursor: pointer;">
+                      <span class="text-muted">{{ store?.createdAt | date:"dd-MM-yyyy"}}</span>
+                      <!-- <span class="text-dark-green ml-2" style="cursor: pointer;">
                         <fa-icon [icon]="['fas', 'balance-scale']"></fa-icon>
-                      </span>
+                      </span> -->
                     </div>
-                    <div class="btn btn-dark-green mr-2 p-2">
+                    <div class="btn btn-dark-green ml-0 mr-2 my-1 p-2">
                       Transfer money
                     </div>
-                    <div class="btn btn-light p-2">
-                      Link accounts
+                    <div class="btn btn-info ml-0 my-1 p-2" (click)="openNewClientModal(newClientContent)"  >
+                      Create client
                     </div>
                 </div>
                 <div class="col-md-5 text-md-right text-muted">
                   <div class="font-weight-bold mt-md-0 mt-5 mb-3">Available funds</div> 
-                  <h1>12.233,43 $</h1>
+                  <h1>0</h1>
                 </div>
             </div>
         </div>
       </div>
     </div>
     <div class="col-xl-5 mb-4">
-      <div class="card bg-dark-green text-white h-100 ">
+      <div class="card bg-gradient-dark-green text-white h-100 ">
         <div class="card-body">
           <div class="row">
             <div class="col-md-7">
                 <h4 class="card-title font-weight-bold mb-2">Define standing orders</h4>
                 <p class="card-text">
-                  ajhdasjhd asjdhsajhdjsa asjdhasjjsahd asjhadsjdhjsah asdjashjdash
+                  Text here
                 </p>
                 <div class="btn btn-light p-2">
                   Define standing order
@@ -42,7 +43,7 @@
             </div>
             <div class="col-md-5 text-md-right">
               <div class="font-weight-bold mt-md-0 mt-5 mb-3">. . .</div> 
-              IMAGE HERE
+              Store Image
             </div>
         </div>
         </div>
@@ -50,9 +51,10 @@
     </div>
 </div>
 
-<div class="row">
-    <div *ngFor="let h of hmm" class="col-xl-4 col-lg-6 mb-4">
-        <app-credit-card></app-credit-card>
+<h4 class="font-weight-bold mt-2 mb-3" *ngIf="store?.accounts && store.accounts.length > 0">Accounts</h4>
+<div class="row mb-3">
+    <div *ngFor="let account of store?.accounts" class="col-xl-3 col-lg-6 mb-4">
+        <app-credit-card [account]="account"></app-credit-card>
     </div>
 </div>
 
@@ -85,7 +87,7 @@
 
 <ng-template #newClientContent let-modal>
   <div class="modal-header">
-    <h4 class="modal-title">New Store</h4>
+    <h4 class="modal-title">New Client for store <strong>{{ store?.name }}</strong> </h4>
     <button type="button" class="close text-dark" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -111,6 +113,6 @@
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-secondary mr-3" (click)="modal.close('Cancel click')">Cancel</button>
-    <button type="button" class="btn btn-success" (click)="createClient(modal)" [disabled]="loading">Save</button>
+    <button type="button" class="btn btn-dark-green" (click)="createClient(modal)" [disabled]="loading">Save</button>
   </div>
 </ng-template>

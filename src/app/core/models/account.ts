@@ -3,8 +3,8 @@ import { User } from './user';
 
 export interface Account {
     type: string
-    name: String
-    description: String
+    name: string
+    description: string
     user: User
     currency: Currency
     _id: string

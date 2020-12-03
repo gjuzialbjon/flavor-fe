@@ -3,10 +3,10 @@ import { User } from './user';
 import { Account } from './account';
 
 export interface Client {
-    name: String
-    surname: String
-    location: String
-    description: String
+    name: string
+    surname: string
+    location: string
+    description: string
     user: User
     stores: [Store]
     accounts: [Account]

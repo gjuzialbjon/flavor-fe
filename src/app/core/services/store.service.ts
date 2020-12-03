@@ -26,6 +26,42 @@ const storeMany = gql `
 },
 `
 
+const storeOne = gql `
+query($_id: MongoID!){
+  storeById(
+    _id: $_id
+  ){
+    _id
+    name
+    location
+    description
+    default_currency{
+      currency
+      symbol
+      name
+      type
+    }
+    users{
+      email
+      name
+      image
+    }
+    clients{
+      name
+      surname
+      location
+      description
+    }
+    accounts{
+      type
+      name
+      description
+      
+    }
+    createdAt
+  }
+}
+`
 @Injectable({
   providedIn: 'root'
 })
@@ -33,10 +69,23 @@ export class StoreService {
 
   constructor(private apollo: Apollo) { }
 
-  get Stores() {
+  getStores(fetchPolicy: 'cache-first' | 'network-only' = 'cache-first') {
     return this.apollo.query(
       {
-        query: storeMany
+        query: storeMany,
+        fetchPolicy: fetchPolicy
+      },
+    )
+  }
+
+  getStoreById(storeId: string){
+    return this.apollo.query(
+      {
+        query: storeOne,
+        variables: {
+          "_id": storeId
+        },
+        fetchPolicy: 'network-only'
       },
     )
   }
@@ -60,9 +109,7 @@ export class StoreService {
       }
     }`
 
-    console.log(mut);
-    
-
+    // console.log(mut)
     return this.apollo.mutate({
       mutation: gql `
         ${mut}

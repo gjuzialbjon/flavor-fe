@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-credit-card',
@@ -7,10 +7,12 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CreditCardComponent implements OnInit {
+  @Input() account!: any
 
   constructor() { }
 
   ngOnInit(): void {
+    console.log(this.account)
   }
 
 }

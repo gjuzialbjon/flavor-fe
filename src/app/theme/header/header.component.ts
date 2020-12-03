@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { AuthenticationService } from 'src/app/core/services/authentication.service';
 
 @Component({
@@ -8,12 +8,14 @@ import { AuthenticationService } from 'src/app/core/services/authentication.serv
 })
 export class HeaderComponent implements OnInit {
   isNavbarCollapsed = true;
-  fullName = 'albjon gjuzi'
+  fullName = ''
 
   constructor(
     private authService: AuthenticationService,
+    private chRef: ChangeDetectorRef
     ) { }
 
   ngOnInit(): void {
+    this.fullName = this.authService.username
   }
 }

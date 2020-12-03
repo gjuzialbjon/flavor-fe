@@ -43,9 +43,9 @@ export class StoresComponent implements OnInit {
     this.initNewStoreForm()
   }
 
-  getStores(){
+  getStores(fetchPolicy: 'cache-first' | 'network-only' = 'cache-first'){
     this.subscriptions.add(
-      this.storeService.Stores.subscribe(
+      this.storeService.getStores(fetchPolicy).subscribe(
         (res:any) => { 
           this.stores = res.data.storeMany as Store[]
           this.chRef.detectChanges()
@@ -69,9 +69,9 @@ export class StoresComponent implements OnInit {
     ))
   }
 
-  openNewStoreModal(newModalContent: TemplateRef<any>){
+  openNewStoreModal(content: TemplateRef<any>){
     this.initNewStoreForm()
-    this.modalService.open(newModalContent, this.modalConfig)
+    this.modalService.open(content, this.modalConfig)
   }
 
   createStore(modal: NgbActiveModal) {
@@ -87,7 +87,7 @@ export class StoresComponent implements OnInit {
     // PROCEED TO CREATE NEW STORE AFTER LOCKING BUTTON
     this.storeService.createStore(this.newStoreForm.value).subscribe(
       (res: any) => {
-        this.getStores()
+        this.getStores('network-only')
         this.loading = false
         modal.close('Completed')
       },
