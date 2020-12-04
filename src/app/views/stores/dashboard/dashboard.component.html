@@ -8,7 +8,7 @@
                     <div class="font-weight-bold text-capitalize text-muted mb-3">{{ store?.location }}</div> 
                     <h4 class="card-title text-capitalize font-weight-bold mb-2">{{ store?.name }}</h4>
                     <div class="mb-3">
-                      <span class="text-muted">{{ store?.createdAt | date:"dd-MM-yyyy"}}</span>
+                      <span class="text-muted">{{ store?.createdAt | date:"yyyy-MM-dd"}}</span>
                       <!-- <span class="text-dark-green ml-2" style="cursor: pointer;">
                         <fa-icon [icon]="['fas', 'balance-scale']"></fa-icon>
                       </span> -->
@@ -38,7 +38,8 @@
                   Text here
                 </p>
                 <div class="btn btn-light p-2">
-                  Define standing order
+                  <fa-icon [icon]="['fas', 'plus']"></fa-icon>
+                  Recharge store
                 </div>
             </div>
             <div class="col-md-5 text-md-right">
