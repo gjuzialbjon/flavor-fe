@@ -18,8 +18,8 @@
 .store-hr{
     border-color: #7c8097;
     width: 90%;
-    margin-top: 24px;
-    margin-bottom: 24px;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
 }
 
 .store-card-shadow {
@@ -35,8 +35,9 @@
 }
 
 .store-stat-btn{
-  width: 60px;
-  height: 60px;
+  width: 30px;
+  height: 30px;
+  padding: 0;
   // color: white;
   // box-shadow: 0 13px 26px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.16);
   cursor: default !important;

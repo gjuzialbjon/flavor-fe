@@ -1,11 +1,11 @@
 <div class="row mb-4 justify-content-center">
-  <div class="col-xl-4 col-lg-6 p-3" *ngFor="let store of stores">
-    <div class="card h-100 rounded store-card-shadow">
-      <div class="card-body p-3">
+  <div class="col-xl-3 col-lg-4 col-md-6" *ngFor="let store of stores">
+    <div class="card rounded store-card-shadow m-auto">
+      <div class="card-body p-2">
         <div class="text-center">
-          <h1 class="mb-3 text-capitalize font-weight-bold" placement="bottom" ngbTooltip="{{store.description}}">{{ store.name }}</h1>
-          <h3 class="store-location mb-2 text-secondary text-truncate text-capitalize">{{ store.location }}</h3>
-          <p class="store-currency mb-3">
+          <h2 class=" text-capitalize font-weight-bold" placement="bottom" ngbTooltip="{{store.description}}">{{ store.name }}</h2>
+          <h4 class="store-location text-secondary text-truncate text-capitalize">{{ store.location }}</h4>
+          <p class="store-currency">
             {{ store.default_currency.name }}: <span class="font-weight-bold">{{ store.default_currency.symbol }}</span>
           </p>
           <button class="store-main-btn btn btn-primary rounded-pill px-3" routerLink="{{store._id}}">Open store</button>
@@ -13,24 +13,24 @@
           <div class="row no-gutters">
             <div class="col-4">
               <button class="btn store-stat-btn store-stat-1-btn rounded-circle">
-                <fa-icon [icon]="['fas', 'balance-scale']" class="fa-lg"></fa-icon>
+                <fa-icon [icon]="['fas', 'balance-scale']" class="text-muted"></fa-icon>
               </button>
-              <!-- <h2 class="mt-2" [ngClass]="{ 'text-success': store.balance >  0, 'text-danger':store.balance < 0}"  [countUp]="store.balance" [options]="countUpOptions">{{ store.balance }}</h2> -->
-              <h2 class="mt-2"> 0 </h2>
+              <!-- <h3 class="mt-2" [ngClass]="{ 'text-success': store.balance >  0, 'text-danger':store.balance < 0}"  [countUp]="store.balance" [options]="countUpOptions">{{ store.balance }}</h3> -->
+              <h4 class="mt-0"> 0 </h4>
               <p class="text-muted">Balance</p>
             </div>
             <div class="col-4">
               <button class="btn store-stat-btn store-stat-2-btn rounded-circle">
-                <fa-icon [icon]="['fas', 'user-friends']" class="fa-lg"></fa-icon>
+                <fa-icon [icon]="['fas', 'user-friends']" class="text-muted"></fa-icon>
               </button><br>
-              <h2 class="mt-2"  [countUp]="store.clients.length" [options]="countUpOptions">{{ store.clients.length }}</h2>
+              <h4 class="mt-0"  [countUp]="store.clients.length" [options]="countUpOptions">{{ store.clients.length }}</h4>
               <p class="text-muted">Clients</p>
             </div>
             <div class="col-4">
               <button class="btn store-stat-btn store-stat-3-btn rounded-circle">
-                <fa-icon [icon]="['fas', 'user-tie']" class="fa-lg"></fa-icon>
+                <fa-icon [icon]="['fas', 'user-tie']" class="text-muted"></fa-icon>
               </button>
-              <h2 class="mt-2" [countUp]="store.users.length" [options]="countUpOptions">{{ store.users.length }}</h2>
+              <h4 class="mt-0" [countUp]="store.users.length" [options]="countUpOptions">{{ store.users.length }}</h4>
               <p class="text-muted">Users</p>
             </div>
           </div>
@@ -38,11 +38,11 @@
       </div>
     </div>
   </div>
-  <div class="col-xl-4 col-lg-6 p-3">
-    <div class="card h-100 rounded store-card-shadow" style="cursor: pointer;" (click)="openNewStoreModal(newModalContent)">
-      <div class="card-body p-3 d-flex flex-column align-items-center justify-content-center">
+  <div class="col-xl-3 col-lg-4 col-md-6">
+    <div class="card rounded store-card-shadow" style="cursor: pointer;" (click)="openNewStoreModal(newModalContent)">
+      <div class="card-body p-2 d-flex flex-column align-items-center justify-content-center">
         <fa-icon [icon]="['fas', 'plus']" class="fa-10x text-primary"></fa-icon>
-        <h2 class="d-block display-4 font-weight-bold text-dark">New store</h2>
+        <h3 class="d-block font-weight-bold text-dark">New store</h3>
       </div>
     </div>
   </div>
