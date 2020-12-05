@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './theme/header/header.component';
 import { BaseComponent } from './theme/base/base.component';
 import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome'; 
-import { faArrowDown, faArrowLeft, faArrowRight, faBalanceScale, faBell, faCheck, faChevronUp, faCog, faCopy, faHome, faInfoCircle, faPen, faPlus, faSignOutAlt, faTimes, faUserFriends, faUserTie } from '@fortawesome/free-solid-svg-icons';
+import { faArrowDown, faArrowLeft, faArrowRight, faBalanceScale, faBell, faCheck, faChevronUp, faCog, faCopy, faEdit, faHome, faInfoCircle, faPen, faPlus, faSignOutAlt, faTimes, faUserEdit, faUserFriends, faUserTie } from '@fortawesome/free-solid-svg-icons';
 import { HttpClientModule } from '@angular/common/http';
 import { GraphQLModule } from './graphql.module';
 import { NotificationsComponent } from './theme/notifications/notifications.component';
@@ -62,6 +62,6 @@ import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
 export class AppModule {
   constructor(library: FaIconLibrary) {
     // Add multiple icons to the library
-    library.addIcons(faHome, faBalanceScale, faUserFriends, faUserTie, faBell, faCog, faInfoCircle, faSignOutAlt, faArrowRight, faArrowDown, faArrowLeft, faCheck, faChevronUp, faCopy, faPlus, faPen, faTimes);
+    library.addIcons(faHome, faBalanceScale,faUserEdit, faEdit, faUserFriends, faUserTie, faBell, faCog, faInfoCircle, faSignOutAlt, faArrowRight, faArrowDown, faArrowLeft, faCheck, faChevronUp, faCopy, faPlus, faPen, faTimes);
   }
 }

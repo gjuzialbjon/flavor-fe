@@ -64,9 +64,17 @@
               }
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "node_modules/datatables.net-bs4/css/dataTables.bootstrap4.min.css",
+              "node_modules/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/jquery/dist/jquery.js",
+              "node_modules/datatables.net/js/jquery.dataTables.js",
+              "node_modules/datatables.net-bs4/js/dataTables.bootstrap4.min.js",
+              "node_modules/datatables.net-responsive/js/dataTables.responsive.js",
+              "node_modules/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -86,8 +94,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "1mb",
+                  "maximumError": "2mb"
                 },
                 {
                   "type": "anyComponentStyle",

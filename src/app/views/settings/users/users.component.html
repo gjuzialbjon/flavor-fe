@@ -1,1 +1,24 @@
-<p>users works!</p>
+<table *ngIf="users.length > 0"  datatable [dtOptions]="dtOptions" class="table table-striped table-hover" width="100%">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Confirmed</th>
+        <th>Invited</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users">
+        <td>{{ user.name }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.confirmed }}</td>
+        <td>{{ user.invited }}</td>
+        <td class="text-center" width="8%">
+          <button class="btn btn-info btn-sm mx-auto">
+            <fa-icon [icon]="['fas', 'user-edit']"></fa-icon>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>

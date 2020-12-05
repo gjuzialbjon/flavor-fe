@@ -4,7 +4,12 @@ import { Apollo, gql } from 'apollo-angular';
 const userMany = gql `
   query{
     userMany{
+      _id
+      email
       name
+      image
+      confirmed
+      invited
     }
   }
   `

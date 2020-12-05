@@ -1,4 +1,5 @@
 body {
     height: 100vh;
+    // font-family: sans-serif;
     @include scrollbars($scrollbar-wd, $scrollbar-cl, $scrollbar-bg);
 }

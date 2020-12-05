@@ -5,6 +5,8 @@ import { RouterModule } from '@angular/router';
 import { SettingsComponent } from './settings.component';
 import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { UsersComponent } from './users/users.component';
+import { DataTablesModule } from 'angular-datatables';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [CurrenciesComponent, SettingsComponent, UsersComponent],
@@ -31,7 +33,9 @@ import { UsersComponent } from './users/users.component';
         ]
       },
     ]),
-    NgbNavModule
+    NgbNavModule,
+    DataTablesModule,
+    FontAwesomeModule
   ]
 })
 export class SettingsModule { }

@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 
 const posRanges = [
   { divider: 1000000 , suffix: 'M' },
@@ -48,4 +47,16 @@ export class ConfigsService {
     }
   }
 
+  getDTOptions(): DataTables.Settings {
+    return {
+      pagingType: 'simple_numbers',
+      pageLength: 10,
+      processing: true,
+      responsive: true,
+      columnDefs: [
+        // @ts-ignore
+        { responsivePriority: 100, targets: [0,4] },
+      ]
+    }
+  }
 }
