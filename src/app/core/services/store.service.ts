@@ -62,6 +62,7 @@ query($_id: MongoID!){
   }
 }
 `
+
 @Injectable({
   providedIn: 'root'
 })

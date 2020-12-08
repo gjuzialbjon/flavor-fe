@@ -6,7 +6,7 @@
           <small *ngIf="l.email.touched && l.email.errors" class="form-text text-danger">Please enter a valid email.</small>
         </div>
         <div class="form-group">
-          <input type="password" class="form-control form-control-lg" [class.is-invalid]="l.password.touched && l.password.errors" formControlName="password" placeholder="Password">
+          <input type="password" class="form-control form-control-lg" [class.is-invalid]="l.password.touched && l.password.errors" formControlName="password" placeholder="•••••••">
           <small *ngIf="l.password.touched && l.password.errors" class="form-text text-danger">Password is at least 6 characters long in this app.</small>
         </div>
         <div class="text-center">

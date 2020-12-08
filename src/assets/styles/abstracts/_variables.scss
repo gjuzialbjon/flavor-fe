@@ -3,13 +3,17 @@
 //////////////////////////////////////////////////
 
 /* BODY */
-$body-bg: #e3e4e7;
+$body-bg:#F3F7FD;
 $body-color: #343a40;
 
 /* NAVBAR */
 $navbar-light-color: #999BAD; //MENU ITEM NOT ACTIVE
 $navbar-light-active-color: #292828;
 $navbar-light-hover-color: #292828;
+
+/* SIDEBAR */
+$sidebar-wd: 240px; 
+$sidebar-bg: #ffffff;
 
 /* RESPONSIVE TYPOGRAPHY */
 $enable-responsive-font-sizes: true;

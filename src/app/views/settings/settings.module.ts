@@ -7,6 +7,8 @@ import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { UsersComponent } from './users/users.component';
 import { DataTablesModule } from 'angular-datatables';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
   declarations: [CurrenciesComponent, SettingsComponent, UsersComponent],
@@ -35,7 +37,10 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     ]),
     NgbNavModule,
     DataTablesModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NgSelectModule
   ]
 })
 export class SettingsModule { }

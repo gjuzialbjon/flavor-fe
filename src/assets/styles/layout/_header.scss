@@ -1,7 +1,6 @@
 .navbar{
     min-height: $navbar-ht;
     background: $body-bg;
-    transition: height .4s ease-in;
     z-index: 1040;
 
     .nav-link{
@@ -17,23 +16,4 @@
 .user-full-name{
     @include text-ellipsis;
     max-width: 200px;
-}
-
-@media (min-width: 1024px){
-    .navbar{
-        border-top-left-radius: 24px;
-        border-top-right-radius: 24px;
-    }
-}
-
-@media (max-width: 768px) {
-    .navbar-bg-gray{
-        background: $body-bg;
-        height: fit-content;
-        transition: height .4s ease-in-out;
-    }
-    
-    .user-full-name-li{
-        order: -1;
-    }
 }

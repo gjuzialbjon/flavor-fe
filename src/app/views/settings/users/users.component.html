@@ -1,24 +1,100 @@
+<div class="form-row">
+  <div class="col-lg-4 col-md-6 offset-lg-3 mb-2">
+    <input type="text" class="form-control fc-placeholder bg-secondary text-white" [formControl]="emailFormControl" placeholder="Email of the user you want to invite">
+  </div>
+  <div class="col-lg-3 col-md-4 mb-2">
+    <select class="custom-select bg-secondary text-white" [formControl]="roleFormControl">
+      <option value="">Select role</option>
+      <option value="agent">Agent</option>
+      <option value="finance">Finance</option>
+      <option value="admin">Admin</option>
+    </select>
+  </div>
+  <div class="col-md-2 mb-4">
+    <button class="btn btn-block btn-success" (click)="inviteUser()" [disabled]="invitationLoading">
+      <fa-icon [icon]="['fas', 'plus']"></fa-icon>
+      Invite
+      <span [hidden]="!invitationLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+    </button>
+  </div>
+</div>
+
 <table *ngIf="users.length > 0"  datatable [dtOptions]="dtOptions" class="table table-striped table-hover" width="100%">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Confirmed</th>
-        <th>Invited</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let user of users">
-        <td>{{ user.name }}</td>
-        <td>{{ user.email }}</td>
-        <td>{{ user.confirmed }}</td>
-        <td>{{ user.invited }}</td>
-        <td class="text-center" width="8%">
-          <button class="btn btn-info btn-sm mx-auto">
-            <fa-icon [icon]="['fas', 'user-edit']"></fa-icon>
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Role</th>
+      <th>Confirmed</th>
+      <th>Invited</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let user of users">
+      <td class="text-capitalize">{{ user.name }}</td>
+      <td>{{ user.email }}</td>
+      <td class="text-capitalize">{{ user.role }}</td>
+      <td class="text-capitalize">{{ user.confirmed }}</td>
+      <td class="text-capitalize">{{ user.invited }}</td>
+      <td class="text-center" width="8%">
+        <button class="btn btn-info btn-sm mx-auto" (click)="openUpdate(userContent, user)">
+          <fa-icon [icon]="['fas', 'user-edit']"></fa-icon>
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<ng-template #userContent let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Update User</h4>
+    <button type="button" class="close text-dark" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="userForm">
+      <div class="form-group">
+        <input type="text" class="form-control" [class.is-invalid]="u.name.touched && u.name.errors" formControlName="name" placeholder="Name *" >
+        <small *ngIf="u.name.touched && u.name.errors" class="form-text text-danger">Please enter a name.</small>
+      </div>
+      <div class="form-group">
+        <input type="text" class="form-control" [class.is-invalid]="u.email.touched && u.email.errors" formControlName="email" placeholder="Email *" >
+        <small *ngIf="u.email.touched && u.email.errors" class="form-text text-danger">Please enter an email.</small>
+      </div>
+      <div class="form-group">
+        <ng-select 
+          formControlName="stores" 
+          class="my-ng-select" 
+          [multiple]="true" 
+          [clearable]="true"
+          placeholder="Select stores...">
+            <ng-option *ngFor="let store of stores" [value]="store._id">{{ store.name }}</ng-option>
+        </ng-select> 
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="confirmed" formControlName="confirmed">
+            <label class="custom-control-label" for="confirmed">Confirmed</label>
+          </div>
+        </div>
+        <div class="col">
+          <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="invited" formControlName="invited">
+            <label class="custom-control-label" for="invited">Invited</label>
+          </div>
+        </div>
+      </div>
+      
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary mr-3" (click)="modal.close('Cancel click')">Cancel</button>
+    <button type="button" class="btn btn-dark-green px-4" (click)="saveUser(modal)" [disabled]="loading">
+      Save
+      <span [hidden]="!loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+    </button>
+  </div>
+</ng-template>

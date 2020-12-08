@@ -1,1 +1,23 @@
-<p>currencies works!</p>
+<table *ngIf="currencies.length > 0"  datatable [dtOptions]="dtOptions" class="table table-striped table-hover" width="100%">
+    <thead>
+      <tr>
+        <th>Currency</th>
+        <th>Symbol</th>
+        <th>Name</th>
+        <th>Type</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let currency of currencies">
+        <td class="text-capitalize">{{ currency.currency }}</td>
+        <td>{{ currency.symbol }}</td>
+        <td class="text-capitalize">{{ currency.name }}</td>
+        <td class="text-capitalize">{{ currency.type }}</td>
+        <td class="text-center" width="8%">
+          <button class="btn btn-info btn-sm mx-auto" (click)="openUpdate()">
+            <fa-icon [icon]="['fas', 'user-edit']"></fa-icon>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>

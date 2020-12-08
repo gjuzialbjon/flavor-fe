@@ -1,47 +1,31 @@
-<nav class="navbar navbar-expand-md navbar-light sticky-top container px-lg-4">
-    <button class="navbar-toggler navbar-toggler-right" type="button" (click)="isNavbarCollapsed = !isNavbarCollapsed" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <a class="navbar-brand" style="cursor: pointer;">
-      <fa-icon [icon]="['fas', 'home']"></fa-icon>
-    </a>
-    <div [ngbCollapse]="isNavbarCollapsed" class="navbar-collapse" [ngClass]="{'navbar-bg-gray': !isNavbarCollapsed}" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-md-5 mr-auto">
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/stores" routerLinkActive="active" (click)="isNavbarCollapsed = true">Stores</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/transactions" routerLinkActive="active" (click)="isNavbarCollapsed = true">Transactions</a>
-        </li>
-      </ul>
-      <ul class="navbar-nav align-items-md-center">
-        <li class="nav-item" routerLink="/notifications" (click)="isNavbarCollapsed = true">
-          <a class="nav-link active">
-            <fa-layers class="d-md-inline-block d-none">
-              <fa-icon [icon]="['fas', 'bell']" ></fa-icon>
-              <fa-layers-counter content=""></fa-layers-counter>
-            </fa-layers>
-            <span class="d-md-none"> Notifications</span>
-          </a>
-        </li>
-        <li class="nav-item" routerLink="/settings" (click)="isNavbarCollapsed = true">
-          <a class="nav-link active">
-            <fa-icon [icon]="['fas', 'cog']" class="d-md-inline d-none"></fa-icon>
-            <span class="d-md-none"> Settings</span>
-          </a>
-        </li>
-        <li class="nav-item ml-md-4 mr-md-4 mt-md-0 mt-sm-4 mt-4 user-full-name-li" routerLink="/profile"
-          (click)="isNavbarCollapsed = true">
-          <a class="nav-link active user-full-name" > 
-            {{ fullName | titlecase }} 
-          </a>
-        </li>
-        <li class="nav-item" (click)="isNavbarCollapsed = true" routerLink="/auth/login">
-          <a class="nav-link active" >
-            <fa-icon [icon]="['fas', 'sign-out-alt']" class="d-md-inline d-none"></fa-icon>
-            <span class="d-md-none text-info"> Logout</span>
-          </a>
-        </li>
-      </ul>
-  </div>
+<nav class="navbar navbar-expand-md navbar-light sticky-top">
+    <ul class="navbar-nav align-items-md-center ml-auto d-lg-flex d-none">
+      <li class="nav-item" routerLink="/notifications" (click)="isNavbarCollapsed = true">
+        <a class="nav-link active">
+          <fa-layers class="d-md-inline-block d-none">
+            <fa-icon [icon]="['fas', 'bell']" ></fa-icon>
+            <fa-layers-counter content=""></fa-layers-counter>
+          </fa-layers>
+          <span class="d-md-none"> Notifications</span>
+        </a>
+      </li>
+      <li class="nav-item" routerLink="/settings" (click)="isNavbarCollapsed = true">
+        <a class="nav-link active">
+          <fa-icon [icon]="['fas', 'cog']" class="d-md-inline d-none"></fa-icon>
+          <span class="d-md-none"> Settings</span>
+        </a>
+      </li>
+      <li class="nav-item ml-md-4 mr-md-4 mt-md-0 mt-sm-4 mt-4 user-full-name-li" routerLink="/profile"
+        (click)="isNavbarCollapsed = true">
+        <a class="nav-link active user-full-name" > 
+          {{ fullName | titlecase }} 
+        </a>
+      </li>
+      <li class="nav-item" (click)="isNavbarCollapsed = true" routerLink="/auth/login">
+        <a class="nav-link active" >
+          <fa-icon [icon]="['fas', 'sign-out-alt']" class="d-md-inline d-none"></fa-icon>
+          <span class="d-md-none text-info"> Logout</span>
+        </a>
+      </li>
+    </ul>
 </nav>

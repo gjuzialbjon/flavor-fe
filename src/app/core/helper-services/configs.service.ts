@@ -53,9 +53,10 @@ export class ConfigsService {
       pageLength: 10,
       processing: true,
       responsive: true,
+      // dom:'l<"toolbar">frtip',
       columnDefs: [
         // @ts-ignore
-        { responsivePriority: 100, targets: [0,4] },
+        { responsivePriority: 100, targets: [0,5] },
       ]
     }
   }

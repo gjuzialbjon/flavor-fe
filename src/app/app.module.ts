@@ -15,12 +15,14 @@ import { NgModule } from '@angular/core';
 import { ScrollTopComponent } from './theme/scroll-top/scroll-top.component';
 import { ToastrModule } from 'ngx-toastr';
 import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
+import { SidebarComponent } from './theme/sidebar/sidebar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     BaseComponent,
+    SidebarComponent,
     NotificationsComponent,
     ScrollTopComponent
   ],
@@ -35,8 +37,8 @@ import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
     SocialLoginModule,
     ToastrModule.forRoot({
       autoDismiss: false,
-      // preventDuplicates: true,
-      timeOut: 4000,
+      preventDuplicates: true,
+      timeOut: 3500,
       positionClass: 'toast-top-center'
     }),
     LoadingBarRouterModule
@@ -62,6 +64,6 @@ import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
 export class AppModule {
   constructor(library: FaIconLibrary) {
     // Add multiple icons to the library
-    library.addIcons(faHome, faBalanceScale,faUserEdit, faEdit, faUserFriends, faUserTie, faBell, faCog, faInfoCircle, faSignOutAlt, faArrowRight, faArrowDown, faArrowLeft, faCheck, faChevronUp, faCopy, faPlus, faPen, faTimes);
+    library.addIcons(faHome, faBalanceScale, faUserEdit, faEdit, faUserFriends, faUserTie, faBell, faCog, faInfoCircle, faSignOutAlt, faArrowRight, faArrowDown, faArrowLeft, faCheck, faChevronUp, faCopy, faPlus, faPen, faTimes);
   }
 }

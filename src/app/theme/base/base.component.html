@@ -1,26 +1,16 @@
-<div class="p-lg-5 h-100">
-    <!-- 
-        MAIN BABCKGROUNDS FOR DESKTOP AND LAPTOP
-     -->
-    <div class="main-backgrounds h-100 w-100">
-        <div class="bg-1 h-100">
-            <div class="bg-2 h-50">
-            </div>
-        </div>
-    </div>
+<app-header></app-header>
+    
+<app-sidebar></app-sidebar>
 
-    <!-- 
-        APP STARTER PACK
-     -->
-    <div>
-        <app-header></app-header>
-
-        <div class="container main-content h-100 content-shadow">
-            <router-outlet></router-outlet>
-            <app-scroll-top></app-scroll-top>
-        </div>
+<div class="content-container">
+    <div class="container">
+        <router-outlet></router-outlet>
     </div>
 </div>
+
+<app-scroll-top></app-scroll-top>
+   
+
 
 
 
