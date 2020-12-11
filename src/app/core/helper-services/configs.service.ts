@@ -47,9 +47,9 @@ export class ConfigsService {
     }
   }
 
-  getDTOptions(): DataTables.Settings {
+  getUserDTOptions(): DataTables.Settings {
     return {
-      pagingType: 'simple_numbers',
+      pagingType: 'full',
       pageLength: 10,
       processing: true,
       responsive: true,
@@ -57,6 +57,20 @@ export class ConfigsService {
       columnDefs: [
         // @ts-ignore
         { responsivePriority: 100, targets: [0,5] },
+      ]
+    }
+  }
+
+  getCurrencyDTOptions(): DataTables.Settings {
+    return {
+      pagingType: 'full',
+      pageLength: 10,
+      processing: true,
+      responsive: true,
+      // dom:'l<"toolbar">frtip',
+      columnDefs: [
+        // @ts-ignore
+        { responsivePriority: 100, targets: [0,4] },
       ]
     }
   }

@@ -1,6 +1,6 @@
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, TemplateRef } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
 import { ConfigsService } from 'src/app/core/helper-services/configs.service';
 import { MessageService } from 'src/app/core/helper-services/message.service';
@@ -19,10 +19,21 @@ export class CurrenciesComponent implements OnInit {
   dtOptions: DataTables.Settings 
   modalConfig
   currencies: Currency[] = []
-  userForm!: FormGroup
+  currencyForm!: FormGroup
   currency!: Currency
   loading = false
   invitationLoading = false
+
+  types = [
+    {
+      _id: "crypto",
+      name: "Crypto"
+    },
+    {
+      _id: "valut",
+      name: "Valut"
+    }
+  ]
 
   constructor(
     private currencyService: CurrencyService,
@@ -33,7 +44,7 @@ export class CurrenciesComponent implements OnInit {
     private modalService: NgbModal,
     private authService: AuthenticationService
     ) {
-      this.dtOptions = this.configsService.getDTOptions()
+      this.dtOptions = this.configsService.getCurrencyDTOptions()
       this.modalConfig = this.configsService.getCleanModalOptions()
   }
 
@@ -41,12 +52,16 @@ export class CurrenciesComponent implements OnInit {
     this.getCurrencies()
   }
 
+  saveCurrency(modal: NgbActiveModal){
+
+  }
+
   getCurrencies(){
     this.subscriptions.add(
-      this.currencyService.Currencies.subscribe(
+      this.currencyService.getCurrencies().subscribe(
         (res: any) => {
           this.currencies = res.data.currencyMany as Currency[]
-          console.log(this.currencies)
+          // console.log(this.currencies)
           this.chRef.detectChanges()
         },
         e => { 
@@ -56,9 +71,23 @@ export class CurrenciesComponent implements OnInit {
     )
   }
 
-  openUpdate(){
-
+  openUpdate(content: TemplateRef<any>, currency: Currency){
+    console.log(currency)
+    this.currency = currency
+    this.initCurrencyForm()
+    this.modalService.open(content, this.modalConfig)
   }
+
+  initCurrencyForm() {
+    this.currencyForm = this.fb.group({
+      currency: [this.currency.currency, [Validators.required]],
+      symbol: [this.currency.symbol, [Validators.required]],
+      name: [ this.currency.name, [Validators.required]],
+      type: [ this.currency.type, [Validators.required]],
+    })
+  }
+
+  get f() { return this.currencyForm.controls}
 
   ngOnDestroy(){
     this.subscriptions.unsubscribe()

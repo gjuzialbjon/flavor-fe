@@ -9,12 +9,20 @@ const routes: Routes = [
     component: BaseComponent,
     children:[
       { 
+        path: 'dashboard', 
+        loadChildren: () => import('./views/dashboard/dashboard.module').then(m => m.DashboardModule),
+      },
+      { 
         path: 'stores', 
         loadChildren: () => import('./views/stores/stores.module').then(m => m.StoresModule),
       },
       { 
         path: 'transactions', 
         loadChildren: () => import('./views/transactions/transactions.module').then(m => m.TransactionsModule),
+      },
+      { 
+        path: 'reports', 
+        loadChildren: () => import('./views/reports/reports.module').then(m => m.ReportsModule),
       },
       { 
         path: 'settings', 
@@ -26,7 +34,7 @@ const routes: Routes = [
       },
       { 
         path: '', 
-        redirectTo: 'stores',
+        redirectTo: 'dashboard',
         pathMatch: 'full'
       },
     ]

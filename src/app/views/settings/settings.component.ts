@@ -8,11 +8,6 @@ import { ActivatedRoute } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SettingsComponent implements OnInit {
-  links = [
-    { route: 'users', title: 'Users' },
-    { route: 'currencies', title: 'Currencies' },
-  ];
-
   constructor(
     public route: ActivatedRoute,
     ) {

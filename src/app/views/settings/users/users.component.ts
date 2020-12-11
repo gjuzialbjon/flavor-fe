@@ -39,7 +39,7 @@ export class UsersComponent implements OnInit, OnDestroy {
     private modalService: NgbModal,
     private authService: AuthenticationService
     ) {
-      this.dtOptions = this.configsService.getDTOptions()
+      this.dtOptions = this.configsService.getUserDTOptions()
       this.modalConfig = this.configsService.getCleanModalOptions()
   }
 
@@ -70,7 +70,7 @@ export class UsersComponent implements OnInit, OnDestroy {
         console.log(res)
         this.users = []
         this.chRef.detectChanges()
-        this.getUsers('network-only')
+        this.getUsers()
         modal.close()
       },
       e => {
@@ -117,8 +117,8 @@ export class UsersComponent implements OnInit, OnDestroy {
     })
   }
 
-  getUsers(fetchPolicy: 'cache-first' | 'network-only' = 'cache-first'){
-    this.subscriptions.add(this.userService.getUsers(fetchPolicy).subscribe(
+  getUsers(){
+    this.subscriptions.add(this.userService.getUsers().subscribe(
       (res: any) => {
         this.users = res.data.userMany as User[]
         // console.log(this.users)

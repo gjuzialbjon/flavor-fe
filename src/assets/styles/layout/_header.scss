@@ -17,3 +17,9 @@
     @include text-ellipsis;
     max-width: 200px;
 }
+
+@include media-breakpoint-down(sm){
+    .navbar{
+        min-height: $navbar-mobile-ht;
+    }
+}

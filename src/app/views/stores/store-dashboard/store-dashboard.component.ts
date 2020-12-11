@@ -9,12 +9,12 @@ import { Store } from 'src/app/core/models/store';
 import { StoreService } from 'src/app/core/services/store.service';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss'],
+  selector: 'app-store-dashboard',
+  templateUrl: './store-dashboard.component.html',
+  styleUrls: ['./store-dashboard.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DashboardComponent implements OnInit, OnDestroy {
+export class StoreDashboardComponent implements OnInit, OnDestroy {
   private subscriptions = new Subscription();
   storeId: string
   store!: Store

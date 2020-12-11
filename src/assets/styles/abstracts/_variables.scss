@@ -7,6 +7,9 @@ $body-bg:#F3F7FD;
 $body-color: #343a40;
 
 /* NAVBAR */
+$navbar-ht: 80px;
+$navbar-mobile-ht: 60px;
+
 $navbar-light-color: #999BAD; //MENU ITEM NOT ACTIVE
 $navbar-light-active-color: #292828;
 $navbar-light-hover-color: #292828;
@@ -31,7 +34,7 @@ $container-max-widths: (
   sm: 540px,
   md: 720px,
   lg: 960px,
-  xl: 1340px
+  xl: 1240px
 );
 
 /* OVERALL RADIUS OF COMPONENTS */
@@ -65,8 +68,7 @@ $scrollbar-wd: 5px;
 $scrollbar-cl: $custom-green;
 $scrollbar-bg: $body-bg;
 
-/* NAVBAR */
-$navbar-ht: 80px;
+
 
 
 /* BUTTONS */

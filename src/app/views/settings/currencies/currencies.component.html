@@ -1,23 +1,65 @@
-<table *ngIf="currencies.length > 0"  datatable [dtOptions]="dtOptions" class="table table-striped table-hover" width="100%">
-    <thead>
-      <tr>
-        <th>Currency</th>
-        <th>Symbol</th>
-        <th>Name</th>
-        <th>Type</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let currency of currencies">
-        <td class="text-capitalize">{{ currency.currency }}</td>
-        <td>{{ currency.symbol }}</td>
-        <td class="text-capitalize">{{ currency.name }}</td>
-        <td class="text-capitalize">{{ currency.type }}</td>
-        <td class="text-center" width="8%">
-          <button class="btn btn-info btn-sm mx-auto" (click)="openUpdate()">
-            <fa-icon [icon]="['fas', 'user-edit']"></fa-icon>
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+<table *ngIf="currencies.length > 0" datatable [dtOptions]="dtOptions" class="table table-striped table-hover" width="100%">
+  <thead>
+    <tr>
+      <th>Currency</th>
+      <th>Symbol</th>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let currency of currencies">
+      <td class="text-capitalize">{{ currency.currency }}</td>
+      <td>{{ currency.symbol }}</td>
+      <td class="text-capitalize">{{ currency.name }}</td>
+      <td class="text-capitalize">{{ currency.type }}</td>
+      <td class="text-center" width="8%">
+        <button class="btn btn-info btn-sm mx-auto" (click)="openUpdate(currencyContent, currency)">
+          <fa-icon [icon]="['fas', 'user-edit']"></fa-icon>
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<ng-template #currencyContent let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Update Currency</h4>
+    <button type="button" class="close text-dark" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="currencyForm">
+      <div class="form-group">
+        <input type="text" class="form-control" [class.is-invalid]="f.currency.touched && f.currency.errors" formControlName="currency" placeholder="Currency *" >
+        <small *ngIf="f.currency.touched && f.currency.errors" class="form-text text-danger">Please enter a currency.</small>
+      </div>
+      <div class="form-group">
+        <input type="text" class="form-control" [class.is-invalid]="f.symbol.touched && f.symbol.errors" formControlName="symbol" placeholder="Symbol *" >
+        <small *ngIf="f.symbol.touched && f.symbol.errors" class="form-text text-danger">Please enter a symbol.</small>
+      </div>
+      <div class="form-group">
+        <input type="text" class="form-control" [class.is-invalid]="f.name.touched && f.name.errors" formControlName="name" placeholder="Name *" >
+        <small *ngIf="f.name.touched && f.name.errors" class="form-text text-danger">Please enter a name.</small>
+      </div>
+      <div class="form-group">
+        <ng-select 
+          formControlName="type"
+          [clearable]="false" 
+          class="my-ng-select" 
+          placeholder="Select type...">
+            <ng-option *ngFor="let type of types" [value]="type._id">{{ type.name }}</ng-option>
+        </ng-select> 
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary mr-3" (click)="modal.close('Cancel click')">Cancel</button>
+    <button type="button" class="btn btn-dark-green px-4" (click)="saveCurrency(modal)" [disabled]="loading">
+      Save
+      <span [hidden]="!loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+    </button>
+  </div>
+</ng-template>

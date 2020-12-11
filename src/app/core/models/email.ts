@@ -5,5 +5,6 @@ export interface Email{
     password: string
     port: string
     ssl: Boolean
+    updatedAt: Date
     _id: string
 }

@@ -75,7 +75,7 @@ export function createApollo(httpLink: HttpLink) {
       errorPolicy: 'all',
     },
     query: {
-      fetchPolicy: 'cache-first',
+      fetchPolicy: 'network-only',
       errorPolicy: 'all',
     },
     mutate: {

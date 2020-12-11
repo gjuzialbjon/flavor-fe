@@ -1,28 +1,31 @@
 import { Injectable } from '@angular/core';
-import { Apollo, gql } from 'apollo-angular';
+import { gql, Apollo } from 'apollo-angular';
 
-const currencyMany = gql `
+const emailMany = gql `
 {
-  currencyMany{
-    currency
-    symbol
-    name
-    type
+  emailMany{
     _id
+    email
+    host
+    username
+    password
+    port
+    ssl
+    updatedAt
   }
 }`
 
 @Injectable({
   providedIn: 'root'
 })
-export class CurrencyService {
+export class EmailService {
 
   constructor(private apollo: Apollo) { }
 
-  getCurrencies() {
+  getEmailConfig() {
     return this.apollo.query(
       {
-        query: currencyMany,
+        query: emailMany,
         fetchPolicy:"network-only"
       },
     )

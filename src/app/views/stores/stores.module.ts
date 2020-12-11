@@ -6,12 +6,12 @@ import { CountUpModule } from 'ngx-countup';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { CreditCardComponent } from './dashboard/credit-card/credit-card.component';
+import { StoreDashboardComponent } from './store-dashboard/store-dashboard.component';
+import { CreditCardComponent } from './store-dashboard/credit-card/credit-card.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
-  declarations: [StoresComponent, DashboardComponent, CreditCardComponent],
+  declarations: [StoresComponent, StoreDashboardComponent, CreditCardComponent],
   imports: [
     CommonModule,
     RouterModule.forChild([
@@ -22,7 +22,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
       },
       {
         path: ':id',
-        component: DashboardComponent,
+        component: StoreDashboardComponent,
       }
     ]),
     CountUpModule,

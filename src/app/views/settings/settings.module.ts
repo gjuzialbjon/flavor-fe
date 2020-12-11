@@ -9,9 +9,11 @@ import { DataTablesModule } from 'angular-datatables';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { InvitesComponent } from './invites/invites.component';
+import { EmailConfigComponent } from './email-config/email-config.component';
 
 @NgModule({
-  declarations: [CurrenciesComponent, SettingsComponent, UsersComponent],
+  declarations: [CurrenciesComponent, SettingsComponent, UsersComponent, InvitesComponent, EmailConfigComponent],
   imports: [
     CommonModule,
     RouterModule.forChild([
@@ -26,6 +28,14 @@ import { NgSelectModule } from '@ng-select/ng-select';
           {
             path: 'users',
             component: UsersComponent
+          },
+          {
+            path: 'invites',
+            component: InvitesComponent
+          },
+          {
+            path: 'email-config',
+            component: EmailConfigComponent
           },
           {
             path: '',

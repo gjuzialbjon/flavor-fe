@@ -35,11 +35,10 @@ export class UserService {
 
   constructor(private apollo: Apollo) { }
 
-  getUsers(fetchPolicy: 'cache-first' | 'network-only' = 'cache-first') {
+  getUsers() {
     return this.apollo.query(
       {
         query: userMany,
-        fetchPolicy: fetchPolicy
       }
     )
   }
@@ -48,6 +47,7 @@ export class UserService {
     return this.apollo.query(
       {
         query: storeMany,
+        fetchPolicy:"cache-first"
       }
     )
   }

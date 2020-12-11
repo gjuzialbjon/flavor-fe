@@ -1,10 +1,17 @@
-<!-- your navs bound to current route fragments -->
-<ul ngbNav class="nav-tabs">
-    <li [ngbNavItem]="link.route" *ngFor="let link of links">
-      <a ngbNavLink routerLink="{{link.route}}" class="font-weight-bold">{{ link.title }}</a>
-    </li>
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link font-weight-bold" routerLinkActive="active" [routerLink]="['users']">Users</a>
+  </li>
+  <li class="nav-item font-weight-bold">
+    <a class="nav-link" routerLinkActive="active" [routerLink]="['currencies']">Currencies</a>
+  </li>
+  <li class="nav-item font-weight-bold">
+    <a class="nav-link" routerLinkActive="active" [routerLink]="['invites']">Invites</a>
+  </li>
+  <li class="nav-item font-weight-bold">
+    <a class="nav-link" routerLinkActive="active" [routerLink]="['email-config']">Email</a>
+  </li>
 </ul>
-<hr>
 <!-- and an actual outlet elsewhere -->
 <div class="py-3">
     <router-outlet></router-outlet>

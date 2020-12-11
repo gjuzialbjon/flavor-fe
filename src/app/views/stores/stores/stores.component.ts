@@ -59,7 +59,7 @@ export class StoresComponent implements OnInit {
 
   getCurrencies(){
     this.subscriptions.add(
-      this.currencyService.Currencies.subscribe(
+      this.currencyService.getCurrencies().subscribe(
         (res:any) => { 
           this.currencies = res.data.currencyMany as Currency[]
         },
