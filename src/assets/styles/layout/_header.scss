@@ -1,25 +1,6 @@
-.navbar{
-    min-height: $navbar-ht;
-    background: $body-bg;
-    z-index: 1040;
+.header-bg{
+    background-image: url('../../media/bgs/header.svg');
+    // margin: -5px 0 -12px;
 
-    .nav-link{
-        font-weight: 700;
-        cursor: pointer;
-    }
-
-    .dropdown-toggle::after{
-        display:none;
-    }
-}
-
-.user-full-name{
-    @include text-ellipsis;
-    max-width: 200px;
-}
-
-@include media-breakpoint-down(sm){
-    .navbar{
-        min-height: $navbar-mobile-ht;
-    }
+    @include image-cover;
 }

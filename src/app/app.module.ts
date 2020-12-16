@@ -4,18 +4,15 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './theme/header/header.component';
 import { BaseComponent } from './theme/base/base.component';
-import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome'; 
-import { faArrowDown, faArrowLeft, faArrowRight, faBalanceScale, faBell, faCheck, faChevronUp, faCog, faCopy, faEdit, faHome, faInfoCircle, faPen, faPlus, faSignOutAlt, faTimes, faUserEdit, faUserFriends, faUserTie } from '@fortawesome/free-solid-svg-icons';
 import { HttpClientModule } from '@angular/common/http';
 import { GraphQLModule } from './graphql.module';
 import { NotificationsComponent } from './theme/notifications/notifications.component';
 import { GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule } from 'angularx-social-login';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgModule } from '@angular/core';
 import { ScrollTopComponent } from './theme/scroll-top/scroll-top.component';
-import { ToastrModule } from 'ngx-toastr';
-import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
 import { SidebarComponent } from './theme/sidebar/sidebar.component';
+import { NbActionsModule, NbButtonModule, NbCardModule, NbIconModule, NbInputModule, NbLayoutModule, NbMenuModule, NbSearchModule, NbSidebarModule, NbThemeModule, NbToastrModule } from '@nebular/theme';
+import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
 
 @NgModule({
   declarations: [
@@ -30,18 +27,23 @@ import { SidebarComponent } from './theme/sidebar/sidebar.component';
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    NgbModule,
-    FontAwesomeModule,
     HttpClientModule,
     GraphQLModule,
     SocialLoginModule,
-    ToastrModule.forRoot({
-      autoDismiss: false,
+    LoadingBarRouterModule,
+    NbThemeModule.forRoot(
+      { name: 'corporate' }
+    ),
+    NbLayoutModule,
+    NbSidebarModule.forRoot(), // NbSidebarModule.forRoot(), //if this is your app.module
+    NbMenuModule.forRoot(),
+    NbToastrModule.forRoot({
+      limit: 3,
       preventDuplicates: true,
-      timeOut: 3500,
-      positionClass: 'toast-top-center'
     }),
-    LoadingBarRouterModule
+    NbIconModule,
+    NbButtonModule,
+    NbSearchModule
   ],
   providers: [
     {
@@ -62,8 +64,6 @@ import { SidebarComponent } from './theme/sidebar/sidebar.component';
   bootstrap: [AppComponent]
 })
 export class AppModule {
-  constructor(library: FaIconLibrary) {
-    // Add multiple icons to the library
-    library.addIcons(faHome, faBalanceScale, faUserEdit, faEdit, faUserFriends, faUserTie, faBell, faCog, faInfoCircle, faSignOutAlt, faArrowRight, faArrowDown, faArrowLeft, faCheck, faChevronUp, faCopy, faPlus, faPen, faTimes);
+  constructor() {
   }
 }

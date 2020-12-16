@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { TransactionsComponent } from './transactions.component';
 import { RouterModule } from '@angular/router';
 import { TransactionComponent } from './helpers/transaction/transaction.component';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
@@ -16,7 +15,6 @@ import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
         component: TransactionsComponent,
       }
     ]),
-    FontAwesomeModule,
     NgbTooltipModule
   ]
 })

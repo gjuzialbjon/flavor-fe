@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { StoresComponent } from './stores/stores.component';
 import { RouterModule } from '@angular/router';
 import { CountUpModule } from 'ngx-countup';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { StoreDashboardComponent } from './store-dashboard/store-dashboard.component';
@@ -26,7 +25,6 @@ import { NgSelectModule } from '@ng-select/ng-select';
       }
     ]),
     CountUpModule,
-    FontAwesomeModule,
     FormsModule,
     ReactiveFormsModule,
     NgbTooltipModule,

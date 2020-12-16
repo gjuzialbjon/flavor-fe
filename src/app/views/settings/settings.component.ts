@@ -8,6 +8,33 @@ import { ActivatedRoute } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SettingsComponent implements OnInit {
+  tabs: any[] = [
+    {
+      title: 'Users',
+      icon: 'users-cog',
+      responsive: true,
+      route: './users',
+    },
+    {
+      title: 'Invites',
+      icon: 'user-plus',
+      responsive: true,
+      route: './invites',
+    },
+    {
+      title: 'Currencies',
+      icon: 'euro-sign',
+      responsive: true,
+      route: './currencies',
+    },
+    {
+      title: 'Email',
+      icon: 'envelope',
+      responsive: true,
+      route: './email-config',
+    },
+  ];
+
   constructor(
     public route: ActivatedRoute,
     ) {

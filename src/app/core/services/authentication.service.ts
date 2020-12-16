@@ -45,7 +45,9 @@ export class AuthenticationService {
         this.decodedToken = this.jwtHelper.decodeToken(res.token)
         if(this.decodedToken.confirmed){
           this.router.navigate(['stores'])
-          this.msg.success('Welcome back')
+          setTimeout( () => {
+            this.msg.success('','Welcome back')
+          }, 1500)
         } else {
           this.router.navigate(['auth', 'not-authorized'])
         }

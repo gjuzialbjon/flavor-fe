@@ -1,39 +1,63 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { NavigationEnd, NavigationStart, Router } from '@angular/router';
+import { NavigationStart, Router } from '@angular/router';
+import { NbLayoutComponent, NbMenuItem, NbSidebarService } from '@nebular/theme';
 
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SidebarComponent implements OnInit {
-  sidebar!: HTMLElement
 
-  constructor(private router: Router) {
-    this.router.events.subscribe((event: any) => {
-      if (event instanceof NavigationEnd) {
-          // Hide sidebar if on small devices
-          // console.log(event, window.screen.width);
-          
-          if(window.screen.width < 768){
-            this.closeSidebar()
+  items: NbMenuItem[] = [
+    {
+      title: 'Dashboard',
+      link: '/dashboard',
+      icon: 'home',
+      pathMatch: "prefix",
+      
+    },
+    {
+      title: 'Stores',
+      link: '/stores',
+      icon: 'shopping-bag',
+      pathMatch: "prefix"
+    },
+    {
+      title: 'Transactions',
+      link: '/transactions',
+      icon: 'money-bill',
+      pathMatch: "prefix"
+    },
+    {
+      title: 'Reports',
+      link: '/reports',
+      icon: 'file-alt',
+      pathMatch: "prefix"
+    },
+    {
+      title: 'Settings',
+      link: '/settings',
+      icon: 'cog',
+      pathMatch: "prefix"
+    },
+  ];
+
+  constructor(private router: Router, private layout: NbLayoutComponent, private sidebar: NbSidebarService) { 
+    this.router.events.subscribe(
+      event => {
+        if(event instanceof NavigationStart) {          
+          if(this.layout.getDimensions().clientWidth <= 570){
+            this.sidebar.collapse()
           }
+        }
       }
-    })
-  }
+    )
+   }
 
-  ngOnInit(): void {
-    this.sidebar = document.getElementById('sidebar') as HTMLElement
-  }
+  ngOnInit(): void {  }
 
-  closeSidebar(){
-    // console.log('Close sidebar');
-    
-    this.sidebar.classList.add('hidden')
-    this.sidebar.classList.remove('show')
-  }
+  closeSidebar(){ 
 
-
-
+   }
 }

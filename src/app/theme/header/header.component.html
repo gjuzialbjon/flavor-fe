@@ -1,29 +1,17 @@
-<nav class="navbar navbar-expand-md navbar-light fixed-top">
-  <button class="navbar-toggler navbar-toggler-right" type="button" (click)="toggleSidebar()" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-    <ul class="navbar-nav align-items-md-center ml-auto d-md-flex d-none">
-      <li class="nav-item" routerLink="/notifications">
-        <a class="nav-link active">
-          <fa-layers class="d-md-inline-block d-none">
-            <fa-icon [icon]="['fas', 'bell']" ></fa-icon>
-            <fa-layers-counter content=""></fa-layers-counter>
-          </fa-layers>
-          <span class="d-md-none"> Notifications</span>
-        </a>
-      </li>
-      <li class="nav-item ml-md-4 mr-md-4 mt-md-0 mt-sm-4 mt-4 user-full-name-li" routerLink="/profile"
-        >
-        <a class="nav-link active user-full-name" > 
-          {{ fullName | titlecase }} 
-        </a>
-      </li>
-      <li class="nav-item" routerLink="/auth/login">
-        <a class="nav-link active" >
-          <fa-icon [icon]="['fas', 'sign-out-alt']" class="d-md-inline d-none"></fa-icon>
-          <span class="d-md-none text-info"> Logout</span>
-        </a>
-      </li>
-    </ul>
-</nav>
+<div class="container-fluid">
+  <div class="d-flex align-items-center justify-content-between">
+    <span>
+      <nb-icon (click)="toggleSidebar()" icon="bars" style="cursor: pointer; margin-right: .7rem;"></nb-icon>
+      <a class="brand" style="font-size: 1.5rem;">My Brand</a>
+    </span>
+    <span>
+      <span class="mr-4">
+        <nb-search type="rotate-layout"></nb-search>
+      </span>
+      <a routerLink="/auth/login">
+        <nb-icon icon="user">
+        </nb-icon>
+      </a>
+    </span>
+  </div>
+</div>

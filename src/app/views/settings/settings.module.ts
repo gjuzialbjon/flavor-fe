@@ -6,11 +6,11 @@ import { SettingsComponent } from './settings.component';
 import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { UsersComponent } from './users/users.component';
 import { DataTablesModule } from 'angular-datatables';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { InvitesComponent } from './invites/invites.component';
 import { EmailConfigComponent } from './email-config/email-config.component';
+import { NbButtonModule, NbCardModule, NbCheckboxModule, NbFormFieldModule, NbIconModule, NbInputModule, NbOptionModule, NbRouteTabsetModule, NbSelectModule } from '@nebular/theme';
 
 @NgModule({
   declarations: [CurrenciesComponent, SettingsComponent, UsersComponent, InvitesComponent, EmailConfigComponent],
@@ -47,10 +47,18 @@ import { EmailConfigComponent } from './email-config/email-config.component';
     ]),
     NgbNavModule,
     DataTablesModule,
-    FontAwesomeModule,
     FormsModule,
     ReactiveFormsModule,
-    NgSelectModule
+    NgSelectModule,
+    NbCardModule,
+    NbRouteTabsetModule,
+    NbFormFieldModule,
+    NbInputModule,
+    NbButtonModule,
+    NbSelectModule,
+    NbOptionModule,
+    NbIconModule,
+    NbCheckboxModule
   ]
 })
 export class SettingsModule { }

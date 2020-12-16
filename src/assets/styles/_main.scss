@@ -1,8 +1,6 @@
 @import 'abstracts/variables';
 @import 'abstracts/mixins';
 
-@import 'components/scrollbar';
-
 @import 'base/reset';
 @import 'base/typography';
 
@@ -23,4 +21,16 @@
 @import 'pages/stores';
 @import 'pages/profile';
 
-@import 'shame/shame'
+// NEBULAR STYLING
+// this is our just created themes.scss file, make sure the path to the file is correct
+@import 'theme/theme';
+
+// framework component styles
+@import '~@nebular/theme/styles/globals';
+
+// install the framework styles
+@include nb-install() {
+  @include nb-theme-global();
+};
+
+@import 'shame/shame';

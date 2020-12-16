@@ -1,0 +1,30 @@
+// // import Nebular Theme System and the default theme
+@import '~@nebular/theme/styles/theming';
+@import '~@nebular/theme/styles/themes/corporate';
+
+$nb-themes: nb-register-theme((
+    sidebar-background-color: #3BAAC6,
+    layout-scrollbar-color: #3BAAC6,
+    sidebar-width: 12rem,
+    menu-item-divider-width: 0px,
+    menu-text-font-size: 1rem,
+    menu-item-padding: 1rem 1rem,
+    menu-text-color: #ffffff,
+    menu-item-icon-color: #ffffff,
+    menu-item-icon-hover-color: rgb(233, 240, 233),
+    menu-item-hover-text-color: rgb(233, 240, 233),
+    menu-item-hover-background-color: #2A9CB7,
+    menu-item-active-background-color: #2A9CB7,
+    menu-item-active-text-color: #ffffff,
+    menu-item-icon-active-color: #ffffff,
+    border-radius: 6px,
+    font-family-primary: 'Roboto',
+    tabset-tab-padding: .5rem 1rem,
+    tabset-content-padding: .5rem .4rem,
+    tabset-tab-active-text-color: #2A9CB7,
+    tabset-tab-active-underline-color: #2A9CB7,
+    tabset-tab-focus-text-color: #2A9CB7,
+    tabset-tab-focus-underline-color:  #2A9CB7,
+    tabset-tab-hover-text-color: #2A9CB7,	
+    tabset-tab-hover-underline-color:#2A9CB7,
+), corporate, corporate);

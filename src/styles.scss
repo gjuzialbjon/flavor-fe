@@ -7,8 +7,5 @@
 /* Importing Bootstrap SCSS file. */
 @import '~bootstrap/scss/bootstrap';
 
-// should be after your bootstrap imports, it uses bs4 variables, mixins, functions 
-@import '~ngx-toastr/toastr-bs4-alert';
-
 /* CUSTOM STYLES */
 @import './assets/styles/main';

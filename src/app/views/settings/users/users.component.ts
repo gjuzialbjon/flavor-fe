@@ -24,11 +24,6 @@ export class UsersComponent implements OnInit, OnDestroy {
   userForm!: FormGroup
   user!: User
   loading = false
-  invitationLoading = false
-
-  // INVITATION VARIABLES //
-  emailFormControl: FormControl = new FormControl('', [Validators.required, Validators.email])
-  roleFormControl: FormControl = new FormControl('', [Validators.required])
 
   constructor(
     private userService: UserService,
@@ -75,36 +70,12 @@ export class UsersComponent implements OnInit, OnDestroy {
       },
       e => {
         console.error(e)
-        this.msg.error('Sorry, could not update user at the moment. Please try again later.')
+        this.msg.error('Sorry, could not update user at the moment. Please try again later.', 'Error')
       },
       () => {
         this.loading = false
       }
     )
-  }
-
-  inviteUser(){
-    if(this.emailFormControl.invalid && this.roleFormControl.invalid ){
-      this.msg.error('Email and role are both required')
-      return
-    } else if(this.emailFormControl.invalid){
-      this.msg.error('Email format is invalid')
-      return
-    } else if(this.roleFormControl.invalid){
-      this.msg.error('Role is invalid')
-      return
-    }
-
-    this.invitationLoading = true
-    console.log('Invite user ', this.emailFormControl.value, this.roleFormControl.value)
-
-    setTimeout( () => {
-      this.emailFormControl.setValue('')
-      this.roleFormControl.setValue('')
-      this.msg.success('Invitation sent successfully!')
-      this.invitationLoading = false
-      this.chRef.detectChanges()
-    },1200)
   }
 
   initUserForm() {

@@ -1,18 +1,5 @@
-.content-container {
-    margin-left: $sidebar-wd;
-    margin-top: calc(#{$navbar-ht} + 1rem);
-}
+.content-bg{
+    background-image: url('../../media/bgs/background.svg');
 
-.content-shadow{
-    -moz-box-shadow:    0px 0px 7px 0px #555;
-    -webkit-box-shadow: 0px 0px 7px 0px #555;
-    box-shadow:         0px 0px 7px 0px #555;
+    @include image-cover;
 }
-
-@include media-breakpoint-down(sm){
-    .content-container{
-        margin-left: 0;
-        margin-top: calc(#{$navbar-mobile-ht} + 1rem);
-    }
-}
-

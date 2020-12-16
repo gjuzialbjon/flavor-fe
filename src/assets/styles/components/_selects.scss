@@ -3,7 +3,3 @@
     height: 38px;
     border-radius: $border-radius;
 }
-
-.ng-select.my-ng-select .ng-dropdown-panel .ng-dropdown-panel-items{
-    @include scrollbars($scrollbar-wd, $scrollbar-cl, $scrollbar-bg);
-}

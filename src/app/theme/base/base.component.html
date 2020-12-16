@@ -1,19 +1,18 @@
-<app-header></app-header>
+<nb-layout withScroll>
+    <nb-layout-header fixed class="header-bg">
+        <app-header class="w-100"></app-header>
+    </nb-layout-header>
+
+    <nb-sidebar responsive>
+        <app-sidebar></app-sidebar>
+    </nb-sidebar>
     
-<app-sidebar></app-sidebar>
-
-<div class="content-container">
-    <div class="container">
-        <div class="card content-shadow">
-            <div class="card-body p-md-3 p-2">
-                <router-outlet></router-outlet>
-            </div>
-        </div>
-    </div>
-</div>
-
-<app-scroll-top></app-scroll-top>
-   
+    <nb-layout-column class="content-bg">
+      <router-outlet></router-outlet>
+      
+      <app-scroll-top></app-scroll-top>
+    </nb-layout-column>
+</nb-layout>
 
 
 

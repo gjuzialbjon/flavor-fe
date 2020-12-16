@@ -1,27 +1,2 @@
-<div id="sidebar" class="sidebar">
-    <button class="close ml-auto mt-2 mr-2" (click)="closeSidebar()">
-        <-
-    </button>
-    <div class="logo mb-5">
-        Logo is here
-    </div>
-    <ul class="list-unstyled w-100">
-        <li routerLink="/dashboard" routerLinkActive="active">
-            Dashboard
-        </li>
-        <li routerLink="/stores" routerLinkActive="active">
-            Stores
-        </li>
-        <li routerLink="/transactions" routerLinkActive="active">
-            Transactions
-        </li>
-        <li routerLink="/reports" routerLinkActive="active">
-            Reports
-        </li>
-        <li routerLink="/settings" routerLinkActive="active">
-            Settings
-        </li>
-    </ul>
-
-
-</div>
+<nb-menu [items]="items">
+</nb-menu>

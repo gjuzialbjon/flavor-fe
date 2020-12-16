@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { NbSidebarService } from '@nebular/theme';
 import { AuthenticationService } from 'src/app/core/services/authentication.service';
 
 @Component({
@@ -12,7 +13,8 @@ export class HeaderComponent implements OnInit {
 
   constructor(
     private authService: AuthenticationService,
-    private chRef: ChangeDetectorRef
+    private chRef: ChangeDetectorRef,
+    private sidebarService: NbSidebarService
     ) { }
 
   ngOnInit(): void {
@@ -21,15 +23,6 @@ export class HeaderComponent implements OnInit {
   }
 
   toggleSidebar(){
-    console.log('Toggle sidebar')
-    if(this.sidebar.classList.contains('hidden') && !this.sidebar.classList.contains('show')){
-      this.sidebar.classList.remove('hidden')
-      this.sidebar.classList.add('show')
-    } else if(this.sidebar.classList.contains('show') && !this.sidebar.classList.contains('hidden')){
-      this.sidebar.classList.add('hidden')
-      this.sidebar.classList.remove('show')
-    } else if(!this.sidebar.classList.contains('show') && !this.sidebar.classList.contains('hidden')){
-      this.sidebar.classList.add('show')
-    }
+    this.sidebarService.toggle();
   }
 }

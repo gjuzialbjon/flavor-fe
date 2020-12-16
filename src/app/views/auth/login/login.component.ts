@@ -13,6 +13,18 @@ import { AuthenticationService } from 'src/app/core/services/authentication.serv
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup
+  showPassword = false
+
+  getInputType() {
+    if (this.showPassword) {
+      return 'text';
+    }
+    return 'password';
+  }
+
+  toggleShowPassword() {
+    this.showPassword = !this.showPassword;
+  }
 
   constructor(
     private router: Router, 

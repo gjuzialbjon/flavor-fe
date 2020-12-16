@@ -1,0 +1,20 @@
+.nb-theme-corporate{
+    a {
+        text-decoration: none;
+    }
+
+    nb-sidebar.compacted nb-menu .menu-item a.active::before{
+        background-color: white;
+    }
+
+    nb-tabset.dashboard-tabset{
+        ul.tabset{
+            background-color: white;
+            padding: .6rem .4rem;
+            border-radius: 30rem;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+}
+

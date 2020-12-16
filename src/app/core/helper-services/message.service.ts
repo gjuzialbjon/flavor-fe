@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IndividualConfig, ToastrService } from 'ngx-toastr';
+import { NbToastrConfig, NbToastrService } from '@nebular/theme';
 
 @Injectable({
   providedIn: 'root'
@@ -7,27 +7,26 @@ import { IndividualConfig, ToastrService } from 'ngx-toastr';
 export class MessageService {
 
 
-  constructor(private toastr: ToastrService) {
-
+  constructor(private toastr: NbToastrService) {
   }
 
-  success(msg: string, title?: string, config?: Partial<IndividualConfig> ) {
+  success(msg: string, title?: string, config?: Partial<NbToastrConfig> ) {
     this.toastr.success(msg, title, config);
   }
 
-  info(msg: string, title?: string, config?: Partial<IndividualConfig> ) {
+  info(msg: string, title?: string, config?: Partial<NbToastrConfig> ) {
     this.toastr.info(msg, title, config);
   }
 
-  error(msg: string, title?: string, config?: Partial<IndividualConfig> ) {
-    this.toastr.error(msg, title, config);
+  error(msg: string, title?: string, config?: Partial<NbToastrConfig> ) {
+    this.toastr.danger(msg, title, config);
   }
 
-  warning(msg: string, title?: string, config?: Partial<IndividualConfig> ) {
+  warning(msg: string, title?: string, config?: Partial<NbToastrConfig> ) {
     this.toastr.warning(msg, title, config);
   }
 
   defaultError(){
-    this.toastr.error('Sorry, something went wrong. Please try again later or contact support.');
+    this.toastr.danger('Sorry, something went wrong. Please try again later or contact support.', 'Error');
   }
 }

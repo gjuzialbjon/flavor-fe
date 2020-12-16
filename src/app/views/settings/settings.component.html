@@ -1,18 +1,5 @@
-<ul class="nav nav-tabs">
-  <li class="nav-item">
-    <a class="nav-link font-weight-bold" routerLinkActive="active" [routerLink]="['users']">Users</a>
-  </li>
-  <li class="nav-item font-weight-bold">
-    <a class="nav-link" routerLinkActive="active" [routerLink]="['currencies']">Currencies</a>
-  </li>
-  <li class="nav-item font-weight-bold">
-    <a class="nav-link" routerLinkActive="active" [routerLink]="['invites']">Invites</a>
-  </li>
-  <li class="nav-item font-weight-bold">
-    <a class="nav-link" routerLinkActive="active" [routerLink]="['email-config']">Email</a>
-  </li>
-</ul>
-<!-- and an actual outlet elsewhere -->
-<div class="py-3">
-    <router-outlet></router-outlet>
-</div>
+<nb-card class="shadow">
+  <nb-card-body>
+    <nb-route-tabset [tabs]="tabs" fullWidth [activeLinkOptions]="{exact:false}"></nb-route-tabset>
+  </nb-card-body>
+</nb-card>
