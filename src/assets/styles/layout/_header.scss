@@ -1,6 +1,4 @@
 .header-bg{
     background-image: url('../../media/bgs/header.svg');
-    // margin: -5px 0 -12px;
-
     @include image-cover;
 }

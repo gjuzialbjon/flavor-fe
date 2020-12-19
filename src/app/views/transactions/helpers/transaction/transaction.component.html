@@ -1,49 +1,43 @@
-<div class="row no-gutters mb-2">
-    <div class="card w-100">
-        <div class="card-body px-2 py-0">
-            <div class="row align-items-center">
-                <div class="col-xl-1 col-lg-4 mb-xl-0 mb-3">
-                    <div class="btn btn-light-gray rounded-pill">
-                        PDF
-                        <!-- <fa-icon [icon]="['fas', 'arrow-down']"></fa-icon> -->
-                    </div>
-                </div>
-                <div class="col-xl-2 col-lg-4 mb-xl-0 mb-3">
-                    <div class="transaction-date font-weight-bold text-secondary">2022-03-21</div>
-                    <div class="transaction-code text-secondary">XCXCSAD SAD</div>
-                </div>
-                <div class="col-xl-2 col-lg-4 mb-xl-0 mb-3 text-secondary font-weight-bold">
-                    EMRI 
-                </div>
-                <div class="col-xl-2 col-lg-4 mb-lg-0 mb-3">
-                    <div class="transaction-value font-weight-bold text-secondary">232332 $</div>
-                    <div class="transaction-value-text text-secondary">Transaction value</div>
-                </div>
-                <div class="col-xl-2 col-lg-4 mb-lg-0 mb-3">
-                    <div class="transaction-after-tax-value font-weight-bold text-secondary">545454 $</div>
-                    <div class="transaction-after-tax-value-text text-secondary">After tax</div>
-                </div>
-                <div class="col-xl-3 col-lg-4 mb-lg-0 mb-md-0 mb-0">
-                    <span *ngIf="!paid">
-                        <button class="btn btn-primary rounded-pill mr-2 py-2 px-3">
-                            <!-- <fa-icon [icon]="['fas', 'plus']" class="mr-1"></fa-icon> -->
-                            Fix payment
-                        </button>
-                        <button class="btn btn-light-gray rounded-circle mr-2" style="width: 42px; height: 42px;" placement="top" ngbTooltip="Edit transaction">
-                            <!-- <fa-icon [icon]="['fas', 'pen']"></fa-icon> -->
-                        </button>
-                    </span>
-                    
-                    <button *ngIf="paid" class="btn btn-success rounded-pill mr-2 py-2 px-3">
-                        <!-- <fa-icon [icon]="['fas', 'check']" class="mr-1"></fa-icon> -->
-                        Paid: 2020-03-34
-                    </button>
-
-                    <button class="btn btn-danger rounded-circle float-xl-right" style="width: 42px; height: 42px;" placement="top" ngbTooltip="Delete transaction">
-                        <!-- <fa-icon [icon]="['fas', 'times']"></fa-icon> -->
-                    </button>
-                </div>
-            </div>
+<div class="row no-gutters align-items-center mb-2">
+    <div class="col-xl-1 col-lg-4 mb-xl-0 mb-3">
+        <div class="btn btn-light-gray rounded-pill">
+            PDF
+            <nb-icon icon="arrow-down"></nb-icon>
         </div>
+    </div>
+    <div class="col-xl-2 col-lg-4 mb-xl-0 mb-3">
+        <div class="transaction-date font-weight-bold text-secondary">2022-03-21</div>
+        <div class="transaction-code text-secondary">XCXCSAD SAD</div>
+    </div>
+    <div class="col-xl-2 col-lg-4 mb-xl-0 mb-3 text-secondary font-weight-bold">
+        EMRI 
+    </div>
+    <div class="col-xl-2 col-lg-4 mb-lg-0 mb-3">
+        <div class="transaction-value font-weight-bold text-secondary">232332 $</div>
+        <div class="transaction-value-text text-secondary">Transaction value</div>
+    </div>
+    <div class="col-xl-2 col-lg-4 mb-lg-0 mb-3">
+        <div class="transaction-after-tax-value font-weight-bold text-secondary">545454 $</div>
+        <div class="transaction-after-tax-value-text text-secondary">After tax</div>
+    </div>
+    <div class="col-xl-3 col-lg-4 mb-lg-0 mb-md-0 mb-0">
+        <span *ngIf="!paid">
+            <button nbButton class="rounded-pill mr-2">
+                <nb-icon icon="plus"></nb-icon>
+                Fix payment
+            </button>
+            <button nbButton class="rounded-circle mr-2" style="width: 42px; height: 42px;" >
+                <nb-icon icon="pen"></nb-icon>
+            </button>
+        </span>
+        
+        <button *ngIf="paid" nbButton class="rounded-pill mr-2">
+            <nb-icon icon="check"></nb-icon>
+            Paid: 2020-03-34
+        </button>
+
+        <button nbButton class="rounded-circle float-xl-right" style="width: 42px; height: 42px;">
+            <nb-icon icon="times"></nb-icon>
+        </button>
     </div>
 </div>

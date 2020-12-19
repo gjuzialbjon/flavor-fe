@@ -11,7 +11,7 @@ import { GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule } from 
 import { NgModule } from '@angular/core';
 import { ScrollTopComponent } from './theme/scroll-top/scroll-top.component';
 import { SidebarComponent } from './theme/sidebar/sidebar.component';
-import { NbActionsModule, NbButtonModule, NbCardModule, NbIconModule, NbInputModule, NbLayoutModule, NbMenuModule, NbSearchModule, NbSidebarModule, NbThemeModule, NbToastrModule } from '@nebular/theme';
+import { NbActionsModule, NbButtonModule, NbCardModule, NbDatepickerModule, NbGlobalPhysicalPosition, NbIconModule, NbInputModule, NbLayoutModule, NbMenuModule, NbSearchModule, NbSidebarModule, NbThemeModule, NbToastrModule } from '@nebular/theme';
 import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
 
 @NgModule({
@@ -40,7 +40,9 @@ import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
     NbToastrModule.forRoot({
       limit: 3,
       preventDuplicates: true,
+      position: NbGlobalPhysicalPosition.TOP_LEFT
     }),
+    NbDatepickerModule.forRoot(),
     NbIconModule,
     NbButtonModule,
     NbSearchModule

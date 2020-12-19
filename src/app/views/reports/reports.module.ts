@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReportsComponent } from './reports/reports.component';
 import { RouterModule } from '@angular/router';
+import { NbButtonModule, NbCardModule, NbIconModule, NbSelectModule } from '@nebular/theme';
 
 
 
@@ -15,7 +16,11 @@ import { RouterModule } from '@angular/router';
         component: ReportsComponent,
         pathMatch: 'full'
       },
-    ])
+    ]),
+    NbSelectModule,
+    NbButtonModule,
+    NbIconModule,
+    NbCardModule
   ]
 })
 export class ReportsModule { }

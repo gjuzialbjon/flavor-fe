@@ -1,0 +1,113 @@
+<div class="row">
+  <div class="col-lg-5 col-md-8 col-12">
+    <form>
+      <div class="form-row">
+        <div class="col-lg-5 mb-3">
+          <nb-form-field>
+            <label class="label" for="date">Date</label>
+            <input nbInput fullWidth [nbDatepicker]="datepicker" />
+            <nb-icon
+              nbSuffix
+              icon="calendar-alt"
+              style="margin-top: 29px"
+            ></nb-icon>
+            <nb-datepicker #datepicker></nb-datepicker>
+          </nb-form-field>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col-lg-5 mb-3">
+          <nb-form-field>
+            <label class="label" for="date">Amount</label>
+            <input nbInput fullWidth />
+          </nb-form-field>
+        </div>
+        <div class="col-lg-1"></div>
+        <div class="col-lg-5 mb-3">
+          <nb-form-field>
+            <label class="label" for="date">Tax</label>
+            <input nbInput fullWidth />
+          </nb-form-field>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col-lg-5 mb-md-3 mb-0">
+          <nb-form-field>
+            <label class="label d-block" for="date">From</label>
+            <nb-select fullWidth placeholder="Placeholder">
+              <nb-option value="1">Option 1</nb-option>
+              <nb-option value="2">Option 2</nb-option>
+              <nb-option value="3">Option 3</nb-option>
+              <nb-option value="4">Option 4</nb-option>
+            </nb-select>
+          </nb-form-field>
+        </div>
+        <div
+          class="col-lg-1 d-flex align-items-center justify-content-center mb-md-3 mb-0"
+        >
+          <nb-icon icon="arrow-right" style="margin-top: 20px"></nb-icon>
+        </div>
+        <div class="col-lg-5 mb-3">
+          <nb-form-field>
+            <label class="label d-block" for="date">To</label>
+            <nb-select fullWidth placeholder="Placeholder">
+              <nb-option value="1">Option 1</nb-option>
+              <nb-option value="2">Option 2</nb-option>
+              <nb-option value="3">Option 3</nb-option>
+              <nb-option value="4">Option 4</nb-option>
+            </nb-select>
+          </nb-form-field>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col-lg-11 mb-3">
+          <nb-form-field>
+            <label class="label" for="date">Transaction details</label>
+            <textarea
+              nbInput
+              name="desc"
+              cols="30"
+              rows="3"
+              fullWidth
+            ></textarea>
+          </nb-form-field>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col-lg-11 text-right">
+          <button nbButton class="mr-2">Cancel</button>
+          <button nbButton status="success">Make</button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="col-lg-3 pt-md-5">
+    <nb-card class="new-transaction-card mt-md-5 mt-3">
+      <nb-card-body class="d-flex align-items-center flex-column justify-content-around">
+        <div class="d-flex flex-column w-100 align-items-end pr-4">
+          <div>Amount</div>
+          <div>$ 123123</div>
+        </div>
+        <div class="w-100">
+          <div class="row">
+            <div class="col-4 text-right">
+              Subtotal
+            </div>
+            <div class="col-8 text-right pr-4">
+              242423423
+            </div>
+          </div>
+          <hr style="border-top: 2px solid #3BAAC6;" class="my-2">
+          <div class="row">
+            <div class="col-4 text-right">
+              Total
+            </div>
+            <div class="col-8 text-right pr-4">
+              242423423
+            </div>
+          </div>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>

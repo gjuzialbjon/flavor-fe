@@ -5,6 +5,7 @@
 $nb-themes: nb-register-theme((
     sidebar-background-color: #3BAAC6,
     layout-scrollbar-color: #3BAAC6,
+    layout-background-color: #ffffff,
     sidebar-width: 12rem,
     menu-item-divider-width: 0px,
     menu-text-font-size: 1rem,
@@ -27,4 +28,6 @@ $nb-themes: nb-register-theme((
     tabset-tab-focus-underline-color:  #2A9CB7,
     tabset-tab-hover-text-color: #2A9CB7,	
     tabset-tab-hover-underline-color:#2A9CB7,
+    select-min-width: 10rem,
+    select-filled-border-width: 0px,
 ), corporate, corporate);
