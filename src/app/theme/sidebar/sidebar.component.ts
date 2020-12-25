@@ -17,12 +17,12 @@ export class SidebarComponent implements OnInit {
       pathMatch: "prefix",
       
     },
-    {
-      title: 'Stores',
-      link: '/stores',
-      icon: 'shopping-bag',
-      pathMatch: "prefix"
-    },
+    // {
+    //   title: 'Stores',
+    //   link: '/stores',
+    //   icon: 'shopping-bag',
+    //   pathMatch: "prefix"
+    // },
     {
       title: 'Transactions',
       link: '/transactions',

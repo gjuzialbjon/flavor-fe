@@ -1,5 +1,11 @@
-<div class="pt-3">  
-  <table *ngIf="users.length > 0"  datatable [dtOptions]="dtOptions" class="table table-borderless table-striped table-hover" width="100%">
+<div class="pt-3">
+  <table
+    datatable
+    [dtTrigger]="$any(dtTrigger)"
+    [dtOptions]="dtOptions"
+    class="table table-borderless table-striped table-hover"
+    width="100%"
+  >
     <thead>
       <tr>
         <th>Name</th>
@@ -18,7 +24,12 @@
         <td class="text-capitalize">{{ user.confirmed }}</td>
         <td class="text-capitalize">{{ user.invited }}</td>
         <td class="text-center" width="8%">
-          <button nbButton status="info" size="small" (click)="openUpdate(userContent, user)">
+          <button
+            nbButton
+            status="info"
+            size="small"
+            (click)="openUpdate(userContent, user)"
+          >
             <nb-icon icon="user-edit"></nb-icon>
           </button>
         </td>
@@ -30,52 +41,110 @@
 <ng-template #userContent let-modal>
   <div class="modal-header">
     <h4 class="modal-title">Update User</h4>
-    <button type="button" class="close text-dark" aria-label="Close" (click)="modal.dismiss('Cross click')">
+    <button
+      type="button"
+      class="close text-dark"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    >
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body">
     <form [formGroup]="userForm">
       <div class="form-group">
-        <input type="text" class="form-control" [class.is-invalid]="u.name.touched && u.name.errors" formControlName="name" placeholder="Name *" >
-        <small *ngIf="u.name.touched && u.name.errors" class="form-text text-danger">Please enter a name.</small>
+        <input
+          type="text"
+          class="form-control"
+          [class.is-invalid]="u.name.touched && u.name.errors"
+          formControlName="name"
+          placeholder="Name *"
+        />
+        <small
+          *ngIf="u.name.touched && u.name.errors"
+          class="form-text text-danger"
+          >Please enter a name.</small
+        >
       </div>
       <div class="form-group">
-        <input type="text" class="form-control" [class.is-invalid]="u.email.touched && u.email.errors" formControlName="email" placeholder="Email *" >
-        <small *ngIf="u.email.touched && u.email.errors" class="form-text text-danger">Please enter an email.</small>
+        <input
+          type="text"
+          class="form-control"
+          [class.is-invalid]="u.email.touched && u.email.errors"
+          formControlName="email"
+          placeholder="Email *"
+        />
+        <small
+          *ngIf="u.email.touched && u.email.errors"
+          class="form-text text-danger"
+          >Please enter an email.</small
+        >
       </div>
       <div class="form-group">
-        <ng-select 
-          formControlName="stores" 
-          class="my-ng-nb-select" 
-          [multiple]="true" 
+        <ng-select
+          formControlName="stores"
+          class="my-ng-nb-select"
+          [multiple]="true"
           [clearable]="true"
-          placeholder="Select stores...">
-            <ng-option *ngFor="let store of stores" [value]="store._id">{{ store.name }}</ng-option>
-        </ng-select> 
+          placeholder="Select stores..."
+        >
+          <ng-option *ngFor="let store of stores" [value]="store._id">{{
+            store.name
+          }}</ng-option>
+        </ng-select>
       </div>
       <div class="row">
         <div class="col">
           <div class="custom-control custom-checkbox">
-            <input type="checkbox" class="custom-control-input" id="confirmed" formControlName="confirmed">
-            <label class="custom-control-label" for="confirmed">Confirmed</label>
+            <input
+              type="checkbox"
+              class="custom-control-input"
+              id="confirmed"
+              formControlName="confirmed"
+            />
+            <label class="custom-control-label" for="confirmed"
+              >Confirmed</label
+            >
           </div>
         </div>
         <div class="col">
           <div class="custom-control custom-checkbox">
-            <input type="checkbox" class="custom-control-input" id="invited" formControlName="invited">
+            <input
+              type="checkbox"
+              class="custom-control-input"
+              id="invited"
+              formControlName="invited"
+            />
             <label class="custom-control-label" for="invited">Invited</label>
           </div>
         </div>
       </div>
-      
     </form>
   </div>
   <div class="modal-footer">
-    <button type="button" nbButton class="mr-3" (click)="modal.close('Cancel click')">Cancel</button>
-    <button type="button" nbButton class="" status="success" (click)="saveUser(modal)" [disabled]="loading">
+    <button
+      type="button"
+      nbButton
+      class="mr-3"
+      (click)="modal.close('Cancel click')"
+    >
+      Cancel
+    </button>
+    <button
+      type="button"
+      nbButton
+      class=""
+      status="success"
+      (click)="saveUser(modal)"
+      [disabled]="loading"
+    >
       Save
-      <span [hidden]="!loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+      <span
+        [hidden]="!loading"
+        class="spinner-border spinner-border-sm"
+        role="status"
+        aria-hidden="true"
+      ></span>
     </button>
   </div>
 </ng-template>

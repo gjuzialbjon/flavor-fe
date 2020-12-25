@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { NbSidebarService } from '@nebular/theme';
+import { NbMenuItem, NbSidebarService } from '@nebular/theme';
 import { AuthenticationService } from 'src/app/core/services/authentication.service';
 
 @Component({
@@ -8,8 +8,22 @@ import { AuthenticationService } from 'src/app/core/services/authentication.serv
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HeaderComponent implements OnInit {
+  userMenu: NbMenuItem[] = [
+    { 
+      title: 'Profile',
+      icon: 'user',
+      link: '/profile',
+      pathMatch: 'full'
+    }, 
+    { 
+      title: 'Log out',
+      icon: 'sign-out-alt',
+      link: '/auth',
+      pathMatch: 'prefix'
+    }
+  ];
+  
   fullName = ''
-  sidebar!: HTMLElement
 
   constructor(
     private authService: AuthenticationService,
@@ -19,7 +33,7 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.fullName = this.authService.username
-    this.sidebar = document.getElementById('sidebar') as HTMLElement
+    this.chRef.detectChanges()
   }
 
   toggleSidebar(){

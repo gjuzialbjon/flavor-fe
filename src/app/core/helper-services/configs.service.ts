@@ -61,6 +61,20 @@ export class ConfigsService {
     }
   }
 
+  getTransactionDTOptions(): DataTables.Settings {
+    return {
+      pagingType: 'full',
+      pageLength: 10,
+      processing: true,
+      responsive: true,
+      columnDefs: [
+        // @ts-ignore
+        { responsivePriority: 100, targets: [0,5] },
+        // { orderable: false, targets: [5] },
+      ]
+    }
+  }
+
   getCurrencyDTOptions(): DataTables.Settings {
     return {
       pagingType: 'full',

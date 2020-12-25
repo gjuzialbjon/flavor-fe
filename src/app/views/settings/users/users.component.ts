@@ -1,7 +1,8 @@
-import { ChangeDetectionStrategy, Component, OnInit, OnDestroy, ChangeDetectorRef, TemplateRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, OnDestroy, ChangeDetectorRef, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Subscription } from 'rxjs';
+import { DataTableDirective } from 'angular-datatables';
+import { Subject, Subscription } from 'rxjs';
 import { ConfigsService } from 'src/app/core/helper-services/configs.service';
 import { MessageService } from 'src/app/core/helper-services/message.service';
 import { Store } from 'src/app/core/models/store';
@@ -16,14 +17,18 @@ import { UserService } from 'src/app/core/services/user.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UsersComponent implements OnInit, OnDestroy {
+  @ViewChild(DataTableDirective) dtElement!: DataTableDirective;
+
   private subscriptions = new Subscription()
   dtOptions: DataTables.Settings 
   modalConfig
   users: User[] = []
   stores: Store[] = [] // Only names and ID for setting privileges
   userForm!: FormGroup
-  user!: User
+  user!: any
   loading = false
+
+  dtTrigger = new Subject<any>();
 
   constructor(
     private userService: UserService,
@@ -44,7 +49,6 @@ export class UsersComponent implements OnInit, OnDestroy {
   }
 
   openUpdate(content: TemplateRef<any>, user: User) {
-    console.log(user)
     this.user = user
     this.initUserForm()
     this.modalService.open(content, this.modalConfig)
@@ -57,15 +61,18 @@ export class UsersComponent implements OnInit, OnDestroy {
       return
     }
 
-    console.log(this.userForm.value);
-
     this.loading = true
     this.userService.updateUser(this.user._id, this.userForm.value).subscribe(
       (res: any) => {
-        console.log(res)
-        this.users = []
-        this.chRef.detectChanges()
-        this.getUsers()
+        var updatedUser = res.data.userUpdateById.record
+       
+        this.user.name = updatedUser.name
+        this.user.email = updatedUser.email
+        this.user.confirmed = updatedUser.confirmed
+        this.user.invited = updatedUser.invited
+        this.user.stores = updatedUser.stores
+               
+        this.rerender()
         modal.close()
       },
       e => {
@@ -74,16 +81,18 @@ export class UsersComponent implements OnInit, OnDestroy {
       },
       () => {
         this.loading = false
+        this.chRef.detectChanges()
       }
     )
   }
 
   initUserForm() {
+    this.loading = false
     this.userForm = this.fb.group({
-      name: [this.user.name, [Validators.required]],
+      name: [this.user.name, [Validators.required]], 
       email: [this.user.email, [Validators.required]],
-      confirmed: [ this.user.confirmed, []],
-      invited: [ this.user.invited, []],
+      confirmed: [this.user.confirmed, []],
+      invited: [this.user.invited, []],
       stores: [this.getStoreIds(this.user.stores), []]
     })
   }
@@ -91,12 +100,13 @@ export class UsersComponent implements OnInit, OnDestroy {
   getUsers(){
     this.subscriptions.add(this.userService.getUsers().subscribe(
       (res: any) => {
-        this.users = res.data.userMany as User[]
-        // console.log(this.users)
-        this.chRef.detectChanges()
+        this.users = JSON.parse(JSON.stringify(res.data.userMany)) as User[]
       },
       e => { 
         console.error(e)
+      },
+      () => {
+        this.dtTrigger.next()
         this.chRef.detectChanges()
       }))
   }
@@ -118,9 +128,22 @@ export class UsersComponent implements OnInit, OnDestroy {
     return storeIds
   }
 
+  rerender(): void {
+    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+        // Destroy the table first 
+        dtInstance.destroy();
+
+        // Call the dtTrigger to rerender again
+        this.dtTrigger.next();
+    });
+    this.chRef.detectChanges()
+  }
+
+
   get u() { return this.userForm.controls }  
 
   ngOnDestroy() {
+    this.dtTrigger.unsubscribe();
     this.subscriptions.unsubscribe()
   }
 }

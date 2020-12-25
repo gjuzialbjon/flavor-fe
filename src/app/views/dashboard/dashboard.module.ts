@@ -4,6 +4,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { RouterModule } from '@angular/router';
 import { NbTabsetModule, NbButtonModule, NbIconModule, NbCardModule } from '@nebular/theme';
 import { DashboardStoreComponent } from './dashboard-store/dashboard-store.component';
+import { DataTablesModule } from 'angular-datatables';
 
 
 
@@ -22,6 +23,7 @@ import { DashboardStoreComponent } from './dashboard-store/dashboard-store.compo
     NbButtonModule,
     NbIconModule,
     NbCardModule,
+    DataTablesModule,
   ]
 })
 export class DashboardModule { }

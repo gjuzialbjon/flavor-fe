@@ -1,4 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
+import { ConfigsService } from 'src/app/core/helper-services/configs.service';
+import { Transaction } from 'src/app/core/models/transaction';
 
 @Component({
   selector: 'app-dashboard-store',
@@ -9,10 +11,70 @@ import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core
 export class DashboardStoreComponent implements OnInit {
   @Input() storeId = ''
 
-  constructor() { }
+  dtOptions: DataTables.Settings 
+  transactions = [
+    {
+      date : "223432423",
+      name: "Njashtu",
+      type: "kHUS ASHtu",
+      amount: 2213123,
+      status: "pergjys",
+      flagged: true
+    },
+    {
+      date : "223432423",
+      name: "Njashtu",
+      type: "kHUS ASHtu",
+      amount: 2213123,
+      status: "pergjys"
+    },
+    {
+      date : "223432423",
+      name: "Njashtu",
+      type: "kHUS ASHtu",
+      amount: 2213123,
+      status: "pergjys"
+    },
+    {
+      date : "223432423",
+      name: "Njashtu",
+      type: "kHUS ASHtu",
+      amount: 2213123,
+      status: "pergjys"
+    },
+    {
+      date : "223432423",
+      name: "Njashtu",
+      type: "kHUS ASHtu",
+      amount: 2213123,
+      status: "pergjys"
+    }
+  ]
+
+  transaction: any
+
+  constructor(
+    private configsService: ConfigsService,
+
+  ) { 
+    this.dtOptions = this.configsService.getTransactionDTOptions()
+  }
 
   ngOnInit(): void {
     console.log(this.storeId, ' store id')
+    
+  }
+
+  markForWarning(transaction: any){
+    console.log(transaction)
+    this.transaction = transaction
+    this.transaction.flagged = true
+  }
+
+  markForFixed(transaction: any){
+    console.log(transaction)
+    this.transaction = transaction
+    this.transaction.flagged = false
   }
 
 }

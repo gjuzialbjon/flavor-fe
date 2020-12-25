@@ -65,7 +65,16 @@ export class UserService {
             invited:${user.invited}
             stores:${JSON.stringify(user.stores)}
           }){
-          recordId
+            record{
+              email
+              name
+              role
+              invited
+              confirmed
+              stores{
+                _id
+              }
+            }
         }
       }
 

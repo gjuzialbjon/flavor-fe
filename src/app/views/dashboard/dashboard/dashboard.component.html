@@ -1,6 +1,10 @@
 <nb-tabset class="dashboard-tabset">
     <nb-tab *ngFor="let store of stores; let i = index" tabTitle="{{ store.name }}" [active]="i === 0">
-        <app-dashboard-store [storeId]="store.id"></app-dashboard-store>
+        <div class="row no-gutters">
+            <div class="col-12">
+                <app-dashboard-store [storeId]="store.id"></app-dashboard-store>
+            </div>
+        </div>
     </nb-tab>
 </nb-tabset>
 

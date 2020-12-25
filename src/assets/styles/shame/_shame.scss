@@ -3,6 +3,19 @@
         text-decoration: none;
     }
 
+    // .start-search.appearance-ghost.size-medium.status-basic.shape-rectangle.icon-start.icon-end.nb-transition{
+    //     background-color: red;
+    // }
+
+    .dashboard-store{
+        background-color: #3BAAC6;
+        color: white;
+    }
+
+    .toastr-class{
+        width: 320px;
+    }
+
     nb-sidebar.compacted nb-menu .menu-item a.active::before{
         background-color: white;
     }
