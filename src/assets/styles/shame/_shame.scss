@@ -3,9 +3,16 @@
         text-decoration: none;
     }
 
-    // .start-search.appearance-ghost.size-medium.status-basic.shape-rectangle.icon-start.icon-end.nb-transition{
-    //     background-color: red;
-    // }
+    nb-sidebar nb-menu .menu-item {
+        .menu-icon{
+            font-size: 1.8rem;
+            margin: 0;
+        }
+
+        .menu-title{
+            padding-left: .8rem;
+        }
+    }
 
     .dashboard-store{
         background-color: #3BAAC6;

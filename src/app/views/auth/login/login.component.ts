@@ -14,17 +14,7 @@ import { AuthenticationService } from 'src/app/core/services/authentication.serv
 export class LoginComponent implements OnInit {
   loginForm: FormGroup
   showPassword = false
-
-  getInputType() {
-    if (this.showPassword) {
-      return 'text';
-    }
-    return 'password';
-  }
-
-  toggleShowPassword() {
-    this.showPassword = !this.showPassword;
-  }
+  loading = false
 
   constructor(
     private router: Router, 
@@ -45,11 +35,30 @@ export class LoginComponent implements OnInit {
 
   login(){
     console.log('Login')
-    // this.router.navigate(['dashboard'])
+    if(this.loginForm.invalid){
+      this.msg.error('Please enter your email and password', 'Error!')
+      // return
+    }
+
+    this.loading = true
+    console.log(this.loginForm.value)
+    const {email, password} = this.loginForm.value
+    this.authService.login(email, password, '')
   }
 
   loginWithGoogle(){
     this.authService.signInWithGoogle()
+  }
+
+  getInputType() {
+    if (this.showPassword) {
+      return 'text';
+    }
+    return 'password';
+  }
+
+  toggleShowPassword() {
+    this.showPassword = !this.showPassword;
   }
 
   get l() { return this.loginForm.controls }

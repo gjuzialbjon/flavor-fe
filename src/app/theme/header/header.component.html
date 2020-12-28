@@ -6,8 +6,10 @@
     </span>
     <span class="d-flex align-items-center">
       <nb-search type="rotate-layout" status="success" class="mr-3"></nb-search>
-      <a [nbContextMenu]="userMenu" class="d-none d-md-block pr-3">{{ fullName }}</a>
-      <nb-icon icon="user" [nbContextMenu]="userMenu"></nb-icon>
+      <span class="d-flex align-items-center" [nbContextMenu]="userMenu">
+        <a class="d-none d-md-block pr-3">{{ fullName }}</a>
+        <nb-icon icon="user" ></nb-icon>
+      </span>
     </span>
   </div>
 </div>

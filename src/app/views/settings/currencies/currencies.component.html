@@ -1,5 +1,11 @@
 <div class="pt-3">
-  <table *ngIf="currencies.length > 0" datatable [dtOptions]="dtOptions" class="table table-borderless table-striped table-hover" width="100%">
+  <table
+    datatable
+    [dtTrigger]="$any(dtTrigger)"
+    [dtOptions]="dtOptions"
+    class="table table-borderless table-striped table-hover"
+    width="100%"
+  >
     <thead>
       <tr>
         <th>Currency</th>
@@ -15,8 +21,13 @@
         <td>{{ currency.symbol }}</td>
         <td class="text-capitalize">{{ currency.name }}</td>
         <td class="text-capitalize">{{ currency.type }}</td>
-        <td class="text-center" width="8%">
-          <button nbButton status="info" size="small" (click)="openUpdate(currencyContent, currency)">
+        <td class="text-center px-0 py-2" width="8%">
+          <button
+            nbButton
+            status="info"
+            size="small"
+            (click)="openUpdate(currencyContent, currency)"
+          >
             <nb-icon icon="edit"></nb-icon>
           </button>
         </td>
@@ -28,40 +39,97 @@
 <ng-template #currencyContent let-modal>
   <div class="modal-header">
     <h4 class="modal-title">Update Currency</h4>
-    <button type="button" class="close text-dark" aria-label="Close" (click)="modal.dismiss('Cross click')">
+    <button
+      type="button"
+      class="close text-dark"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    >
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body">
     <form [formGroup]="currencyForm">
       <div class="form-group">
-        <input type="text" class="form-control" [class.is-invalid]="f.currency.touched && f.currency.errors" formControlName="currency" placeholder="Currency *" >
-        <small *ngIf="f.currency.touched && f.currency.errors" class="form-text text-danger">Please enter a currency.</small>
+        <input
+          type="text"
+          class="form-control"
+          [class.is-invalid]="f.currency.touched && f.currency.errors"
+          formControlName="currency"
+          placeholder="Currency *"
+        />
+        <small
+          *ngIf="f.currency.touched && f.currency.errors"
+          class="form-text text-danger"
+          >Please enter a currency.</small
+        >
       </div>
       <div class="form-group">
-        <input type="text" class="form-control" [class.is-invalid]="f.symbol.touched && f.symbol.errors" formControlName="symbol" placeholder="Symbol *" >
-        <small *ngIf="f.symbol.touched && f.symbol.errors" class="form-text text-danger">Please enter a symbol.</small>
+        <input
+          type="text"
+          class="form-control"
+          [class.is-invalid]="f.symbol.touched && f.symbol.errors"
+          formControlName="symbol"
+          placeholder="Symbol *"
+        />
+        <small
+          *ngIf="f.symbol.touched && f.symbol.errors"
+          class="form-text text-danger"
+          >Please enter a symbol.</small
+        >
       </div>
       <div class="form-group">
-        <input type="text" class="form-control" [class.is-invalid]="f.name.touched && f.name.errors" formControlName="name" placeholder="Name *" >
-        <small *ngIf="f.name.touched && f.name.errors" class="form-text text-danger">Please enter a name.</small>
+        <input
+          type="text"
+          class="form-control"
+          [class.is-invalid]="f.name.touched && f.name.errors"
+          formControlName="name"
+          placeholder="Name *"
+        />
+        <small
+          *ngIf="f.name.touched && f.name.errors"
+          class="form-text text-danger"
+          >Please enter a name.</small
+        >
       </div>
       <div class="form-group">
-        <ng-select 
+        <ng-select
           formControlName="type"
-          [clearable]="false" 
-          class="my-ng-select" 
-          placeholder="Select type...">
-            <ng-option *ngFor="let type of types" [value]="type._id">{{ type.name }}</ng-option>
-        </ng-select> 
+          [clearable]="false"
+          class="my-ng-select"
+          placeholder="Select type..."
+        >
+          <ng-option *ngFor="let type of types" [value]="type._id">{{
+            type.name
+          }}</ng-option>
+        </ng-select>
       </div>
     </form>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-secondary mr-3" (click)="modal.close('Cancel click')">Cancel</button>
-    <button type="button" class="btn btn-dark-green px-4" (click)="saveCurrency(modal)" [disabled]="loading">
+    <button
+      type="button"
+      nbButton
+      class="mr-3"
+      (click)="modal.close('Cancel click')"
+    >
+      Cancel
+    </button>
+    <button
+      type="button"
+      nbButton
+      class=""
+      status="success"
+      (click)="saveCurrency(modal)"
+      [disabled]="loading"
+    >
       Save
-      <span [hidden]="!loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+      <span
+        [hidden]="!loading"
+        class="spinner-border spinner-border-sm"
+        role="status"
+        aria-hidden="true"
+      ></span>
     </button>
   </div>
 </ng-template>

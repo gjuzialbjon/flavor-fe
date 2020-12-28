@@ -47,45 +47,14 @@ export class ConfigsService {
     }
   }
 
-  getUserDTOptions(): DataTables.Settings {
+  getDTOptions(): DataTables.Settings {
     return {
       pagingType: 'full',
       pageLength: 10,
       processing: true,
       responsive: true,
-      // dom:'l<"toolbar">frtip',
-      columnDefs: [
-        // @ts-ignore
-        { responsivePriority: 100, targets: [0,5] },
-      ]
-    }
-  }
-
-  getTransactionDTOptions(): DataTables.Settings {
-    return {
-      pagingType: 'full',
-      pageLength: 10,
-      processing: true,
-      responsive: true,
-      columnDefs: [
-        // @ts-ignore
-        { responsivePriority: 100, targets: [0,5] },
-        // { orderable: false, targets: [5] },
-      ]
-    }
-  }
-
-  getCurrencyDTOptions(): DataTables.Settings {
-    return {
-      pagingType: 'full',
-      pageLength: 10,
-      processing: true,
-      responsive: true,
-      // dom:'l<"toolbar">frtip',
-      columnDefs: [
-        // @ts-ignore
-        { responsivePriority: 100, targets: [0,4] },
-      ]
+      scrollCollapse: true,
+      scrollY: '500px',
     }
   }
 }

@@ -20,7 +20,8 @@ export class UsersComponent implements OnInit, OnDestroy {
   @ViewChild(DataTableDirective) dtElement!: DataTableDirective;
 
   private subscriptions = new Subscription()
-  dtOptions: DataTables.Settings 
+  dtOptions: DataTables.Settings
+  dtTrigger = new Subject<any>(); 
   modalConfig
   users: User[] = []
   stores: Store[] = [] // Only names and ID for setting privileges
@@ -28,7 +29,6 @@ export class UsersComponent implements OnInit, OnDestroy {
   user!: any
   loading = false
 
-  dtTrigger = new Subject<any>();
 
   constructor(
     private userService: UserService,
@@ -39,7 +39,11 @@ export class UsersComponent implements OnInit, OnDestroy {
     private modalService: NgbModal,
     private authService: AuthenticationService
     ) {
-      this.dtOptions = this.configsService.getUserDTOptions()
+      this.dtOptions = this.configsService.getDTOptions()
+      this.dtOptions.columnDefs = [
+        // @ts-ignore
+        { responsivePriority: 100, targets: [0,4] },
+      ]
       this.modalConfig = this.configsService.getCleanModalOptions()
   }
 
@@ -103,6 +107,7 @@ export class UsersComponent implements OnInit, OnDestroy {
         this.users = JSON.parse(JSON.stringify(res.data.userMany)) as User[]
       },
       e => { 
+        this.msg.defaultError()
         console.error(e)
       },
       () => {

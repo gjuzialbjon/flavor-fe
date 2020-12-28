@@ -57,7 +57,7 @@ export class DashboardStoreComponent implements OnInit {
     private configsService: ConfigsService,
 
   ) { 
-    this.dtOptions = this.configsService.getTransactionDTOptions()
+    this.dtOptions = this.configsService.getDTOptions()
   }
 
   ngOnInit(): void {

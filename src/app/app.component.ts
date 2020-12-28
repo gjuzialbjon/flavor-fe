@@ -18,5 +18,8 @@ export class AppComponent {
   constructor(private iconLibraries: NbIconLibraries){
     this.iconLibraries.registerFontPack('solid', { packClass: 'fas', iconClassPrefix: 'fa'} );
     this.iconLibraries.setDefaultPack('solid'); // <---- set as default
+
+    this.iconLibraries.registerFontPack('menu', { iconClassPrefix: 'icon'})
+    
   }
 }

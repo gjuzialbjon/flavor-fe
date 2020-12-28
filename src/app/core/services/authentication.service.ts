@@ -33,7 +33,7 @@ export class AuthenticationService {
     if(!!this.token){
       this.decodedToken = this.jwtHelper.decodeToken(this.token)
       this.role = this.decodedToken.role
-      console.log(this.decodedToken)
+      // console.log(this.decodedToken)
       this.username = localStorage.getItem('flavorUsername') || ''
     }
   }
@@ -45,16 +45,14 @@ export class AuthenticationService {
         localStorage.setItem('flavorToken', token)
         this.decodedToken = this.jwtHelper.decodeToken(res.token)
         if(this.decodedToken.confirmed){
-          // localStorage.setItem('flavorUsername', this.decodedToken.name )
-          // this.username = this.decodedToken.name
           this.router.navigate(['stores'])
           setTimeout( () => {
-            this.msg.success('','Welcome back')
+            this.msg.success('','Welcome')
           }, 1500)
         } else {
           this.router.navigate(['auth', 'not-authorized'])
         }
-      }, e => { console.error(e); this.msg.error('Something went wrong. Please try again later.')}
+      }, e => { console.error(e); this.msg.error('Something went wrong. Please try again later.', 'Error!')}
     )
   }
 
