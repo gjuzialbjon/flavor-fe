@@ -11,6 +11,8 @@ export class ReportsComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    console.log('Init report');
+    
   }
 
 }

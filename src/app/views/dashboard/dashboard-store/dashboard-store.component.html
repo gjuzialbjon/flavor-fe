@@ -1,5 +1,5 @@
 <div class="row no-gutters">
-  <div class="col-xl-6 pr-xl-2 pr-0">
+  <div class="col-12">
     <nb-card>
       <nb-card-body>
         <table
@@ -16,15 +16,10 @@
               <th>Type</th>
               <th>Amount</th>
               <th>Status</th>
-              <th>Flagged</th>
-              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let transaction of transactions" 
-              [ngClass]="{
-                'bg-warning': transaction.flagged
-              }">
+            <tr *ngFor="let transaction of transactions" >
               <td>{{ transaction.date }}</td>
               <td>{{ transaction.name }}</td>
               <td>{{ transaction.type }}</td>
@@ -36,25 +31,11 @@
                 {{ transaction.amount }}
               </td>
               <td>{{ transaction.status }}</td>
-              <td>{{ transaction.flagged }}</td>
-              <td>
-                <div class="text-center">
-                  <button *ngIf="!transaction.flagged" nbButton size="small" status="warning" (click)="markForWarning(transaction)">
-                    <nb-icon icon="flag"></nb-icon>
-                  </button>
-                  <button *ngIf="transaction.flagged" nbButton size="small" status="success" (click)="markForFixed(transaction)">
-                    <nb-icon icon="flag"></nb-icon>
-                  </button>
-                </div>
-              </td>
             </tr>
           </tbody>
         </table>
       </nb-card-body>
     </nb-card>
-  </div>
-  <div class="col-xl-6 pl-xl-2 pl-0">
-   
   </div>
 </div>
 

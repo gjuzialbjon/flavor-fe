@@ -52,12 +52,12 @@ export class StoreDashboardComponent implements OnInit, OnDestroy {
         (res: any) => {
           this.store = res.data.storeById as Store
           console.log(this.store)
-          if(!this.store){
-            this.msg.error('Something went wrong loading the store.')
-            setTimeout(() => {
-              this.router.navigate(['/stores'])
-            },2000)
-          }
+          // if(!this.store){
+          //   this.msg.error('Something went wrong loading the store.')
+          //   setTimeout(() => {
+          //     this.router.navigate(['/stores'])
+          //   },2000)
+          // }
           this.chRef.detectChanges()
         },
         e => {

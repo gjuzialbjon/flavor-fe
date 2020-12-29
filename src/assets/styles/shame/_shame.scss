@@ -27,6 +27,20 @@
         background-color: white;
     }
 
+    nb-sidebar nb-menu .menu-item a.active{
+        position: relative;
+
+        &:before{
+            position: absolute;
+            content: "";
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 4px;
+            background: white;
+        }
+    }
+    
     nb-tabset.dashboard-tabset{
         ul.tabset{
             background-color: white;

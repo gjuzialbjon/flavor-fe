@@ -33,10 +33,14 @@ const routes: Routes = [
         loadChildren: () => import('./views/profile/profile.module').then(m => m.ProfileModule),
       },
       { 
-        path: '', 
-        redirectTo: 'dashboard',
-        pathMatch: 'full'
+        path: 'search', 
+        loadChildren: () => import('./views/search/search.module').then(m => m.SearchModule),
       },
+      // { 
+      //   path: '', 
+      //   redirectTo: 'dashboard',
+      //   pathMatch: 'full'
+      // },
     ]
   },
   { 
@@ -53,7 +57,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [CommonModule, RouterModule.forRoot(routes, {scrollPositionRestoration: 'enabled'})],
+  imports: [CommonModule, RouterModule.forRoot(routes, {scrollPositionRestoration: 'enabled', onSameUrlNavigation:'ignore'})],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
