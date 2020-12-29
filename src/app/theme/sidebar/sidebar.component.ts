@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { NavigationStart, Router } from '@angular/router';
-import { NbLayoutComponent, NbMediaBreakpointsService, NbMenuItem, NbMenuService, NbSidebarService } from '@nebular/theme';
+import { Router } from '@angular/router';
+import { NbMediaBreakpointsService, NbMenuItem, NbMenuService, NbSidebarService } from '@nebular/theme';
 import { ReplaySubject } from 'rxjs';
 
 import { map, tap, takeUntil} from 'rxjs/operators';
@@ -12,7 +12,6 @@ import { map, tap, takeUntil} from 'rxjs/operators';
 })
 export class SidebarComponent implements OnInit {
   destroyed$: ReplaySubject<boolean> = new ReplaySubject(1);
-
 
   items: NbMenuItem[] = [
     {
@@ -63,7 +62,7 @@ export class SidebarComponent implements OnInit {
     },
   ];
 
-  constructor(private router: Router, private menuService: NbMenuService, private layout: NbLayoutComponent, private breakpointService: NbMediaBreakpointsService, private sidebarService: NbSidebarService) { 
+  constructor(private router: Router, private menuService: NbMenuService, private breakpointService: NbMediaBreakpointsService, private sidebarService: NbSidebarService) { 
   }
 
   ngOnInit(): void { 

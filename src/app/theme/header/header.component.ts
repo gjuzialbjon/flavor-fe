@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { NbMenuItem, NbSidebarService } from '@nebular/theme';
+import { NbLayoutComponent, NbMenuItem, NbSidebarService } from '@nebular/theme';
 import { AuthenticationService } from 'src/app/core/services/authentication.service';
 
 @Component({
@@ -28,7 +28,8 @@ export class HeaderComponent implements OnInit {
   constructor(
     private authService: AuthenticationService,
     private chRef: ChangeDetectorRef,
-    private sidebarService: NbSidebarService
+    private sidebarService: NbSidebarService,
+    private layout: NbLayoutComponent,
     ) { }
 
   ngOnInit(): void {
@@ -36,7 +37,7 @@ export class HeaderComponent implements OnInit {
     this.chRef.detectChanges()
   }
 
-  toggleSidebar(){
-    this.sidebarService.toggle();
+  toggle(){
+    this.sidebarService.toggle(true)
   }
 }
