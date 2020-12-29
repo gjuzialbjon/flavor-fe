@@ -4,7 +4,7 @@ import { NbIconLibraries } from '@nebular/theme';
 @Component({
   selector: 'app-root',
   template: ` 
-    <ngx-loading-bar [includeSpinner]="false" [height]="'7px'" color="linear-gradient(to right,#3BAAC6,#21C5AD)"></ngx-loading-bar>
+    <ngx-loading-bar [includeSpinner]="false" [height]="'7px'" color="linear-gradient(to right,#3886f7,#21C5AD)"></ngx-loading-bar>
     <nb-layout>
       <nb-layout-column style="padding: 0;">
         <router-outlet></router-outlet>

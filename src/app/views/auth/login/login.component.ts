@@ -43,7 +43,7 @@ export class LoginComponent implements OnInit {
     this.loading = true
     console.log(this.loginForm.value)
     const {email, password} = this.loginForm.value
-    this.authService.login(email, password, '')
+    // this.authService.login(email, password, '')
   }
 
   loginWithGoogle(){

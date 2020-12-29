@@ -16,7 +16,10 @@ import { DataTablesModule } from 'angular-datatables';
       {
         path: '',
         component: DashboardComponent,
-        pathMatch: 'full'
+        pathMatch: 'full',
+        data:{
+          breadcrumb: 'Dashboard'
+        }
       },
     ]),
     NbTabsetModule,

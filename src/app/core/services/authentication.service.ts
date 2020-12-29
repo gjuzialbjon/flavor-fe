@@ -47,7 +47,7 @@ export class AuthenticationService {
         if(this.decodedToken.confirmed){
           this.router.navigate(['stores'])
           setTimeout( () => {
-            this.msg.success('','Welcome')
+            this.msg.success('','Welcome back!')
           }, 1500)
         } else {
           this.router.navigate(['auth', 'not-authorized'])

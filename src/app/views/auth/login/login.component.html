@@ -1,14 +1,13 @@
-<div
-  class="row no-gutters h-100 align-items-center justify-content-center"
->
-  <form class="auth-form shadow p-3" [formGroup]="loginForm" style="border-radius: 6px;">
+<div class="row no-gutters align-items-center justify-content-center">
+  <form class="auth-form  p-3" [formGroup]="loginForm" style="border-radius: 6px;">
     <div class="text-center mb-4">
       <img
-        src="../../../../assets/media/logos/Logo.png"
+        src="../../../../assets/media/logos/logo.svg"
         alt=""
         width="116"
         height="158"
       />
+      <p style="letter-spacing: 2px; color: #284693; font-size: xx-large; font-weight: bolder; margin-top: 10px;">SWAP</p>
     </div>
 
     <nb-form-field class="mb-2">
@@ -54,7 +53,7 @@
         <button
           type="button"
           nbButton
-          status="success"
+          status="info"
           class="mt-2"
           (click)="login()"
           [disabled]="loginForm.invalid || loading"
