@@ -36,11 +36,11 @@ const routes: Routes = [
         path: 'search', 
         loadChildren: () => import('./views/search/search.module').then(m => m.SearchModule),
       },
-      // { 
-      //   path: '', 
-      //   redirectTo: 'dashboard',
-      //   pathMatch: 'full'
-      // },
+      { 
+        path: '', 
+        redirectTo: 'dashboard',
+        pathMatch: 'full'
+      },
     ]
   },
   { 

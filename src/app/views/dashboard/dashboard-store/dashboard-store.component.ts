@@ -19,7 +19,8 @@ export class DashboardStoreComponent implements OnInit {
       type: "kHUS ASHtu",
       amount: 2213123,
       status: "pergjys",
-      flagged: true
+      flagged: true,
+      lastComment: 'Komenti i fundit'
     },
     {
       date : "223432423",

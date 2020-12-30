@@ -19,8 +19,18 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let transaction of transactions" >
-              <td>{{ transaction.date }}</td>
+            <tr
+              *ngFor="let transaction of transactions"
+              
+            >
+              <td>
+                <nb-icon
+                  icon="flag"
+                  [status]="transaction.flagged ? 'danger' : 'basic'"
+                  class="mr-2"
+                ></nb-icon>
+                {{ transaction.date }}
+              </td>
               <td>{{ transaction.name }}</td>
               <td>{{ transaction.type }}</td>
               <td
@@ -38,5 +48,3 @@
     </nb-card>
   </div>
 </div>
-
-
