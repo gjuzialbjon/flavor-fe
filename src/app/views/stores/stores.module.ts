@@ -6,11 +6,10 @@ import { CountUpModule } from 'ngx-countup';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { StoreDashboardComponent } from './store-dashboard/store-dashboard.component';
-import { CreditCardComponent } from './store-dashboard/credit-card/credit-card.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
-  declarations: [StoresComponent, StoreDashboardComponent, CreditCardComponent],
+  declarations: [StoresComponent, StoreDashboardComponent],
   imports: [
     CommonModule,
     RouterModule.forChild([

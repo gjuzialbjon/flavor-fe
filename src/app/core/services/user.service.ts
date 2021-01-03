@@ -80,4 +80,19 @@ export class UserService {
       `
     })
   }
+
+  inviteUser(email: string, role: string){
+    return this.apollo.mutate({
+      mutation: gql`
+      mutation{
+        inviteUser(
+          email:"${email}"
+          role:${role}
+        ){
+          message
+        }
+      }
+      `
+    })
+  }
 }

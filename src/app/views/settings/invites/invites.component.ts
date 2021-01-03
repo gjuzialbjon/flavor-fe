@@ -47,13 +47,20 @@ export class InvitesComponent implements OnInit {
     this.invitationLoading = true
     console.log('Invite user ', this.emailFormControl.value, this.roleFormControl.value)
 
-    setTimeout( () => {
-      this.emailFormControl.setValue('')
-      this.roleFormControl.setValue('')
-      this.msg.success('Invitation sent successfully!','Success')
-      this.invitationLoading = false
-      this.chRef.detectChanges()
-    },1200)
+    this.userService.inviteUser(this.emailFormControl.value, this.roleFormControl.value).subscribe(
+      (res: any) => {
+        console.log(res)
+
+      },
+      e => {
+        console.error(e)
+        this.msg.error('Something went wrong. Invitation not sent.', 'Error!')
+      },
+      () => {
+        this.invitationLoading = false
+        this.chRef.detectChanges()
+      }
+    )
   }
 
 }

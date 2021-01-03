@@ -1,14 +1,19 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
-import { NbMediaBreakpointsService, NbMenuItem, NbMenuService, NbSidebarService } from '@nebular/theme';
+import {
+  NbMediaBreakpointsService,
+  NbMenuItem,
+  NbMenuService,
+  NbSidebarService,
+} from '@nebular/theme';
 import { ReplaySubject } from 'rxjs';
 
-import { map, tap, takeUntil} from 'rxjs/operators';
+import { map, tap, takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SidebarComponent implements OnInit {
   destroyed$: ReplaySubject<boolean> = new ReplaySubject(1);
@@ -21,8 +26,7 @@ export class SidebarComponent implements OnInit {
         icon: 'dashboard',
         pack: 'menu',
       },
-      pathMatch: "prefix",
-      
+      pathMatch: 'prefix',
     },
     {
       title: 'Stores',
@@ -31,7 +35,7 @@ export class SidebarComponent implements OnInit {
         icon: 'stores',
         pack: 'menu',
       },
-      pathMatch: "prefix"
+      pathMatch: 'prefix',
     },
     {
       title: 'Transactions',
@@ -40,7 +44,7 @@ export class SidebarComponent implements OnInit {
         icon: 'transactions',
         pack: 'menu',
       },
-      pathMatch: "prefix"
+      pathMatch: 'prefix',
     },
     {
       title: 'Reports',
@@ -49,7 +53,7 @@ export class SidebarComponent implements OnInit {
         icon: 'reports',
         pack: 'menu',
       },
-      pathMatch: "prefix"
+      pathMatch: 'prefix',
     },
     {
       title: 'Settings',
@@ -58,27 +62,38 @@ export class SidebarComponent implements OnInit {
         icon: 'settings',
         pack: 'menu',
       },
-      pathMatch: "prefix"
+      pathMatch: 'prefix',
     },
   ];
 
-  constructor(private router: Router, private menuService: NbMenuService, private breakpointService: NbMediaBreakpointsService, private sidebarService: NbSidebarService) { 
+  constructor(
+    private router: Router,
+    private menuService: NbMenuService,
+    private breakpointService: NbMediaBreakpointsService,
+    private sidebarService: NbSidebarService,
+    private chRef: ChangeDetectorRef
+  ) {}
+
+  ngOnInit(): void {
+    const { sm } = this.breakpointService.getBreakpointsMap();
+
+    this.menuService
+      .onItemSelect()
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe((event: { tag: string; item: any }) => {
+        if (document.documentElement.clientWidth < sm) {
+          this.sidebarService.collapse('menu-sidebar');
+        }
+      });
   }
 
-  ngOnInit(): void { 
-    const { sm } = this.breakpointService.getBreakpointsMap(); 
+  ngAfterViewInit(){
+    this.chRef.detectChanges()
+  }
 
-    this.menuService.onItemSelect() 
-        .pipe(takeUntil(this.destroyed$))
-        .subscribe((event: { tag: string, item: any }) => {
-          if (document.documentElement.clientWidth < sm){
-            this.sidebarService.collapse('menu-sidebar');
-          }
-      });
-    }
-
-    ngOnDestroy() {
-      this.destroyed$.next(true);
-      this.destroyed$.complete();
-    }
+  ngOnDestroy() {
+    this.destroyed$.next(true);
+    this.destroyed$.complete();
+    this.chRef.detach();
+  }
 }
