@@ -20,6 +20,7 @@ export class StoresComponent implements OnInit {
   stores: Store[] = []
   currencies: Currency[] = []
   loading = false // Prevent duplicate store creation
+  loadingStores = true
   countUpOptions
   modalConfig
   newStoreForm!: FormGroup;
@@ -48,11 +49,15 @@ export class StoresComponent implements OnInit {
       this.storeService.getStores(fetchPolicy).subscribe(
         (res:any) => { 
           this.stores = res.data.storeMany as Store[]
-          this.chRef.detectChanges()
+          console.log(this.stores)
         },
         e => { 
           console.error(e);
           this.msg.defaultError()
+        },
+        () => {
+          this.loadingStores = false
+          this.chRef.detectChanges()
         }
     ))
   }

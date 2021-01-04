@@ -1,43 +1,99 @@
-<div class="row">
+<div class="row"  
+  [nbSpinner]="loadingStores"
+  nbSpinnerStatus="danger"
+  nbSpinnerSize="large"
+  nbSpinnerMessage="">
   <div class="col-xl-6 col-lg-9">
-    <app-store-dashboard></app-store-dashboard>
-    <app-store-dashboard></app-store-dashboard>
-    <app-store-dashboard></app-store-dashboard>
+    <app-store-card 
+      *ngFor="let store of stores"
+      [name]="store.name"
+      [id]="store._id"
+      >
+    </app-store-card>
   </div>
 </div>
-
-
 
 <ng-template #newModalContent let-modal>
   <div class="modal-header">
     <h4 class="modal-title">New Store</h4>
-    <button type="button" class="close text-dark" aria-label="Close" (click)="modal.dismiss('Cross click')">
+    <button
+      type="button"
+      class="close text-dark"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    >
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body">
     <form [formGroup]="newStoreForm">
       <div class="form-group">
-        <input type="text" class="form-control" [class.is-invalid]="s.name.touched && s.name.errors" formControlName="name" placeholder="Name *" >
-        <small *ngIf="s.name.touched && s.name.errors" class="form-text text-danger">Please enter a name for your new store.</small>
+        <input
+          type="text"
+          class="form-control"
+          [class.is-invalid]="s.name.touched && s.name.errors"
+          formControlName="name"
+          placeholder="Name *"
+        />
+        <small
+          *ngIf="s.name.touched && s.name.errors"
+          class="form-text text-danger"
+          >Please enter a name for your new store.</small
+        >
       </div>
       <div class="form-group">
-        <input type="text" class="form-control" [class.is-invalid]="s.location.touched && s.location.errors" formControlName="location" placeholder="Location *">
-        <small *ngIf="s.location.touched && s.location.errors" class="form-text text-danger">Please enter a location.</small>
+        <input
+          type="text"
+          class="form-control"
+          [class.is-invalid]="s.location.touched && s.location.errors"
+          formControlName="location"
+          placeholder="Location *"
+        />
+        <small
+          *ngIf="s.location.touched && s.location.errors"
+          class="form-text text-danger"
+          >Please enter a location.</small
+        >
       </div>
       <div class="form-group">
-        <input type="text" class="form-control"  formControlName="description" placeholder="Description">
+        <input
+          type="text"
+          class="form-control"
+          formControlName="description"
+          placeholder="Description"
+        />
       </div>
       <div class="form-group">
-        <ng-select formControlName="default_currency" class="my-ng-select" [clearable]="false">
+        <ng-select
+          formControlName="default_currency"
+          class="my-ng-select"
+          [clearable]="false"
+        >
           <ng-option [value]="0">Default currency</ng-option>
-          <ng-option *ngFor="let currency of currencies" [value]="currency._id">{{currency.name}}</ng-option>
-       </ng-select> 
+          <ng-option
+            *ngFor="let currency of currencies"
+            [value]="currency._id"
+            >{{ currency.name }}</ng-option
+          >
+        </ng-select>
       </div>
     </form>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-secondary mr-3" (click)="modal.close('Cancel click')">Cancel</button>
-    <button type="button" class="btn btn-dark-green px-4" (click)="createStore(modal)" [disabled]="loading">Save</button>
+    <button
+      type="button"
+      class="btn btn-outline-secondary mr-3"
+      (click)="modal.close('Cancel click')"
+    >
+      Cancel
+    </button>
+    <button
+      type="button"
+      class="btn btn-dark-green px-4"
+      (click)="createStore(modal)"
+      [disabled]="loading"
+    >
+      Save
+    </button>
   </div>
 </ng-template>

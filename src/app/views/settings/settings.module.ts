@@ -10,7 +10,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { InvitesComponent } from './invites/invites.component';
 import { EmailConfigComponent } from './email-config/email-config.component';
-import { NbButtonModule, NbCardModule, NbCheckboxModule, NbFormFieldModule, NbIconModule, NbInputModule, NbOptionModule, NbRouteTabsetModule, NbSelectModule } from '@nebular/theme';
+import { NbButtonModule, NbCardModule, NbCheckboxModule, NbFormFieldModule, NbIconModule, NbInputModule, NbOptionModule, NbRouteTabsetModule, NbSelectModule, NbSpinnerModule } from '@nebular/theme';
 
 @NgModule({
   declarations: [CurrenciesComponent, SettingsComponent, UsersComponent, InvitesComponent, EmailConfigComponent],
@@ -58,7 +58,8 @@ import { NbButtonModule, NbCardModule, NbCheckboxModule, NbFormFieldModule, NbIc
     NbSelectModule,
     NbOptionModule,
     NbIconModule,
-    NbCheckboxModule
+    NbCheckboxModule,
+    NbSpinnerModule
   ]
 })
 export class SettingsModule { }

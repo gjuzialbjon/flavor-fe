@@ -1,4 +1,12 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, TemplateRef } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnDestroy,
+  OnInit,
+  TemplateRef,
+} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -11,66 +19,68 @@ import { StoreService } from 'src/app/core/services/store.service';
 @Component({
   selector: 'app-store-dashboard',
   templateUrl: './store-dashboard.component.html',
-  styleUrls: ['./store-dashboard.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StoreDashboardComponent implements OnInit, OnDestroy {
+  @Input() name: string = '';
+  @Input() balance: number = 0;
+  @Input() profit: number = 0;
+  @Input() percentage: number = 0;
+  @Input() id: string = '';
+
   private subscriptions = new Subscription();
-  storeId: string
-  store!: Store
-  modalConfig
-  loading = false // Prevent duplicate client creation
-  newClientForm!: FormGroup
+  storeId: string;
+  store!: Store;
+  modalConfig;
+  loading = false; // Prevent duplicate client creation
+  newClientForm!: FormGroup;
 
-  hmm = [1,2,3,4]
-
-  constructor(  
-    private configsService: ConfigsService, 
-    private modalService: NgbModal, 
+  constructor(
+    private configsService: ConfigsService,
+    private modalService: NgbModal,
     private chRef: ChangeDetectorRef,
     private route: ActivatedRoute,
     private fb: FormBuilder,
     private storeService: StoreService,
     private msg: MessageService,
-    private router: Router) {
-      this.storeId = this.route.snapshot.params.id
-      this.modalConfig = this.configsService.getCleanModalOptions()
+    private router: Router
+  ) {
+    this.storeId = this.route.snapshot.params.id;
+    this.modalConfig = this.configsService.getCleanModalOptions();
   }
 
   ngOnInit(): void {
-    // this.getStoreInfo()
+    this.getStoreInfo()
     // this.initNewClientForm()
-  } 
-
-  createClient(modal: NgbActiveModal){
-
   }
 
-  getStoreInfo(){
+  createClient(modal: NgbActiveModal) {}
+
+  getStoreInfo() {
     this.subscriptions.add(
       this.storeService.getStoreById(this.storeId).subscribe(
         (res: any) => {
-          this.store = res.data.storeById as Store
-          console.log(this.store)
+          this.store = res.data.storeById as Store;
+          console.log(this.store);
           // if(!this.store){
           //   this.msg.error('Something went wrong loading the store.')
           //   setTimeout(() => {
           //     this.router.navigate(['/stores'])
           //   },2000)
           // }
-          this.chRef.detectChanges()
+          this.chRef.detectChanges();
         },
-        e => {
-          console.error(e)
-          this.msg.defaultError()
+        (e) => {
+          console.error(e);
+          this.msg.defaultError();
         }
       )
-    )
+    );
   }
 
-  openNewClientModal(content: TemplateRef<any>){
-    this.initNewClientForm()
-    this.modalService.open(content, this.modalConfig)
+  openNewClientModal(content: TemplateRef<any>) {
+    this.initNewClientForm();
+    this.modalService.open(content, this.modalConfig);
   }
 
   initNewClientForm() {
@@ -79,13 +89,15 @@ export class StoreDashboardComponent implements OnInit, OnDestroy {
       surname: ['', [Validators.required]],
       description: ['', []],
       location: ['', [Validators.required]],
-    })
+    });
   }
 
-  get n() { return this.newClientForm.controls }
+  get n() {
+    return this.newClientForm.controls;
+  }
 
   ngOnDestroy() {
-    this.subscriptions.unsubscribe()
-    this.chRef.detach()
+    this.subscriptions.unsubscribe();
+    this.chRef.detach();
   }
 }

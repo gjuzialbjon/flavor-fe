@@ -7,10 +7,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { StoreDashboardComponent } from './store-dashboard/store-dashboard.component';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { NbButtonModule, NbCardModule, NbFormFieldModule, NbIconModule, NbInputModule, NbSelectModule } from '@nebular/theme';
+import { NbButtonModule, NbCardModule, NbFormFieldModule, NbIconModule, NbInputModule, NbSelectModule, NbSpinnerModule } from '@nebular/theme';
+import { StoreCardComponent } from './store-card/store-card.component';
 
 @NgModule({
-  declarations: [StoresComponent, StoreDashboardComponent],
+  declarations: [StoresComponent, StoreDashboardComponent, StoreCardComponent],
   imports: [
     CommonModule,
     RouterModule.forChild([
@@ -35,6 +36,7 @@ import { NbButtonModule, NbCardModule, NbFormFieldModule, NbIconModule, NbInputM
     NbFormFieldModule,
     NbInputModule,
     NbSelectModule,
+    NbSpinnerModule
   ]
 })
 export class StoresModule { }
