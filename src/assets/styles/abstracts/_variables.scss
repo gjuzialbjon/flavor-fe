@@ -2,22 +2,6 @@
 /////////* BOOSTRAP OVERRIDE VARIABLES *//////////
 //////////////////////////////////////////////////
 
-/* BODY */
-$body-bg:#F3F7FD;
-$body-color: #343a40;
-
-/* NAVBAR */
-$navbar-ht: 80px;
-$navbar-mobile-ht: 60px;
-
-$navbar-light-color: #999BAD; //MENU ITEM NOT ACTIVE
-$navbar-light-active-color: #292828;
-$navbar-light-hover-color: #292828;
-
-/* SIDEBAR */
-$sidebar-wd: 240px; 
-$sidebar-bg: #ffffff;
-
 /* RESPONSIVE TYPOGRAPHY */
 $enable-responsive-font-sizes: true;
 
@@ -40,52 +24,10 @@ $container-max-widths: (
 /* OVERALL RADIUS OF COMPONENTS */
 $border-radius: 6px;
 
-/* CARDS */
-$card-border-width: 0;
-$card-spacer-y: 1.7rem;
-$card-spacer-x: 1.7rem;
-
-/* COLORS */
-$enable-gradients: true;
-
 $cyan: #056AFF;
 $primary:#7562CA;
 
-$text-muted: #717171;
 
-$dark-blue: #222B45;
-$custom-green: #107f72;
-$custom-gray: #EBF0F5;
-
-// Add "custom color" styles to the generated classes
-$theme-colors: (
-  "dark-green": $custom-green,
-  "light-gray": $custom-gray,
-);
-
-/* SCROLLBAR */
-$scrollbar-wd: 5px;
-$scrollbar-cl: $custom-green;
-$scrollbar-bg: $body-bg;
-
-
-
-
-/* BUTTONS */
-
-
-///////////////////////////////////////////////
-//////////* BOOSTRAP OVERRIDE VARIABLES *//////
-///////////////////////////////////////////////
-
-$main-bg-1: #DCDEE7;
-$main-bg-2: #EDEEF3;
-
-
-
-///////////////////////////////////////////////
-////////////* CUSTOM VARIABLES *///////////////
-///////////////////////////////////////////////
 
 
 

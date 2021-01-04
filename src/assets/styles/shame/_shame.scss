@@ -3,6 +3,12 @@
         text-decoration: none;
     }
 
+    nb-card.store-card{
+        background: #3886f7;
+        color: white;
+        border: none;
+    }
+
     nb-sidebar nb-menu .menu-item {
         .menu-icon{
             font-size: 1.8rem;
@@ -60,5 +66,10 @@
             }
         }
     }
+
+    .horizontal-line{
+        border-left: 2px solid rgba(255, 255, 255, 0.642);
+    }
 }
+
 

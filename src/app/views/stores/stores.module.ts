@@ -7,6 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { StoreDashboardComponent } from './store-dashboard/store-dashboard.component';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { NbButtonModule, NbCardModule, NbFormFieldModule, NbIconModule, NbInputModule, NbSelectModule } from '@nebular/theme';
 
 @NgModule({
   declarations: [StoresComponent, StoreDashboardComponent],
@@ -27,7 +28,13 @@ import { NgSelectModule } from '@ng-select/ng-select';
     FormsModule,
     ReactiveFormsModule,
     NgbTooltipModule,
-    NgSelectModule
+    NgSelectModule,
+    NbCardModule,
+    NbIconModule,
+    NbButtonModule,
+    NbFormFieldModule,
+    NbInputModule,
+    NbSelectModule,
   ]
 })
 export class StoresModule { }

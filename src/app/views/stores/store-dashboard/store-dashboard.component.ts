@@ -38,8 +38,8 @@ export class StoreDashboardComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.getStoreInfo()
-    this.initNewClientForm()
+    // this.getStoreInfo()
+    // this.initNewClientForm()
   } 
 
   createClient(modal: NgbActiveModal){
