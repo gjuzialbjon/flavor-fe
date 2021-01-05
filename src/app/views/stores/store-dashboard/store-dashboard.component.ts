@@ -28,12 +28,99 @@ export class StoreDashboardComponent implements OnInit, OnDestroy {
   @Input() percentage: number = 0;
   @Input() id: string = '';
 
+  transactions = [
+    {
+      date: '2020-23-11',
+      storeName: 'Store 1',
+      clientName: 'John Doe',
+      paymentType: 'Invoice',
+      credit: 2000,
+      debit: 4444,
+      status: 'completed',
+      description: 'Short description',
+      issued: true,
+      comment: 'This is the error comment'
+    },
+    {
+      date: '2020-23-11',
+      storeName: 'Store 1',
+      clientName: 'John Doe',
+      paymentType: 'Invoice',
+      credit: 2000,
+      debit: 4444,
+      status: 'pending',
+      description: 'Short description'
+    },
+    {
+      date: '2020-23-11',
+      storeName: 'Store 1',
+      clientName: 'John Doe',
+      paymentType: 'Invoice',
+      credit: 2000,
+      debit: 4444,
+      status: 'completed',
+      description: 'Short description'
+    },
+    {
+      date: '2020-23-11',
+      storeName: 'Store 1',
+      clientName: 'John Doe',
+      paymentType: 'Invoice',
+      credit: 2000,
+      debit: 4444,
+      status: 'completed',
+      description: 'Short description'
+    },
+    {
+      date: '2020-23-11',
+      storeName: 'Store 1',
+      clientName: 'John Doe',
+      paymentType: 'Invoice',
+      credit: 2000,
+      debit: 4444,
+      status: 'completed',
+      description: 'Short description',
+      issued: true
+    },
+    {
+      date: '2020-23-11',
+      storeName: 'Store 1',
+      clientName: 'John Doe',
+      paymentType: 'Invoice',
+      credit: 2000,
+      debit: 4444,
+      status: 'pending',
+      description: 'Short description'
+    },
+    {
+      date: '2020-23-11',
+      storeName: 'Store 1',
+      clientName: 'John Doe',
+      paymentType: 'Invoice',
+      credit: 2000,
+      debit: 4444,
+      status: 'completed',
+      description: 'Short description'
+    },
+    {
+      date: '2020-23-11',
+      storeName: 'Store 1',
+      clientName: 'John Doe',
+      paymentType: 'Invoice',
+      credit: 2000,
+      debit: 4444,
+      status: 'completed',
+      description: 'Short description'
+    }
+  ]
+
   private subscriptions = new Subscription();
   storeId: string;
   store!: Store;
   modalConfig;
   loading = false; // Prevent duplicate client creation
   newClientForm!: FormGroup;
+
 
   constructor(
     private configsService: ConfigsService,

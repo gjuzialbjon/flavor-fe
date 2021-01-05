@@ -19,15 +19,15 @@ export class SidebarComponent implements OnInit {
   destroyed$: ReplaySubject<boolean> = new ReplaySubject(1);
 
   items: NbMenuItem[] = [
-    {
-      title: 'Dashboard',
-      link: '/dashboard',
-      icon: {
-        icon: 'dashboard',
-        pack: 'menu',
-      },
-      pathMatch: 'prefix',
-    },
+    // {
+    //   title: 'Dashboard',
+    //   link: '/dashboard',
+    //   icon: {
+    //     icon: 'dashboard',
+    //     pack: 'menu',
+    //   },
+    //   pathMatch: 'prefix',
+    // },
     {
       title: 'Stores',
       link: '/stores',

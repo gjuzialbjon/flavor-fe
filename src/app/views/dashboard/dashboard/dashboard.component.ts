@@ -1,38 +1,59 @@
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+} from '@angular/core';
 import { DashboardService } from 'src/app/core/services/dashboard.service';
 
-interface StoreBase{
-  id: string,
-  name: string
+interface StoreBase {
+  id: string;
+  name: string;
 }
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DashboardComponent implements OnInit {
-  stores: StoreBase[] = [
+  stores: StoreBase[] = [];
+
+  tabs: any[] = [
     {
-      id: '12231123',
-      name: "dsadsads"
+      title: 'Users',
+      responsive: false,
+      route: './users',
     },
     {
-      id: '4444444',
-      name: "dsadsads"
-    }
-  ]
+      title: 'Invites',
+      responsive: false,
+      route: './invites',
+    },
+  ];
 
-  constructor(private chRef: ChangeDetectorRef, private dashboardService: DashboardService) { }
+  constructor(
+    private chRef: ChangeDetectorRef,
+    private dashboardService: DashboardService
+  ) {}
 
   ngOnInit(): void {
-    // this.dashboardService.getStoreBase().subscribe(
-    //   (res: any) => {
-    //     console.log(res)
-    //   },
-    //   e => { console.error(e) }
-    // )
+    this.dashboardService.getStoreBase().subscribe(
+      (res: any) => {
+        this.stores = res.data.storeMany as StoreBase[];
+        console.log(this.stores);
+      },
+      (e) => {
+        console.error(e);
+      },
+      () => {
+        this.chRef.detectChanges()
+      }
+    );
   }
 
+  ngOnDestroy(){
+    this.chRef.detach()
+  }
 }

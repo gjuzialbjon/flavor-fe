@@ -34,20 +34,20 @@ export class InvitesComponent implements OnInit {
 
   inviteUser(){
     if(this.emailFormControl.invalid && this.roleFormControl.invalid ){
-      this.msg.error('Email and role are both required', 'Error')
+      this.msg.error('Email and role are both required', 'Error!')
       return
     } else if(this.emailFormControl.invalid){
-      this.msg.error('Email format is invalid', 'Error')
+      this.msg.error('A valid email is required', 'Error!')
       return
     } else if(this.roleFormControl.invalid){
-      this.msg.error('Role is invalid', 'Error')
+      this.msg.error('A valid role is required', 'Error!')
       return
     }
 
     this.invitationLoading = true
     console.log('Invite user ', this.emailFormControl.value, this.roleFormControl.value)
 
-    this.userService.inviteUser(this.emailFormControl.value, this.roleFormControl.value).subscribe(
+    this.userService.inviteUser(this.emailFormControl.value.toLowerCase(), this.roleFormControl.value).subscribe(
       (res: any) => {
         console.log(res)
 

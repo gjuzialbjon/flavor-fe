@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { CurrenciesComponent } from './currencies/currencies.component';
 import { RouterModule } from '@angular/router';
 import { SettingsComponent } from './settings.component';
-import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { UsersComponent } from './users/users.component';
 import { DataTablesModule } from 'angular-datatables';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -45,7 +44,6 @@ import { NbButtonModule, NbCardModule, NbCheckboxModule, NbFormFieldModule, NbIc
         ]
       },
     ]),
-    NgbNavModule,
     DataTablesModule,
     FormsModule,
     ReactiveFormsModule,

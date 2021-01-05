@@ -4,11 +4,12 @@ import { StoresComponent } from './stores/stores.component';
 import { RouterModule } from '@angular/router';
 import { CountUpModule } from 'ngx-countup';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDropdownModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { StoreDashboardComponent } from './store-dashboard/store-dashboard.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NbButtonModule, NbCardModule, NbFormFieldModule, NbIconModule, NbInputModule, NbSelectModule, NbSpinnerModule } from '@nebular/theme';
 import { StoreCardComponent } from './store-card/store-card.component';
+import { DataTablesModule } from 'angular-datatables';
 
 @NgModule({
   declarations: [StoresComponent, StoreDashboardComponent, StoreCardComponent],
@@ -25,6 +26,7 @@ import { StoreCardComponent } from './store-card/store-card.component';
         component: StoreDashboardComponent,
       }
     ]),
+    DataTablesModule,
     CountUpModule,
     FormsModule,
     ReactiveFormsModule,
@@ -36,7 +38,8 @@ import { StoreCardComponent } from './store-card/store-card.component';
     NbFormFieldModule,
     NbInputModule,
     NbSelectModule,
-    NbSpinnerModule
+    NbSpinnerModule,
+    NgbDropdownModule
   ]
 })
 export class StoresModule { }

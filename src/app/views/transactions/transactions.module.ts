@@ -6,6 +6,8 @@ import { TransactionComponent } from './helpers/transaction/transaction.componen
 import { NbButtonModule, NbCardModule, NbDatepickerModule, NbFormFieldModule, NbIconModule, NbInputModule, NbSelectModule } from '@nebular/theme';
 import { NewTransactionComponent } from './new-transaction/new-transaction.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DataTablesModule } from 'angular-datatables';
+import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [TransactionsComponent, TransactionComponent, NewTransactionComponent],
@@ -17,6 +19,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
         component: TransactionsComponent,
       }
     ]),
+    DataTablesModule,
     FormsModule,
     ReactiveFormsModule,
     NbCardModule,
@@ -25,7 +28,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     NbButtonModule,
     NbDatepickerModule,
     NbInputModule,
-    NbSelectModule
+    NbSelectModule,
+    NgbDropdownModule
   ]
 })
 export class TransactionsModule { }
