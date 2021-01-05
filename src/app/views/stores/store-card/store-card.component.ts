@@ -15,8 +15,8 @@ import { StoreService } from 'src/app/core/services/store.service';
 })
 export class StoreCardComponent implements OnInit {
   @Input() name: string = '';
-  @Input() balance: number = 0;
-  @Input() profit: number = 0;
+  @Input() balance: number = 3434;
+  @Input() profit: number = 343430;
   @Input() percentage: number = 0;
   @Input() id: string = '';
 

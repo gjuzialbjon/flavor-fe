@@ -1,26 +1,26 @@
 <div class="row">
   <div class="col-lg-4 col-md-6">
-    <nb-card class="h-100">
+    <nb-card class="">
       <nb-card-body>
         <div class="row">
           <div class="col">
-            <h6 class="text-uppercase text-muted">Store name</h6>
-            <img
+            <p class="text-uppercase text-muted">Store name</p>
+            <!-- <img
               src="../../../../assets/media/stores/st1.jpg"
               alt=""
               width="100"
               class="rounded-circle"
-            />
+            /> -->
           </div>
           <div class="col">
-            <p class="mb-1 text-muted font-weight-bold">BALANCE TOT</p>
-            <p class="text-center mb-3 h3 text-info">
+            <p class="mb-1 text-muted">BALANCE TOT</p>
+            <p class="text-center mb-3 text-info">
               <sup>$</sup>
               324324
             </p>
 
-            <p class="mb-1 text-muted font-weight-bold">PROFIT TOT</p>
-            <p class="text-center h3 mb-0 text-info">
+            <p class="mb-1 text-muted">PROFIT TOT</p>
+            <p class="text-center  mb-0 text-info">
               <sup>$</sup>
               324324
             </p>
@@ -30,67 +30,31 @@
     </nb-card>
   </div>
   <div class="col-lg-4 col-md-6">
-    <div class="row mt-md-0 mt-4">
-      <div class="col-sm-6">
-        <nb-card>
-          <nb-card-body>
-            <h6 class="text-muted font-weight-bold">BALANCE EURO</h6>
-            <p class="text-left mb-0 h4 text-info">
-              <sup>$</sup>
-              3243
-            </p>
-          </nb-card-body>
-        </nb-card>
-      </div>
-      <div class="col-sm-6">
-        <nb-card>
-          <nb-card-body>
-            <h6 class="text-muted font-weight-bold">BALANCE DOLLAR</h6>
-            <p class="text-left mb-0 h4 text-info">
-              <sup>$</sup>
-              3243
-            </p>
-          </nb-card-body>
-        </nb-card>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-sm-6">
-        <nb-card class="mb-0">
-          <nb-card-body>
-            <h6 class="text-muted font-weight-bold">BALANCE ALL</h6>
-            <p class="text-left mb-0 h4 text-info">
-              <sup>$</sup>
-              3243
-            </p>
-          </nb-card-body>
-        </nb-card>
-      </div>
-      <div class="col-sm-6">
-        <nb-card class="mb-0 mt-sm-0 mt-4">
-          <nb-card-body>
-            <h6 class="text-muted font-weight-bold">BALANCE GBP</h6>
-            <p class="text-left mb-0 h4 text-info">
-              <sup>$</sup>
-              3243
-            </p>
-          </nb-card-body>
-        </nb-card>
-      </div>
-    </div>
-  </div>
-  <div class="col-lg-4 col-md-6">
-    <nb-card class="h-100 mt-lg-0 mt-4">
+    <nb-card class="">
       <nb-card-body> Calendar </nb-card-body>
     </nb-card>
   </div>
+</div>
+
+<div class="row">
+    <div class="col-xl-2 col-lg-3 col-md-4">
+        <nb-card>
+            <nb-card-body>
+                <p class="text-muted">BALANCE EURO</p>
+                <p class="text-left mb-0 text-info">
+                <sup>$</sup>
+                3243
+                </p>
+            </nb-card-body>
+        </nb-card>
+    </div>
 </div>
 
 <nb-card class="mt-4">
   <nb-card-body>
     <div class="row mb-3">
       <div class="col">
-        <h6>Transactions</h6>
+        <p>Transactions</p>
       </div>
       <div class="col text-right">
         <nb-icon
@@ -156,7 +120,7 @@
               </td>
               <td
                 class="text-capitalize"
-                [ngClass]="{ 'text-danger font-weight-bold': transaction.status === 'pending' }"
+                [ngClass]="{ 'text-danger': transaction.status === 'pending' }"
               >
                 {{ transaction.status }}
               </td>
