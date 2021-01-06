@@ -38,6 +38,12 @@ export class SidebarComponent implements OnInit {
       pathMatch: 'prefix',
     },
     {
+      title: 'Clients',
+      link: '/clients',
+      icon: 'user-tie',
+      pathMatch: 'prefix',
+    },
+    {
       title: 'Transactions',
       link: '/transactions',
       icon: {

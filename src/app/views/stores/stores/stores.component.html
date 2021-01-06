@@ -1,15 +1,42 @@
-<div class="row"  
-  [nbSpinner]="loadingStores"
-  nbSpinnerStatus="danger"
-  nbSpinnerSize="large"
-  nbSpinnerMessage="">
-  <div class="col-xl-4 col-lg-6">
-    <app-store-card 
-      *ngFor="let store of stores"
-      [name]="store.name"
-      [id]="store._id"
-      >
-    </app-store-card>
+<div class="row">
+  <div class="col-lg-5">
+    <div class="row">
+      <div class="col-xl-5 col-lg-6 col-12">
+        <nb-card class="store-card shadow mb-4">
+          <nb-card-body class="p-3">
+            <div class="text-uppercase font-weight-normal text-white mb-1">
+              Total balance euro
+            </div>
+            <div class="text-right text-white mb-0" style="font-size: x-large">
+              <sup>&euro;</sup>
+              234324
+            </div>
+          </nb-card-body>
+        </nb-card>
+      </div>
+    </div>
+    
+    <div class="row"  
+      [nbSpinner]="loadingStores"
+      nbSpinnerStatus="danger"
+      nbSpinnerSize="large"
+      nbSpinnerMessage="">
+      <div class="col-12">
+        <app-store-card 
+          *ngFor="let store of stores"
+          [name]="store.name"
+          [id]="store._id"
+          >
+        </app-store-card>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-7">
+    <nb-card style="box-shadow: 2px 2px 3px #0000004D;">
+      <nb-card-body>
+        Favorite clients here
+      </nb-card-body>
+    </nb-card>
   </div>
 </div>
 

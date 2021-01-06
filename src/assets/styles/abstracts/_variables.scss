@@ -11,22 +11,26 @@ $grid-breakpoints: (
   sm: 576px,
   md: 768px,
   lg: 1092px,
-  xl: 1350px
+  xl: 1450px
 );
 
 $container-max-widths: (
   sm: 540px,
   md: 720px,
-  lg: 1060px,
+  lg: 1090px,
   xl: 2040px
 );
 
 /* OVERALL RADIUS OF COMPONENTS */
 $border-radius: 6px;
 
+// COLORS
 $cyan: #056AFF;
 $primary:#7562CA;
 
+
+// SHADOW
+$box-shadow: 2px 2px 3px #0000004D;
 
 
 

@@ -39,7 +39,7 @@ export class StoreDashboardComponent implements OnInit, OnDestroy {
       status: 'completed',
       description: 'Short description',
       issued: true,
-      comment: 'This is the error comment'
+      comment: 'This is the error comment',
     },
     {
       date: '2020-23-11',
@@ -49,27 +49,7 @@ export class StoreDashboardComponent implements OnInit, OnDestroy {
       credit: 2000,
       debit: 4444,
       status: 'pending',
-      description: 'Short description'
-    },
-    {
-      date: '2020-23-11',
-      storeName: 'Store 1',
-      clientName: 'John Doe',
-      paymentType: 'Invoice',
-      credit: 2000,
-      debit: 4444,
-      status: 'completed',
-      description: 'Short description'
-    },
-    {
-      date: '2020-23-11',
-      storeName: 'Store 1',
-      clientName: 'John Doe',
-      paymentType: 'Invoice',
-      credit: 2000,
-      debit: 4444,
-      status: 'completed',
-      description: 'Short description'
+      description: 'Short description',
     },
     {
       date: '2020-23-11',
@@ -80,7 +60,27 @@ export class StoreDashboardComponent implements OnInit, OnDestroy {
       debit: 4444,
       status: 'completed',
       description: 'Short description',
-      issued: true
+    },
+    {
+      date: '2020-23-11',
+      storeName: 'Store 1',
+      clientName: 'John Doe',
+      paymentType: 'Invoice',
+      credit: 2000,
+      debit: 4444,
+      status: 'completed',
+      description: 'Short description',
+    },
+    {
+      date: '2020-23-11',
+      storeName: 'Store 1',
+      clientName: 'John Doe',
+      paymentType: 'Invoice',
+      credit: 2000,
+      debit: 4444,
+      status: 'completed',
+      description: 'Short description',
+      issued: true,
     },
     {
       date: '2020-23-11',
@@ -90,7 +90,7 @@ export class StoreDashboardComponent implements OnInit, OnDestroy {
       credit: 2000,
       debit: 4444,
       status: 'pending',
-      description: 'Short description'
+      description: 'Short description',
     },
     {
       date: '2020-23-11',
@@ -100,7 +100,7 @@ export class StoreDashboardComponent implements OnInit, OnDestroy {
       credit: 2000,
       debit: 4444,
       status: 'completed',
-      description: 'Short description'
+      description: 'Short description',
     },
     {
       date: '2020-23-11',
@@ -110,17 +110,46 @@ export class StoreDashboardComponent implements OnInit, OnDestroy {
       credit: 2000,
       debit: 4444,
       status: 'completed',
-      description: 'Short description'
-    }
-  ]
+      description: 'Short description',
+    },
+  ];
+
+  balances = [
+    {
+      name: 'Euro',
+      amount: 2134324,
+    },
+    {
+      name: 'Dollar',
+      amount: 2134,
+    },
+    {
+      name: 'All',
+      amount: 434,
+    },
+    {
+      name: 'Bitcoin',
+      amount: 5434,
+    },
+  ];
 
   private subscriptions = new Subscription();
   storeId: string;
   store!: Store;
   modalConfig;
-  loading = false; // Prevent duplicate client creation
-  newClientForm!: FormGroup;
 
+  makingTransaction = true;
+  transactionType = 'transfer';
+  transactionTypes = [
+    'transfer',
+    'purchase',
+    'trade',
+    'loan',
+    'withdraw',
+    'deposit',
+    'sell',
+    'fee',
+  ];
 
   constructor(
     private configsService: ConfigsService,
@@ -137,11 +166,9 @@ export class StoreDashboardComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.getStoreInfo()
+    this.getStoreInfo();
     // this.initNewClientForm()
   }
-
-  createClient(modal: NgbActiveModal) {}
 
   getStoreInfo() {
     this.subscriptions.add(
@@ -165,22 +192,29 @@ export class StoreDashboardComponent implements OnInit, OnDestroy {
     );
   }
 
-  openNewClientModal(content: TemplateRef<any>) {
-    this.initNewClientForm();
-    this.modalService.open(content, this.modalConfig);
+  toggleTransaction() {
+    this.makingTransaction = !this.makingTransaction;
+    this.chRef.detectChanges();
   }
 
-  initNewClientForm() {
-    this.newClientForm = this.fb.group({
-      name: ['', [Validators.required]],
-      surname: ['', [Validators.required]],
-      description: ['', []],
-      location: ['', [Validators.required]],
-    });
+  cancelTransaction() {
+    this.makingTransaction = false;
+    this.transactionType = 'transfer';
+    this.chRef.detectChanges();
   }
 
-  get n() {
-    return this.newClientForm.controls;
+  select(type: string) {
+    this.transactionType = type;
+    console.log('Selecting ', this.transactionType);
+    this.removeActiveClassFromActiveTransferType();
+
+    document.getElementById(type)?.classList.add('active');
+  }
+
+  removeActiveClassFromActiveTransferType() {
+    for (const type of this.transactionTypes) {
+      document.getElementById(type)?.classList.remove('active');
+    }
   }
 
   ngOnDestroy() {

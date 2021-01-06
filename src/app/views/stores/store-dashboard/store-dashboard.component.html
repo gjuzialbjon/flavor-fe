@@ -1,26 +1,33 @@
 <div class="row">
-  <div class="col-lg-4 col-md-6">
+  <div class="col-xl-4 col-lg-6 col-md-4">
     <nb-card class="">
       <nb-card-body>
         <div class="row">
           <div class="col">
-            <p class="text-uppercase text-muted">Store name</p>
-            <!-- <img
-              src="../../../../assets/media/stores/st1.jpg"
-              alt=""
-              width="100"
-              class="rounded-circle"
-            /> -->
+            <p class="text-uppercase text-muted m-0">Store name</p>
           </div>
+          <div class="col text-right">
+            <button
+              nbButton
+              status="info"
+              size="small"
+              shape="round"
+              >
+              Charge store
+            </button>
+          </div>
+        </div>
+        <div class="row mt-2">
           <div class="col">
             <p class="mb-1 text-muted">BALANCE TOT</p>
-            <p class="text-center mb-3 text-info">
+            <p class="text-center mb-0 text-info" style="font-size: 24px;">
               <sup>$</sup>
               324324
             </p>
-
+          </div>
+          <div class="col">
             <p class="mb-1 text-muted">PROFIT TOT</p>
-            <p class="text-center  mb-0 text-info">
+            <p class="text-center mb-0 text-info" style="font-size: 24px;">
               <sup>$</sup>
               324324
             </p>
@@ -29,54 +36,151 @@
       </nb-card-body>
     </nb-card>
   </div>
-  <div class="col-lg-4 col-md-6">
-    <nb-card class="">
-      <nb-card-body> Calendar </nb-card-body>
+  <div class="col-xl-2 col-lg-3 col-md-4" *ngFor="let balance of balances">
+    <nb-card>
+        <nb-card-body>
+            <p class="text-muted text-uppercase">BALANCE {{ balance.name }}</p>
+            <p class="text-center mb-0 text-info" style="font-size: 30px;">
+            <sup>$</sup>
+            <span >{{ balance.amount }}</span>
+            </p>
+        </nb-card-body>
     </nb-card>
   </div>
 </div>
 
-<div class="row">
-    <div class="col-xl-2 col-lg-3 col-md-4">
-        <nb-card>
-            <nb-card-body>
-                <p class="text-muted">BALANCE EURO</p>
-                <p class="text-left mb-0 text-info">
-                <sup>$</sup>
-                3243
-                </p>
-            </nb-card-body>
-        </nb-card>
-    </div>
-</div>
-
-<nb-card class="mt-4">
+<nb-card class="mt-4 shadow" style="border: none;">
   <nb-card-body>
     <div class="row mb-3">
-      <div class="col">
+      <div class="col-md-4">
         <p>Transactions</p>
       </div>
-      <div class="col text-right">
+      <div class="col-md-8 text-right">
         <nb-icon
-        icon="calendar-alt"
-        status="info"
-        class="mr-4"
-        style="cursor: pointer"
-      ></nb-icon>
-        <div ngbDropdown class="d-inline-block">
-            <button class="btn btn-info" id="dropdownBasic1" ngbDropdownToggle>Make a transaction</button>
-            <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-              <button ngbDropdownItem>Transfer</button>
-              <button ngbDropdownItem>Purchase</button>
-              <button ngbDropdownItem>Trade</button>
-              <button ngbDropdownItem>Loan</button>
-              <button ngbDropdownItem>Withdraw</button>
-              <button ngbDropdownItem>Deposit</button>
-              <button ngbDropdownItem>Sell</button>
+          icon="calendar-alt"
+          status="info"
+          class="mr-4"
+          style="cursor: pointer"
+        ></nb-icon>
+        <button
+          nbButton
+          status="info"
+          style="text-transform: none; border-radius: 13px;"
+          (click)="toggleTransaction()"
+          >
+          {{ makingTransaction ? 'Cancel transaction' : 'Make a transaction'}}
+        </button>
+        
+      </div>
+    </div>
+
+    <!-- MAKING A TRANSACTION SECTION -->
+    <div class="row" *ngIf="makingTransaction" style="background-color: #F5F9FF; margin: 0rem -1rem;">
+      <div class="col-12 pt-4 px-lg-5 px-0">
+        <nb-card style="border: none; margin: 0;">
+          <nb-card-body class="pl-1">
+            <span class="transaction-menu-item active" id="transfer" (click)="select('transfer')">Transfer</span>
+            <span class="transaction-menu-item" id="purchase" (click)="select('purchase')">Purchase</span>
+            <span class="transaction-menu-item" id="trade" (click)="select('trade')">Trade</span>
+            <span class="transaction-menu-item" id="loan" (click)="select('loan')">Loan</span>
+            <span class="transaction-menu-item" id="withdraw" (click)="select('withdraw')">Withdraw</span>
+            <span class="transaction-menu-item" id="deposit" (click)="select('deposit')">Deposit</span>
+            <span class="transaction-menu-item" id="sell" (click)="select('sell')">Sell</span>
+            <span class="transaction-menu-item" id="fee" (click)="select('fee')">Fee</span>
+          </nb-card-body>
+        </nb-card>
+      </div>
+      <div class="col-12 py-4 px-lg-5 px-0">
+        <div [ngSwitch]="transactionType">
+          <div *ngSwitchCase="'transfer'">
+            <div class="row">
+              <div class="col-lg-3 col-md-6">
+                <nb-form-field>
+                  <label for="" class="label">Amount</label>
+                  <input nbInput>
+                </nb-form-field>
+              </div>
+              <div class="col-lg-3 col-md-6">
+                <nb-form-field>
+                  <label for="" class="label">Amount</label>
+                  <input nbInput>
+                </nb-form-field>
+              </div>
+              <div class="col-lg-3 col-md-6">
+                <nb-form-field>
+                  <label for="" class="label">Amount</label>
+                  <input nbInput>
+                </nb-form-field>
+              </div>
+              <div class="col-lg-3 col-md-6">
+                <nb-form-field>
+                  <label for="" class="label">Amount</label>
+                  <input nbInput>
+                </nb-form-field>
+              </div>
+              <div class="col-lg-3 col-md-6">
+                <nb-form-field>
+                  <label for="" class="label">Amount</label>
+                  <input nbInput>
+                </nb-form-field>
+              </div>
+              <div class="col-lg-3 col-md-6">
+                <nb-form-field>
+                  <label for="" class="label">Amount</label>
+                  <input nbInput>
+                </nb-form-field>
+              </div>
+              <div class="col-lg-3 col-md-6">
+                <nb-form-field>
+                  <label for="" class="label">Amount</label>
+                  <input nbInput>
+                </nb-form-field>
+              </div>
             </div>
+            <div class="row">
+              <div class="col-12 text-right">
+                <button
+                  nbButton
+                  ghost
+                  class="mr-3"
+                  (click)="cancelTransaction()"
+                  >
+                  Cancel
+                </button>
+                <button
+                  nbButton
+                  status="info"
+                  >
+                  Make
+                </button>
+              </div>
+            </div>
+          </div>
+          <div *ngSwitchCase="'purchase'">
+            Purchase here
+          </div>
+          <div *ngSwitchCase="'trade'">
+            Trade here
+          </div>
+          <div *ngSwitchCase="'loan'">
+            Loan here
+          </div>
+          <div *ngSwitchCase="'withdraw'">
+            Withdraw here
+          </div>
+          <div *ngSwitchCase="'deposit'">
+            Deposit here
+          </div>
+          <div *ngSwitchCase="'sell'">
+            Sell here
+          </div>
+          <div *ngSwitchCase="'fee'">
+            Fee here
+          </div>
         </div>
       </div>
     </div>
+    <!-- END MAKING A TRANSACTION -->
     <div class="row">
       <div class="col-12">
         <table

@@ -54,6 +54,23 @@
         }
     }
 
+    .transaction-menu-item{
+        color: #959595;
+        text-transform: uppercase;
+        font-weight: 700;
+        padding: 5px 10px;
+        cursor: pointer;
+
+        &:hover{
+            color: #3886F7;
+        }
+
+        &.active{
+            color: #3886F7;
+            border-bottom: 4px solid #3886F7;
+        }
+    }
+
     .horizontal-line{
         border-left: 2px solid rgba(255, 255, 255, 0.642);
     }

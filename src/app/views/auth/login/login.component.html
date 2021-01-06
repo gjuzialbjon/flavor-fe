@@ -55,6 +55,7 @@
           nbButton
           status="info"
           class="mt-2"
+          shape="round"
           (click)="login()"
           [disabled]="loginForm.invalid || loading"
           [nbSpinner]="loading" 
@@ -63,17 +64,7 @@
           LOGIN
         </button>
       </div>
-      
-      <br />
-      <div class="row mt-2">
-        <div class="col-5">
-          <hr style="border-top: 1px solid rgb(44, 78, 170)" />
-        </div>
-        <div class="col-2 font-weight-bold mt-2">OR</div>
-        <div class="col-5">
-          <hr style="border-top: 1px solid rgb(44, 78, 170)" />
-        </div>
-      </div>
+    
       <button
         type="button"
         nbButton
