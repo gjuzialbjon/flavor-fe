@@ -8,7 +8,6 @@ export interface User {
     role: string
     passsword: string
     confirmed: Boolean
-    invited: Boolean
     stores: [Store]
     accounts: [Account]
     _id: string

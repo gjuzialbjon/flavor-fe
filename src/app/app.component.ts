@@ -20,6 +20,5 @@ export class AppComponent {
     this.iconLibraries.setDefaultPack('solid'); // <---- set as default
 
     this.iconLibraries.registerFontPack('menu', { iconClassPrefix: 'icon'})
-    
   }
 }

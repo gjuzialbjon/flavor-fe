@@ -28,6 +28,10 @@
         background-color: white;
     }
 
+    nb-sidebar nb-menu{
+        margin: 0 -1.25rem 0 -1.25rem;
+    }
+
     nb-sidebar nb-menu .menu-item a.active{
         position: relative;
 

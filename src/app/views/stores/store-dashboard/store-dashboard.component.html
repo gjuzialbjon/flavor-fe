@@ -1,10 +1,10 @@
-<div class="row">
-  <div class="col-xl-4 col-lg-6 col-md-4">
-    <nb-card class="">
+<div class="row align-items-end">
+  <div class="col-xl-4 col-lg-6 col-md-8">
+    <nb-card>
       <nb-card-body>
         <div class="row">
           <div class="col">
-            <p class="text-uppercase text-muted m-0">Store name</p>
+            <p class="text-uppercase text-muted font-weight-bold m-0">Store name</p>
           </div>
           <div class="col text-right">
             <button
@@ -18,18 +18,16 @@
           </div>
         </div>
         <div class="row mt-2">
-          <div class="col">
+          <div class="col-md-6">
             <p class="mb-1 text-muted">BALANCE TOT</p>
-            <p class="text-center mb-0 text-info" style="font-size: 24px;">
-              <sup>$</sup>
-              324324
+            <p class="text-center mb-md-0 md-3 text-info" style="font-size: 1.5rem;">
+              {{ '324324' | currency: 'EUR' }}
             </p>
           </div>
-          <div class="col">
+          <div class="col-md-6 ">
             <p class="mb-1 text-muted">PROFIT TOT</p>
-            <p class="text-center mb-0 text-info" style="font-size: 24px;">
-              <sup>$</sup>
-              324324
+            <p class="text-center mb-0 text-info" style="font-size: 1.5rem;">
+              {{ '324324' | currency: 'EUR' }}
             </p>
           </div>
         </div>
@@ -40,16 +38,15 @@
     <nb-card>
         <nb-card-body>
             <p class="text-muted text-uppercase">BALANCE {{ balance.name }}</p>
-            <p class="text-center mb-0 text-info" style="font-size: 30px;">
-            <sup>$</sup>
-            <span >{{ balance.amount }}</span>
+            <p class="text-center mb-0 text-info" style="font-size: 1.5rem;">
+            <span >{{ balance.amount | currency: balance.currency }}</span>
             </p>
         </nb-card-body>
     </nb-card>
   </div>
 </div>
 
-<nb-card class="mt-4 shadow" style="border: none;">
+<nb-card class="mt-0 shadow" style="border: none;">
   <nb-card-body>
     <div class="row mb-3">
       <div class="col-md-4">
@@ -185,6 +182,7 @@
       <div class="col-12">
         <table
           datatable
+          [dtOptions]="dtOptions"
           class="table table-borderless table-hover"
           width="100%"
         >
@@ -214,13 +212,11 @@
               <td class="text-capitalize">{{ transaction.storeName }}</td>
               <td class="text-capitalize">{{ transaction.clientName }}</td>
               <td class="text-capitalize">{{ transaction.paymentType }}</td>
-              <td class="text-capitalize">
-                <sup>$</sup>
-                {{ transaction.credit }}
+              <td class="text-capitalize" [attr.data-sort]="transaction.credit">
+                {{ transaction.credit | currency: transaction.currency }}
               </td>
-              <td class="text-capitalize">
-                <sup>$</sup>
-                {{ transaction.debit }}
+              <td class="text-capitalize" [attr.data-sort]="transaction.debit">
+                {{ transaction.debit | currency: transaction.currency }}
               </td>
               <td
                 class="text-capitalize"

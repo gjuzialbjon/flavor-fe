@@ -83,6 +83,10 @@ export class SidebarComponent implements OnInit {
   ngOnInit(): void {
     const { sm } = this.breakpointService.getBreakpointsMap();
 
+    if(document.documentElement.clientWidth > 1190 ){
+      this.sidebarService.compact()
+    }
+
     this.menuService
       .onItemSelect()
       .pipe(takeUntil(this.destroyed$))

@@ -18,7 +18,6 @@ import { CurrencyService } from 'src/app/core/services/currency.service';
 export class CurrenciesComponent implements OnInit {
   @ViewChild(DataTableDirective) dtElement!: DataTableDirective;
 
-  private subscriptions = new Subscription()
   dtOptions: DataTables.Settings 
   dtTrigger = new Subject<any>();
   modalConfig
@@ -49,6 +48,10 @@ export class CurrenciesComponent implements OnInit {
     private authService: AuthenticationService
     ) {
       this.dtOptions = this.configsService.getDTOptions()
+      this.dtOptions.columnDefs = [
+        // @ts-ignore
+        { responsivePriority: 100, targets: [0,4] },
+      ]
       this.modalConfig = this.configsService.getCleanModalOptions()
   }
 
@@ -88,20 +91,19 @@ export class CurrenciesComponent implements OnInit {
   }
 
   getCurrencies(){
-    this.subscriptions.add(
-      this.currencyService.getCurrencies().subscribe(
-        (res: any) => {
-          this.currencies = JSON.parse(JSON.stringify(res.data.currencyMany)) as Currency[]
-        },
-        e => { 
-          console.error(e)
-          this.msg.defaultError()
-        },
-        () => {
-          this.dtTrigger.next()
-          this.chRef.detectChanges()
-        })
-    )
+    this.currencyService.getCurrencies().subscribe(
+      (res: any) => {
+        this.currencies = JSON.parse(JSON.stringify(res.data.currencyMany)) as Currency[]
+      },
+      e => { 
+        console.error(e)
+        this.msg.defaultError()
+      },
+      () => {
+        this.dtTrigger.next()
+        this.chRef.detectChanges()
+      })
+    
   }
 
   openUpdate(content: TemplateRef<any>, currency: Currency){
@@ -133,7 +135,6 @@ export class CurrenciesComponent implements OnInit {
   get f() { return this.currencyForm.controls}
 
   ngOnDestroy(){
-    this.subscriptions.unsubscribe()
     this.dtTrigger.unsubscribe()
     this.chRef.detach()
   }

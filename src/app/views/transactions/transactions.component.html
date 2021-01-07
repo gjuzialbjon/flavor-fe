@@ -80,12 +80,10 @@
                 <td class="text-capitalize">{{ transaction.clientName }}</td>
                 <td class="text-capitalize">{{ transaction.paymentType }}</td>
                 <td class="text-capitalize">
-                  <sup>$</sup>
-                  {{ transaction.credit }}
+                  {{ transaction.credit | currency }}
                 </td>
                 <td class="text-capitalize">
-                  <sup>$</sup>
-                  {{ transaction.debit }}
+                  {{ transaction.debit | currency }}
                 </td>
                 <td
                   class="text-capitalize"

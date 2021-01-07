@@ -42,7 +42,7 @@ export class UsersComponent implements OnInit, OnDestroy {
       this.dtOptions = this.configsService.getDTOptions()
       this.dtOptions.columnDefs = [
         // @ts-ignore
-        { responsivePriority: 100, targets: [0,4] },
+        { responsivePriority: 100, targets: [0,3] },
       ]
       this.modalConfig = this.configsService.getCleanModalOptions()
   }
@@ -72,8 +72,7 @@ export class UsersComponent implements OnInit, OnDestroy {
        
         this.user.name = updatedUser.name
         this.user.email = updatedUser.email
-        this.user.confirmed = updatedUser.confirmed
-        this.user.invited = updatedUser.invited
+        this.user.role = updatedUser.role
         this.user.stores = updatedUser.stores
                
         this.rerender()
@@ -95,14 +94,13 @@ export class UsersComponent implements OnInit, OnDestroy {
     this.userForm = this.fb.group({
       name: [this.user.name, [Validators.required]], 
       email: [this.user.email, [Validators.required]],
-      confirmed: [this.user.confirmed, []],
-      invited: [this.user.invited, []],
+      role: [this.user.role, [Validators.required]],
       stores: [this.getStoreIds(this.user.stores), []]
     })
   }
 
   getUsers(){
-    this.subscriptions.add(this.userService.getUsers().subscribe(
+   this.userService.getUsers().subscribe(
       (res: any) => {
         this.users = JSON.parse(JSON.stringify(res.data.userMany)) as User[]
       },
@@ -113,16 +111,16 @@ export class UsersComponent implements OnInit, OnDestroy {
       () => {
         this.dtTrigger.next()
         this.chRef.detectChanges()
-      }))
+      })
   }
 
   getStores() {
-    this.subscriptions.add(this.userService.getStores().subscribe(
+    this.userService.getStores().subscribe(
       (res: any) => {
         this.stores = res.data.storeMany as Store[]
         // console.log(this.stores)
       },
-      e => { console.error(e)}))
+      e => { console.error(e)})
   }
 
   getStoreIds(stores: Store[]){
@@ -149,6 +147,5 @@ export class UsersComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.dtTrigger.unsubscribe();
-    this.subscriptions.unsubscribe()
   }
 }

@@ -14,8 +14,7 @@
                                 Balance
                             </div>
                             <div class="col-6 text-right">
-                                <sup>$</sup>
-                                <span style="font-size: large;">{{ balance }}</span> 
+                                <span style="font-size: large;">{{ balance | currency:'EUR' }}</span> 
                             </div>
                         </div>
                     </div>
@@ -25,8 +24,7 @@
                                 Profit
                             </div>
                             <div class="col-6 text-right">
-                                <sup>$</sup>
-                                <span style="font-size: large;">{{ profit }}</span> 
+                                <span style="font-size: large;">{{ profit | currency:'EUR' }}</span> 
                             </div>
                         </div>
                     </div>

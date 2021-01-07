@@ -8,20 +8,21 @@
               Total balance euro
             </div>
             <div class="text-right text-white mb-0" style="font-size: x-large">
-              <sup>&euro;</sup>
-              234324
+              {{ totalBalance | currency:'EUR' }}
             </div>
           </nb-card-body>
         </nb-card>
       </div>
     </div>
     
-    <div class="row"  
-      [nbSpinner]="loadingStores"
-      nbSpinnerStatus="danger"
-      nbSpinnerSize="large"
-      nbSpinnerMessage="">
-      <div class="col-12">
+    <div class="row">
+      <div 
+        class="col-12"
+        [nbSpinner]="loadingStores"
+        nbSpinnerStatus="danger"
+        nbSpinnerSize="large"
+        nbSpinnerMessage="Loading stores"
+        style="min-height: 40px;">
         <app-store-card 
           *ngFor="let store of stores"
           [name]="store.name"

@@ -16,22 +16,10 @@ export class SettingsComponent implements OnInit {
       route: './users',
     },
     {
-      title: 'Invites',
-      icon: 'user-plus',
-      responsive: true,
-      route: './invites',
-    },
-    {
       title: 'Currencies',
       icon: 'euro-sign',
       responsive: true,
       route: './currencies',
-    },
-    {
-      title: 'Email',
-      icon: 'envelope',
-      responsive: true,
-      route: './email-config',
     },
   ];
 

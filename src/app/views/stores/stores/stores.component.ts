@@ -16,7 +16,6 @@ import { StoreService } from 'src/app/core/services/store.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class StoresComponent implements OnInit {
-  private subscriptions = new Subscription();
   stores: Store[] = []
   currencies: Currency[] = []
   loading = false // Prevent duplicate store creation
@@ -24,6 +23,8 @@ export class StoresComponent implements OnInit {
   countUpOptions
   modalConfig
   newStoreForm!: FormGroup;
+
+  totalBalance = 32322
 
   constructor(
     private configsService: ConfigsService, 
@@ -45,33 +46,30 @@ export class StoresComponent implements OnInit {
   }
 
   getStores(fetchPolicy: 'cache-first' | 'network-only' = 'cache-first'){
-    this.subscriptions.add(
-      this.storeService.getStores(fetchPolicy).subscribe(
-        (res:any) => { 
-          this.stores = res.data.storeMany as Store[]
-          console.log(this.stores)
-        },
-        e => { 
-          console.error(e);
-          this.msg.defaultError()
-        },
-        () => {
-          this.loadingStores = false
-          this.chRef.detectChanges()
-        }
-    ))
+    this.storeService.getStores(fetchPolicy).subscribe(
+      (res:any) => { 
+        this.stores = res.data.storeMany as Store[]
+        console.log(this.stores)
+      },
+      e => { 
+        console.error(e);
+        this.msg.defaultError()
+      },
+      () => {
+        this.loadingStores = false
+        this.chRef.detectChanges()
+      })
   }
 
   getCurrencies(){
-    this.subscriptions.add(
-      this.currencyService.getCurrencies().subscribe(
-        (res:any) => { 
-          this.currencies = res.data.currencyMany as Currency[]
-        },
-        e => { 
-          console.error(e);
-        }
-    ))
+    this.currencyService.getCurrencies().subscribe(
+      (res:any) => { 
+        this.currencies = res.data.currencyMany as Currency[]
+      },
+      e => { 
+        console.error(e);
+      }
+    )
   }
 
   openNewStoreModal(content: TemplateRef<any>){
@@ -120,7 +118,6 @@ export class StoresComponent implements OnInit {
   get s() { return this.newStoreForm.controls }
 
   ngOnDestroy() {
-    this.subscriptions.unsubscribe()
     this.chRef.detach()
   }
 }

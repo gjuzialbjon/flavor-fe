@@ -8,8 +8,6 @@ const userMany = gql `
     _id
     email
     name
-    confirmed
-    invited
     role
     stores{
       _id
@@ -61,35 +59,17 @@ export class UserService {
             _id:"${userId}"
             name:"${user.name}"
             email:"${user.email}"
-            confirmed:${user.confirmed}
-            invited:${user.invited}
+            role:${user.role}
             stores:${JSON.stringify(user.stores)}
           }){
             record{
               email
               name
               role
-              invited
-              confirmed
               stores{
                 _id
               }
             }
-        }
-      }
-      `
-    })
-  }
-
-  inviteUser(email: string, role: string){
-    return this.apollo.mutate({
-      mutation: gql`
-      mutation{
-        inviteUser(
-          email:"${email}"
-          role:${role}
-        ){
-          message
         }
       }
       `

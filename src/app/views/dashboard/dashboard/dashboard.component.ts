@@ -20,19 +20,6 @@ interface StoreBase {
 export class DashboardComponent implements OnInit {
   stores: StoreBase[] = [];
 
-  tabs: any[] = [
-    {
-      title: 'Users',
-      responsive: false,
-      route: './users',
-    },
-    {
-      title: 'Invites',
-      responsive: false,
-      route: './invites',
-    },
-  ];
-
   constructor(
     private chRef: ChangeDetectorRef,
     private dashboardService: DashboardService

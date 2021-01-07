@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { StoresComponent } from './stores/stores.component';
 import { RouterModule } from '@angular/router';
-import { CountUpModule } from 'ngx-countup';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbDropdownModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { StoreDashboardComponent } from './store-dashboard/store-dashboard.component';
@@ -27,7 +26,6 @@ import { DataTablesModule } from 'angular-datatables';
       }
     ]),
     DataTablesModule,
-    CountUpModule,
     FormsModule,
     ReactiveFormsModule,
     NgbTooltipModule,

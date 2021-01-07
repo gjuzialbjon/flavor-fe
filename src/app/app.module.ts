@@ -22,7 +22,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     BaseComponent,
     SidebarComponent,
     NotificationsComponent,
-    ScrollTopComponent
+    ScrollTopComponent,
   ],
   imports: [
     BrowserModule,
@@ -68,7 +68,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
           }
         ]
       } as SocialAuthServiceConfig,
-    }
+    },
   ],
   bootstrap: [AppComponent]
 })

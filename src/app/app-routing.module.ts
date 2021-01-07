@@ -8,10 +8,10 @@ const routes: Routes = [
     path: '',
     component: BaseComponent,
     children:[
-      // { 
-      //   path: 'dashboard', 
-      //   loadChildren: () => import('./views/dashboard/dashboard.module').then(m => m.DashboardModule),
-      // },
+      { 
+        path: 'clients', 
+        loadChildren: () => import('./views/clients/clients.module').then(m => m.ClientsModule),
+      },
       { 
         path: 'stores', 
         loadChildren: () => import('./views/stores/stores.module').then(m => m.StoresModule),

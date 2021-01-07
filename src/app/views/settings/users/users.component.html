@@ -11,8 +11,6 @@
         <th>Name</th>
         <th>Email</th>
         <th>Role</th>
-        <th>Confirmed</th>
-        <th>Invited</th>
         <th>Actions</th>
       </tr>
     </thead>
@@ -21,17 +19,13 @@
         <td class="text-capitalize">{{ user.name }}</td>
         <td>{{ user.email }}</td>
         <td class="text-capitalize">{{ user.role }}</td>
-        <td class="text-capitalize">{{ user.confirmed }}</td>
-        <td class="text-capitalize">{{ user.invited }}</td>
         <td class="text-center px-0 py-2" width="8%">
-          <button
-            nbButton
+          <nb-icon
+            icon="edit"
             status="info"
-            size="small"
+            style="cursor: pointer;"
             (click)="openUpdate(userContent, user)"
-          >
-            <nb-icon icon="user-edit"></nb-icon>
-          </button>
+          ></nb-icon>
         </td>
       </tr>
     </tbody>
@@ -82,6 +76,19 @@
       </div>
       <div class="form-group">
         <ng-select
+          formControlName="role"
+          class="my-ng-nb-select"
+          [multiple]="false"
+          [clearable]="false"
+          placeholder="Select role..."
+        >
+          <ng-option value="admin">Admin</ng-option>
+          <ng-option value="agent">Agent</ng-option>
+          <ng-option value="finance">Finance</ng-option>
+        </ng-select>
+      </div>
+      <div class="form-group">
+        <ng-select
           formControlName="stores"
           class="my-ng-nb-select"
           [multiple]="true"
@@ -92,32 +99,6 @@
             store.name
           }}</ng-option>
         </ng-select>
-      </div>
-      <div class="row">
-        <div class="col">
-          <div class="custom-control custom-checkbox">
-            <input
-              type="checkbox"
-              class="custom-control-input"
-              id="confirmed"
-              formControlName="confirmed"
-            />
-            <label class="custom-control-label" for="confirmed"
-              >Confirmed</label
-            >
-          </div>
-        </div>
-        <div class="col">
-          <div class="custom-control custom-checkbox">
-            <input
-              type="checkbox"
-              class="custom-control-input"
-              id="invited"
-              formControlName="invited"
-            />
-            <label class="custom-control-label" for="invited">Invited</label>
-          </div>
-        </div>
       </div>
     </form>
   </div>

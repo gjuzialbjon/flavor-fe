@@ -6,11 +6,14 @@ import {
   OnDestroy,
   OnInit,
   TemplateRef,
+  ViewChild,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Subscription } from 'rxjs';
+import { DataTableDirective } from 'angular-datatables';
+import { truncate } from 'fs';
+import { Subject, Subscription } from 'rxjs';
 import { ConfigsService } from 'src/app/core/helper-services/configs.service';
 import { MessageService } from 'src/app/core/helper-services/message.service';
 import { Store } from 'src/app/core/models/store';
@@ -22,6 +25,8 @@ import { StoreService } from 'src/app/core/services/store.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StoreDashboardComponent implements OnInit, OnDestroy {
+  @ViewChild(DataTableDirective) dtElement!: DataTableDirective;
+
   @Input() name: string = '';
   @Input() balance: number = 0;
   @Input() profit: number = 0;
@@ -36,6 +41,7 @@ export class StoreDashboardComponent implements OnInit, OnDestroy {
       paymentType: 'Invoice',
       credit: 2000,
       debit: 4444,
+      currency: 'USD',
       status: 'completed',
       description: 'Short description',
       issued: true,
@@ -46,6 +52,7 @@ export class StoreDashboardComponent implements OnInit, OnDestroy {
       storeName: 'Store 1',
       clientName: 'John Doe',
       paymentType: 'Invoice',
+      currency: 'USD',
       credit: 2000,
       debit: 4444,
       status: 'pending',
@@ -56,6 +63,7 @@ export class StoreDashboardComponent implements OnInit, OnDestroy {
       storeName: 'Store 1',
       clientName: 'John Doe',
       paymentType: 'Invoice',
+      currency: 'USD',
       credit: 2000,
       debit: 4444,
       status: 'completed',
@@ -66,6 +74,7 @@ export class StoreDashboardComponent implements OnInit, OnDestroy {
       storeName: 'Store 1',
       clientName: 'John Doe',
       paymentType: 'Invoice',
+      currency: 'EUR',
       credit: 2000,
       debit: 4444,
       status: 'completed',
@@ -76,6 +85,7 @@ export class StoreDashboardComponent implements OnInit, OnDestroy {
       storeName: 'Store 1',
       clientName: 'John Doe',
       paymentType: 'Invoice',
+      currency: 'EUR',
       credit: 2000,
       debit: 4444,
       status: 'completed',
@@ -87,6 +97,7 @@ export class StoreDashboardComponent implements OnInit, OnDestroy {
       storeName: 'Store 1',
       clientName: 'John Doe',
       paymentType: 'Invoice',
+      currency: 'EUR',
       credit: 2000,
       debit: 4444,
       status: 'pending',
@@ -97,6 +108,7 @@ export class StoreDashboardComponent implements OnInit, OnDestroy {
       storeName: 'Store 1',
       clientName: 'John Doe',
       paymentType: 'Invoice',
+      currency: 'EUR',
       credit: 2000,
       debit: 4444,
       status: 'completed',
@@ -107,6 +119,7 @@ export class StoreDashboardComponent implements OnInit, OnDestroy {
       storeName: 'Store 1',
       clientName: 'John Doe',
       paymentType: 'Invoice',
+      currency: 'EUR',
       credit: 2000,
       debit: 4444,
       status: 'completed',
@@ -117,28 +130,35 @@ export class StoreDashboardComponent implements OnInit, OnDestroy {
   balances = [
     {
       name: 'Euro',
+      currency: 'EUR',
       amount: 2134324,
     },
     {
       name: 'Dollar',
+      currency: 'USD',
       amount: 2134,
     },
     {
       name: 'All',
+      currency: 'L',
       amount: 434,
     },
     {
       name: 'Bitcoin',
+      currency: '₿',
       amount: 5434,
     },
   ];
+
+  dtOptions: DataTables.Settings 
+  dtTrigger = new Subject<any>();
 
   private subscriptions = new Subscription();
   storeId: string;
   store!: Store;
   modalConfig;
 
-  makingTransaction = true;
+  makingTransaction = false;
   transactionType = 'transfer';
   transactionTypes = [
     'transfer',
@@ -162,16 +182,21 @@ export class StoreDashboardComponent implements OnInit, OnDestroy {
     private router: Router
   ) {
     this.storeId = this.route.snapshot.params.id;
+    this.dtOptions = this.configsService.getDTOptions()
+    this.dtOptions.columnDefs = [
+      // @ts-ignore
+      { responsivePriority: 100, targets: [1,9] },
+    ]
     this.modalConfig = this.configsService.getCleanModalOptions();
   }
 
   ngOnInit(): void {
     this.getStoreInfo();
+    this.dtTrigger.next(true)
     // this.initNewClientForm()
   }
 
   getStoreInfo() {
-    this.subscriptions.add(
       this.storeService.getStoreById(this.storeId).subscribe(
         (res: any) => {
           this.store = res.data.storeById as Store;
@@ -189,7 +214,6 @@ export class StoreDashboardComponent implements OnInit, OnDestroy {
           this.msg.defaultError();
         }
       )
-    );
   }
 
   toggleTransaction() {
@@ -218,7 +242,7 @@ export class StoreDashboardComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscriptions.unsubscribe();
+    this.dtTrigger.unsubscribe()
     this.chRef.detach();
   }
 }

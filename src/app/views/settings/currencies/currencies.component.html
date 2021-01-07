@@ -22,14 +22,12 @@
         <td class="text-capitalize">{{ currency.name }}</td>
         <td class="text-capitalize">{{ currency.type }}</td>
         <td class="text-center px-0 py-2" width="8%">
-          <button
-            nbButton
+          <nb-icon
+            icon="edit"
             status="info"
-            size="small"
+            style="cursor: pointer;"
             (click)="openUpdate(currencyContent, currency)"
-          >
-            <nb-icon icon="edit"></nb-icon>
-          </button>
+          ></nb-icon>
         </td>
       </tr>
     </tbody>
