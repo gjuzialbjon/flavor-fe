@@ -7,7 +7,7 @@ import { UsersComponent } from './users/users.component';
 import { DataTablesModule } from 'angular-datatables';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { NbButtonModule, NbCardModule, NbCheckboxModule, NbFormFieldModule, NbIconModule, NbInputModule, NbOptionModule, NbRouteTabsetModule, NbSelectModule, NbSpinnerModule } from '@nebular/theme';
+import { NbButtonModule, NbCardModule, NbCheckboxModule, NbDialogModule, NbFormFieldModule, NbIconModule, NbInputModule, NbOptionModule, NbRouteTabsetModule, NbSelectModule, NbSpinnerModule } from '@nebular/theme';
 
 @NgModule({
   declarations: [CurrenciesComponent, SettingsComponent, UsersComponent],
@@ -34,6 +34,9 @@ import { NbButtonModule, NbCardModule, NbCheckboxModule, NbFormFieldModule, NbIc
         ]
       },
     ]),
+    NbDialogModule.forChild({
+      dialogClass: 'dialog-width'
+    }),
     DataTablesModule,
     FormsModule,
     ReactiveFormsModule,

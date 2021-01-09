@@ -11,7 +11,7 @@ import { GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule } from 
 import { NgModule } from '@angular/core';
 import { ScrollTopComponent } from './theme/scroll-top/scroll-top.component';
 import { SidebarComponent } from './theme/sidebar/sidebar.component';
-import { NbButtonModule, NbContextMenuModule, NbDatepickerModule, NbFormFieldModule, NbGlobalPhysicalPosition, NbIconModule, NbInputModule, NbLayoutModule, NbMenuModule, NbSearchModule, NbSidebarModule, NbThemeModule, NbToastrModule } from '@nebular/theme';
+import { NbButtonModule, NbContextMenuModule, NbDatepickerModule, NbDialogModule, NbFormFieldModule, NbGlobalPhysicalPosition, NbIconModule, NbInputModule, NbLayoutModule, NbMenuModule, NbSearchModule, NbSidebarModule, NbThemeModule, NbToastrModule } from '@nebular/theme';
 import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -38,6 +38,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     NbLayoutModule,
     NbSidebarModule.forRoot(), // NbSidebarModule.forRoot(), //if this is your app.module
     NbMenuModule.forRoot(),
+    NbDialogModule.forRoot(),
     NbContextMenuModule,
     NbToastrModule.forRoot({
       limit: 3,

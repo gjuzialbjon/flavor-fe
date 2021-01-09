@@ -3,6 +3,17 @@
         text-decoration: none;
     }
 
+    .dialog-width {
+        nb-card{
+            min-width: 330px;
+
+            nb-card-footer{
+                display: flex;
+                justify-content: center;
+            }
+        }
+    }
+
     nb-card.store-card{
         background: #3886f7;
         color: white;

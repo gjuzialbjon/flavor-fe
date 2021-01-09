@@ -1,13 +1,12 @@
 import { ChangeDetectionStrategy, Component, OnInit, OnDestroy, ChangeDetectorRef, TemplateRef, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NbDialogService } from '@nebular/theme';
 import { DataTableDirective } from 'angular-datatables';
 import { Subject, Subscription } from 'rxjs';
 import { ConfigsService } from 'src/app/core/helper-services/configs.service';
 import { MessageService } from 'src/app/core/helper-services/message.service';
 import { Store } from 'src/app/core/models/store';
 import { User } from 'src/app/core/models/user';
-import { AuthenticationService } from 'src/app/core/services/authentication.service';
 import { UserService } from 'src/app/core/services/user.service';
 
 @Component({
@@ -22,7 +21,6 @@ export class UsersComponent implements OnInit, OnDestroy {
   private subscriptions = new Subscription()
   dtOptions: DataTables.Settings
   dtTrigger = new Subject<any>(); 
-  modalConfig
   users: User[] = []
   stores: Store[] = [] // Only names and ID for setting privileges
   userForm!: FormGroup
@@ -36,15 +34,13 @@ export class UsersComponent implements OnInit, OnDestroy {
     private chRef: ChangeDetectorRef,
     private fb: FormBuilder,
     private msg: MessageService,
-    private modalService: NgbModal,
-    private authService: AuthenticationService
+    private dialogService: NbDialogService,
     ) {
       this.dtOptions = this.configsService.getDTOptions()
       this.dtOptions.columnDefs = [
         // @ts-ignore
         { responsivePriority: 100, targets: [0,3] },
       ]
-      this.modalConfig = this.configsService.getCleanModalOptions()
   }
 
   ngOnInit(): void {
@@ -55,13 +51,13 @@ export class UsersComponent implements OnInit, OnDestroy {
   openUpdate(content: TemplateRef<any>, user: User) {
     this.user = user
     this.initUserForm()
-    this.modalService.open(content, this.modalConfig)
+    this.dialogService.open(content)
   }
 
-  async saveUser(modal: NgbActiveModal) {
+  async saveUser(dialog: any) {
     if(this.userForm.invalid){
       this.userForm.markAllAsTouched()
-      this.msg.error('Please complete the form to proceed')
+      this.msg.error('Please complete the form to proceed', 'Error!')
       return
     }
 
@@ -76,7 +72,7 @@ export class UsersComponent implements OnInit, OnDestroy {
         this.user.stores = updatedUser.stores
                
         this.rerender()
-        modal.close()
+        dialog.close()
       },
       e => {
         console.error(e)

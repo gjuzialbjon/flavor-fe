@@ -1,4 +1,11 @@
 <div class="pt-3">
+  <button
+    nbButton
+    status="info"
+    class="mb-3">
+  Create new user
+</button>
+
   <table
     datatable
     [dtTrigger]="$any(dtTrigger)"
@@ -32,82 +39,73 @@
   </table>
 </div>
 
-<ng-template #userContent let-modal>
-  <div class="modal-header">
-    <h4 class="modal-title">Update User</h4>
-    <button
-      type="button"
-      class="close text-dark"
-      aria-label="Close"
-      (click)="modal.dismiss('Cross click')"
-    >
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
-    <form [formGroup]="userForm">
-      <div class="form-group">
-        <input
-          type="text"
-          class="form-control"
-          [class.is-invalid]="u.name.touched && u.name.errors"
-          formControlName="name"
-          placeholder="Name *"
-        />
-        <small
-          *ngIf="u.name.touched && u.name.errors"
-          class="form-text text-danger"
-          >Please enter a name.</small
-        >
-      </div>
-      <div class="form-group">
-        <input
-          type="text"
-          class="form-control"
-          [class.is-invalid]="u.email.touched && u.email.errors"
-          formControlName="email"
-          placeholder="Email *"
-        />
-        <small
-          *ngIf="u.email.touched && u.email.errors"
-          class="form-text text-danger"
-          >Please enter an email.</small
-        >
-      </div>
-      <div class="form-group">
-        <ng-select
-          formControlName="role"
-          class="my-ng-nb-select"
-          [multiple]="false"
-          [clearable]="false"
-          placeholder="Select role..."
-        >
-          <ng-option value="admin">Admin</ng-option>
-          <ng-option value="agent">Agent</ng-option>
-          <ng-option value="finance">Finance</ng-option>
-        </ng-select>
-      </div>
-      <div class="form-group">
-        <ng-select
-          formControlName="stores"
-          class="my-ng-nb-select"
-          [multiple]="true"
-          [clearable]="true"
-          placeholder="Select stores..."
-        >
-          <ng-option *ngFor="let store of stores" [value]="store._id">{{
-            store.name
-          }}</ng-option>
-        </ng-select>
-      </div>
-    </form>
-  </div>
-  <div class="modal-footer">
-    <button
+<ng-template #userContent let-data let-ref="dialogRef">
+  <nb-card>
+    <nb-card-header>UPDATE USER</nb-card-header>
+
+      <form [formGroup]="userForm" class="p-3">
+        <div class="form-group">
+          <input
+            type="text"
+            nbInput
+            fullWidth
+            [status]="u.name.touched && u.name.errors ? 'danger' : 'basic'"
+            formControlName="name"
+            placeholder="Name *"
+          />
+          <small
+            *ngIf="u.name.touched && u.name.errors"
+            class="form-text text-danger"
+            >Please enter a name.</small
+          >
+        </div>
+        <div class="form-group">
+          <input
+            type="text"
+            nbInput
+            fullWidth
+            [status]="u.email.touched && u.email.errors ? 'danger' : 'basic'"
+            formControlName="email"
+            placeholder="Email *"
+          />
+          <small
+            *ngIf="u.email.touched && u.email.errors"
+            class="form-text text-danger"
+            >Please enter an email.</small
+          >
+        </div>
+        <div class="form-group">
+          <nb-select
+            fullWidth
+            formControlName="role"
+            placeholder="Select role..."
+          >
+            <nb-option value="admin">Admin</nb-option>
+            <nb-option value="agent">Agent</nb-option>
+            <nb-option value="finance">Finance</nb-option>
+          </nb-select>
+        </div>
+        <div class="form-group">
+          <ng-select
+            formControlName="stores"
+            class="my-ng-nb-select"
+            [multiple]="true"
+            [clearable]="true"
+            placeholder="Select stores..."
+          >
+            <ng-option *ngFor="let store of stores" [value]="store._id">{{
+              store.name
+            }}</ng-option>
+          </ng-select>
+        </div>
+      </form>
+
+    <nb-card-footer>
+      <button
       type="button"
       nbButton
       class="mr-3"
-      (click)="modal.close('Cancel click')"
+      (click)="ref.close()"
     >
       Cancel
     </button>
@@ -116,7 +114,7 @@
       nbButton
       class=""
       status="success"
-      (click)="saveUser(modal)"
+      (click)="saveUser(ref)"
       [disabled]="loading"
     >
       Save
@@ -127,5 +125,6 @@
         aria-hidden="true"
       ></span>
     </button>
-  </div>
+    </nb-card-footer>
+  </nb-card>
 </ng-template>

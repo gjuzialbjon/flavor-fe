@@ -1,5 +1,9 @@
 <div class="row no-gutters align-items-center justify-content-center">
-  <form class="auth-form  p-3" [formGroup]="loginForm" style="border-radius: 6px;">
+  <form
+    class="auth-form p-3 mt-md-n5 mb-md-5"
+    [formGroup]="loginForm"
+    style="border-radius: 6px"
+  >
     <div class="text-center mb-4">
       <img
         src="../../../../assets/media/logos/logo.svg"
@@ -7,7 +11,17 @@
         width="116"
         height="158"
       />
-      <p style="letter-spacing: 2px; color: #284693; font-size: xx-large; font-weight: bolder; margin-top: 10px;">SWAP</p>
+      <p
+        style="
+          letter-spacing: 2px;
+          color: #284693;
+          font-size: xx-large;
+          font-weight: bolder;
+          margin-top: 10px;
+        "
+      >
+        SWAP
+      </p>
     </div>
 
     <nb-form-field class="mb-2">
@@ -17,9 +31,14 @@
         nbInput
         fullWidth
         formControlName="email"
-        placeholder="albjon.gjuzi@gmail.com"
-        [status]="l.email.touched && l.email.errors ? 'danger' : 'primary'"
+        placeholder="E-mail address"
+        [status]="l.email.touched && l.email.errors ? 'danger' : 'info'"
       />
+      <small
+        *ngIf="l.email.touched && l.email.errors"
+        class="form-text text-danger"
+        >Please enter a valid e-mail address</small
+      >
     </nb-form-field>
 
     <nb-form-field class="mb-2">
@@ -30,7 +49,7 @@
         nbInput
         fullWidth
         placeholder="••••••"
-        [status]="l.password.touched && l.password.errors ? 'danger' : 'primary'"
+        [status]="l.password.touched && l.password.errors ? 'danger' : 'info'"
       />
       <button
         nbSuffix
@@ -46,40 +65,47 @@
         </nb-icon>
       </button>
     </nb-form-field>
+    <small
+      *ngIf="l.password.touched && l.password.errors"
+      class="form-text text-danger"
+      >Please enter your password</small
+    >
 
-    <div class="text-center">
-      <div class="d-flex w-100 align-items-center justify-content-between">
-        <a style="cursor: pointer; text-decoration: underline; color: #284693;">Forgot your password?</a>
-        <button
-          type="button"
-          nbButton
-          status="info"
-          class="mt-2"
-          shape="round"
-          (click)="login()"
-          [disabled]="loginForm.invalid || loading"
-          [nbSpinner]="loading" 
-          nbSpinnerStatus="info"
-        >
-          LOGIN
-        </button>
-      </div>
-    
+    <div class="d-flex w-100 align-items-center justify-content-between">
+      <a
+        style="cursor: pointer; text-decoration: underline; color: #284693"
+        routerLink="/auth/forgot"
+        >Forgot your password?</a
+      >
       <button
         type="button"
         nbButton
-        fullWidth
         status="info"
-        class="font-weight-bold mt-4"
-        (click)="loginWithGoogle()"
+        class="mt-2"
+        style="padding: 0.6875rem 3.125rem"
+        shape="round"
+        (click)="login()"
+        [nbSpinner]="loading"
+        nbSpinnerStatus="info"
       >
-        <img
-          class="google-icon"
-          width="30px"
-          src="../../../../assets/media/auth/google.svg"
-        />
-        &nbsp; LOGIN WITH GOOGLE
+        LOGIN
       </button>
     </div>
+
+    <button
+      type="button"
+      nbButton
+      fullWidth
+      status="info"
+      class="font-weight-bold mt-4"
+      (click)="loginWithGoogle()"
+    >
+      <img
+        class="google-icon"
+        width="30px"
+        src="../../../../assets/media/auth/google.svg"
+      />
+      &nbsp; LOGIN WITH GOOGLE
+    </button>
   </form>
 </div>

@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NbDialogService } from '@nebular/theme';
 import { Apollo } from 'apollo-angular';
 import { MessageService } from 'src/app/core/helper-services/message.service';
 import { AuthenticationService } from 'src/app/core/services/authentication.service';
@@ -21,15 +22,16 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder, 
     private authService: AuthenticationService, 
     private msg: MessageService,
+    private dialogService: NbDialogService,
     private apollo: Apollo) {
       this.loginForm = this.fb.group({
-        email: ['', [Validators.required, Validators.email]],
-        password: ['', [Validators.required, Validators.minLength(6)]]
+        email: ['albjon.gjuzi@gmail.com', [Validators.required, Validators.email]],
+        password: ['123123', [Validators.required, Validators.minLength(6)]]
       })
   }
 
   ngOnInit(): void {
-    this.authService.signOut()
+    localStorage.clear()
     this.apollo.client.resetStore()
   }
 
@@ -37,17 +39,20 @@ export class LoginComponent implements OnInit {
     console.log('Login')
     if(this.loginForm.invalid){
       this.msg.error('Please enter your email and password', 'Error!')
-      // return
+      return
     }
 
     this.loading = true
-    console.log(this.loginForm.value)
     const {email, password} = this.loginForm.value
-    // this.authService.login(email, password, '')
+    this.authService.login(email, password)
   }
 
   loginWithGoogle(){
     this.authService.signInWithGoogle()
+  }
+
+  openForgotDialog(content: any){
+    this.dialogService.open(content)
   }
 
   getInputType() {
