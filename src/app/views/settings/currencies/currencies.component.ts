@@ -1,5 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NbDialogService } from '@nebular/theme';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DataTableDirective } from 'angular-datatables';
 import { Subject, Subscription } from 'rxjs';
@@ -20,12 +21,10 @@ export class CurrenciesComponent implements OnInit {
 
   dtOptions: DataTables.Settings 
   dtTrigger = new Subject<any>();
-  modalConfig
   currencies: Currency[] = []
   currencyForm!: FormGroup
   currency!: Currency
   loading = false
-  invitationLoading = false
 
   types = [
     {
@@ -44,15 +43,13 @@ export class CurrenciesComponent implements OnInit {
     private chRef: ChangeDetectorRef,
     private fb: FormBuilder,
     private msg: MessageService,
-    private modalService: NgbModal,
-    private authService: AuthenticationService
+    private dialogService: NbDialogService,
     ) {
       this.dtOptions = this.configsService.getDTOptions()
       this.dtOptions.columnDefs = [
         // @ts-ignore
         { responsivePriority: 100, targets: [0,4] },
       ]
-      this.modalConfig = this.configsService.getCleanModalOptions()
   }
 
   ngOnInit(): void {
@@ -109,7 +106,7 @@ export class CurrenciesComponent implements OnInit {
   openUpdate(content: TemplateRef<any>, currency: Currency){
     this.currency = currency
     this.initCurrencyForm()
-    this.modalService.open(content, this.modalConfig)
+    this.dialogService.open(content)
   }
 
   initCurrencyForm() {

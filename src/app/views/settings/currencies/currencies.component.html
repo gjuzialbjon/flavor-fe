@@ -25,7 +25,7 @@
           <nb-icon
             icon="edit"
             status="info"
-            style="cursor: pointer;"
+            style="cursor: pointer"
             (click)="openUpdate(currencyContent, currency)"
           ></nb-icon>
         </td>
@@ -34,25 +34,15 @@
   </table>
 </div>
 
-<ng-template #currencyContent let-modal>
-  <div class="modal-header">
-    <h4 class="modal-title">Update Currency</h4>
-    <button
-      type="button"
-      class="close text-dark"
-      aria-label="Close"
-      (click)="modal.dismiss('Cross click')"
-    >
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
-    <form [formGroup]="currencyForm">
+<ng-template #currencyContent let-data let-ref="dialogRef">
+  <nb-card>
+    <nb-card-header>UPDATE CURRENCY</nb-card-header>
+    <form [formGroup]="currencyForm" class="p-3">
       <div class="form-group">
         <input
-          type="text"
-          class="form-control"
-          [class.is-invalid]="f.currency.touched && f.currency.errors"
+          nbInput
+          fullWidth
+          [status]="f.currency.touched && f.currency.errors ? 'danger' : 'basic' "
           formControlName="currency"
           placeholder="Currency *"
         />
@@ -64,9 +54,9 @@
       </div>
       <div class="form-group">
         <input
-          type="text"
-          class="form-control"
-          [class.is-invalid]="f.symbol.touched && f.symbol.errors"
+          nbInput
+          fullWidth
+          [status]="f.symbol.touched && f.symbol.errors ? 'danger' : 'basic'"
           formControlName="symbol"
           placeholder="Symbol *"
         />
@@ -78,9 +68,9 @@
       </div>
       <div class="form-group">
         <input
-          type="text"
-          class="form-control"
-          [class.is-invalid]="f.name.touched && f.name.errors"
+          nbInput
+          fullWidth
+          [status]="f.name.touched && f.name.errors ? 'danger' : 'basic'"
           formControlName="name"
           placeholder="Name *"
         />
@@ -91,43 +81,38 @@
         >
       </div>
       <div class="form-group">
-        <ng-select
+        <nb-select
+          fullWidth
           formControlName="type"
-          [clearable]="false"
-          class="my-ng-select"
           placeholder="Select type..."
+          [status]="f.type.touched && f.type.errors ? 'danger' : 'basic'"
         >
-          <ng-option *ngFor="let type of types" [value]="type._id">{{
+          <nb-option *ngFor="let type of types" [value]="type._id">{{
             type.name
-          }}</ng-option>
-        </ng-select>
+          }}</nb-option>
+        </nb-select>
       </div>
     </form>
-  </div>
-  <div class="modal-footer">
-    <button
-      type="button"
-      nbButton
-      class="mr-3"
-      (click)="modal.close('Cancel click')"
-    >
-      Cancel
-    </button>
-    <button
-      type="button"
-      nbButton
-      class=""
-      status="success"
-      (click)="saveCurrency(modal)"
-      [disabled]="loading"
-    >
-      Save
-      <span
-        [hidden]="!loading"
-        class="spinner-border spinner-border-sm"
-        role="status"
-        aria-hidden="true"
-      ></span>
-    </button>
-  </div>
+    <nb-card-footer>
+      <button
+        type="button"
+        nbButton
+        class="mr-3"
+        (click)="ref.close()"
+      >
+        Cancel
+      </button>
+      <button
+        type="button"
+        nbButton
+        class=""
+        status="success"
+        (click)="saveCurrency(ref)"
+        [disabled]="loading"
+        [nbSpinner]="loading" nbSpinnerStatus="info"
+      >
+        Save
+      </button>
+    </nb-card-footer>
+  </nb-card>
 </ng-template>

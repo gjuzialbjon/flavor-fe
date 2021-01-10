@@ -5,11 +5,12 @@ import { RouterModule } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NotAuthorizedComponent } from './not-authorized/not-authorized.component';
-import { NbButtonModule, NbCardModule, NbDialogModule, NbFormFieldModule, NbIconModule, NbInputModule, NbLayoutModule, NbSpinnerModule } from '@nebular/theme';
+import { NbAlertModule, NbButtonModule, NbCardModule, NbDialogModule, NbFormFieldModule, NbIconModule, NbInputModule, NbLayoutModule, NbSpinnerModule } from '@nebular/theme';
 import { ForgotComponent } from './forgot/forgot.component';
+import { ResetComponent } from './reset/reset.component';
 
 @NgModule({
-  declarations: [AuthComponent, LoginComponent, NotAuthorizedComponent, ForgotComponent],
+  declarations: [AuthComponent, LoginComponent, NotAuthorizedComponent, ForgotComponent, ResetComponent],
   imports: [
     CommonModule,
     RouterModule.forChild([
@@ -31,6 +32,10 @@ import { ForgotComponent } from './forgot/forgot.component';
             component: ForgotComponent,
           },
           {
+            path: 'reset',
+            component: ResetComponent,
+          },
+          {
             path: 'not-found',
             component: NotAuthorizedComponent
           }
@@ -45,6 +50,7 @@ import { ForgotComponent } from './forgot/forgot.component';
     NbIconModule,
     NbButtonModule,
     NbSpinnerModule,
+    NbAlertModule
   ]
 })
 export class AuthModule { }

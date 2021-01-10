@@ -11,17 +11,7 @@
         width="116"
         height="158"
       />
-      <p
-        style="
-          letter-spacing: 2px;
-          color: #284693;
-          font-size: xx-large;
-          font-weight: bolder;
-          margin-top: 10px;
-        "
-      >
-        SWAP
-      </p>
+      <p class="logo-name">SWAP</p>
     </div>
 
     <nb-form-field class="mb-2">
@@ -84,6 +74,7 @@
         class="mt-2"
         style="padding: 0.6875rem 3.125rem"
         shape="round"
+        [disabled]="loading"
         (click)="login()"
         [nbSpinner]="loading"
         nbSpinnerStatus="info"

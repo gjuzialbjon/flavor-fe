@@ -24,6 +24,7 @@ export class UsersComponent implements OnInit, OnDestroy {
   users: User[] = []
   stores: Store[] = [] // Only names and ID for setting privileges
   userForm!: FormGroup
+  newUserForm!: FormGroup 
   user!: any
   loading = false
 
@@ -54,7 +55,12 @@ export class UsersComponent implements OnInit, OnDestroy {
     this.dialogService.open(content)
   }
 
-  async saveUser(dialog: any) {
+  openNewUserDialog(content: TemplateRef<any>){
+    this.initNewUserForm()
+    this.dialogService.open(content)
+  }
+
+  saveUser(dialog: any) {
     if(this.userForm.invalid){
       this.userForm.markAllAsTouched()
       this.msg.error('Please complete the form to proceed', 'Error!')
@@ -85,13 +91,47 @@ export class UsersComponent implements OnInit, OnDestroy {
     )
   }
 
+  createUser(dialog: any){
+    if(this.newUserForm.invalid){
+      this.newUserForm.markAllAsTouched()
+      this.msg.error('Please complete the form to proceed', 'Error!')
+      return
+    }
+
+    this.loading = true
+    this.userService.registerUser(this.newUserForm.value).subscribe(
+      (res:any) => {
+        console.log(res)
+      },
+      e => {
+        console.error(e)
+        this.msg.defaultError()
+      },
+      () => {
+        this.loading = false
+        this.chRef.detectChanges()
+      }
+    )
+
+  }
+
   initUserForm() {
     this.loading = false
     this.userForm = this.fb.group({
       name: [this.user.name, [Validators.required]], 
-      email: [this.user.email, [Validators.required]],
+      email: [this.user.email, [Validators.required, Validators.email]],
       role: [this.user.role, [Validators.required]],
       stores: [this.getStoreIds(this.user.stores), []]
+    })
+  }
+
+  initNewUserForm(){
+    this.loading = false
+    this.newUserForm = this.fb.group({
+      name: ['', [Validators.required]], 
+      email: ['', [Validators.required, Validators.email]],
+      role: ['', [Validators.required]],
+      password: ['', [Validators.required, Validators.minLength(6)]]
     })
   }
 
@@ -114,7 +154,6 @@ export class UsersComponent implements OnInit, OnDestroy {
     this.userService.getStores().subscribe(
       (res: any) => {
         this.stores = res.data.storeMany as Store[]
-        // console.log(this.stores)
       },
       e => { console.error(e)})
   }
@@ -138,8 +177,8 @@ export class UsersComponent implements OnInit, OnDestroy {
     this.chRef.detectChanges()
   }
 
-
   get u() { return this.userForm.controls }  
+  get n() { return this.newUserForm.controls }  
 
   ngOnDestroy() {
     this.dtTrigger.unsubscribe();

@@ -1,7 +1,6 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { MessageService } from 'src/app/core/helper-services/message.service';
+import { AuthenticationService } from 'src/app/core/services/authentication.service';
 
 @Component({
   selector: 'app-forgot',
@@ -12,10 +11,12 @@ import { MessageService } from 'src/app/core/helper-services/message.service';
 export class ForgotComponent implements OnInit {
   loading = false
   emailFormControl = new FormControl('', [Validators.required, Validators.email])
+  success = false
+  error = false
 
   constructor(
-    private msg: MessageService,
-    private router: Router
+    private authService: AuthenticationService,
+    private chRef: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
@@ -27,6 +28,23 @@ export class ForgotComponent implements OnInit {
       return
     }
 
-    console.log('Sending reset link')
+    this.loading = true
+    this.authService.forgotPassword(this.emailFormControl.value).subscribe(
+      (res:any) => {
+        console.log(res);
+        this.success = true
+        this.error = false
+        this.loading = false
+        this.chRef.detectChanges()
+      },
+      e => {
+        console.error(e);
+        this.error = true
+        this.success = false
+        this.loading = false
+        this.chRef.detectChanges()
+      }
+    )
   }
+
 }

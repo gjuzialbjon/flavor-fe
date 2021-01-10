@@ -75,4 +75,21 @@ export class UserService {
       `
     })
   }
+
+  registerUser(user: User){
+    return this.apollo.mutate({
+      mutation: gql`
+      mutation{
+        registerUser(
+          email:"${user.email}"
+          role:${user.role}
+          name:"${user.name}"
+          password:"${user.passsword}"
+        ){
+          message
+        }
+      }
+      `
+    })
+  }
 }

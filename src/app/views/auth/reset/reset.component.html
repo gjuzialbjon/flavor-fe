@@ -1,0 +1,71 @@
+<div class="row no-gutters align-items-center justify-content-center">
+  <form [formGroup]="passwordForm" class="auth-form p-3 mt-md-n5 mb-md-5">
+    <div class="text-center mb-4">
+      <img
+        src="../../../../assets/media/logos/logo.svg"
+        alt=""
+        width="116"
+        height="158"
+      />
+      <p class="logo-name">SWAP</p>
+    </div>
+    <p class="text-muted">Please enter your new password twice.</p>
+
+    <input
+      #pass
+      type="password"
+      nbInput
+      fullWidth
+      formControlName="password"
+      [status]="p.password.touched && p.password.errors ? 'danger' : 'info'"
+      placeholder="••••••"
+    />
+    <small
+      *ngIf="p.password.touched && p.password.errors"
+      class="form-text text-danger"
+      >Please enter a password with a minimum length of 6</small
+    >
+
+    <input
+      #repPass
+      type="password"
+      nbInput
+      fullWidth
+      formControlName="repeatPassword"
+      [status]="
+        p.repeatPassword.touched && (repPass.value !== pass.value)
+          ? 'danger'
+          : 'info'
+      "
+      placeholder="••••••"
+      class="mt-2"
+    />
+    <small
+      *ngIf="p.repeatPassword.touched && (repPass.value !== pass.value)"
+      class="form-text text-danger"
+      >Passwords should match</small
+    >
+
+    <div class="d-flex w-100 align-items-center justify-content-between mt-1">
+      <a
+        style="cursor: pointer; text-decoration: underline; color: #284693"
+        routerLink="/auth/login"
+        >Back to login</a
+      >
+      <button
+        type="button"
+        nbButton
+        status="info"
+        class="mt-2"
+        style="padding: 0.6875rem 2.125rem"
+        shape="round"
+        (click)="resetPassword()"
+        [disabled]="loading"
+        [nbSpinner]="loading"
+        nbSpinnerStatus="info"
+      >
+        update password
+      </button>
+    </div>
+  </form>
+</div>
