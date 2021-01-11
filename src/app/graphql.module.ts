@@ -1,15 +1,15 @@
-import { NgModule} from '@angular/core';
-import { APOLLO_OPTIONS} from 'apollo-angular';
-import { ApolloLink, InMemoryCache, split} from '@apollo/client/core';
+import { NgModule } from '@angular/core';
+import { APOLLO_OPTIONS } from 'apollo-angular';
+import { ApolloLink, InMemoryCache, split } from '@apollo/client/core';
 import { HttpLink } from 'apollo-angular/http';
 import { setContext } from '@apollo/client/link/context';
 import { HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { environment } from '@env';
 import { WebSocketLink } from '@apollo/client/link/ws';
 import { getMainDefinition } from '@apollo/client/utilities';
-import { onError } from "@apollo/client/link/error";
+import { onError } from '@apollo/client/link/error';
 
-const httpsUri = 'https' + environment.API_URL + 'graphql' // URL TO ENDPOINT FOR HTTPS REQUESTS
+const httpsUri = 'https' + environment.API_URL + 'graphql'; // URL TO ENDPOINT FOR HTTPS REQUESTS
 
 const wsUri = new WebSocketLink({
   uri: `wss${environment.API_URL}graphql`,
@@ -21,50 +21,61 @@ const wsUri = new WebSocketLink({
 export function createApollo(httpLink: HttpLink) {
   const basic = setContext((operation, context) => ({
     headers: {
-      Accept: 'charset=utf-8'
-    }
-  }));
-
-  const auth = setContext((operation, context) => ({
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem('flavorToken')}`
+      Accept: 'charset=utf-8',
     },
   }));
+
+  const auth = setContext((operation, context) => {
+    const token = localStorage.getItem('flavorToken');
+
+    if (token === null) {
+      return {};
+    } else {
+      return {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+    }
+  });
 
   const errorHandler = onError(({ graphQLErrors, networkError }) => {
     if (graphQLErrors)
       graphQLErrors.map(({ message, locations, path }) =>
         console.log(
-          `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`,
-        ),
+          `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
+        )
       );
-  
-    if (networkError) console.log(`[Network error]: ${networkError}`);
+
+    if (networkError)
+      console.log(`[Network error]: ${JSON.stringify(networkError, null, 3)}`);
   });
 
-  const httpsLink = ApolloLink.from(
-    [
-      basic, 
-      auth,
-      errorHandler,
-      httpLink.create({
-        uri: httpsUri,
-        // withCredentials: true
-      }),
-    ]);
+  const httpsLink = ApolloLink.from([
+    basic,
+    auth,
+    errorHandler,
+    httpLink.create({
+      uri: httpsUri,
+      // withCredentials: true
+    }),
+  ]);
+
+  console.log('Https link ', httpsLink);
 
   // using the ability to split links, you can send data to each link
   // depending on what kind of operation is being sent
   const link = split(
     // split based on operation type
-    ({query}) => {
+    ({ query }) => {
       const definition = getMainDefinition(query);
       return (
-        definition.kind === 'OperationDefinition' && definition.operation === 'subscription'
+        definition.kind === 'OperationDefinition' &&
+        definition.operation === 'subscription'
       );
     },
     wsUri,
-    httpsLink,
+    httpsLink
   );
 
   const cache = new InMemoryCache({ addTypename: false });
@@ -86,18 +97,18 @@ export function createApollo(httpLink: HttpLink) {
   return {
     link,
     cache,
-    defaultOptions
-  }
+    defaultOptions,
+  };
 }
 
 @NgModule({
-  exports: [
-    HttpClientModule,
+  exports: [HttpClientModule],
+  providers: [
+    {
+      provide: APOLLO_OPTIONS,
+      useFactory: createApollo,
+      deps: [HttpLink],
+    },
   ],
-  providers: [{
-    provide: APOLLO_OPTIONS,
-    useFactory: createApollo,
-    deps: [HttpLink]
-  }]
 })
 export class GraphQLModule {}

@@ -1,4 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Apollo } from 'apollo-angular';
 
 @Component({
   selector: 'app-not-authorized',
@@ -8,9 +9,12 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 })
 export class NotAuthorizedComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private apollo: Apollo
+  ) { }
 
   ngOnInit(): void {
+    this.apollo.client.resetStore()
   }
 
 }

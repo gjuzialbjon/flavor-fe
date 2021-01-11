@@ -143,11 +143,6 @@ export class StoreDashboardComponent implements OnInit, OnDestroy {
       currency: 'L',
       amount: 434,
     },
-    {
-      name: 'Bitcoin',
-      currency: '₿',
-      amount: 5434,
-    },
   ];
 
   dtOptions: DataTables.Settings 
@@ -173,7 +168,6 @@ export class StoreDashboardComponent implements OnInit, OnDestroy {
 
   constructor(
     private configsService: ConfigsService,
-    private modalService: NgbModal,
     private chRef: ChangeDetectorRef,
     private route: ActivatedRoute,
     private fb: FormBuilder,
@@ -201,12 +195,6 @@ export class StoreDashboardComponent implements OnInit, OnDestroy {
         (res: any) => {
           this.store = res.data.storeById as Store;
           console.log(this.store);
-          // if(!this.store){
-          //   this.msg.error('Something went wrong loading the store.')
-          //   setTimeout(() => {
-          //     this.router.navigate(['/stores'])
-          //   },2000)
-          // }
           this.chRef.detectChanges();
         },
         (e) => {

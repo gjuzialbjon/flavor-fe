@@ -4,11 +4,6 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { environment } from '@env';
-import {
-  GoogleLoginProvider,
-  SocialAuthService,
-  SocialUser,
-} from 'angularx-social-login';
 import { Apollo, gql } from 'apollo-angular';
 import { MessageService } from '../helper-services/message.service';
 import { SocialTokenResponse } from '../models/socialTokenResponse';
@@ -19,14 +14,12 @@ import { SocialTokenResponse } from '../models/socialTokenResponse';
 export class AuthenticationService {
   jwtHelper: JwtHelperService;
   decodedToken: any;
-  googleUser: SocialUser | undefined;
   user: any;
   token: any;
   role!: string;
   username!: string;
 
   constructor(
-    private authService: SocialAuthService,
     private router: Router,
     private msg: MessageService,
     private apollo: Apollo,
@@ -64,20 +57,6 @@ export class AuthenticationService {
       );
   }
 
-  signInWithGoogle(): void {
-    this.authService
-      .signIn(GoogleLoginProvider.PROVIDER_ID)
-      .then((res) => {
-        this.login(res.email, res.id); // CALL LOGIN PROCEDURE TO BACKEND TO GET USER TOKEN
-      })
-      .catch((e) => {
-        console.error(e);
-        this.msg.error(
-          'Sorry, could not log in with Google now. Please try again later.'
-        );
-      });
-  }
-
   resetPassword(newPassword: string) {
     return this.apollo.mutate({
       mutation: gql`
@@ -98,7 +77,24 @@ export class AuthenticationService {
       mutation{
         forgotPassword(
           email:"${email}"
-        )
+        ){
+          message
+        }
+      }
+      `
+    })
+  }
+
+  resetForgotPassword(newPassword: string, token: string){
+    return this.apollo.mutate({
+      mutation: gql`
+      mutation{
+        resetforgotPassword(
+          new:"${newPassword}"
+          token:"${token}"
+        ){
+          message
+        }
       }
       `
     })

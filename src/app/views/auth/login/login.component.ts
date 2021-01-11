@@ -47,10 +47,6 @@ export class LoginComponent implements OnInit {
     this.authService.login(email, password)
   }
 
-  loginWithGoogle(){
-    this.authService.signInWithGoogle()
-  }
-
   openForgotDialog(content: any){
     this.dialogService.open(content)
   }

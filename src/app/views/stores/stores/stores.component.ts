@@ -1,7 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy, TemplateRef, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Subscription } from 'rxjs';
 import { ConfigsService } from 'src/app/core/helper-services/configs.service';
 import { MessageService } from 'src/app/core/helper-services/message.service';
 import { Currency } from 'src/app/core/models/currency';
@@ -49,7 +48,7 @@ export class StoresComponent implements OnInit {
     this.storeService.getStores(fetchPolicy).subscribe(
       (res:any) => { 
         this.stores = res.data.storeMany as Store[]
-        console.log(this.stores)
+        // console.log(this.stores)
       },
       e => { 
         console.error(e);
