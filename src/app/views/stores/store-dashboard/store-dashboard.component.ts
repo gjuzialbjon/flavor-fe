@@ -10,6 +10,7 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NbDialogService } from '@nebular/theme';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DataTableDirective } from 'angular-datatables';
 import { truncate } from 'fs';
@@ -26,12 +27,6 @@ import { StoreService } from 'src/app/core/services/store.service';
 })
 export class StoreDashboardComponent implements OnInit, OnDestroy {
   @ViewChild(DataTableDirective) dtElement!: DataTableDirective;
-
-  @Input() name: string = '';
-  @Input() balance: number = 0;
-  @Input() profit: number = 0;
-  @Input() percentage: number = 0;
-  @Input() id: string = '';
 
   transactions = [
     {
@@ -151,7 +146,7 @@ export class StoreDashboardComponent implements OnInit, OnDestroy {
   private subscriptions = new Subscription();
   storeId: string;
   store!: Store;
-  modalConfig;
+  loading = false
 
   makingTransaction = false;
   transactionType = 'transfer';
@@ -173,6 +168,7 @@ export class StoreDashboardComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private storeService: StoreService,
     private msg: MessageService,
+    private dialogService: NbDialogService,
     private router: Router
   ) {
     this.storeId = this.route.snapshot.params.id;
@@ -181,7 +177,6 @@ export class StoreDashboardComponent implements OnInit, OnDestroy {
       // @ts-ignore
       { responsivePriority: 100, targets: [1,9] },
     ]
-    this.modalConfig = this.configsService.getCleanModalOptions();
   }
 
   ngOnInit(): void {
@@ -202,6 +197,10 @@ export class StoreDashboardComponent implements OnInit, OnDestroy {
           this.msg.defaultError();
         }
       )
+  }
+
+  createAccount(dialog: any){
+    console.log('Creating account')
   }
 
   toggleTransaction() {
