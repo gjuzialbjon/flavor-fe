@@ -15,6 +15,13 @@ const transactionMany = gql `
     store{
       name
     }
+    comments{
+      _id
+      comment
+      user{
+        name
+      }
+    }
     posts{
       date
       type
@@ -51,6 +58,28 @@ export class TransactionsService {
   getTransactions(){
     return this.apollo.query({
       query: transactionMany
+    })
+  }
+
+  addComment(transactionId: string, comment: string){
+    return this.apollo.mutate({
+      mutation: gql`
+      mutation{
+        commentCreateOne(record:{
+          transaction:"${transactionId}"
+          comment:"${comment}"
+          
+        }){
+          record{
+            _id
+            comment
+            user{
+              name
+            }
+          }
+        }
+      }
+      `
     })
   }
   

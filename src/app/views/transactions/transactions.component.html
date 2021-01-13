@@ -131,14 +131,14 @@
           <thead>
             <tr>
               <th width="20px">&nbsp;</th>
-              <th class="text-uppercase">Date</th>
-              <th class="text-uppercase">Store Name</th>
-              <th class="text-uppercase">Client Name</th>
-              <th class="text-uppercase">Payment type</th>
-              <th class="text-uppercase">Direction</th>
-              <th class="text-uppercase">User Name</th>
-              <th class="text-uppercase">Status</th>
-              <th class="text-uppercase">Description</th>
+              <th>Date</th>
+              <th>Store Name</th>
+              <th>Client Name</th>
+              <th>Payment type</th>
+              <th>Direction</th>
+              <th>User Name</th>
+              <th>Status</th>
+              <th>Description</th>
               <th width="20px">&nbsp;</th>
             </tr>
           </thead>
@@ -251,22 +251,18 @@
         Comments
       </p>
 
-      <div>
-        <p class="mb-2" style="font-size: 13.5px;">
-          <strong>Emri komentuesit:</strong> Cfar komenti ka bere
-        </p>
-        <p class="mb-2" style="font-size: 13.5px;">
-          <strong>Emri komentuesit:</strong> Cfar komenti ka bere
-        </p>
-        <p class="mb-2" style="font-size: 13.5px;">
-          <strong>Emri komentuesit:</strong> Cfar komenti ka bere
-        </p>
+      <small *ngIf="transaction?.comments?.length === 0">No comments have been added yet for this transaction</small>
 
+      <div>
+        <p class="mb-2" style="font-size: 13.5px;" *ngFor="let comment of transaction?.comments">
+          <strong>{{ comment.user?.name || 'Unknown' }}:</strong> {{ comment.comment }}
+        </p>
       </div>
 
-      <textarea nbInput fullWidth rows="2"></textarea>
+      <textarea nbInput fullWidth rows="2" [formControl]="commentFormControl" placeholder="Insert comment here"></textarea>
       <div class="text-right">
-        <button nbButton status="info">Add comment</button>
+        <button nbButton status="info" class="mr-sm-3" (click)="addComment()">Add comment</button>
+        <button nbButton status="danger" class="mt-sm-0 mt-2">Add comment + flag transaction</button>
       </div>
     </nb-card-body>
     <nb-card-footer>

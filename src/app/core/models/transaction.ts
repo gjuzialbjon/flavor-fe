@@ -12,6 +12,7 @@ export interface Transaction {
     user: User
     createdAt: string
     store: Store
+    comments: any[]
     posts: [Post]
     currency: Currency
     client: Client
