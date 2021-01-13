@@ -15,7 +15,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
       {
         path: '',
         component: ProfileComponent,
-        pathMatch: 'full'
+        pathMatch: 'full',
+        data:{
+          roles: ['admin', 'agent']
+        }
       }
     ]),
     NbCardModule,

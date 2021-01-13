@@ -18,6 +18,7 @@ import { Subject, Subscription } from 'rxjs';
 import { ConfigsService } from 'src/app/core/helper-services/configs.service';
 import { MessageService } from 'src/app/core/helper-services/message.service';
 import { Store } from 'src/app/core/models/store';
+import { Transaction } from 'src/app/core/models/transaction';
 import { StoreService } from 'src/app/core/services/store.service';
 
 @Component({
@@ -27,121 +28,12 @@ import { StoreService } from 'src/app/core/services/store.service';
 })
 export class StoreDashboardComponent implements OnInit, OnDestroy {
   @ViewChild(DataTableDirective) dtElement!: DataTableDirective;
-
-  transactions = [
-    {
-      date: '2020-23-11',
-      storeName: 'Store 1',
-      clientName: 'John Doe',
-      paymentType: 'Invoice',
-      credit: 2000,
-      debit: 4444,
-      currency: 'USD',
-      status: 'completed',
-      description: 'Short description',
-      issued: true,
-      comment: 'This is the error comment',
-    },
-    {
-      date: '2020-23-11',
-      storeName: 'Store 1',
-      clientName: 'John Doe',
-      paymentType: 'Invoice',
-      currency: 'USD',
-      credit: 2000,
-      debit: 4444,
-      status: 'pending',
-      description: 'Short description',
-    },
-    {
-      date: '2020-23-11',
-      storeName: 'Store 1',
-      clientName: 'John Doe',
-      paymentType: 'Invoice',
-      currency: 'USD',
-      credit: 2000,
-      debit: 4444,
-      status: 'completed',
-      description: 'Short description',
-    },
-    {
-      date: '2020-23-11',
-      storeName: 'Store 1',
-      clientName: 'John Doe',
-      paymentType: 'Invoice',
-      currency: 'EUR',
-      credit: 2000,
-      debit: 4444,
-      status: 'completed',
-      description: 'Short description',
-    },
-    {
-      date: '2020-23-11',
-      storeName: 'Store 1',
-      clientName: 'John Doe',
-      paymentType: 'Invoice',
-      currency: 'EUR',
-      credit: 2000,
-      debit: 4444,
-      status: 'completed',
-      description: 'Short description',
-      issued: true,
-    },
-    {
-      date: '2020-23-11',
-      storeName: 'Store 1',
-      clientName: 'John Doe',
-      paymentType: 'Invoice',
-      currency: 'EUR',
-      credit: 2000,
-      debit: 4444,
-      status: 'pending',
-      description: 'Short description',
-    },
-    {
-      date: '2020-23-11',
-      storeName: 'Store 1',
-      clientName: 'John Doe',
-      paymentType: 'Invoice',
-      currency: 'EUR',
-      credit: 2000,
-      debit: 4444,
-      status: 'completed',
-      description: 'Short description',
-    },
-    {
-      date: '2020-23-11',
-      storeName: 'Store 1',
-      clientName: 'John Doe',
-      paymentType: 'Invoice',
-      currency: 'EUR',
-      credit: 2000,
-      debit: 4444,
-      status: 'completed',
-      description: 'Short description',
-    },
-  ];
-
-  balances = [
-    {
-      name: 'Euro',
-      currency: 'EUR',
-      amount: 2134324,
-    },
-    {
-      name: 'Dollar',
-      currency: 'USD',
-      amount: 2134,
-    },
-    {
-      name: 'All',
-      currency: 'L',
-      amount: 434,
-    },
-  ];
-
   dtOptions: DataTables.Settings 
   dtTrigger = new Subject<any>();
+
+  transactions: Transaction[] = []
+
+  balances = []
 
   private subscriptions = new Subscription();
   storeId: string;
@@ -149,17 +41,8 @@ export class StoreDashboardComponent implements OnInit, OnDestroy {
   loading = false
 
   makingTransaction = false;
-  transactionType = 'transfer';
-  transactionTypes = [
-    'transfer',
-    'purchase',
-    'trade',
-    'loan',
-    'withdraw',
-    'deposit',
-    'sell',
-    'fee',
-  ];
+  transactionType = '';
+  transactionTypes
 
   constructor(
     private configsService: ConfigsService,
@@ -172,16 +55,16 @@ export class StoreDashboardComponent implements OnInit, OnDestroy {
     private router: Router
   ) {
     this.storeId = this.route.snapshot.params.id;
+    this.transactionTypes = this.configsService.getTransactionTypes()
     this.dtOptions = this.configsService.getDTOptions()
     this.dtOptions.columnDefs = [
       // @ts-ignore
-      { responsivePriority: 100, targets: [1,9] },
+      // { responsivePriority: 100, targets: [1,9] },
     ]
   }
 
   ngOnInit(): void {
     this.getStoreInfo();
-    this.dtTrigger.next(true)
     // this.initNewClientForm()
   }
 
@@ -190,6 +73,7 @@ export class StoreDashboardComponent implements OnInit, OnDestroy {
         (res: any) => {
           this.store = res.data.storeById as Store;
           console.log(this.store);
+          this.dtTrigger.next(true)
           this.chRef.detectChanges();
         },
         (e) => {
@@ -199,19 +83,16 @@ export class StoreDashboardComponent implements OnInit, OnDestroy {
       )
   }
 
-  createAccount(dialog: any){
-    console.log('Creating account')
+  make(transactionType: string){
+    this.makingTransaction = true
+    this.transactionType = transactionType
+    this.chRef.detectChanges()
   }
 
-  toggleTransaction() {
-    this.makingTransaction = !this.makingTransaction;
-    this.chRef.detectChanges();
-  }
-
-  cancelTransaction() {
-    this.makingTransaction = false;
-    this.transactionType = 'transfer';
-    this.chRef.detectChanges();
+  cancelTransaction(){
+    this.makingTransaction = false
+    this.transactionType = ''
+    this.chRef.detectChanges()
   }
 
   select(type: string) {

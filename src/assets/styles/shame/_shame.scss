@@ -14,6 +14,8 @@
     .dialog-width {
         nb-card{
             min-width: 330px;
+            max-width: 95vw; 
+            max-height: 95vh;
 
             nb-card-footer{
                 display: flex;
@@ -22,9 +24,25 @@
         }
     }
 
-    nb-card.store-card, nb-card.client-card{
+    table.table.table-hover{
+        th{
+            text-transform: uppercase;
+        }
+
+        td{
+            border: none !important;
+        }
+    }
+
+    nb-card.store-card{
         background: #3886f7;
         color: white;
+        border: none;
+    }
+
+    nb-card.client-card{
+        background: #e0e4eb;
+        color: #292626;
         border: none;
     }
 

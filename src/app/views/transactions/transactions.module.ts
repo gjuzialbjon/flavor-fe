@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { TransactionsComponent } from './transactions.component';
 import { RouterModule } from '@angular/router';
 import { TransactionComponent } from './helpers/transaction/transaction.component';
-import { NbButtonModule, NbCardModule, NbDatepickerModule, NbFormFieldModule, NbIconModule, NbInputModule, NbSelectModule } from '@nebular/theme';
+import { NbButtonModule, NbCardModule, NbDatepickerModule, NbDialogModule, NbFormFieldModule, NbIconModule, NbInputModule, NbSelectModule, NbSpinnerModule } from '@nebular/theme';
 import { NewTransactionComponent } from './new-transaction/new-transaction.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DataTablesModule } from 'angular-datatables';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
+import { SharedTransactionsModule } from '../shared-transactions/shared-transactions.module';
 
 @NgModule({
   declarations: [TransactionsComponent, TransactionComponent, NewTransactionComponent],
@@ -17,6 +18,9 @@ import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
       {
         path: '',
         component: TransactionsComponent,
+        data:{
+          roles: ['admin', 'agent']
+        }
       }
     ]),
     DataTablesModule,
@@ -29,7 +33,12 @@ import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
     NbDatepickerModule,
     NbInputModule,
     NbSelectModule,
-    NgbDropdownModule
+    NgbDropdownModule,
+    NbSpinnerModule,
+    NbDialogModule.forChild({
+      dialogClass: 'dialog-width'
+    }),
+    SharedTransactionsModule
   ]
 })
 export class TransactionsModule { }

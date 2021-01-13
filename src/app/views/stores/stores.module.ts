@@ -9,20 +9,28 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { NbButtonModule, NbCardModule, NbFormFieldModule, NbIconModule, NbInputModule, NbSelectModule, NbSpinnerModule } from '@nebular/theme';
 import { StoreCardComponent } from './store-card/store-card.component';
 import { DataTablesModule } from 'angular-datatables';
+import { SharedTransactionsModule } from '../shared-transactions/shared-transactions.module';
+import { ClientCardComponent } from './client-card/client-card.component';
 
 @NgModule({
-  declarations: [StoresComponent, StoreDashboardComponent, StoreCardComponent],
+  declarations: [StoresComponent, StoreDashboardComponent, StoreCardComponent, ClientCardComponent],
   imports: [
     CommonModule,
     RouterModule.forChild([
       {
         path: '',
         component: StoresComponent,
-        pathMatch: 'full'
+        pathMatch: 'full',
+        data:{
+          roles: ['admin', 'agent']
+        }
       },
       {
         path: ':id',
         component: StoreDashboardComponent,
+        data:{
+          roles: ['admin', 'agent']
+        }
       }
     ]),
     DataTablesModule,
@@ -37,7 +45,8 @@ import { DataTablesModule } from 'angular-datatables';
     NbInputModule,
     NbSelectModule,
     NbSpinnerModule,
-    NgbDropdownModule
+    NgbDropdownModule,
+    SharedTransactionsModule
   ]
 })
 export class StoresModule { }

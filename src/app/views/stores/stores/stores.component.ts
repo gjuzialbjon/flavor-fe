@@ -19,8 +19,6 @@ export class StoresComponent implements OnInit {
   currencies: Currency[] = []
   loading = false // Prevent duplicate store creation
   loadingStores = true
-  countUpOptions
-  modalConfig
   newStoreForm!: FormGroup;
 
   totalBalance = 32322
@@ -34,8 +32,6 @@ export class StoresComponent implements OnInit {
     private currencyService: CurrencyService,
     private chRef: ChangeDetectorRef
     ) {
-      this.countUpOptions = this.configsService.getCountUpOptions()
-      this.modalConfig = this.configsService.getCleanModalOptions()
   }
 
   ngOnInit(): void {
@@ -73,7 +69,7 @@ export class StoresComponent implements OnInit {
 
   openNewStoreModal(content: TemplateRef<any>){
     this.initNewStoreForm()
-    this.modalService.open(content, this.modalConfig)
+    this.modalService.open(content)
   }
 
   createStore(modal: NgbActiveModal) {

@@ -6,7 +6,7 @@
           <div class="col">
             <p class="text-uppercase text-muted font-weight-bold m-0">{{ store?.name }}</p>
           </div>
-          <div class="col text-right">
+          <!-- <div class="col text-right">
             <button
               nbButton
               status="info"
@@ -15,7 +15,7 @@
               >
               Charge store
             </button>
-          </div>
+          </div> -->
         </div>
         <div class="row mt-2">
           <div class="col-md-6">
@@ -37,9 +37,9 @@
   <div class="col-xl-2 col-lg-3 col-md-4" *ngFor="let balance of balances">
     <nb-card>
         <nb-card-body>
-            <p class="text-muted text-uppercase">BALANCE {{ balance.name }}</p>
+            <!-- <p class="text-muted text-uppercase">BALANCE {{ balance.name }}</p> -->
             <p class="text-center mb-0 text-info" style="font-size: 1.5rem;">
-            <span >{{ balance.amount | currency: balance.currency }}</span>
+            <!-- <span >{{ balance.amount | currency: 'EUR' }}</span> -->
             </p>
         </nb-card-body>
     </nb-card>
@@ -50,7 +50,7 @@
   <nb-card-body>
     <div class="row mb-3">
       <div class="col-md-4">
-        <p>Transactions</p>
+        <p class="text-muted text-uppercase font-weight-bold m-0">Transactions</p>
       </div>
       <div class="col-md-8 text-right">
         <nb-icon
@@ -59,131 +59,58 @@
           class="mr-4"
           style="cursor: pointer"
         ></nb-icon>
-        <button
-          nbButton
-          status="info"
-          style="text-transform: none; border-radius: 13px;"
-          (click)="toggleTransaction()"
+        <div ngbDropdown class="d-inline-block">
+          <button
+            nbButton
+            status="info"
+            style="text-transform: none; border-radius: 13px"
+            id="dropdownBasic1"
+            ngbDropdownToggle
           >
-          {{ makingTransaction ? 'Cancel transaction' : 'Make a transaction'}}
-        </button>
+            Make a transaction
+          </button>
+          <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+            <button ngbDropdownItem (click)="make('transfer')">Transfer</button>
+            <button ngbDropdownItem (click)="make('loan')">Loan</button>
+            <button ngbDropdownItem (click)="make('trade')">Trade</button>
+            <button ngbDropdownItem (click)="make('deposit')">Deposit</button>
+            <button ngbDropdownItem (click)="make('withdraw')">Withdraw</button>
+          </div>
+        </div>
         
       </div>
     </div>
 
     <!-- MAKING A TRANSACTION SECTION -->
     <div class="row" *ngIf="makingTransaction" style="background-color: #F5F9FF; margin: 0rem -1rem;">
-      <div class="col-12 pt-4 px-lg-5 px-0">
-        <nb-card style="border: none; margin: 0;">
-          <nb-card-body class="pl-1">
-            <span class="transaction-menu-item active" id="transfer" (click)="select('transfer')">Transfer</span>
-            <span class="transaction-menu-item" id="purchase" (click)="select('purchase')">Purchase</span>
-            <span class="transaction-menu-item" id="trade" (click)="select('trade')">Trade</span>
-            <span class="transaction-menu-item" id="loan" (click)="select('loan')">Loan</span>
-            <span class="transaction-menu-item" id="withdraw" (click)="select('withdraw')">Withdraw</span>
-            <span class="transaction-menu-item" id="deposit" (click)="select('deposit')">Deposit</span>
-            <span class="transaction-menu-item" id="sell" (click)="select('sell')">Sell</span>
-            <span class="transaction-menu-item" id="fee" (click)="select('fee')">Fee</span>
-          </nb-card-body>
-        </nb-card>
-      </div>
-      <div class="col-12 py-4 px-lg-5 px-0">
+      <div class="col-12 py-4 px-lg-5 px-3">
         <div [ngSwitch]="transactionType">
           <div *ngSwitchCase="'transfer'">
-            <div class="row">
-              <div class="col-lg-3 col-md-6">
-                <nb-form-field>
-                  <label for="" class="label">Amount</label>
-                  <input nbInput>
-                </nb-form-field>
-              </div>
-              <div class="col-lg-3 col-md-6">
-                <nb-form-field>
-                  <label for="" class="label">Amount</label>
-                  <input nbInput>
-                </nb-form-field>
-              </div>
-              <div class="col-lg-3 col-md-6">
-                <nb-form-field>
-                  <label for="" class="label">Amount</label>
-                  <input nbInput>
-                </nb-form-field>
-              </div>
-              <div class="col-lg-3 col-md-6">
-                <nb-form-field>
-                  <label for="" class="label">Amount</label>
-                  <input nbInput>
-                </nb-form-field>
-              </div>
-              <div class="col-lg-3 col-md-6">
-                <nb-form-field>
-                  <label for="" class="label">Amount</label>
-                  <input nbInput>
-                </nb-form-field>
-              </div>
-              <div class="col-lg-3 col-md-6">
-                <nb-form-field>
-                  <label for="" class="label">Amount</label>
-                  <input nbInput>
-                </nb-form-field>
-              </div>
-              <div class="col-lg-3 col-md-6">
-                <nb-form-field>
-                  <label for="" class="label">Amount</label>
-                  <input nbInput>
-                </nb-form-field>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-12 text-right">
-                <button
-                  nbButton
-                  ghost
-                  class="mr-3"
-                  (click)="cancelTransaction()"
-                  >
-                  Cancel
-                </button>
-                <button
-                  nbButton
-                  status="info"
-                  >
-                  Make
-                </button>
-              </div>
-            </div>
-          </div>
-          <div *ngSwitchCase="'purchase'">
-            Purchase here
+            <app-transfer (onTransactionCancel)="cancelTransaction()"></app-transfer>
           </div>
           <div *ngSwitchCase="'trade'">
-            Trade here
+            <app-trade (onTransactionCancel)="cancelTransaction()"></app-trade>
           </div>
           <div *ngSwitchCase="'loan'">
-            Loan here
+            <app-loan (onTransactionCancel)="cancelTransaction()"></app-loan>
           </div>
           <div *ngSwitchCase="'withdraw'">
-            Withdraw here
+            <app-withdraw (onTransactionCancel)="cancelTransaction()"></app-withdraw>
           </div>
           <div *ngSwitchCase="'deposit'">
-            Deposit here
-          </div>
-          <div *ngSwitchCase="'sell'">
-            Sell here
-          </div>
-          <div *ngSwitchCase="'fee'">
-            Fee here
+            <app-deposit (onTransactionCancel)="cancelTransaction()"></app-deposit>
           </div>
         </div>
       </div>
     </div>
-    <!-- END MAKING A TRANSACTION -->
+      <!-- END MAKING A TRANSACTION -->
     <div class="row">
       <div class="col-12">
         <table
           datatable
           [dtOptions]="dtOptions"
-          class="table table-borderless table-hover"
+          [dtTrigger]="$any(dtTrigger)"
+          class="table table-hover"
           width="100%"
         >
           <thead>
@@ -193,8 +120,8 @@
               <th>Store Name</th>
               <th>Client Name</th>
               <th>Payment type</th>
-              <th>Credit</th>
-              <th>Debit</th>
+              <!-- <th>Credit</th>
+              <th>Debit</th> -->
               <th>Status</th>
               <th>Description</th>
               <th width="20px">&nbsp;</th>
@@ -202,22 +129,22 @@
           </thead>
           <tbody>
             <tr *ngFor="let transaction of transactions">
-              <td [attr.data-sort]="transaction.issued">
+              <td>
                 <nb-icon
                   icon="flag"
-                  [status]="transaction.issued ? 'warning' : 'basic'"
+                  status="warning"
                 ></nb-icon>
               </td>
-              <td class="text-capitalize">{{ transaction.date }}</td>
-              <td class="text-capitalize">{{ transaction.storeName }}</td>
-              <td class="text-capitalize">{{ transaction.clientName }}</td>
-              <td class="text-capitalize">{{ transaction.paymentType }}</td>
-              <td class="text-capitalize" [attr.data-sort]="transaction.credit">
+              <td class="text-capitalize">{{ transaction.createdAt }}</td>
+              <td class="text-capitalize">{{ transaction.store.name }}</td>
+              <td class="text-capitalize">{{ transaction.client.name }}</td>
+              <td class="text-capitalize">{{ transaction.type }}</td>
+              <!-- <td class="text-capitalize" [attr.data-sort]="transaction.credit">
                 {{ transaction.credit | currency: transaction.currency }}
-              </td>
-              <td class="text-capitalize" [attr.data-sort]="transaction.debit">
-                {{ transaction.debit | currency: transaction.currency }}
-              </td>
+              </td> -->
+              <!-- <td class="text-capitalize" [attr.data-sort]="transaction.debit">
+                {{ transaction.debit | currency: transaction.currency.symbol }}
+              </td> -->
               <td
                 class="text-capitalize"
                 [ngClass]="{ 'text-danger': transaction.status === 'pending' }"

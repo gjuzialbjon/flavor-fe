@@ -13,6 +13,7 @@ export interface Post {
     price_out: number
     currency: Currency
     user: User
+    type: string
     store: Store
     transaction: Transaction
     debit_account: Account

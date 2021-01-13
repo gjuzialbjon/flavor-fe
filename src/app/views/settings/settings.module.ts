@@ -17,6 +17,9 @@ import { NbButtonModule, NbCardModule, NbCheckboxModule, NbDialogModule, NbFormF
       {
         path: '',
         component: SettingsComponent,
+        data:{
+          roles: ['admin', 'agent']
+        },
         children:[
           {
             path: 'currencies',

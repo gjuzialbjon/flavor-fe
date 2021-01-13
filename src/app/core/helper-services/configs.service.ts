@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { NbMenuItem } from '@nebular/theme';
 
 const posRanges = [
   { divider: 1000000 , suffix: 'M' },
@@ -17,44 +18,116 @@ export class ConfigsService {
 
   constructor() { }
 
-  getCountUpOptions() {
-    return {
-      formattingFn: (n:number) => {
-        if(n > 0){
-          for (var i = 0; i < posRanges.length; i++) {
-            if (n >= posRanges[i].divider) {
-                return (n / posRanges[i].divider).toFixed(1) + posRanges[i].suffix;
-            }
-          }
-          return n.toString();
-        } else {
-          for (var i = 0; i < negRanges.length; i++) {
-            if (n <= negRanges[i].divider) {
-                return '-' + (n / negRanges[i].divider).toFixed(1) + negRanges[i].suffix;
-            }
-          }
-          return n.toString();
-        }
-      },
-    }
-  }
-
-  getCleanModalOptions(size = 'md') {
-    return {
-      centered: true,
-      size: size,
-      windowClass: 'clean-modal'
-    }
-  }
-
   getDTOptions(): DataTables.Settings {
     return {
       pagingType: 'full',
       pageLength: 10,
       processing: true,
       responsive: true,
-      scrollCollapse: true,
-      scrollY: '500px',
+      // scrollCollapse: true,
+      // scrollY: '500px',
+    }
+  }
+
+  getTransactionTypes(){
+    return [
+      'transfer',
+      'trade',
+      'loan',
+      'withdraw',
+      'deposit',
+    ];
+  }
+
+  getMenuByRole(): NbMenuItem[] {
+    let role = 'admin'
+
+    if(role === 'admin'){
+      return [
+        {
+          title: 'Stores',
+          link: '/stores',
+          icon: {
+            icon: 'stores',
+            pack: 'menu',
+          },
+          pathMatch: 'prefix',
+        },
+        {
+          title: 'Clients',
+          link: '/clients',
+          icon: 'user-tie',
+          pathMatch: 'prefix',
+        },
+        {
+          title: 'Transactions',
+          link: '/transactions',
+          icon: {
+            icon: 'transactions',
+            pack: 'menu',
+          },
+          pathMatch: 'prefix',
+        },
+        {
+          title: 'Reports',
+          link: '/reports',
+          icon: {
+            icon: 'reports',
+            pack: 'menu',
+          },
+          pathMatch: 'prefix',
+        },
+        {
+          title: 'Settings',
+          link: '/settings',
+          icon: {
+            icon: 'settings',
+            pack: 'menu',
+          },
+          pathMatch: 'prefix',
+        },
+      ];
+    } else if(role === 'agent'){
+      return [
+        {
+          title: 'Stores',
+          link: '/stores',
+          icon: {
+            icon: 'stores',
+            pack: 'menu',
+          },
+          pathMatch: 'prefix',
+        },
+        {
+          title: 'Clients',
+          link: '/clients',
+          icon: 'user-tie',
+          pathMatch: 'prefix',
+        },
+        {
+          title: 'Transactions',
+          link: '/transactions',
+          icon: {
+            icon: 'transactions',
+            pack: 'menu',
+          },
+          pathMatch: 'prefix',
+        },
+      ];
+    } else if( role === 'finance'){
+      return [
+        {
+          title: 'Reports',
+          link: '/reports',
+          icon: {
+            icon: 'reports',
+            pack: 'menu',
+          },
+          pathMatch: 'prefix',
+        },
+      ]
+    } else {
+      return []
     }
   }
 }

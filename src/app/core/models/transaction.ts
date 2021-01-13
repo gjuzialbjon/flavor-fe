@@ -8,8 +8,9 @@ export interface Transaction {
     type: string
     status: string
     direction: string
-    description: String
+    description: string
     user: User
+    createdAt: string
     store: Store
     posts: [Post]
     currency: Currency

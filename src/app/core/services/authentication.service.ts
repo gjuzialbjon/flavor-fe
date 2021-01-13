@@ -6,17 +6,13 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { environment } from '@env';
 import { Apollo, gql } from 'apollo-angular';
 import { MessageService } from '../helper-services/message.service';
-import { SocialTokenResponse } from '../models/socialTokenResponse';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthenticationService {
   jwtHelper: JwtHelperService;
-  decodedToken: any;
   user: any;
-  token: any;
-  role!: string;
   username!: string;
 
   constructor(
@@ -26,35 +22,30 @@ export class AuthenticationService {
     private http: HttpClient
   ) {
     this.jwtHelper = new JwtHelperService();
+    this.checkIfToken()
+  }
+
+  checkIfToken(){
+    const token = localStorage.getItem('flavorToken')
+    if(!!token && token.length > 10){
+      this.user = this.jwtHelper.decodeToken(token)
+      console.log('User after app init is ', this.user);
+      
+    }
+  }
+
+  initApp(token: string){
+    localStorage.setItem('flavorToken', token)
+    this.user = this.jwtHelper.decodeToken(token)
+    console.log('User after login is ', this.user)
   }
 
   login(email: string, password: string) {
-    this.http
+    return this.http
       .post(`https${environment.API_URL}login`, {
         email: `${email}`,
         password: `${password}`,
       })
-      .subscribe(
-        (res: SocialTokenResponse) => {
-          console.log(res);
-          const token = res.token + '';
-          localStorage.setItem('flavorToken', token);
-          this.decodedToken = this.jwtHelper.decodeToken(res.token);
-          console.log(this.decodedToken);
-
-          this.router.navigate(['stores']);
-          setTimeout(() => {
-            this.msg.success('', 'Welcome back!');
-          }, 1500);
-        },
-        (e) => {
-          console.error(e);
-          this.msg.error(
-            'Something went wrong. Please try again.',
-            'Error!'
-          );
-        }
-      );
   }
 
   resetPassword(newPassword: string) {

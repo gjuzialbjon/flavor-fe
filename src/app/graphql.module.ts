@@ -61,8 +61,6 @@ export function createApollo(httpLink: HttpLink) {
     }),
   ]);
 
-  console.log('Https link ', httpsLink);
-
   // using the ability to split links, you can send data to each link
   // depending on what kind of operation is being sent
   const link = split(

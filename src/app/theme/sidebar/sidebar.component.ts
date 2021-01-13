@@ -9,6 +9,7 @@ import {
 import { ReplaySubject } from 'rxjs';
 
 import { map, tap, takeUntil } from 'rxjs/operators';
+import { ConfigsService } from 'src/app/core/helper-services/configs.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -18,67 +19,18 @@ import { map, tap, takeUntil } from 'rxjs/operators';
 export class SidebarComponent implements OnInit {
   destroyed$: ReplaySubject<boolean> = new ReplaySubject(1);
 
-  items: NbMenuItem[] = [
-    // {
-    //   title: 'Dashboard',
-    //   link: '/dashboard',
-    //   icon: {
-    //     icon: 'dashboard',
-    //     pack: 'menu',
-    //   },
-    //   pathMatch: 'prefix',
-    // },
-    {
-      title: 'Stores',
-      link: '/stores',
-      icon: {
-        icon: 'stores',
-        pack: 'menu',
-      },
-      pathMatch: 'prefix',
-    },
-    {
-      title: 'Clients',
-      link: '/clients',
-      icon: 'user-tie',
-      pathMatch: 'prefix',
-    },
-    {
-      title: 'Transactions',
-      link: '/transactions',
-      icon: {
-        icon: 'transactions',
-        pack: 'menu',
-      },
-      pathMatch: 'prefix',
-    },
-    {
-      title: 'Reports',
-      link: '/reports',
-      icon: {
-        icon: 'reports',
-        pack: 'menu',
-      },
-      pathMatch: 'prefix',
-    },
-    {
-      title: 'Settings',
-      link: '/settings',
-      icon: {
-        icon: 'settings',
-        pack: 'menu',
-      },
-      pathMatch: 'prefix',
-    },
-  ];
+  items: NbMenuItem[]
 
   constructor(
     private router: Router,
     private menuService: NbMenuService,
     private breakpointService: NbMediaBreakpointsService,
     private sidebarService: NbSidebarService,
-    private chRef: ChangeDetectorRef
-  ) {}
+    private chRef: ChangeDetectorRef,
+    private configsService: ConfigsService
+  ) {
+    this.items = this.configsService.getMenuByRole()
+  }
 
   ngOnInit(): void {
     const { sm } = this.breakpointService.getBreakpointsMap();

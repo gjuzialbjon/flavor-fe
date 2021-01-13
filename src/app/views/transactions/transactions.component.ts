@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { NbDialogService } from '@nebular/theme';
+import { DataTableDirective } from 'angular-datatables';
+import { Subject } from 'rxjs';
+import { ConfigsService } from 'src/app/core/helper-services/configs.service';
+import { MessageService } from 'src/app/core/helper-services/message.service';
+import { Transaction } from 'src/app/core/models/transaction';
+import { TransactionsService } from 'src/app/core/services/transactions.service';
 
 @Component({
   selector: 'app-transactions',
@@ -7,94 +14,76 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TransactionsComponent implements OnInit {
-  transactions = [
-    {
-      date: '2020-23-11',
-      storeName: 'Store 1',
-      clientName: 'John Doe',
-      paymentType: 'Invoice',
-      credit: 2000,
-      debit: 4444,
-      status: 'completed',
-      description: 'Short description',
-      issued: true
-    },
-    {
-      date: '2020-23-11',
-      storeName: 'Store 1',
-      clientName: 'John Doe',
-      paymentType: 'Invoice',
-      credit: 2000,
-      debit: 4444,
-      status: 'pending',
-      description: 'Short description'
-    },
-    {
-      date: '2020-23-11',
-      storeName: 'Store 1',
-      clientName: 'John Doe',
-      paymentType: 'Invoice',
-      credit: 2000,
-      debit: 4444,
-      status: 'completed',
-      description: 'Short description'
-    },
-    {
-      date: '2020-23-11',
-      storeName: 'Store 1',
-      clientName: 'John Doe',
-      paymentType: 'Invoice',
-      credit: 2000,
-      debit: 4444,
-      status: 'completed',
-      description: 'Short description'
-    },
-    {
-      date: '2020-23-11',
-      storeName: 'Store 1',
-      clientName: 'John Doe',
-      paymentType: 'Invoice',
-      credit: 2000,
-      debit: 4444,
-      status: 'completed',
-      description: 'Short description',
-      issued: true
-    },
-    {
-      date: '2020-23-11',
-      storeName: 'Store 1',
-      clientName: 'John Doe',
-      paymentType: 'Invoice',
-      credit: 2000,
-      debit: 4444,
-      status: 'pending',
-      description: 'Short description'
-    },
-    {
-      date: '2020-23-11',
-      storeName: 'Store 1',
-      clientName: 'John Doe',
-      paymentType: 'Invoice',
-      credit: 2000,
-      debit: 4444,
-      status: 'completed',
-      description: 'Short description'
-    },
-    {
-      date: '2020-23-11',
-      storeName: 'Store 1',
-      clientName: 'John Doe',
-      paymentType: 'Invoice',
-      credit: 2000,
-      debit: 4444,
-      status: 'completed',
-      description: 'Short description'
-    }
-  ]
+  @ViewChild(DataTableDirective) transactionsTable!: DataTableDirective;
 
-  constructor() { }
+  transactions: Transaction[] = []
+  transaction!: Transaction
+
+  loadingTransactions = true
+
+  makingTransaction = false;
+  transactionType = '';
+  transactionTypes
+
+  dtOptions 
+  dtTrigger = new Subject<any>(); 
+
+  constructor(
+    private configsService: ConfigsService,
+    private chRef: ChangeDetectorRef,
+    private dialogService: NbDialogService,
+    private transactionsService: TransactionsService,
+    private msg: MessageService
+  ) {
+    this.transactionTypes = this.configsService.getTransactionTypes()
+    this.dtOptions = this.configsService.getDTOptions()
+  }
 
   ngOnInit(): void {
+    this.getTransactions()
   }
-  
+
+  getTransactions(){
+    this.transactionsService.getTransactions().subscribe(
+      (res: any) => {
+        console.log(res)
+        this.transactions = JSON.parse(JSON.stringify(res.data.transactionMany)) as Transaction[]
+        this.loadingTransactions = false
+        this.dtTrigger.next()
+        this.chRef.detectChanges()
+      },
+      e => {
+        console.error(e)
+        this.msg.defaultError()
+      }
+    )
+  }
+
+  openEditTransaction(content: TemplateRef<any>, transaction: Transaction){
+    this.transaction = transaction
+    this.dialogService.open(content)
+  }
+
+  make(transactionType: string){
+    this.makingTransaction = true
+    this.transactionType = transactionType
+    this.chRef.detectChanges()
+  }
+
+  rerenderTransactions(): void {
+    this.transactionsTable.dtInstance.then((dtInstance: DataTables.Api) => {
+        // Destroy the table first 
+        dtInstance.destroy();
+
+        // Call the dtTrigger to rerender again
+        this.dtTrigger.next();
+    });
+    this.chRef.detectChanges()
+  }
+
+  cancelTransaction(){
+    this.makingTransaction = false
+    this.transactionType = ''
+    this.chRef.detectChanges()
+  }
 }

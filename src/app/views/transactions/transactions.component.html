@@ -1,104 +1,277 @@
-<nb-select placeholder="STORE" filled shape="round" size="medium" status="info" class="mr-4 mb-2">
-    <nb-option value="1">Option 1</nb-option>
-    <nb-option value="2">Option 2</nb-option>
-    <nb-option value="3">Option 3</nb-option>
-    <nb-option value="4">Option 4</nb-option>
-</nb-select>
-
-<nb-select placeholder="TYPE" filled shape="round" size="medium" status="info" class="mr-4 mb-2">
-    <nb-option value="1">Option 1</nb-option>
-    <nb-option value="2">Option 2</nb-option>
-    <nb-option value="3">Option 3</nb-option>
-    <nb-option value="4">Option 4</nb-option>
-</nb-select>
-
-<nb-select placeholder="PERIOD" filled shape="round" size="medium" status="info" class="mr-4 mb-2">
-    <nb-option value="1">Option 1</nb-option>
-    <nb-option value="2">Option 2</nb-option>
-    <nb-option value="3">Option 3</nb-option>
-    <nb-option value="4">Option 4</nb-option>
-</nb-select>
-
-<nb-card class="mt-4">
-    <nb-card-body>
-      <div class="row mb-3">
-        <div class="col">
-          <p>Transactions</p>
-        </div>
-        <div class="col text-right">
-          <nb-icon
+<nb-card
+  class="mt-0"
+  [nbSpinner]="loadingTransactions"
+  nbSpinnerStatus="info"
+  nbSpinnerSize="large"
+  nbSpinnerMessage="Loading transactions"
+>
+  <nb-card-body>
+    <div class="row mb-3">
+      <div class="col-lg-2 col-sm-12">
+        <p class="text-muted text-uppercase font-weight-bold m-0">
+          Transactions
+        </p>
+      </div>
+      <div class="col-lg-2 col-md-4 col-sm-6">
+        <nb-select
+          placeholder="STORE"
+          filled
+          shape="round"
+          size="medium"
+          status="info"
+          class="mr-4 mb-2"
+        >
+          <nb-option value="1">Option 1</nb-option>
+          <nb-option value="2">Option 2</nb-option>
+          <nb-option value="3">Option 3</nb-option>
+          <nb-option value="4">Option 4</nb-option>
+        </nb-select>
+      </div>
+      <div class="col-lg-2 col-md-4 col-sm-6">
+        <nb-select
+          placeholder="TYPE"
+          filled
+          shape="round"
+          size="medium"
+          status="info"
+          class="mr-4 mb-2"
+        >
+          <nb-option value="1">Option 1</nb-option>
+          <nb-option value="2">Option 2</nb-option>
+          <nb-option value="3">Option 3</nb-option>
+          <nb-option value="4">Option 4</nb-option>
+        </nb-select>
+      </div>
+      <div class="col-lg-2 col-md-4 col-sm-6">
+        <nb-select
+          placeholder="PERIOD"
+          filled
+          shape="round"
+          size="medium"
+          status="info"
+          class="mr-4 mb-2"
+        >
+          <nb-option value="1">Option 1</nb-option>
+          <nb-option value="2">Option 2</nb-option>
+          <nb-option value="3">Option 3</nb-option>
+          <nb-option value="4">Option 4</nb-option>
+        </nb-select>
+      </div>
+      <div class="col-lg-4 col-md-12 col-sm-6 text-lg-right">
+        <nb-icon
           icon="calendar-alt"
           status="info"
           class="mr-4"
           style="cursor: pointer"
         ></nb-icon>
-          <div ngbDropdown class="d-inline-block">
-              <button class="btn btn-info" id="dropdownBasic1" ngbDropdownToggle>Make a transaction</button>
-              <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                <button ngbDropdownItem>Transfer</button>
-                <button ngbDropdownItem>Purchase</button>
-                <button ngbDropdownItem>Trade</button>
-                <button ngbDropdownItem>Loan</button>
-                <button ngbDropdownItem>Withdraw</button>
-                <button ngbDropdownItem>Deposit</button>
-                <button ngbDropdownItem>Sell</button>
-              </div>
+        <div ngbDropdown class="d-inline-block">
+          <button
+            nbButton
+            status="info"
+            style="text-transform: none; border-radius: 13px"
+            id="dropdownBasic1"
+            ngbDropdownToggle
+          >
+            Make a transaction
+          </button>
+          <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+            <button ngbDropdownItem (click)="make('transfer')">Transfer</button>
+            <button ngbDropdownItem (click)="make('loan')">Loan</button>
+            <button ngbDropdownItem (click)="make('trade')">Trade</button>
+            <button ngbDropdownItem (click)="make('deposit')">Deposit</button>
+            <button ngbDropdownItem (click)="make('withdraw')">Withdraw</button>
           </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col-12">
-          <table
-            datatable
-            class="table table-borderless table-hover"
-            width="100%"
-          >
-            <thead>
-              <tr>
-                <th width="20px">&nbsp;</th>
-                <th>Date</th>
-                <th>Store Name</th>
-                <th>Client Name</th>
-                <th>Payment type</th>
-                <th>Credit</th>
-                <th>Debit</th>
-                <th>Status</th>
-                <th>Description</th>
-                <th width="20px">&nbsp;</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let transaction of transactions">
-                <td [attr.data-sort]="transaction.issued">
-                  <nb-icon
-                    icon="flag"
-                    [status]="transaction.issued ? 'warning' : 'basic'"
-                  ></nb-icon>
-                </td>
-                <td class="text-capitalize">{{ transaction.date }}</td>
-                <td class="text-capitalize">{{ transaction.storeName }}</td>
-                <td class="text-capitalize">{{ transaction.clientName }}</td>
-                <td class="text-capitalize">{{ transaction.paymentType }}</td>
-                <td class="text-capitalize">
-                  {{ transaction.credit | currency }}
-                </td>
-                <td class="text-capitalize">
-                  {{ transaction.debit | currency }}
-                </td>
-                <td
-                  class="text-capitalize"
-                  [ngClass]="{ 'text-danger font-weight-bold': transaction.status === 'pending' }"
-                >
-                  {{ transaction.status }}
-                </td>
-                <td class="text-capitalize">{{ transaction.description }}</td>
-                <td>
-                  <nb-icon icon="pen" style="cursor: pointer;" status="basic"></nb-icon>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+    </div>
+
+    <!-- MAKING A TRANSACTION SECTION -->
+    <div
+      class="row"
+      *ngIf="makingTransaction"
+      style="background-color: #f5f9ff; margin: 0rem -1rem"
+    >
+      <div class="col-12 py-4 px-lg-5 px-3">
+        <div [ngSwitch]="transactionType">
+          <div *ngSwitchCase="'transfer'">
+            <app-transfer
+              (onTransactionCancel)="cancelTransaction()"
+            ></app-transfer>
+          </div>
+          <div *ngSwitchCase="'trade'">
+            <app-trade (onTransactionCancel)="cancelTransaction()"></app-trade>
+          </div>
+          <div *ngSwitchCase="'loan'">
+            <app-loan (onTransactionCancel)="cancelTransaction()"></app-loan>
+          </div>
+          <div *ngSwitchCase="'withdraw'">
+            <app-withdraw
+              (onTransactionCancel)="cancelTransaction()"
+            ></app-withdraw>
+          </div>
+          <div *ngSwitchCase="'deposit'">
+            <app-deposit
+              (onTransactionCancel)="cancelTransaction()"
+            ></app-deposit>
+          </div>
         </div>
       </div>
+    </div>
+    <!-- END MAKING A TRANSACTION -->
+
+    <div class="row pt-2">
+      <div class="col-12">
+        <table
+          [dtTrigger]="$any(dtTrigger)"
+          [dtOptions]="dtOptions"
+          datatable
+          class="table table-hover"
+          width="100%"
+        >
+          <thead>
+            <tr>
+              <th width="20px">&nbsp;</th>
+              <th class="text-uppercase">Date</th>
+              <th class="text-uppercase">Store Name</th>
+              <th class="text-uppercase">Client Name</th>
+              <th class="text-uppercase">Payment type</th>
+              <th class="text-uppercase">Direction</th>
+              <th class="text-uppercase">User Name</th>
+              <th class="text-uppercase">Status</th>
+              <th class="text-uppercase">Description</th>
+              <th width="20px">&nbsp;</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let transaction of transactions">
+              <td>
+                <nb-icon
+                  icon="flag"
+                  [status]="true ? 'danger' : 'basic'"
+                ></nb-icon>
+              </td>
+              <td class="text-capitalize">
+                {{ transaction.createdAt | date: "yyyy-MM-dd HH:mm" }}
+              </td>
+              <td class="text-capitalize">{{ transaction.store?.name }}</td>
+              <td class="text-capitalize">{{ transaction.client?.name }}</td>
+              <td class="text-capitalize">{{ transaction.type }}</td>
+              <td class="text-capitalize">{{ transaction.direction }}</td>
+              <td class="text-capitalize">{{ transaction.user?.name }}</td>
+              <td
+                class="text-capitalize"
+                [ngClass]="{
+                  'text-danger font-weight-bold':
+                    transaction.status === 'pending'
+                }"
+              >
+                {{ transaction.status }}
+              </td>
+              <td>{{ transaction.description }}</td>
+              <td (click)="openEditTransaction(transactionDialog, transaction)">
+                <nb-icon
+                  icon="edit"
+                  style="cursor: pointer"
+                  status="basic"
+                ></nb-icon>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>
+
+<ng-template #transactionDialog let-data let-ref="dialogRef">
+  <nb-card>
+    <nb-card-header class="d-flex align-items-start justify-content-between">
+      <span
+        class="mr-4"
+        style="
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          max-width: 25ch;
+        "
+      >
+        {{ transaction.description }}</span
+      >
+      <span class="">
+        {{ transaction.status }}
+      </span>
+      <span class="text-muted ml-4">
+        {{ transaction.createdAt | date: "yyyy-MM-dd HH:mm" }}
+      </span>
+    </nb-card-header>
+    <nb-card-body class="p-3">
+      <!-- <h6
+        *ngIf="!!transaction.description && transaction.description.length > 15"
+        class="text-muted"
+      >
+        {{ transaction.description }}
+      </h6> -->
+
+      <p class="mb-2 text-muted font-weight-bold" style="color: #959595;">
+        Transaction details
+      </p>
+
+      <div style="background-color: #F5F9FF; min-height: 200px; border-radius: 6px;">KTU DO JENE INFOT PER TRANSACTIONIN</div>
+
+      <p class="mb-2 mt-4 text-muted font-weight-bold" style="color: #959595;">
+        Posts
+      </p>
+
+      <table class="table table-hover table-sm table-responsive" width="100%">
+        <thead>
+          <tr>
+            <th>detail</th>
+            <th>date</th>
+            <th>ammount</th>
+            <th>type</th>
+            <th>user</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let post of transaction?.posts">
+            <td>{{ post.details }}</td>
+            <td>{{ post.date | date: "yyyy-MM-dd HH:mm" }}</td>
+            <td>{{ post.ammount | currency:post.currency.symbol }}</td>
+            <td class="text-capitalize">{{ post.type }}</td>
+            <td>{{ post.user?.name }}</td>
+            <td>
+              <nb-icon icon="edit" status="basic"></nb-icon>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p class="mb-2 mt-4 text-muted font-weight-bold" style="color: #959595;">
+        Comments
+      </p>
+
+      <div>
+        <p class="mb-2" style="font-size: 13.5px;">
+          <strong>Emri komentuesit:</strong> Cfar komenti ka bere
+        </p>
+        <p class="mb-2" style="font-size: 13.5px;">
+          <strong>Emri komentuesit:</strong> Cfar komenti ka bere
+        </p>
+        <p class="mb-2" style="font-size: 13.5px;">
+          <strong>Emri komentuesit:</strong> Cfar komenti ka bere
+        </p>
+
+      </div>
+
+      <textarea nbInput fullWidth rows="2"></textarea>
+      <div class="text-right">
+        <button nbButton status="info">Add comment</button>
+      </div>
     </nb-card-body>
+    <nb-card-footer>
+      <button nbButton (click)="ref.close()">Close</button>
+      <!-- <button nbButton status="success" (click)="ref.close()" class="ml-4">update store</button> -->
+    </nb-card-footer>
   </nb-card>
+</ng-template>

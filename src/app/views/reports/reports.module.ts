@@ -14,7 +14,10 @@ import { NbButtonModule, NbCardModule, NbIconModule, NbSelectModule } from '@neb
       {
         path: '',
         component: ReportsComponent,
-        pathMatch: 'full'
+        pathMatch: 'full',
+        data:{
+          roles: ['finance']
+        }
       },
     ]),
     NbSelectModule,

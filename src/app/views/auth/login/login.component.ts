@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { NbDialogService } from '@nebular/theme';
 import { Apollo } from 'apollo-angular';
 import { MessageService } from 'src/app/core/helper-services/message.service';
+import { SocialTokenResponse } from 'src/app/core/models/socialTokenResponse';
 import { AuthenticationService } from 'src/app/core/services/authentication.service';
 
 @Component({
@@ -44,7 +45,20 @@ export class LoginComponent implements OnInit {
 
     this.loading = true
     const {email, password} = this.loginForm.value
-    this.authService.login(email, password)
+    this.authService.login(email, password).subscribe(
+      (res: SocialTokenResponse) => {
+        // console.log(res);
+        this.authService.initApp(res.token + '')
+        this.router.navigate(['/']);
+      },
+      (e) => {
+        console.error(e);
+        this.msg.error(
+          'Something went wrong. Please try again.',
+          'Error!'
+        );
+      }
+    );
   }
 
   openForgotDialog(content: any){
