@@ -16,6 +16,7 @@ import { ClientCardComponent } from './client-card/client-card.component';
   declarations: [StoresComponent, StoreDashboardComponent, StoreCardComponent, ClientCardComponent],
   imports: [
     CommonModule,
+    SharedTransactionsModule,
     RouterModule.forChild([
       {
         path: '',
@@ -26,7 +27,7 @@ import { ClientCardComponent } from './client-card/client-card.component';
         }
       },
       {
-        path: ':id',
+        path: ':storeId',
         component: StoreDashboardComponent,
         data:{
           roles: ['admin', 'agent']
@@ -46,7 +47,6 @@ import { ClientCardComponent } from './client-card/client-card.component';
     NbSelectModule,
     NbSpinnerModule,
     NgbDropdownModule,
-    SharedTransactionsModule
   ]
 })
 export class StoresModule { }

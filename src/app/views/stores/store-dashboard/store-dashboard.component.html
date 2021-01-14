@@ -49,10 +49,10 @@
 <nb-card class="mt-0 shadow" style="border: none;">
   <nb-card-body>
     <div class="row mb-3">
-      <div class="col-md-4">
+      <div class="col-sm-4">
         <p class="text-muted text-uppercase font-weight-bold m-0">Transactions</p>
       </div>
-      <div class="col-md-8 text-right">
+      <div class="col-sm-8 text-sm-right mt-3 mt-sm-0">
         <nb-icon
           icon="calendar-alt"
           status="info"
@@ -98,13 +98,13 @@
             <app-withdraw (onTransactionCancel)="cancelTransaction()"></app-withdraw>
           </div>
           <div *ngSwitchCase="'deposit'">
-            <app-deposit (onTransactionCancel)="cancelTransaction()"></app-deposit>
+            <app-deposit (onTransactionCancel)="cancelTransaction()" ></app-deposit>
           </div>
         </div>
       </div>
     </div>
       <!-- END MAKING A TRANSACTION -->
-    <div class="row">
+    <div class="row pt-2">
       <div class="col-12">
         <table
           datatable

@@ -29,15 +29,14 @@ export class AuthenticationService {
     const token = localStorage.getItem('flavorToken')
     if(!!token && token.length > 10){
       this.user = this.jwtHelper.decodeToken(token)
-      console.log('User after app init is ', this.user);
-      
+      // console.log('User after app init is ', this.user);
     }
   }
 
   initApp(token: string){
     localStorage.setItem('flavorToken', token)
     this.user = this.jwtHelper.decodeToken(token)
-    console.log('User after login is ', this.user)
+    // console.log('User after login is ', this.user)
   }
 
   login(email: string, password: string) {

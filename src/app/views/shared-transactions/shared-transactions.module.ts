@@ -13,6 +13,8 @@ import {
   NbInputModule,
   NbSelectModule,
 } from '@nebular/theme';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -30,6 +32,9 @@ import {
     NbDatepickerModule,
     NbInputModule,
     NbSelectModule,
+    NgSelectModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   exports: [
     TransferComponent,

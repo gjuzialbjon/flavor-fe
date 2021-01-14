@@ -14,37 +14,35 @@
       </div>
       <div class="col-lg-2 col-md-4 col-sm-6">
         <nb-select
-          placeholder="STORE"
+          placeholder="Store"
           filled
           shape="round"
           size="medium"
           status="info"
           class="mr-4 mb-2"
         >
-          <nb-option value="1">Option 1</nb-option>
-          <nb-option value="2">Option 2</nb-option>
-          <nb-option value="3">Option 3</nb-option>
-          <nb-option value="4">Option 4</nb-option>
+          <nb-option *ngFor="let store of stores" [value]="store._id">{{
+            store.name
+          }}</nb-option>
         </nb-select>
       </div>
       <div class="col-lg-2 col-md-4 col-sm-6">
         <nb-select
-          placeholder="TYPE"
+          placeholder="Type"
           filled
           shape="round"
           size="medium"
           status="info"
           class="mr-4 mb-2"
         >
-          <nb-option value="1">Option 1</nb-option>
-          <nb-option value="2">Option 2</nb-option>
-          <nb-option value="3">Option 3</nb-option>
-          <nb-option value="4">Option 4</nb-option>
+          <nb-option *ngFor="let type of transactionTypes" [value]="type._id">{{
+            type.name
+          }}</nb-option>
         </nb-select>
       </div>
       <div class="col-lg-2 col-md-4 col-sm-6">
         <nb-select
-          placeholder="PERIOD"
+          placeholder="Period"
           filled
           shape="round"
           size="medium"
@@ -96,22 +94,31 @@
           <div *ngSwitchCase="'transfer'">
             <app-transfer
               (onTransactionCancel)="cancelTransaction()"
+              (onTransactionLock)="loadingTransactions = true"
             ></app-transfer>
           </div>
           <div *ngSwitchCase="'trade'">
-            <app-trade (onTransactionCancel)="cancelTransaction()"></app-trade>
+            <app-trade
+              (onTransactionCancel)="cancelTransaction()"
+              (onTransactionLock)="loadingTransactions = true"
+            ></app-trade>
           </div>
           <div *ngSwitchCase="'loan'">
-            <app-loan (onTransactionCancel)="cancelTransaction()"></app-loan>
+            <app-loan
+              (onTransactionCancel)="cancelTransaction()"
+              (onTransactionLock)="loadingTransactions = true"
+            ></app-loan>
           </div>
           <div *ngSwitchCase="'withdraw'">
             <app-withdraw
               (onTransactionCancel)="cancelTransaction()"
+              (onTransactionLock)="loadingTransactions = true"
             ></app-withdraw>
           </div>
           <div *ngSwitchCase="'deposit'">
             <app-deposit
               (onTransactionCancel)="cancelTransaction()"
+              (onTransactionLock)="loadingTransactions = true"
             ></app-deposit>
           </div>
         </div>
@@ -144,14 +151,14 @@
           </thead>
           <tbody>
             <tr *ngFor="let transaction of transactions">
-              <td>
+              <td [attr.data-sort]="checkForFlag(transaction.comments) ? 'a' : 'b'">
                 <nb-icon
                   icon="flag"
-                  [status]="true ? 'danger' : 'basic'"
+                  [status]="checkForFlag(transaction.comments) ? 'danger' : 'basic'"
                 ></nb-icon>
               </td>
               <td class="text-capitalize">
-                {{ transaction.createdAt | date: "yyyy-MM-dd HH:mm" }}
+                {{ transaction.createdAt | date: "mediumDate" }}
               </td>
               <td class="text-capitalize">{{ transaction.store?.name }}</td>
               <td class="text-capitalize">{{ transaction.client?.name }}</td>
@@ -161,11 +168,10 @@
               <td
                 class="text-capitalize"
                 [ngClass]="{
-                  'text-danger font-weight-bold':
-                    transaction.status === 'pending'
+                  'text-danger font-weight-bold': transaction.status === 'Open'
                 }"
               >
-                {{ transaction.status }}
+                {{ transaction.status === "Open" ? "Pending" : "Completed" }}
               </td>
               <td>{{ transaction.description }}</td>
               <td (click)="openEditTransaction(transactionDialog, transaction)">
@@ -184,7 +190,10 @@
 </nb-card>
 
 <ng-template #transactionDialog let-data let-ref="dialogRef">
-  <nb-card>
+  <nb-card
+    [status]="transaction.status === 'Open' ? (checkForFlag(transaction.comments) ? 'danger' : 'info') : 'success'"
+    style="border: none"
+  >
     <nb-card-header class="d-flex align-items-start justify-content-between">
       <span
         class="mr-4"
@@ -198,10 +207,17 @@
         {{ transaction.description }}</span
       >
       <span class="">
-        {{ transaction.status }}
+        {{ transaction.status === "Open" ? "Pending" : "Completed" }}
       </span>
-      <span class="text-muted ml-4">
-        {{ transaction.createdAt | date: "yyyy-MM-dd HH:mm" }}
+      <span class="mx-4">
+        {{ transaction.createdAt | date: "mediumDate" }}
+      </span>
+      <span>
+        <nb-icon
+          icon="window-close"
+          (click)="ref.close()"
+          style="cursor: pointer"
+        ></nb-icon>
       </span>
     </nb-card-header>
     <nb-card-body class="p-3">
@@ -212,17 +228,36 @@
         {{ transaction.description }}
       </h6> -->
 
-      <p class="mb-2 text-muted font-weight-bold" style="color: #959595;">
+      <p class="mb-2 text-muted font-weight-bold" style="color: #959595">
         Transaction details
       </p>
 
-      <div style="background-color: #F5F9FF; min-height: 200px; border-radius: 6px;">KTU DO JENE INFOT PER TRANSACTIONIN</div>
+      <div
+        style="background-color: #f5f9ff; min-height: 200px; border-radius: 6px"
+      >
+        KTU DO JENE INFOT PER TRANSACTIONIN
+      </div>
 
-      <p class="mb-2 mt-4 text-muted font-weight-bold" style="color: #959595;">
-        Posts
-      </p>
+      <div class="row mt-3">
+        <div class="col text-left">
+          <p
+            class="mb-2 mt-4 text-muted font-weight-bold"
+            style="color: #959595"
+          >
+            Posts
+          </p>
+        </div>
+        <div class="col text-right">
+          <button nbButton status="warning">Add post</button>
+        </div>
+      </div>
 
-      <table class="table table-hover table-sm table-responsive" width="100%">
+      <table
+        datatable
+        [dtOptions]="dialogDtOptions"
+        class="table table-hover table-sm mt-3"
+        width="100%"
+      >
         <thead>
           <tr>
             <th>detail</th>
@@ -236,8 +271,8 @@
         <tbody>
           <tr *ngFor="let post of transaction?.posts">
             <td>{{ post.details }}</td>
-            <td>{{ post.date | date: "yyyy-MM-dd HH:mm" }}</td>
-            <td>{{ post.ammount | currency:post.currency.symbol }}</td>
+            <td>{{ post.date | date: "mediumDate" }}</td>
+            <td>{{ post.ammount | currency: post.currency.symbol }}</td>
             <td class="text-capitalize">{{ post.type }}</td>
             <td>{{ post.user?.name }}</td>
             <td>
@@ -247,27 +282,53 @@
         </tbody>
       </table>
 
-      <p class="mb-2 mt-4 text-muted font-weight-bold" style="color: #959595;">
+      <p class="mb-2 mt-4 text-muted font-weight-bold" style="color: #959595">
         Comments
       </p>
 
-      <small *ngIf="transaction?.comments?.length === 0">No comments have been added yet for this transaction</small>
+      <small *ngIf="transaction?.comments?.length === 0"
+        >No comments have been added yet for this transaction</small
+      >
 
       <div>
-        <p class="mb-2" style="font-size: 13.5px;" *ngFor="let comment of transaction?.comments">
-          <strong>{{ comment.user?.name || 'Unknown' }}:</strong> {{ comment.comment }}
+        <p
+          class="mb-2"
+          style="font-size: 13.5px"
+          *ngFor="let comment of transaction.comments"
+          [ngClass]="{'text-danger': comment.issue === 'Open'}"
+        >
+          <strong>{{ comment.user?.name || "Unknown" }}:</strong>
+          {{ comment.comment }}
         </p>
       </div>
 
-      <textarea nbInput fullWidth rows="2" [formControl]="commentFormControl" placeholder="Insert comment here"></textarea>
+      <textarea
+        nbInput
+        fullWidth
+        rows="2"
+        [formControl]="commentFormControl"
+        placeholder="Insert comment here"
+      ></textarea>
       <div class="text-right">
-        <button nbButton status="info" class="mr-sm-3" (click)="addComment()">Add comment</button>
-        <button nbButton status="danger" class="mt-sm-0 mt-2">Add comment + flag transaction</button>
+        <button
+          nbButton
+          status="info"
+          size="small"
+          class="mr-sm-3"
+          (click)="addComment('Closed')"
+        >
+          Add comment
+        </button>
+        <button
+          nbButton
+          status="danger"
+          size="small"
+          class="mt-sm-0 mt-2"
+          (click)="addComment('Open')"
+        >
+          Add comment + flag transaction
+        </button>
       </div>
     </nb-card-body>
-    <nb-card-footer>
-      <button nbButton (click)="ref.close()">Close</button>
-      <!-- <button nbButton status="success" (click)="ref.close()" class="ml-4">update store</button> -->
-    </nb-card-footer>
   </nb-card>
 </ng-template>

@@ -54,7 +54,7 @@ export class StoreDashboardComponent implements OnInit, OnDestroy {
     private dialogService: NbDialogService,
     private router: Router
   ) {
-    this.storeId = this.route.snapshot.params.id;
+    this.storeId = this.route.snapshot.params.storeId;
     this.transactionTypes = this.configsService.getTransactionTypes()
     this.dtOptions = this.configsService.getDTOptions()
     this.dtOptions.columnDefs = [
@@ -86,6 +86,7 @@ export class StoreDashboardComponent implements OnInit, OnDestroy {
   make(transactionType: string){
     this.makingTransaction = true
     this.transactionType = transactionType
+    console.log(this.storeId)
     this.chRef.detectChanges()
   }
 
@@ -93,20 +94,6 @@ export class StoreDashboardComponent implements OnInit, OnDestroy {
     this.makingTransaction = false
     this.transactionType = ''
     this.chRef.detectChanges()
-  }
-
-  select(type: string) {
-    this.transactionType = type;
-    console.log('Selecting ', this.transactionType);
-    this.removeActiveClassFromActiveTransferType();
-
-    document.getElementById(type)?.classList.add('active');
-  }
-
-  removeActiveClassFromActiveTransferType() {
-    for (const type of this.transactionTypes) {
-      document.getElementById(type)?.classList.remove('active');
-    }
   }
 
   ngOnDestroy() {

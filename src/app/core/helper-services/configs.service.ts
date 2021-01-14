@@ -31,11 +31,26 @@ export class ConfigsService {
 
   getTransactionTypes(){
     return [
-      'transfer',
-      'trade',
-      'loan',
-      'withdraw',
-      'deposit',
+      {
+        _id: 'transfer',
+        name: 'Transfer'
+      },
+      {
+        _id: 'trade',
+        name: 'Trade'
+      },
+      {
+        _id: 'loan',
+        name: 'Loan'
+      },
+      {
+        _id: 'withdraw',
+        name: 'Withdraw'
+      },
+      {
+        _id: 'deposit',
+        name: 'Deposit'
+      }
     ];
   }
 

@@ -8,10 +8,15 @@ import { Component, OnInit, ChangeDetectionStrategy, EventEmitter, Output } from
 })
 export class WithdrawComponent implements OnInit {
   @Output() onTransactionCancel: EventEmitter<any> = new EventEmitter<any>();
+  @Output() onTransactionLock: EventEmitter<any> = new EventEmitter<any>();
 
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  lockTransactions(){
+    this.onTransactionLock.emit(true)
   }
 
   cancelTransaction(){

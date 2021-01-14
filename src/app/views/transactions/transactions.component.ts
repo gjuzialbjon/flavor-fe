@@ -26,14 +26,17 @@ export class TransactionsComponent implements OnInit {
 
   transactions: Transaction[] = [];
   transaction!: Transaction;
+  
+  stores: any[] = []
 
   loadingTransactions = true;
 
-  makingTransaction = false;
-  transactionType = '';
-  transactionTypes;
+  makingTransaction = true;
+  transactionType = 'deposit';
+  transactionTypes: any[] = [];
 
   dtOptions;
+  dialogDtOptions
   dtTrigger = new Subject<any>();
 
   commentFormControl = new FormControl('', [Validators.required]);
@@ -47,10 +50,13 @@ export class TransactionsComponent implements OnInit {
   ) {
     this.transactionTypes = this.configsService.getTransactionTypes();
     this.dtOptions = this.configsService.getDTOptions();
+    this.dialogDtOptions = this.configsService.getDTOptions()
   }
 
-  ngOnInit(): void {
+  async ngOnInit() {
     this.getTransactions();
+
+    this.stores = await this.transactionsService.getStores()
   }
 
   getTransactions() {
@@ -77,14 +83,14 @@ export class TransactionsComponent implements OnInit {
     this.dialogService.open(content);
   }
 
-  addComment() {
+  addComment(issue: string) {
     if (this.commentFormControl.invalid) {
       this.msg.warning('Enter a comment before', 'Error');
       return;
     }
 
     this.transactionsService
-      .addComment(this.transaction._id, this.commentFormControl.value)
+      .addComment(this.transaction._id, this.commentFormControl.value, issue)
       .subscribe(
         (res: any) => {
           console.log(res);
@@ -120,5 +126,15 @@ export class TransactionsComponent implements OnInit {
     this.makingTransaction = false;
     this.transactionType = '';
     this.chRef.detectChanges();
+  }
+
+  checkForFlag(comments: any[]){
+    for (const comment of comments) {
+      if(comment.issue === 'Open'){
+        return true
+      }
+    }
+
+    return false
   }
 }

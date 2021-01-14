@@ -1,59 +1,70 @@
 <div class="row">
-  <div class="col-xl-6 col-lg-7">
-    <div class="row">
-      <div class="col-xl-5 col-lg-6 col-12">
-        <h6>Stores</h6>
+  <div class="col-xl-4 col-lg-5 col-md-7">
+    <nb-card class="store-card shadow mb-4">
+      <nb-card-body class="p-3">
+        <div class="text-uppercase font-weight-normal text-white mb-1">
+          Total balance euro
+        </div>
+        <div class="text-right text-white mb-0" style="font-size: x-large">
+          {{ totalBalance | currency:'EUR' }}
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
 
-        <nb-card class="store-card shadow mb-4">
-          <nb-card-body class="p-3">
-            <div class="text-uppercase font-weight-normal text-white mb-1">
-              Total balance euro
-            </div>
-            <div class="text-right text-white mb-0" style="font-size: x-large">
-              {{ totalBalance | currency:'EUR' }}
-            </div>
-          </nb-card-body>
-        </nb-card>
-      </div>
-    </div>
-    
-    <div class="row">
-      <div 
-        class="col-12"
-        [nbSpinner]="loadingStores"
-        nbSpinnerStatus="info"
-        nbSpinnerSize="large"
-        nbSpinnerMessage="Loading stores"
-        style="min-height: 40px;">
-        <app-store-card 
-          *ngFor="let store of stores"
-          [name]="store.name"
-          [id]="store._id"
-          >
-        </app-store-card>
-      </div>
-    </div>
+<div class="row">
+  <div class="col-xl-6 col-lg-7">
+    <nb-card>
+      <nb-card-header>
+        <h6>Stores</h6>
+      </nb-card-header>
+      <nb-card-body>
+        <div class="row">
+          <div 
+            class="col-12"
+            [nbSpinner]="loadingStores"
+            nbSpinnerStatus="info"
+            nbSpinnerSize="large"
+            nbSpinnerMessage="Loading stores"
+            style="min-height: 40px;">
+            <app-store-card 
+              *ngFor="let store of stores"
+              [name]="store.name"
+              [id]="store._id"
+              >
+            </app-store-card>
+          </div>
+        </div>
+      </nb-card-body>
+    </nb-card> 
   </div>
   
   <div class="col-xl-6 col-lg-5">
-    <h6>Favorite clients</h6>
-
-    <div class="row">
-      <div class="col-md-6">
-        <app-client-card></app-client-card>
-        <app-client-card></app-client-card>
-        <app-client-card></app-client-card>
-        <app-client-card></app-client-card>
-        <app-client-card></app-client-card>
-      </div>
-      <div class="col-md-6">
-        <app-client-card></app-client-card>
-        <app-client-card></app-client-card>
-        <app-client-card></app-client-card>
-        <app-client-card></app-client-card>
-        <app-client-card></app-client-card>
-      </div>
-    </div>
+    <nb-card class="shadow">
+      <nb-card-header>
+        <h6>Favorite clients</h6>
+      </nb-card-header>
+      <nb-card-body>
+        <div class="row">
+          <div class="col-md-6">
+            <app-client-card></app-client-card>
+            <app-client-card></app-client-card>
+            <app-client-card></app-client-card>
+            <app-client-card></app-client-card>
+            <app-client-card></app-client-card>
+          </div>
+          <div class="col-md-6">
+            <app-client-card></app-client-card>
+            <app-client-card></app-client-card>
+            <app-client-card></app-client-card>
+            <app-client-card></app-client-card>
+            <app-client-card></app-client-card>
+          </div>
+        </div>
+      </nb-card-body>
+    </nb-card>
+    
 
    
   </div>
