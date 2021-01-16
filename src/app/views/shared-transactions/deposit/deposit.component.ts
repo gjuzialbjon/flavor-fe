@@ -41,7 +41,10 @@ export class DepositComponent implements OnInit {
     this.stores = await this.transactionsService.getStores()
     this.clients = await this.transactionsService.getClients()
     this.currencies = await this.transactionsService.getCurrencies()
-    // console.log(this.stores, this.clients, this.currencies)
+    this.chRef.detectChanges()
+  }
+
+  ngAfterViewInit(){
     this.chRef.detectChanges()
   }
 
@@ -60,7 +63,7 @@ export class DepositComponent implements OnInit {
       },
       e => {
         console.error(e)
-        this.msg.defaultError()
+        this.msg.error('Sorry, its not your fault, its ours. Please contact page developers :)', 'Error!')
       }
     )
 

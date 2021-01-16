@@ -24,6 +24,11 @@ import { TransactionsService } from 'src/app/core/services/transactions.service'
 export class TransactionsComponent implements OnInit {
   @ViewChild(DataTableDirective) transactionsTable!: DataTableDirective;
 
+  storeFormControl = new FormControl('all')
+  typeFormControl = new FormControl('all')
+  periodFormControl = new FormControl('all')
+
+
   transactions: Transaction[] = [];
   transaction!: Transaction;
   
@@ -81,6 +86,14 @@ export class TransactionsComponent implements OnInit {
     this.transaction = transaction;
     this.commentFormControl.setValue('');
     this.dialogService.open(content);
+  }
+
+  changedFilters(){
+    console.log(this.storeFormControl.value)
+  }
+
+  changedPeriod(){
+    console.log(this.periodFormControl.value)
   }
 
   addComment(issue: string) {

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Apollo, gql } from 'apollo-angular';
+import { AuthenticationService } from './authentication.service';
 
 const transactionMany = gql`
   {
@@ -19,6 +20,7 @@ const transactionMany = gql`
         _id
         comment
         issue
+        createdAt
         user {
           name
         }
@@ -84,7 +86,8 @@ export class TransactionsService {
   clients: any[] = [];
   currencies: any[] = [];
 
-  constructor(private apollo: Apollo) {
+  constructor(private apollo: Apollo, 
+    private authService: AuthenticationService) {
   }
 
   // QUERIES
@@ -145,13 +148,13 @@ export class TransactionsService {
       })
       .toPromise()
       .then((res:any) => {
-        this.stores = res.data.currencyMany
+        this.clients = res.data.currencyMany
       })
       .catch((e) => {
         console.error(e);
       });
 
-    return this.stores
+    return this.clients
   }
 
   // MUTATIONS //
@@ -163,10 +166,13 @@ export class TransactionsService {
           transaction:"${transactionId}"
           comment:"${comment}"
           issue:${issue}
+          user:"${this.authService.user._id}"
         }){
           record{
             _id
             comment
+            issue
+            createdAt
             user{
               name
             }
@@ -180,7 +186,7 @@ export class TransactionsService {
   makeDeposit(deposit: any) {
     let hasCurrency = !!deposit.currency ? `currency: ${deposit.currency}` : ''
     let hasFee = !!deposit.fee ? `fee: ${deposit.fee}` : ''
-
+    let hasClient = !!deposit.clientId ? `clientId: ${deposit.clientId}` : ''
 
     return this.apollo.mutate({
       mutation: gql`
@@ -189,8 +195,8 @@ export class TransactionsService {
             storeId: "${deposit.storeId}"
             date: "${deposit.date}"
             description: "${deposit.description}"
-            clientId: "${deposit.clientId}"
             ammount: ${deposit.amount}
+            ${hasClient}
             ${hasFee}
             ${hasCurrency}
           ) {

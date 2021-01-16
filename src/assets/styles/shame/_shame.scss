@@ -1,120 +1,136 @@
-.nb-theme-corporate{
-    a {
-        text-decoration: none;
+.nb-theme-corporate {
+  a {
+    text-decoration: none;
+  }
+
+  .logo-name {
+    letter-spacing: 2px;
+    color: #284693;
+    font-size: xx-large;
+    font-weight: bolder;
+    margin-top: 10px;
+  }
+
+  .posts-row {
+    min-width: 800px;
+  }
+
+  .table-hover tbody tr.row-issued:hover{
+    background-color: rgba(255, 0, 0, 0.2);
+  }
+
+  .table-hover tbody tr.row-pending:hover{
+    background-color: rgba(0, 0, 255, 0.2);
+  }
+
+  .table-hover tbody tr.row-closed:hover{
+    background-color: rgba(0, 255, 0, 0.2);
+  }
+
+  .dialog-width {
+    nb-card {
+      min-width: 330px;
+      max-width: 95vw;
+      max-height: 95vh;
+
+      nb-card-footer {
+        display: flex;
+        justify-content: center;
+      }
+    }
+  }
+
+  table.table.table-hover {
+    th {
+      text-transform: uppercase;
     }
 
-    .logo-name{
-        letter-spacing: 2px;
-        color: #284693;
-        font-size: xx-large;
-        font-weight: bolder;
-        margin-top: 10px;
+    td {
+      border: none !important;
+    }
+  }
+
+  nb-card.store-card {
+    background: #3886f7;
+    color: white;
+    border: none;
+  }
+
+  nb-sidebar nb-menu .menu-item {
+    .menu-icon {
+      font-size: 1.8rem;
+      margin: 0;
     }
 
-    .dialog-width {
-        nb-card{
-            min-width: 330px;
-            max-width: 95vw; 
-            max-height: 95vh;
+    .menu-title {
+      padding-left: 0.8rem;
+    }
+  }
 
-            nb-card-footer{
-                display: flex;
-                justify-content: center;
-            }
-        }
+  .toastr-class {
+    width: 320px;
+  }
+
+  nb-sidebar.compacted nb-menu .menu-item a.active::before {
+    background-color: white;
+  }
+
+  nb-sidebar nb-menu {
+    margin: 0 -1.25rem 0 -1.25rem;
+  }
+
+  nb-sidebar nb-menu .menu-item a.active {
+    position: relative;
+
+    &:before {
+      position: absolute;
+      content: "";
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 4px;
+      background: white;
+    }
+  }
+
+//   nb-select.appearance-filled.status-info {
+//     .select-button {
+//       nb-icon {
+//         color: black;
+//         background-color: white;
+//         height: 100%;
+//         right: 0 !important;
+//         width: 1.8rem;
+//       }
+//     }
+//   }
+
+  .transaction-menu-item {
+    color: #959595;
+    text-transform: uppercase;
+    font-weight: 700;
+    padding: 5px 10px;
+    cursor: pointer;
+
+    &:hover {
+      color: #3886f7;
     }
 
-    table.table.table-hover{
-        th{
-            text-transform: uppercase;
-        }
-
-        td{
-            border: none !important;
-        }
+    &.active {
+      color: #3886f7;
+      border-bottom: 4px solid #3886f7;
     }
+  }
 
-    nb-card.store-card{
-        background: #3886f7;
-        color: white;
-        border: none;
-    }
-
-    nb-card.client-card{
-        background: #e0e4eb;
-        color: #292626;
-        border: none;
-    }
-
-    nb-sidebar nb-menu .menu-item {
-        .menu-icon{
-            font-size: 1.8rem;
-            margin: 0;
-        }
-
-        .menu-title{
-            padding-left: .8rem;
-        }
-    }
-
-    .toastr-class{
-        width: 320px;
-    }
-
-    nb-sidebar.compacted nb-menu .menu-item a.active::before{
-        background-color: white;
-    }
-
-    nb-sidebar nb-menu{
-        margin: 0 -1.25rem 0 -1.25rem;
-    }
-
-    nb-sidebar nb-menu .menu-item a.active{
-        position: relative;
-
-        &:before{
-            position: absolute;
-            content: "";
-            top: 0;
-            left: 0;
-            height: 100%;
-            width: 4px;
-            background: white;
-        }
-    }
-
-    nb-select.appearance-filled.status-info{
-        .select-button{
-            nb-icon{
-                color: black;
-                background-color: white;
-                height: 100%;
-                right: 0 !important;
-                width: 1.8rem;
-            }
-        }
-    }
-
-    .transaction-menu-item{
-        color: #959595;
-        text-transform: uppercase;
-        font-weight: 700;
-        padding: 5px 10px;
-        cursor: pointer;
-
-        &:hover{
-            color: #3886F7;
-        }
-
-        &.active{
-            color: #3886F7;
-            border-bottom: 4px solid #3886F7;
-        }
-    }
-
-    .horizontal-line{
-        border-left: 2px solid rgba(255, 255, 255, 0.642);
-    }
+  .horizontal-line {
+    border-left: 2px solid rgba(255, 255, 255, 0.642);
+  }
 }
 
-
+@media only screen and (max-width: 800px) {
+  .nb-theme-corporate {
+    .posts-row {
+      min-width: 100px;
+    }
+  }
+}
