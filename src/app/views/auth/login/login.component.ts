@@ -47,9 +47,15 @@ export class LoginComponent implements OnInit {
     const {email, password} = this.loginForm.value
     this.authService.login(email, password).subscribe(
       (res: SocialTokenResponse) => {
-        // console.log(res);
-        this.authService.initApp(res.token + '')
-        this.router.navigate(['/']);
+        localStorage.setItem('flavorToken', res.token + '')
+        this.authService.initUserFromToken()
+        console.log('User ', this.authService.user)
+        if(this.authService.user.confirmed){
+          this.router.navigate(['/']);
+        } else {
+          this.router.navigate(['/auth/not-authorized']);
+          console.error('User unconfirmed')
+        }
       },
       (e) => {
         console.error(e);

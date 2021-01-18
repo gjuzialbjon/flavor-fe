@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthenticationService } from 'src/app/core/services/authentication.service';
 
 @Component({
   selector: 'app-base',
@@ -9,13 +10,18 @@ import { Router } from '@angular/router';
 export class BaseComponent implements OnInit {
 
   constructor(
-    private router: Router
+    private router: Router,
+    private authService: AuthenticationService
   ) { }
 
   ngOnInit(): void {
-    console.log('Navigated to base');
-    
-    
+    if(this.authService.user.role === 'admin' || this.authService.user.role === 'agent'){
+      this.router.navigateByUrl('/stores')
+    } else if(this.authService.user.role === 'finance'){
+      this.router.navigateByUrl('/reports')
+    } else{
+      console.error('Unknown role in base component')
+    }
   }
 
 }

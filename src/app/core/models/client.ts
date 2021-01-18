@@ -7,6 +7,8 @@ export interface Client {
     surname: string
     location: string
     description: string
+    favorite: boolean
+    createdAt: Date
     user: User
     stores: [Store]
     accounts: [Account]

@@ -93,17 +93,9 @@
     }
   }
 
-//   nb-select.appearance-filled.status-info {
-//     .select-button {
-//       nb-icon {
-//         color: black;
-//         background-color: white;
-//         height: 100%;
-//         right: 0 !important;
-//         width: 1.8rem;
-//       }
-//     }
-//   }
+  .post-first-td::before {
+    top: 50% !important;
+  }
 
   .transaction-menu-item {
     color: #959595;

@@ -6,25 +6,60 @@ const storeMany = gql `
   storeMany{
     _id
     name
-    description
     default_currency{
       currency
       symbol
       name
     }
     location
-    users{
-      name
-    }
-    clients{
-      name
-    }
-    accounts{
-      name
-    }
   }
 },
 `
+const transactionMany = gql`
+query($storeId: MongoID!){
+  transactionMany(filter:{
+    store:$storeId
+  })
+  {
+    type
+    createdAt
+    status
+    comments{
+      _id
+      comment
+      createdAt
+      user{
+        name
+      }
+    }
+    direction
+    description
+    user{
+      name
+    }
+    posts{
+      date
+      type
+      details
+      amount
+      fee
+      currency{
+        symbol
+      }
+      user{
+        name
+      }
+    }
+    currency{
+      symbol
+    }
+    client{
+      name
+      surname
+    }
+    _id
+  }
+}`
 
 const storeOne = gql `
 query($_id: MongoID!){
@@ -56,7 +91,6 @@ query($_id: MongoID!){
       type
       name
       description
-      
     }
     createdAt
   }
@@ -70,11 +104,10 @@ export class StoreService {
 
   constructor(private apollo: Apollo) { }
 
-  getStores(fetchPolicy: 'cache-first' | 'network-only' = 'cache-first') {
+  getStores() {
     return this.apollo.query(
       {
-        query: storeMany,
-        fetchPolicy: fetchPolicy
+        query: storeMany
       },
     )
   }
@@ -85,6 +118,18 @@ export class StoreService {
         query: storeOne,
         variables: {
           "_id": storeId
+        },
+        fetchPolicy: 'network-only'
+      },
+    )
+  }
+
+  getStoreTransactions(storeId: string){
+    return this.apollo.query(
+      {
+        query: transactionMany,
+        variables: {
+          "storeId": storeId
         },
         fetchPolicy: 'network-only'
       },
@@ -117,6 +162,4 @@ export class StoreService {
       `
     })
   }
-
-
 }

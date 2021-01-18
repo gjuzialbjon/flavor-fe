@@ -107,9 +107,9 @@
     <div class="row pt-2">
       <div class="col-12">
         <table
-          datatable
-          [dtOptions]="dtOptions"
           [dtTrigger]="$any(dtTrigger)"
+          [dtOptions]="dtOptions"
+          datatable
           class="table table-hover"
           width="100%"
         >
@@ -117,44 +117,51 @@
             <tr>
               <th width="20px">&nbsp;</th>
               <th>Date</th>
-              <th>Store Name</th>
               <th>Client Name</th>
               <th>Payment type</th>
-              <!-- <th>Credit</th>
-              <th>Debit</th> -->
+              <th>Direction</th>
+              <th>User Name</th>
               <th>Status</th>
               <th>Description</th>
-              <th width="20px">&nbsp;</th>
+              <!-- <th width="20px">&nbsp;</th> -->
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let transaction of transactions">
-              <td>
+            <tr *ngFor="let transaction of transactions" 
+              [ngClass]="{
+                'row-issued': checkForFlag(transaction.comments),
+                'row-pending': transaction.status === 'Open' && !checkForFlag(transaction.comments),
+                'row-closed': transaction.status ==='Closed' && !checkForFlag(transaction.comments)
+              }">
+              <td [attr.data-sort]="checkForFlag(transaction.comments) ? 'a' : 'b'">
                 <nb-icon
                   icon="flag"
-                  status="warning"
+                  [status]="checkForFlag(transaction.comments) ? 'danger' : 'basic'"
                 ></nb-icon>
               </td>
-              <td class="text-capitalize">{{ transaction.createdAt }}</td>
-              <td class="text-capitalize">{{ transaction.store.name }}</td>
-              <td class="text-capitalize">{{ transaction.client.name }}</td>
+              <td class="text-capitalize">
+                {{ transaction.createdAt | date: "mediumDate" }}
+              </td>
+              <td class="text-capitalize">{{ transaction.client?.name }}</td>
               <td class="text-capitalize">{{ transaction.type }}</td>
-              <!-- <td class="text-capitalize" [attr.data-sort]="transaction.credit">
-                {{ transaction.credit | currency: transaction.currency }}
-              </td> -->
-              <!-- <td class="text-capitalize" [attr.data-sort]="transaction.debit">
-                {{ transaction.debit | currency: transaction.currency.symbol }}
-              </td> -->
+              <td class="text-capitalize">{{ transaction.direction }}</td>
+              <td class="text-capitalize">{{ transaction.user?.name }}</td>
               <td
                 class="text-capitalize"
-                [ngClass]="{ 'text-danger': transaction.status === 'pending' }"
+                [ngClass]="{
+                  'text-danger font-weight-bold': transaction.status === 'Open'
+                }"
               >
-                {{ transaction.status }}
+                {{ transaction.status === "Open" ? "Pending" : "Completed" }}
               </td>
-              <td class="text-capitalize">{{ transaction.description }}</td>
-              <td>
-                  <nb-icon icon="pen" style="cursor: pointer;" status="basic"></nb-icon>
-              </td>
+              <td>{{ transaction.description }}</td>
+              <!-- <td (click)="openEditTransaction(transactionDialog, transaction)">
+                <nb-icon
+                  icon="edit"
+                  style="cursor: pointer"
+                  status="basic"
+                ></nb-icon>
+              </td> -->
             </tr>
           </tbody>
         </table>

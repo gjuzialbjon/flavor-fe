@@ -100,7 +100,7 @@
         class="mr-3"
         (click)="ref.close()"
       >
-        Cancel
+        Close
       </button>
       <button
         type="button"
@@ -109,7 +109,7 @@
         status="success"
         (click)="saveCurrency(ref)"
         [disabled]="loading"
-        [nbSpinner]="loading" nbSpinnerStatus="info"
+        [nbSpinner]="loading" nbSpinnerStatus="danger"
       >
         Save
       </button>

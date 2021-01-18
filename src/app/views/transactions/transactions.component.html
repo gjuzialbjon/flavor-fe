@@ -1,18 +1,18 @@
 <nb-card
   class="mt-0"
   [nbSpinner]="loadingTransactions"
-  nbSpinnerStatus="info"
+  nbSpinnerStatus="danger"
   nbSpinnerSize="large"
   nbSpinnerMessage="Loading transactions"
 >
   <nb-card-body>
     <div class="row mb-3 align-items-center">
-      <div class="col-lg-2 col-sm-12">
+      <div class="col-lg-2 col-md-4 col-sm-12">
         <p class="text-muted text-uppercase font-weight-bold mb-2">
           Transactions
         </p>
       </div>
-      <div class="col-lg-2 col-md-4 col-sm-6">
+      <div class="col-lg-7 col-md-12">
         <nb-select
           placeholder="Store"
           [formControl]="storeFormControl"
@@ -28,8 +28,6 @@
             store.name
           }}</nb-option>
         </nb-select>
-      </div>
-      <div class="col-lg-2 col-md-4 col-sm-6">
         <nb-select
           placeholder="Type"
           [formControl]="typeFormControl"
@@ -40,13 +38,11 @@
           class="mr-4 mb-2"
           (selectedChange)="changedFilters()"
         >
-        <nb-option value="all">Type</nb-option>
+          <nb-option value="all">Type</nb-option>
           <nb-option *ngFor="let type of transactionTypes" [value]="type._id">{{
             type.name
           }}</nb-option>
         </nb-select>
-      </div>
-      <div class="col-lg-2 col-md-4 col-sm-6">
         <nb-select
           placeholder="Period"
           [formControl]="periodFormControl"
@@ -57,7 +53,7 @@
           class="mr-4 mb-2"
           (selectedChange)="changedPeriod()"
         >
-        <nb-option value="all">Period</nb-option>
+          <nb-option value="all">Period</nb-option>
 
           <nb-option value="1">Today</nb-option>
           <nb-option value="2">Last week</nb-option>
@@ -65,7 +61,7 @@
           <nb-option value="4">Last year</nb-option>
         </nb-select>
       </div>
-      <div class="col-lg-4 col-md-12 col-sm-6 text-lg-right">
+      <div class="col-lg-3 col-md-12 col-sm-6 text-lg-right">
         <nb-icon
           icon="calendar-alt"
           status="info"
@@ -117,18 +113,21 @@
             <app-loan
               (onTransactionCancel)="cancelTransaction()"
               (onTransactionLock)="loadingTransactions = true"
+              (onTransactionCreate)="rerenderTransactions($event)"
             ></app-loan>
           </div>
           <div *ngSwitchCase="'withdraw'">
             <app-withdraw
               (onTransactionCancel)="cancelTransaction()"
               (onTransactionLock)="loadingTransactions = true"
+              (onTransactionCreate)="rerenderTransactions($event)"
             ></app-withdraw>
           </div>
           <div *ngSwitchCase="'deposit'">
             <app-deposit
               (onTransactionCancel)="cancelTransaction()"
               (onTransactionLock)="loadingTransactions = true"
+              (onTransactionCreate)="rerenderTransactions($event)"
             ></app-deposit>
           </div>
         </div>
@@ -160,16 +159,28 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let transaction of transactions" 
+            <tr
+              *ngFor="let transaction of tableTransactions"
               [ngClass]="{
                 'row-issued': checkForFlag(transaction.comments),
-                'row-pending': transaction.status === 'Open' && !checkForFlag(transaction.comments),
-                'row-closed': transaction.status ==='Closed' && !checkForFlag(transaction.comments)
-              }">
-              <td [attr.data-sort]="checkForFlag(transaction.comments) ? 'a' : 'b'">
+                'row-pending':
+                  transaction.status === 'Open' &&
+                  !checkForFlag(transaction.comments),
+                'row-closed':
+                  transaction.status === 'Closed' &&
+                  !checkForFlag(transaction.comments)
+              }"
+            >
+              <td
+                [attr.data-sort]="
+                  checkForFlag(transaction.comments) ? 'a' : 'b'
+                "
+              >
                 <nb-icon
                   icon="flag"
-                  [status]="checkForFlag(transaction.comments) ? 'danger' : 'basic'"
+                  [status]="
+                    checkForFlag(transaction.comments) ? 'danger' : 'basic'
+                  "
                 ></nb-icon>
               </td>
               <td class="text-capitalize">
@@ -186,7 +197,10 @@
                   'text-danger font-weight-bold': transaction.status === 'Open'
                 }"
               >
-                {{ transaction.status === "Open" ? "Pending" : "Completed" }}
+                {{
+                  transaction.status === "Open" ? "Pending" : "Completed"
+                }}
+                ({{ transaction.posts?.length }})
               </td>
               <td>{{ transaction.description }}</td>
               <td (click)="openEditTransaction(transactionDialog, transaction)">
@@ -206,7 +220,13 @@
 
 <ng-template #transactionDialog let-data let-ref="dialogRef">
   <nb-card
-    [status]="transaction.status === 'Open' ? (checkForFlag(transaction.comments) ? 'danger' : 'info') : 'success'"
+    [status]="
+      transaction.status === 'Open'
+        ? checkForFlag(transaction.comments)
+          ? 'danger'
+          : 'info'
+        : 'success'
+    "
     style="border: none"
   >
     <nb-card-header class="d-flex align-items-start justify-content-between">
@@ -251,7 +271,7 @@
               <button nbButton status="warning" size="small">Add post</button>
             </div>
           </div>
-    
+
           <table
             datatable
             [dtOptions]="dialogDtOptions"
@@ -262,7 +282,7 @@
               <tr>
                 <th>detail</th>
                 <th>date</th>
-                <th>ammount</th>
+                <th>amount</th>
                 <th>type</th>
                 <th>user</th>
                 <th></th>
@@ -270,13 +290,17 @@
             </thead>
             <tbody>
               <tr *ngFor="let post of transaction?.posts">
-                <td>{{ post.details }}</td>
+                <td class="post-first-td">{{ post.details }}</td>
                 <td>{{ post.date | date: "mediumDate" }}</td>
-                <td>{{ post.ammount | currency: post.currency.symbol }}</td>
+                <td>{{ post.amount | currency: post.currency.symbol }}</td>
                 <td class="text-capitalize">{{ post.type }}</td>
                 <td>{{ post.user?.name }}</td>
                 <td>
-                  <nb-icon icon="edit" status="basic" style="cursor: pointer;"></nb-icon>
+                  <nb-icon
+                    icon="edit"
+                    status="basic"
+                    style="cursor: pointer"
+                  ></nb-icon>
                 </td>
               </tr>
             </tbody>
@@ -288,19 +312,25 @@
         <div class="col-lg-6">
           <div class="row">
             <div class="col-10">
-              <p class="mb-2 text-muted text-uppercase font-weight-bold" style="color: #959595">
+              <p
+                class="mb-2 text-muted text-uppercase font-weight-bold"
+                style="color: #959595"
+              >
                 Transaction details
               </p>
             </div>
             <div class="col-2 text-right">
-              <nb-icon icon="edit" style="cursor: pointer;"></nb-icon>
+              <nb-icon icon="edit" style="cursor: pointer"></nb-icon>
             </div>
           </div>
-          
-    
+
           <div
             class="p-2"
-            style="background-color: #f5f9ff; min-height: 100px; border-radius: 6px"
+            style="
+              background-color: #f5f9ff;
+              min-height: 100px;
+              border-radius: 6px;
+            "
           >
             <div class="d-flex align-items-center justify-content-between mb-2">
               <strong class="mr-2 text-muted font-smaller">Created At</strong>
@@ -308,11 +338,11 @@
             </div>
             <div class="d-flex align-items-center justify-content-between mb-2">
               <strong class="mr-2 text-muted">Store</strong>
-              <span>{{ transaction.store?.name }}</span>
+              <span>{{ transaction.store?.name || "-" }}</span>
             </div>
             <div class="d-flex align-items-center justify-content-between mb-2">
               <strong class="mr-2 text-muted">Client</strong>
-              <span>{{ transaction.client?.name }}</span>
+              <span>{{ transaction.client?.name || "-" }}</span>
             </div>
             <div class="d-flex align-items-center justify-content-between mb-2">
               <strong class="mr-2 text-muted">Payment type</strong>
@@ -324,7 +354,9 @@
             </div>
             <div class="d-flex align-items-center justify-content-between mb-2">
               <strong class="mr-2 text-muted">User</strong>
-              <span class="text-capitalize">{{ transaction.user?.name }}</span>
+              <span class="text-capitalize">{{
+                transaction.user?.name || "-"
+              }}</span>
             </div>
             <div class="d-flex align-items-center justify-content-between mb-2">
               <strong class="mr-2 text-muted">Description</strong>
@@ -333,39 +365,41 @@
           </div>
         </div>
         <div class="col-lg-6">
-          <p class="mb-2 text-muted text-uppercase font-weight-bold" style="color: #959595">
+          <p
+            class="mb-2 text-muted text-uppercase font-weight-bold"
+            style="color: #959595"
+          >
             Comments
           </p>
-    
+
           <small *ngIf="transaction?.comments?.length === 0"
             >No comments have been added yet for this transaction</small
           >
-    
-          <div style="max-height: 200px; overflow: auto;">
+
+          <div style="max-height: 200px; overflow: auto">
             <p
-            class="mb-2 d-flex flex-column flex-wrap"
-            style="font-size: 13.5px"
-            *ngFor="let comment of transaction.comments"
-            [ngClass]="{'text-danger': comment.issue === 'Open'}"
-          >
-            <span>
-              <strong>{{ comment.user?.name || "Unknown" }}:</strong>
-              {{ comment.comment }}
-            </span>
-            <span style="font-size: 12px;" class="text-muted">
-              {{ comment.createdAt | date:"MMM d, y, HH:mm"  }}
-            </span>
-          </p>
+              class="mb-2 d-flex flex-column flex-wrap"
+              style="font-size: 13.5px"
+              *ngFor="let comment of transaction.comments"
+              [ngClass]="{ 'text-danger': comment.issue === 'Open' }"
+            >
+              <span>
+                <strong>{{ comment.user?.name || "Unknown" }}:</strong>
+                {{ comment.comment }}
+              </span>
+              <span style="font-size: 12px" class="text-muted">
+                {{ comment.createdAt | date: "MMM d, y, HH:mm" }}
+              </span>
+            </p>
           </div>
-          
-    
+
           <textarea
             nbInput
             fullWidth
             rows="2"
             [formControl]="commentFormControl"
             placeholder="Insert comment here"
-            style="resize: none;"
+            style="resize: none; margin-top: 10px"
           ></textarea>
           <div class="text-right">
             <button
@@ -389,8 +423,6 @@
           </div>
         </div>
       </div>
-
-      
     </nb-card-body>
   </nb-card>
 </ng-template>

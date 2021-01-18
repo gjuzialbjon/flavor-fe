@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ClientsComponent } from './clients/clients.component';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NbCardModule, NbIconModule, NbButtonModule, NbFormFieldModule, NbInputModule, NbSelectModule, NbSpinnerModule } from '@nebular/theme';
+import { NbCardModule, NbIconModule, NbButtonModule, NbFormFieldModule, NbInputModule, NbSelectModule, NbSpinnerModule, NbDialogModule } from '@nebular/theme';
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { DataTablesModule } from 'angular-datatables';
@@ -38,6 +38,9 @@ import { ClientDashboardComponent } from './client-dashboard/client-dashboard.co
     NbCardModule,
     NbIconModule,
     NbButtonModule,
+    NbDialogModule.forChild({
+      dialogClass: 'dialog-width'
+    }),
     NbFormFieldModule,
     NbInputModule,
     NbSelectModule,

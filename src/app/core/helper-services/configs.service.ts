@@ -1,22 +1,15 @@
 import { Injectable } from '@angular/core';
 import { NbMenuItem } from '@nebular/theme';
-
-const posRanges = [
-  { divider: 1000000 , suffix: 'M' },
-  { divider: 1000 , suffix: 'k' }
-];
-
-const negRanges = [
-  { divider: -1000000 , suffix: 'M' },
-  { divider: -1000 , suffix: 'k' }
-];
+import { AuthenticationService } from '../services/authentication.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ConfigsService {
 
-  constructor() { }
+  constructor(
+    private authService: AuthenticationService
+  ) { }
 
   getDTOptions(): DataTables.Settings {
     return {
@@ -55,7 +48,7 @@ export class ConfigsService {
   }
 
   getMenuByRole(): NbMenuItem[] {
-    let role = 'admin'
+    let role = this.authService.user.role
 
     if(role === 'admin'){
       return [

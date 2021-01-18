@@ -2,6 +2,48 @@ import { Injectable } from '@angular/core';
 import { Apollo, gql } from 'apollo-angular';
 import { AuthenticationService } from './authentication.service';
 
+const transactionOne = `{
+  type
+  createdAt
+  status
+  direction
+  description
+  user {
+    name
+  }
+  store {
+    name
+  }
+  comments {
+    _id
+    comment
+    user {
+      name
+    }
+  }
+  posts {
+    date
+    type
+    details
+    amount
+    fee
+    currency {
+      symbol
+    }
+    user {
+      name
+    }
+  }
+  currency {
+    symbol
+  }
+  client {
+    name
+    surname
+  }
+  _id
+}`
+
 const transactionMany = gql`
   {
     transactionMany {
@@ -29,7 +71,7 @@ const transactionMany = gql`
         date
         type
         details
-        ammount
+        amount
         fee
         currency {
           symbol
@@ -148,13 +190,13 @@ export class TransactionsService {
       })
       .toPromise()
       .then((res:any) => {
-        this.clients = res.data.currencyMany
+        this.currencies = res.data.currencyMany
       })
       .catch((e) => {
         console.error(e);
       });
 
-    return this.clients
+    return this.currencies
   }
 
   // MUTATIONS //
@@ -184,9 +226,9 @@ export class TransactionsService {
   }
 
   makeDeposit(deposit: any) {
-    let hasCurrency = !!deposit.currency ? `currency: ${deposit.currency}` : ''
+    let hasCurrency = !!deposit.currency ? `currency: "${deposit.currency}"` : ''
     let hasFee = !!deposit.fee ? `fee: ${deposit.fee}` : ''
-    let hasClient = !!deposit.clientId ? `clientId: ${deposit.clientId}` : ''
+    let hasClient = !!deposit.clientId ? `clientId: "${deposit.clientId}"` : ''
 
     return this.apollo.mutate({
       mutation: gql`
@@ -195,51 +237,55 @@ export class TransactionsService {
             storeId: "${deposit.storeId}"
             date: "${deposit.date}"
             description: "${deposit.description}"
-            ammount: ${deposit.amount}
+            amount: ${deposit.amount}
             ${hasClient}
             ${hasFee}
             ${hasCurrency}
-          ) {
-            type
-            createdAt
-            status
-            direction
-            description
-            user {
-              name
-            }
-            store {
-              name
-            }
-            comments {
-              _id
-              comment
-              user {
-                name
-              }
-            }
-            posts {
-              date
-              type
-              details
-              ammount
-              fee
-              currency {
-                symbol
-              }
-              user {
-                name
-              }
-            }
-            currency {
-              symbol
-            }
-            client {
-              name
-              surname
-            }
-            _id
-          }
+          ) ${transactionOne}
+        }
+      `,
+    });
+  }
+
+  makeWithdraw(deposit: any) {
+    let hasCurrency = !!deposit.currency ? `currency: "${deposit.currency}"` : ''
+    let hasFee = !!deposit.fee ? `fee: ${deposit.fee}` : ''
+    let hasClient = !!deposit.clientId ? `clientId: "${deposit.clientId}"` : ''
+
+    return this.apollo.mutate({
+      mutation: gql`
+        mutation {
+          makeWithdraw(
+            storeId: "${deposit.storeId}"
+            date: "${deposit.date}"
+            description: "${deposit.description}"
+            amount: ${deposit.amount}
+            ${hasClient}
+            ${hasFee}
+            ${hasCurrency}
+          ) ${transactionOne}
+        }
+      `,
+    });
+  }
+
+  makeLoan(deposit: any) {
+    let hasCurrency = !!deposit.currency ? `currency: "${deposit.currency}"` : ''
+    let hasFee = !!deposit.fee ? `fee: ${deposit.fee}` : ''
+    let hasClient = !!deposit.clientId ? `clientId: "${deposit.clientId}"` : ''
+
+    return this.apollo.mutate({
+      mutation: gql`
+        mutation {
+          makeLoan(
+            storeId: "${deposit.storeId}"
+            date: "${deposit.date}"
+            description: "${deposit.description}"
+            amount: ${deposit.amount}
+            ${hasClient}
+            ${hasFee}
+            ${hasCurrency}
+          ) ${transactionOne}
         }
       `,
     });

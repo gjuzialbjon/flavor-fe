@@ -13,6 +13,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NbDialogService } from '@nebular/theme';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DataTableDirective } from 'angular-datatables';
+import { AnyARecord } from 'dns';
 import { truncate } from 'fs';
 import { Subject, Subscription } from 'rxjs';
 import { ConfigsService } from 'src/app/core/helper-services/configs.service';
@@ -65,7 +66,22 @@ export class StoreDashboardComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getStoreInfo();
-    // this.initNewClientForm()
+    this.getStoreTransactions()
+  }
+
+  getStoreTransactions(){
+    this.storeService.getStoreTransactions(this.storeId).subscribe(
+      (res:any) => {
+        this.transactions = res.data.transactionMany as Transaction[]
+        console.log(this.transactions)
+        this.dtTrigger.next(true)
+        this.chRef.detectChanges()
+      },
+      e => {
+        console.error(e)
+        this.msg.error('Could not get transactions for this store', 'Error!')
+      }
+    )
   }
 
   getStoreInfo() {
@@ -73,7 +89,6 @@ export class StoreDashboardComponent implements OnInit, OnDestroy {
         (res: any) => {
           this.store = res.data.storeById as Store;
           console.log(this.store);
-          this.dtTrigger.next(true)
           this.chRef.detectChanges();
         },
         (e) => {
@@ -94,6 +109,16 @@ export class StoreDashboardComponent implements OnInit, OnDestroy {
     this.makingTransaction = false
     this.transactionType = ''
     this.chRef.detectChanges()
+  }
+
+  checkForFlag(comments: any[]) {
+    for (const comment of comments) {
+      if (comment.issue === 'Open') {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   ngOnDestroy() {

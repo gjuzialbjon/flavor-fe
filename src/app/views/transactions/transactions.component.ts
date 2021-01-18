@@ -24,15 +24,15 @@ import { TransactionsService } from 'src/app/core/services/transactions.service'
 export class TransactionsComponent implements OnInit {
   @ViewChild(DataTableDirective) transactionsTable!: DataTableDirective;
 
-  storeFormControl = new FormControl('all')
-  typeFormControl = new FormControl('all')
-  periodFormControl = new FormControl('all')
-
+  storeFormControl = new FormControl('all');
+  typeFormControl = new FormControl('all');
+  periodFormControl = new FormControl('all');
 
   transactions: Transaction[] = [];
+  tableTransactions: Transaction[] = [];
   transaction!: Transaction;
-  
-  stores: any[] = []
+
+  stores: any[] = [];
 
   loadingTransactions = true;
 
@@ -41,7 +41,7 @@ export class TransactionsComponent implements OnInit {
   transactionTypes: any[] = [];
 
   dtOptions;
-  dialogDtOptions
+  dialogDtOptions;
   dtTrigger = new Subject<any>();
 
   commentFormControl = new FormControl('', [Validators.required]);
@@ -55,13 +55,13 @@ export class TransactionsComponent implements OnInit {
   ) {
     this.transactionTypes = this.configsService.getTransactionTypes();
     this.dtOptions = this.configsService.getDTOptions();
-    this.dialogDtOptions = this.configsService.getDTOptions()
+    this.dialogDtOptions = this.configsService.getDTOptions();
   }
 
   async ngOnInit() {
     this.getTransactions();
 
-    this.stores = await this.transactionsService.getStores()
+    this.stores = await this.transactionsService.getStores();
   }
 
   getTransactions() {
@@ -69,6 +69,9 @@ export class TransactionsComponent implements OnInit {
       (res: any) => {
         console.log(res);
         this.transactions = JSON.parse(
+          JSON.stringify(res.data.transactionMany)
+        ) as Transaction[];
+        this.tableTransactions = JSON.parse(
           JSON.stringify(res.data.transactionMany)
         ) as Transaction[];
         this.loadingTransactions = false;
@@ -88,12 +91,12 @@ export class TransactionsComponent implements OnInit {
     this.dialogService.open(content);
   }
 
-  changedFilters(){
-    console.log(this.storeFormControl.value)
+  changedFilters() {
+    console.log(this.storeFormControl.value);
   }
 
-  changedPeriod(){
-    console.log(this.periodFormControl.value)
+  changedPeriod() {
+    console.log(this.periodFormControl.value);
   }
 
   addComment(issue: string) {
@@ -124,10 +127,19 @@ export class TransactionsComponent implements OnInit {
     this.chRef.detectChanges();
   }
 
-  rerenderTransactions(): void {
+  rerenderTransactions(transaction?: Transaction): void {
     this.transactionsTable.dtInstance.then((dtInstance: DataTables.Api) => {
       // Destroy the table first
       dtInstance.destroy();
+
+      if(transaction){
+        this.transactions.push(transaction)
+        this.resetFilters()
+        this.loadingTransactions = false
+      }
+
+      this.tableTransactions = JSON.parse(JSON.stringify(this.transactions))
+      this.chRef.detectChanges();
 
       // Call the dtTrigger to rerender again
       this.dtTrigger.next();
@@ -141,13 +153,23 @@ export class TransactionsComponent implements OnInit {
     this.chRef.detectChanges();
   }
 
-  checkForFlag(comments: any[]){
+  checkForFlag(comments: any[]) {
     for (const comment of comments) {
-      if(comment.issue === 'Open'){
-        return true
+      if (comment.issue === 'Open') {
+        return true;
       }
     }
 
-    return false
+    return false;
+  }
+
+  resetFilters(){
+    this.storeFormControl.setValue('all')
+    this.typeFormControl.setValue('all')
+    this.periodFormControl.setValue('all')
+  }
+
+  ngOnDestroy(){
+    this.chRef.detach()
   }
 }

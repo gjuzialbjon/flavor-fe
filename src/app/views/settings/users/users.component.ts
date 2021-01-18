@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit, OnDestroy, ChangeDetectorRef, TemplateRef, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NbDialogService } from '@nebular/theme';
 import { DataTableDirective } from 'angular-datatables';
 import { Subject, Subscription } from 'rxjs';
@@ -17,8 +17,6 @@ import { UserService } from 'src/app/core/services/user.service';
 })
 export class UsersComponent implements OnInit, OnDestroy {
   @ViewChild(DataTableDirective) dtElement!: DataTableDirective;
-
-  private subscriptions = new Subscription()
   dtOptions: DataTables.Settings
   dtTrigger = new Subject<any>(); 
   users: User[] = []
@@ -28,6 +26,9 @@ export class UsersComponent implements OnInit, OnDestroy {
   user!: any
   loading = false
 
+  resettingPassword = false
+  newPassFormControl = new FormControl('', [Validators.required, Validators.minLength(6)])
+  newPassRFormControl = new FormControl('', [Validators.required, Validators.minLength(6)])
 
   constructor(
     private userService: UserService,
@@ -60,6 +61,17 @@ export class UsersComponent implements OnInit, OnDestroy {
     this.dialogService.open(content)
   }
 
+  resetPassword(){
+    if(this.newPassFormControl.invalid){
+      this.msg.error('Please insert a valid password with a minimum length of 6.', 'Error')
+      return
+    }
+    if(this.newPassRFormControl.invalid || this.newPassFormControl.value !== this.newPassRFormControl.value){
+      this.msg.error('Passwords should match.', 'Error')
+      return
+    }
+  }
+
   saveUser(dialog: any) {
     if(this.userForm.invalid){
       this.userForm.markAllAsTouched()
@@ -76,6 +88,8 @@ export class UsersComponent implements OnInit, OnDestroy {
         this.user.email = updatedUser.email
         this.user.role = updatedUser.role
         this.user.stores = updatedUser.stores
+        this.user.confirmed = updatedUser.confirmed
+        this.user.telegram = updatedUser.telegram
                
         this.rerender()
         dialog.close()
@@ -121,7 +135,10 @@ export class UsersComponent implements OnInit, OnDestroy {
       name: [this.user.name, [Validators.required]], 
       email: [this.user.email, [Validators.required, Validators.email]],
       role: [this.user.role, [Validators.required]],
-      stores: [this.getStoreIds(this.user.stores), []]
+      stores: [this.getStoreIds(this.user.stores), []],
+      confirmed: [this.user.confirmed],
+      telegramId: [this.user.telegram && this.user.telegram.id, [Validators.pattern(/[0-9]+/)]],
+      telegramName: [!!this.user.telegram && !!this.user.telegram.name ? this.user.telegram.name : '']
     })
   }
 
@@ -174,6 +191,14 @@ export class UsersComponent implements OnInit, OnDestroy {
         // Call the dtTrigger to rerender again
         this.dtTrigger.next();
     });
+    this.chRef.detectChanges()
+  }
+
+  resetPasswordFormControls(){
+    this.newPassFormControl.setValue('')
+    this.newPassRFormControl.setValue('')
+    this.newPassFormControl.markAsUntouched()
+    this.newPassRFormControl.markAsUntouched()
     this.chRef.detectChanges()
   }
 

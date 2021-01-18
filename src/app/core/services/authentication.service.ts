@@ -22,21 +22,22 @@ export class AuthenticationService {
     private http: HttpClient
   ) {
     this.jwtHelper = new JwtHelperService();
-    this.checkIfToken()
+    this.initUserFromToken()
   }
 
-  checkIfToken(){
+  initUserFromToken(){
     const token = localStorage.getItem('flavorToken')
     if(!!token && token.length > 10){
       this.user = this.jwtHelper.decodeToken(token)
-      // console.log('User after app init is ', this.user);
     }
   }
 
-  initApp(token: string){
-    localStorage.setItem('flavorToken', token)
-    this.user = this.jwtHelper.decodeToken(token)
-    // console.log('User after login is ', this.user)
+  isTokenExpired(){
+    if(!!localStorage.getItem('flavorToken')){
+      return this.jwtHelper.isTokenExpired(localStorage.getItem('flavorToken') + '')
+    } else {
+      return true
+    }
   }
 
   login(email: string, password: string) {

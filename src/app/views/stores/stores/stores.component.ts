@@ -40,8 +40,8 @@ export class StoresComponent implements OnInit {
     this.initNewStoreForm()
   }
 
-  getStores(fetchPolicy: 'cache-first' | 'network-only' = 'cache-first'){
-    this.storeService.getStores(fetchPolicy).subscribe(
+  getStores(){
+    this.storeService.getStores().subscribe(
       (res:any) => { 
         this.stores = res.data.storeMany as Store[]
         // console.log(this.stores)
@@ -85,7 +85,7 @@ export class StoresComponent implements OnInit {
     // PROCEED TO CREATE NEW STORE AFTER LOCKING BUTTON
     this.storeService.createStore(this.newStoreForm.value).subscribe(
       (res: any) => {
-        this.getStores('network-only')
+        this.getStores()
         this.loading = false
         modal.close('Completed')
       },

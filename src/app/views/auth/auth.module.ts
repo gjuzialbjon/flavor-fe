@@ -36,7 +36,7 @@ import { ResetComponent } from './reset/reset.component';
             component: ResetComponent,
           },
           {
-            path: 'not-found',
+            path: 'not-authorized',
             component: NotAuthorizedComponent
           }
         ]

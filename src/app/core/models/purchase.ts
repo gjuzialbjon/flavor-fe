@@ -1,6 +1,6 @@
 export interface Purchase {
     description: string
-    ammount: number
+    amount: number
     price_in: number
     price_out: number
     currency: string

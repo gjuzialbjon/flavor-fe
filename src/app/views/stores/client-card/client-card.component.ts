@@ -1,4 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-client-card',
@@ -9,11 +10,17 @@ import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core
 export class ClientCardComponent implements OnInit {
   @Input() name: string = '';
   @Input() balance: number = 344444434;
-  @Input() id: string = '';
+  @Input() id: string = '234234';
 
-  constructor() { }
+  constructor(
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
+  }
+
+  goToClient(){
+    this.router.navigate(['clients', this.id])
   }
 
 }

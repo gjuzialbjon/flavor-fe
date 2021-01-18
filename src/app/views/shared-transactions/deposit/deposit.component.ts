@@ -59,7 +59,7 @@ export class DepositComponent implements OnInit {
     this.transactionsService.makeDeposit(this.transactionForm.value).subscribe(
       (res: any) => {
         console.log(res)
-        // this.onTransactionCreate.emit(JSON.parse(JSON.stringify(res.data.makeDeposit)))
+        this.onTransactionCreate.emit(JSON.parse(JSON.stringify(res.data.makeDeposit)))
       },
       e => {
         console.error(e)

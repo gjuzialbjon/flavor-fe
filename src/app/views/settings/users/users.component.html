@@ -1,10 +1,10 @@
 <div class="pt-3">
   <div class="row no-gutters">
-    <div class="col-12 text-center">
+    <div class="col-12 text-right">
       <button
         nbButton
         status="info"
-        class="mb-3"
+        class="mb-4"
         (click)="openNewUserDialog(newUser)"
       >
         Create new user
@@ -104,11 +104,99 @@
           }}</ng-option>
         </ng-select>
       </div>
+      <div class="form-group">
+        <div class="row">
+          <div class="col">
+            <input
+              nbInput
+              fullWidth
+              status="basic"
+              formControlName="telegramId"
+              placeholder="Telegram ID"
+            />
+          </div>
+          <div class="col">
+            <input
+              nbInput
+              fullWidth
+              status="basic"
+              formControlName="telegramName"
+              placeholder="Telegram Name"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="row">
+          <div class="col-12">
+            <div class="custom-control custom-checkbox">
+              <input
+                type="checkbox"
+                class="custom-control-input"
+                id="confirmed"
+                formControlName="confirmed"
+              />
+              <label class="custom-control-label" for="confirmed"
+                >Confirmed</label
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="!resettingPassword" class="form-group">
+        <a style="cursor: pointer; color: fuchsia;" (click)="resettingPassword = true">Reset password for this user</a>
+      </div>
+      <div *ngIf="resettingPassword" class="form-group">
+        <nb-form-field>
+          <label for="newpass" class="label">New password</label>
+          <input
+            nbInput
+            id="newpass"
+            #newpass
+            [formControl]="newPassFormControl"
+            [status]="
+              newPassFormControl.touched && newPassFormControl.invalid
+                ? 'danger'
+                : 'basic'
+            "
+          />
+          <span class="text-hint" style="font-size: 11px"
+            >Password should have a minimum length of 6</span
+          >
+        </nb-form-field>
+    
+        <nb-form-field>
+          <label for="newpassr" class="label mt-3">Repeat new password</label>
+          <input
+            nbInput
+            id="newpassr"
+            #newpassr
+            [formControl]="newPassRFormControl"
+            [status]="
+              newPassRFormControl.touched &&
+              (newPassFormControl.invalid || newpass.value !== newpassr.value)
+                ? 'danger'
+                : 'basic'
+            "
+          />
+        </nb-form-field>
+        <div class="row">
+          <div class="col text-center">
+            <button nbButton size="small" class="ml-3 mt-3" (click)="resettingPassword = false">
+              Cancel
+            </button>
+            <button nbButton size="small" class="ml-3 mt-3" status="info" (click)="resetPassword()">
+              Update password
+            </button>
+          </div>
+        </div>
+        
+      </div>
     </form>
 
     <nb-card-footer>
       <button type="button" nbButton class="mr-3" (click)="ref.close()">
-        Cancel
+        Close
       </button>
       <button
         type="button"
@@ -118,7 +206,7 @@
         (click)="saveUser(ref)"
         [disabled]="loading"
         [nbSpinner]="loading"
-        nbSpinnerStatus="info"
+        nbSpinnerStatus="danger"
       >
         Save
       </button>
@@ -192,6 +280,7 @@
           >Please select a role.</small
         >
       </div>
+
     </form>
 
     <nb-card-footer>
