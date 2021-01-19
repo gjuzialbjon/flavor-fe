@@ -6,7 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbDropdownModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { StoreDashboardComponent } from './store-dashboard/store-dashboard.component';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { NbButtonModule, NbCardModule, NbFormFieldModule, NbIconModule, NbInputModule, NbSelectModule, NbSpinnerModule } from '@nebular/theme';
+import { NbButtonModule, NbCardModule, NbDatepickerModule, NbFormFieldModule, NbIconModule, NbInputModule, NbSelectModule, NbSpinnerModule } from '@nebular/theme';
 import { StoreCardComponent } from './store-card/store-card.component';
 import { DataTablesModule } from 'angular-datatables';
 import { SharedTransactionsModule } from '../shared-transactions/shared-transactions.module';
@@ -37,10 +37,10 @@ import { ClientCardComponent } from './client-card/client-card.component';
     DataTablesModule,
     FormsModule,
     ReactiveFormsModule,
-    NgbTooltipModule,
     NgSelectModule,
     NbCardModule,
     NbIconModule,
+    NbDatepickerModule,
     NbButtonModule,
     NbFormFieldModule,
     NbInputModule,

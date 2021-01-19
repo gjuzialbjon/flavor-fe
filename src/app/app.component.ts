@@ -13,7 +13,7 @@ import { NbIconLibraries } from '@nebular/theme';
   `,
 })
 export class AppComponent {
-  title = 'Bank';
+  title = 'Swap';
 
   constructor(private iconLibraries: NbIconLibraries){
     this.iconLibraries.registerFontPack('solid', { packClass: 'fas', iconClassPrefix: 'fa'} );

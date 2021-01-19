@@ -1,3 +1,11 @@
+<div class="row mb-3">
+  <div class="col text-right">
+    <button nbButton status="info" class="shadow" (click)="openNewClientDialog(newClient)">
+      Add new client
+    </button>
+  </div>
+</div>
+
 <nb-card
   class="mt-0 shadow"
   style="border: none"
@@ -7,16 +15,6 @@
   nbSpinnerMessage=""
 >
   <nb-card-body>
-    <div class="row mb-4">
-      <div class="col-6">
-        <p class="text-muted text-uppercase font-weight-bold">Clients</p>
-      </div>
-      <div class="col-6 text-right">
-        <button nbButton status="info" (click)="openNewClientDialog(newClient)">
-          Create new client
-        </button>
-      </div>
-    </div>
     <div class="row">
       <div class="col-12">
         <table
@@ -40,8 +38,8 @@
             <tr *ngFor="let client of clients">
               <td>
                 <nb-icon
-                  icon="heart"
-                  [status]="client.favorite ? 'danger' : 'basic'"
+                  icon="star"
+                  [status]="client.favorite ? 'warning' : 'basic'"
                   style="cursor: pointer"
                   class="mr-2"
                   (click)="toggleFavorite(client)"
@@ -143,7 +141,7 @@
         (click)="createClient(ref)"
         [disabled]="loading"
       >
-        Create
+        Add
       </button>
     </nb-card-footer>
   </nb-card>

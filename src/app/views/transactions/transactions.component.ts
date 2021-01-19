@@ -13,6 +13,7 @@ import { Subject } from 'rxjs';
 import { ConfigsService } from 'src/app/core/helper-services/configs.service';
 import { MessageService } from 'src/app/core/helper-services/message.service';
 import { Transaction } from 'src/app/core/models/transaction';
+import { AuthenticationService } from 'src/app/core/services/authentication.service';
 import { TransactionsService } from 'src/app/core/services/transactions.service';
 
 @Component({
@@ -23,6 +24,9 @@ import { TransactionsService } from 'src/app/core/services/transactions.service'
 })
 export class TransactionsComponent implements OnInit {
   @ViewChild(DataTableDirective) transactionsTable!: DataTableDirective;
+  dtOptions;
+  dialogDtOptions;
+  dtTrigger = new Subject<any>();
 
   storeFormControl = new FormControl('all');
   typeFormControl = new FormControl('all');
@@ -34,15 +38,15 @@ export class TransactionsComponent implements OnInit {
 
   stores: any[] = [];
 
+  isAdminOrAgent = false
+
   loadingTransactions = true;
 
-  makingTransaction = true;
-  transactionType = 'deposit';
+  makingTransaction = false;
+  transactionType = '';
   transactionTypes: any[] = [];
 
-  dtOptions;
-  dialogDtOptions;
-  dtTrigger = new Subject<any>();
+
 
   commentFormControl = new FormControl('', [Validators.required]);
 
@@ -51,7 +55,8 @@ export class TransactionsComponent implements OnInit {
     private chRef: ChangeDetectorRef,
     private dialogService: NbDialogService,
     private transactionsService: TransactionsService,
-    private msg: MessageService
+    private msg: MessageService,
+    private authService: AuthenticationService
   ) {
     this.transactionTypes = this.configsService.getTransactionTypes();
     this.dtOptions = this.configsService.getDTOptions();
@@ -59,6 +64,7 @@ export class TransactionsComponent implements OnInit {
   }
 
   async ngOnInit() {
+    this.isAdminOrAgent = this.authService.user.role === 'admin' || this.authService.user.role === 'agent'
     this.getTransactions();
 
     this.stores = await this.transactionsService.getStores();

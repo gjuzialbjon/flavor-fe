@@ -7,7 +7,7 @@
         class="mb-4"
         (click)="openNewUserDialog(newUser)"
       >
-        Create new user
+        Add new user
       </button>
     </div>
   </div>
@@ -35,7 +35,7 @@
         <td class="text-center px-0 py-2" width="8%">
           <nb-icon
             icon="edit"
-            status="info"
+            status="basic"
             style="cursor: pointer"
             (click)="openUpdate(userContent, user)"
           ></nb-icon>
@@ -295,7 +295,7 @@
         (click)="createUser(ref)"
         [disabled]="loading"
       >
-        Create
+        Add
       </button>
     </nb-card-footer>
   </nb-card>

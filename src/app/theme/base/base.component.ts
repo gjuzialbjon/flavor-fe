@@ -15,13 +15,14 @@ export class BaseComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    if(this.authService.user.role === 'admin' || this.authService.user.role === 'agent'){
-      this.router.navigateByUrl('/stores')
-    } else if(this.authService.user.role === 'finance'){
-      this.router.navigateByUrl('/reports')
-    } else{
-      console.error('Unknown role in base component')
+    if(this.router.url.length < 3){
+      if(this.authService.user.role === 'admin' || this.authService.user.role === 'agent'){
+        this.router.navigateByUrl('/stores')
+      } else if(this.authService.user.role === 'finance'){
+        this.router.navigateByUrl('/reports')
+      } else{
+        console.error('Unknown role in base component')
+      }
     }
   }
-
 }

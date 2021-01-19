@@ -8,7 +8,7 @@ import { Account } from './account';
 export interface Post {
     date: Date
     details: string
-    amount: number
+    ammount: number
     price_in: number
     price_out: number
     currency: Currency

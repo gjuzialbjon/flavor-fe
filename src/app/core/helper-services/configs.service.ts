@@ -125,6 +125,15 @@ export class ConfigsService {
     } else if( role === 'finance'){
       return [
         {
+          title: 'Transactions',
+          link: '/transactions',
+          icon: {
+            icon: 'transactions',
+            pack: 'menu',
+          },
+          pathMatch: 'prefix',
+        },
+        {
           title: 'Reports',
           link: '/reports',
           icon: {

@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { ClientsComponent } from './clients/clients.component';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NbCardModule, NbIconModule, NbButtonModule, NbFormFieldModule, NbInputModule, NbSelectModule, NbSpinnerModule, NbDialogModule } from '@nebular/theme';
-import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
+import { NbCardModule, NbIconModule, NbButtonModule, NbFormFieldModule, NbInputModule, NbSelectModule, NbSpinnerModule, NbDialogModule, NbDatepickerModule } from '@nebular/theme';
+import { NgbDropdownModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { DataTablesModule } from 'angular-datatables';
 import { ClientDashboardComponent } from './client-dashboard/client-dashboard.component';
+import { SharedTransactionsModule } from '../shared-transactions/shared-transactions.module';
 
 @NgModule({
   declarations: [ClientsComponent, ClientDashboardComponent],
@@ -23,7 +24,7 @@ import { ClientDashboardComponent } from './client-dashboard/client-dashboard.co
         }
       },
       {
-        path: ':id',
+        path: ':clientId',
         component: ClientDashboardComponent,
         data:{
           roles: ['admin', 'agent']
@@ -45,6 +46,9 @@ import { ClientDashboardComponent } from './client-dashboard/client-dashboard.co
     NbInputModule,
     NbSelectModule,
     NbSpinnerModule,
+    NbDatepickerModule,
+    NgbDropdownModule,
+    SharedTransactionsModule
   ]
 })
 export class ClientsModule { }

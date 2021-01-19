@@ -17,6 +17,7 @@ const transactionOne = `{
   comments {
     _id
     comment
+    issue
     user {
       name
     }
@@ -25,7 +26,7 @@ const transactionOne = `{
     date
     type
     details
-    amount
+    ammount
     fee
     currency {
       symbol
@@ -42,7 +43,7 @@ const transactionOne = `{
     surname
   }
   _id
-}`
+}`;
 
 const transactionMany = gql`
   {
@@ -71,7 +72,7 @@ const transactionMany = gql`
         date
         type
         details
-        amount
+        ammount
         fee
         currency {
           symbol
@@ -128,9 +129,10 @@ export class TransactionsService {
   clients: any[] = [];
   currencies: any[] = [];
 
-  constructor(private apollo: Apollo, 
-    private authService: AuthenticationService) {
-  }
+  constructor(
+    private apollo: Apollo,
+    private authService: AuthenticationService
+  ) {}
 
   // QUERIES
   getTransactions() {
@@ -149,14 +151,14 @@ export class TransactionsService {
         query: storeMany,
       })
       .toPromise()
-      .then((res:any) => {
-        this.stores = res.data.storeMany
+      .then((res: any) => {
+        this.stores = res.data.storeMany;
       })
       .catch((e) => {
         console.error(e);
       });
 
-    return this.stores
+    return this.stores;
   }
 
   async getClients() {
@@ -169,14 +171,14 @@ export class TransactionsService {
         query: clientMany,
       })
       .toPromise()
-      .then((res:any) => {
-        this.clients = res.data.clientMany
+      .then((res: any) => {
+        this.clients = res.data.clientMany;
       })
       .catch((e) => {
         console.error(e);
       });
 
-    return this.clients
+    return this.clients;
   }
 
   async getCurrencies() {
@@ -189,14 +191,14 @@ export class TransactionsService {
         query: currencyMany,
       })
       .toPromise()
-      .then((res:any) => {
-        this.currencies = res.data.currencyMany
+      .then((res: any) => {
+        this.currencies = res.data.currencyMany;
       })
       .catch((e) => {
         console.error(e);
       });
 
-    return this.currencies
+    return this.currencies;
   }
 
   // MUTATIONS //
@@ -226,9 +228,11 @@ export class TransactionsService {
   }
 
   makeDeposit(deposit: any) {
-    let hasCurrency = !!deposit.currency ? `currency: "${deposit.currency}"` : ''
-    let hasFee = !!deposit.fee ? `fee: ${deposit.fee}` : ''
-    let hasClient = !!deposit.clientId ? `clientId: "${deposit.clientId}"` : ''
+    let hasCurrency = !!deposit.currency
+      ? `currency: "${deposit.currency}"`
+      : '';
+    let hasFee = !!deposit.fee ? `fee: ${deposit.fee}` : '';
+    let hasClient = !!deposit.clientId ? `clientId: "${deposit.clientId}"` : '';
 
     return this.apollo.mutate({
       mutation: gql`
@@ -248,9 +252,11 @@ export class TransactionsService {
   }
 
   makeWithdraw(deposit: any) {
-    let hasCurrency = !!deposit.currency ? `currency: "${deposit.currency}"` : ''
-    let hasFee = !!deposit.fee ? `fee: ${deposit.fee}` : ''
-    let hasClient = !!deposit.clientId ? `clientId: "${deposit.clientId}"` : ''
+    let hasCurrency = !!deposit.currency
+      ? `currency: "${deposit.currency}"`
+      : '';
+    let hasFee = !!deposit.fee ? `fee: ${deposit.fee}` : '';
+    let hasClient = !!deposit.clientId ? `clientId: "${deposit.clientId}"` : '';
 
     return this.apollo.mutate({
       mutation: gql`
@@ -270,9 +276,11 @@ export class TransactionsService {
   }
 
   makeLoan(deposit: any) {
-    let hasCurrency = !!deposit.currency ? `currency: "${deposit.currency}"` : ''
-    let hasFee = !!deposit.fee ? `fee: ${deposit.fee}` : ''
-    let hasClient = !!deposit.clientId ? `clientId: "${deposit.clientId}"` : ''
+    let hasCurrency = !!deposit.currency
+      ? `currency: "${deposit.currency}"`
+      : '';
+    let hasFee = !!deposit.fee ? `fee: ${deposit.fee}` : '';
+    let hasClient = !!deposit.clientId ? `clientId: "${deposit.clientId}"` : '';
 
     return this.apollo.mutate({
       mutation: gql`

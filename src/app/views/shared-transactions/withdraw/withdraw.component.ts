@@ -60,6 +60,8 @@ export class WithdrawComponent implements OnInit {
       (res: any) => {
         console.log(res)
         this.onTransactionCreate.emit(JSON.parse(JSON.stringify(res.data.makeWithdraw)))
+        this.initForm()
+        this.chRef.detectChanges()
       },
       e => {
         console.error(e)

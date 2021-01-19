@@ -6,9 +6,10 @@ import {
   OnInit,
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { NbMenuItem, NbSidebarService } from '@nebular/theme';
-import { filter } from 'rxjs/operators';
+import { filter, map } from 'rxjs/operators';
 import { AuthenticationService } from 'src/app/core/services/authentication.service';
 
 @Component({
@@ -35,14 +36,17 @@ export class HeaderComponent implements OnInit {
   searchFormControl: FormControl = new FormControl('');
   routesLength = 1;
   fullName = '';
-  lastRoute = ''
+  lastRoute = '';
+
+  sectionTitle = 'SWAP'
 
   constructor(
     private authService: AuthenticationService,
     private chRef: ChangeDetectorRef,
     private sidebarService: NbSidebarService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private titleService: Title
   ) {}
 
   ngOnInit(): void {
@@ -53,12 +57,31 @@ export class HeaderComponent implements OnInit {
       .pipe(filter((e): e is NavigationEnd => e instanceof NavigationEnd))
       .subscribe((e: any) => {
         this.routesLength = e.url.split('/').length;
-        this.lastRoute = '/'
-        const routes = e.urlAfterRedirects.split('/')
+        this.lastRoute = '/';
+        const routes = e.urlAfterRedirects.split('/');
         for (let i = 1; i < routes.length - 1; i++) {
-          this.lastRoute += routes[i]
+          this.lastRoute += routes[i];
         }
         this.chRef.detectChanges();
+      });
+
+    const appTitle = this.titleService.getTitle();
+
+    this.router.events
+      .pipe(
+        filter((event) => event instanceof NavigationEnd),
+        map(() => {
+          const child = this.route.firstChild;
+          if (!!child && child.snapshot.data['breadcrumb']) {
+            return child.snapshot.data['breadcrumb'];
+          }
+          return appTitle;
+        })
+      )
+      .subscribe((ttl: string) => {
+        this.titleService.setTitle(ttl + ' | Swap');
+        this.sectionTitle = ttl
+        this.chRef.detectChanges()
       });
   }
 
@@ -79,11 +102,11 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['/search'], {
       queryParams: { key: this.searchFormControl.value },
     });
-    this.searchFormControl.setValue('')
-    this.chRef.detectChanges()
+    this.searchFormControl.setValue('');
+    this.chRef.detectChanges();
   }
 
   goBack() {
-    this.router.navigateByUrl(this.lastRoute)
+    this.router.navigateByUrl(this.lastRoute);
   }
 }

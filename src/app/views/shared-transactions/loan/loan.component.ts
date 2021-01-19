@@ -60,6 +60,8 @@ export class LoanComponent implements OnInit {
       (res: any) => {
         console.log(res)
         this.onTransactionCreate.emit(JSON.parse(JSON.stringify(res.data.makeLoan)))
+        this.initForm()
+        this.chRef.detectChanges()
       },
       (e: any) => {
         console.error(e)

@@ -2,8 +2,8 @@
   <div class="d-flex align-items-center justify-content-between">
     <span>
       <nb-icon (click)="toggle()" icon="bars" style="cursor: pointer; margin-right: .8rem;"></nb-icon>
-      <a style="letter-spacing: 2px; color: #284693; font-size: x-large; font-weight: bolder;" class="d-md-inline d-none mr-md-4">Swap</a>
-      <nb-icon (click)="goBack()" *ngIf="routesLength > 2" icon="arrow-left" class="ml-md-5 ml-2 d-md-inline d-none" style="cursor: pointer;"></nb-icon>
+      <a style="letter-spacing: 2px; color: #284693; font-size: large; font-weight: bolder;" class="d-md-inline d-none mr-md-4">{{ sectionTitle }}</a>
+      <nb-icon (click)="goBack()" *ngIf="routesLength > 2" icon="arrow-left" class="ml-md-5 ml-2 d-md-inline d-none" style="cursor: pointer;" status="info"></nb-icon>
     </span>
     <span class="d-flex align-items-center">
       <nb-form-field size="small">
@@ -15,7 +15,7 @@
 
       <span class="d-flex align-items-center ml-4" [nbContextMenu]="userMenu">
         <a class="d-none d-md-block pr-3">{{ fullName }}</a>
-        <nb-icon icon="user" ></nb-icon>
+        <nb-icon icon="user" status="info" ></nb-icon>
       </span>
     </span>
   </div>

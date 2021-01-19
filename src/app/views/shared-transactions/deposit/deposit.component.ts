@@ -60,6 +60,8 @@ export class DepositComponent implements OnInit {
       (res: any) => {
         console.log(res)
         this.onTransactionCreate.emit(JSON.parse(JSON.stringify(res.data.makeDeposit)))
+        this.initForm()
+        this.chRef.detectChanges()
       },
       e => {
         console.error(e)

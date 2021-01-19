@@ -6,13 +6,8 @@
   nbSpinnerMessage="Loading transactions"
 >
   <nb-card-body>
-    <div class="row mb-3 align-items-center">
-      <div class="col-lg-2 col-md-4 col-sm-12">
-        <p class="text-muted text-uppercase font-weight-bold mb-2">
-          Transactions
-        </p>
-      </div>
-      <div class="col-lg-7 col-md-12">
+    <div class="row mb-3 ">
+      <div class="col-lg-9 col-sm-6">
         <nb-select
           placeholder="Store"
           [formControl]="storeFormControl"
@@ -61,14 +56,26 @@
           <nb-option value="4">Last year</nb-option>
         </nb-select>
       </div>
-      <div class="col-lg-3 col-md-12 col-sm-6 text-lg-right">
+      <div class="col-lg-3 col-sm-6 text-right">
+        <input
+          #dateInput
+          style="width: 0px; padding: 0; border: none"
+          nbInput
+          placeholder="Pick Date"
+          [nbDatepicker]="dateTimePicker"
+        />
         <nb-icon
+          nbSuffix
           icon="calendar-alt"
           status="info"
           class="mr-4"
           style="cursor: pointer"
+          (click)="dateInput.click()"
         ></nb-icon>
-        <div ngbDropdown class="d-inline-block">
+
+        <nb-datepicker #dateTimePicker></nb-datepicker>
+
+        <div *ngIf="isAdminOrAgent" ngbDropdown class="d-inline-block">
           <button
             nbButton
             status="info"
@@ -92,7 +99,7 @@
     <!-- MAKING A TRANSACTION SECTION -->
     <div
       class="row"
-      *ngIf="makingTransaction"
+      *ngIf="makingTransaction && isAdminOrAgent"
       style="background-color: #f5f9ff; margin: 0rem -1rem"
     >
       <div class="col-12 py-4 px-lg-5 px-3">
@@ -148,8 +155,8 @@
             <tr>
               <th width="20px">&nbsp;</th>
               <th>Date</th>
-              <th>Store Name</th>
-              <th>Client Name</th>
+              <th *ngIf="isAdminOrAgent">Store Name</th>
+              <th *ngIf="isAdminOrAgent">Client Name</th>
               <th>Payment type</th>
               <th>Direction</th>
               <th>User Name</th>
@@ -186,8 +193,12 @@
               <td class="text-capitalize">
                 {{ transaction.createdAt | date: "mediumDate" }}
               </td>
-              <td class="text-capitalize">{{ transaction.store?.name }}</td>
-              <td class="text-capitalize">{{ transaction.client?.name }}</td>
+              <td *ngIf="isAdminOrAgent" class="text-capitalize">
+                {{ transaction.store?.name }}
+              </td>
+              <td *ngIf="isAdminOrAgent" class="text-capitalize">
+                {{ transaction.client?.name }}
+              </td>
               <td class="text-capitalize">{{ transaction.type }}</td>
               <td class="text-capitalize">{{ transaction.direction }}</td>
               <td class="text-capitalize">{{ transaction.user?.name }}</td>
@@ -197,9 +208,7 @@
                   'text-danger font-weight-bold': transaction.status === 'Open'
                 }"
               >
-                {{
-                  transaction.status === "Open" ? "Pending" : "Completed"
-                }}
+                {{ transaction.status === "Open" ? "Pending" : "Completed" }}
                 ({{ transaction.posts?.length }})
               </td>
               <td>{{ transaction.description }}</td>
@@ -292,7 +301,7 @@
               <tr *ngFor="let post of transaction?.posts">
                 <td class="post-first-td">{{ post.details }}</td>
                 <td>{{ post.date | date: "mediumDate" }}</td>
-                <td>{{ post.amount | currency: post.currency.symbol }}</td>
+                <td>{{ post.ammount | currency: post.currency.symbol }}</td>
                 <td class="text-capitalize">{{ post.type }}</td>
                 <td>{{ post.user?.name }}</td>
                 <td>
@@ -336,11 +345,17 @@
               <strong class="mr-2 text-muted font-smaller">Created At</strong>
               <span>{{ transaction.createdAt | date: "mediumDate" }}</span>
             </div>
-            <div class="d-flex align-items-center justify-content-between mb-2">
+            <div
+              *ngIf="isAdminOrAgent"
+              class="d-flex align-items-center justify-content-between mb-2"
+            >
               <strong class="mr-2 text-muted">Store</strong>
               <span>{{ transaction.store?.name || "-" }}</span>
             </div>
-            <div class="d-flex align-items-center justify-content-between mb-2">
+            <div
+              *ngIf="isAdminOrAgent"
+              class="d-flex align-items-center justify-content-between mb-2"
+            >
               <strong class="mr-2 text-muted">Client</strong>
               <span>{{ transaction.client?.name || "-" }}</span>
             </div>

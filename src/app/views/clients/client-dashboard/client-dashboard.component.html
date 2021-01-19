@@ -1,1 +1,215 @@
-<p>client-dashboard works!</p>
+<div class="row mb-3">
+  <div class="col">
+    <p
+    class="text-uppercase font-weight-bold m-0"
+    style="color: #3886f7; font-size: 28px"
+  >
+    {{ client?.name }} {{ client?.surname}}
+  </p>
+  </div>
+</div>
+
+<div class="row align-items-end">
+  <div class="col-xl-4 col-lg-6 col-md-8">
+    <nb-card>
+      <nb-card-body>
+        <div class="row">
+          <div class="col-md-6">
+            <p class="text-muted text-uppercase">BALANCE TOT</p>
+        <p class="text-center mb-0 text-info" style="font-size: 1.5rem">
+          <span >{{ '233232' | currency: 'EUR' }}</span>
+        </p>
+          </div>
+          <div class="col-md-6 mt-md-0 mt-3">
+            <p class="text-muted text-uppercase">PROFIT TOT</p>
+        <p class="text-center mb-0 text-info" style="font-size: 1.5rem">
+          <span >{{ '2133232' | currency: 'EUR' }}</span>
+        </p>
+          </div>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </div>
+  <div class="col-xl-2 col-lg-3 col-md-4" *ngFor="let balance of balances">
+    <nb-card>
+      <nb-card-body>
+        <p class="text-muted text-uppercase">BALANCE {{ balance.name }}</p>
+        <p class="text-center mb-0 text-info" style="font-size: 1.5rem">
+          <span >{{ balance.amount | currency: balance.symbol }}</span>
+        </p>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+
+<nb-card
+  class="mt-0 shadow"
+  style="border: none"
+  [nbSpinner]="loadingTransactions"
+  nbSpinnerStatus="danger"
+  nbSpinnerSize="large"
+  nbSpinnerMessage="Loading transactions"
+>
+  <nb-card-body>
+    <div class="row mb-3">
+      <div class="col-12 text-right">
+        <input
+          #dateInput
+          style="width: 0px; padding: 0; border: none"
+          nbInput
+          placeholder="Pick Date"
+          [nbDatepicker]="dateTimePicker"
+        />
+        <nb-icon
+          nbSuffix
+          icon="calendar-alt"
+          status="info"
+          class="mr-4"
+          style="cursor: pointer"
+          (click)="dateInput.click()"
+        ></nb-icon>
+
+        <nb-datepicker #dateTimePicker></nb-datepicker>
+        <div ngbDropdown class="d-inline-block">
+          <button
+            nbButton
+            status="info"
+            style="text-transform: none; border-radius: 13px"
+            id="dropdownBasic1"
+            ngbDropdownToggle
+          >
+            Make a transaction
+          </button>
+          <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+            <button ngbDropdownItem (click)="make('transfer')">Transfer</button>
+            <button ngbDropdownItem (click)="make('loan')">Loan</button>
+            <button ngbDropdownItem (click)="make('trade')">Trade</button>
+            <button ngbDropdownItem (click)="make('deposit')">Deposit</button>
+            <button ngbDropdownItem (click)="make('withdraw')">Withdraw</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MAKING A TRANSACTION SECTION -->
+    <div
+      class="row"
+      *ngIf="makingTransaction"
+      style="background-color: #f5f9ff; margin: 0rem -1rem"
+    >
+      <div class="col-12 py-4 px-lg-5 px-3">
+        <div [ngSwitch]="transactionType">
+          <div *ngSwitchCase="'transfer'">
+            <app-transfer
+              (onTransactionCancel)="cancelTransaction()"
+              (onTransactionLock)="loadingTransactions = true"
+            ></app-transfer>
+          </div>
+          <div *ngSwitchCase="'trade'">
+            <app-trade
+              (onTransactionCancel)="cancelTransaction()"
+              (onTransactionLock)="loadingTransactions = true"
+            ></app-trade>
+          </div>
+          <div *ngSwitchCase="'loan'">
+            <app-loan
+              (onTransactionCancel)="cancelTransaction()"
+              (onTransactionLock)="loadingTransactions = true"
+              (onTransactionCreate)="rerenderTransactions($event)"
+            ></app-loan>
+          </div>
+          <div *ngSwitchCase="'withdraw'">
+            <app-withdraw
+              (onTransactionCancel)="cancelTransaction()"
+              (onTransactionLock)="loadingTransactions = true"
+              (onTransactionCreate)="rerenderTransactions($event)"
+            ></app-withdraw>
+          </div>
+          <div *ngSwitchCase="'deposit'">
+            <app-deposit
+              (onTransactionCancel)="cancelTransaction()"
+              (onTransactionLock)="loadingTransactions = true"
+              (onTransactionCreate)="rerenderTransactions($event)"
+            ></app-deposit>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- END MAKING A TRANSACTION -->
+    <div class="row pt-2">
+      <div class="col-12">
+        <table
+          [dtTrigger]="$any(dtTrigger)"
+          [dtOptions]="dtOptions"
+          datatable
+          class="table table-hover"
+          width="100%"
+        >
+          <thead>
+            <tr>
+              <th width="20px">&nbsp;</th>
+              <th>Date</th>
+              <th>Store Name</th>
+              <th>Payment type</th>
+              <th>Direction</th>
+              <th>User Name</th>
+              <th>Status</th>
+              <th>Description</th>
+              <!-- <th width="20px">&nbsp;</th> -->
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let transaction of tableTransactions"
+              [ngClass]="{
+                'row-issued': checkForFlag(transaction.comments),
+                'row-pending':
+                  transaction.status === 'Open' &&
+                  !checkForFlag(transaction.comments),
+                'row-closed':
+                  transaction.status === 'Closed' &&
+                  !checkForFlag(transaction.comments)
+              }"
+            >
+              <td
+                [attr.data-sort]="
+                  checkForFlag(transaction.comments) ? 'a' : 'b'
+                "
+              >
+                <nb-icon
+                  icon="flag"
+                  [status]="
+                    checkForFlag(transaction.comments) ? 'danger' : 'basic'
+                  "
+                ></nb-icon>
+              </td>
+              <td class="text-capitalize">
+                {{ transaction.createdAt | date: "mediumDate" }}
+              </td>
+              <td class="text-capitalize">{{ transaction.store?.name }}</td>
+              <td class="text-capitalize">{{ transaction.type }}</td>
+              <td class="text-capitalize">{{ transaction.direction }}</td>
+              <td class="text-capitalize">{{ transaction.user?.name }}</td>
+              <td
+                class="text-capitalize"
+                [ngClass]="{
+                  'text-danger font-weight-bold': transaction.status === 'Open'
+                }"
+              >
+                {{ transaction.status === "Open" ? "Pending" : "Completed" }}
+              </td>
+              <td>{{ transaction.description }}</td>
+              <!-- <td (click)="openEditTransaction(transactionDialog, transaction)">
+                  <nb-icon
+                    icon="edit"
+                    style="cursor: pointer"
+                    status="basic"
+                  ></nb-icon>
+                </td> -->
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>
