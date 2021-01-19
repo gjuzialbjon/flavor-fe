@@ -69,6 +69,7 @@ const transactionMany = gql`
         symbol
       }
       store {
+        _id
         name
       }
       _id

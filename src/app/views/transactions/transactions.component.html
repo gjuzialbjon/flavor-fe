@@ -38,7 +38,7 @@
             type.name
           }}</nb-option>
         </nb-select>
-        <nb-select
+        <!-- <nb-select
           placeholder="Period"
           [formControl]="periodFormControl"
           filled
@@ -46,15 +46,16 @@
           size="small"
           status="info"
           class="mr-4 mb-2"
-          (selectedChange)="changedPeriod()"
+          (selectedChange)="changedFilters()"
         >
           <nb-option value="all">Period</nb-option>
+          <nb-option value="today">Today</nb-option>
+          <nb-option value="last_week">Last week</nb-option>
+          <nb-option value="last_month">Last month</nb-option>
+          <nb-option value="last_year">Last year</nb-option>
+        </nb-select> -->
 
-          <nb-option value="1">Today</nb-option>
-          <nb-option value="2">Last week</nb-option>
-          <nb-option value="3">Last month</nb-option>
-          <nb-option value="4">Last year</nb-option>
-        </nb-select>
+        <span *ngIf="hasFilters" style="text-decoration: underline; color: rgb(55, 102, 204); cursor: pointer;" (click)="resetFilters()">Reset filters</span>
       </div>
       <div class="col-lg-3 col-sm-6 text-right">
         <input
@@ -62,7 +63,8 @@
           style="width: 0px; padding: 0; border: none"
           nbInput
           placeholder="Pick Date"
-          [nbDatepicker]="dateTimePicker"
+          [nbDatepicker]="rangepicker"
+          [formControl]="periodFormControl"
         />
         <nb-icon
           nbSuffix
@@ -73,7 +75,7 @@
           (click)="dateInput.click()"
         ></nb-icon>
 
-        <nb-datepicker #dateTimePicker></nb-datepicker>
+        <nb-rangepicker #rangepicker (rangeChange)="[periodFormControl.setValue($event), changedFilters()]" name="periodFormControl" ></nb-rangepicker>
 
         <div *ngIf="isAdminOrAgent" ngbDropdown class="d-inline-block">
           <button

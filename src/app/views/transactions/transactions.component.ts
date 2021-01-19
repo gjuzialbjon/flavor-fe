@@ -30,7 +30,7 @@ export class TransactionsComponent implements OnInit {
 
   storeFormControl = new FormControl('all');
   typeFormControl = new FormControl('all');
-  periodFormControl = new FormControl('all');
+  periodFormControl = new FormControl(null);
 
   transactions: Transaction[] = [];
   tableTransactions: Transaction[] = [];
@@ -45,10 +45,12 @@ export class TransactionsComponent implements OnInit {
   makingTransaction = false;
   transactionType = '';
   transactionTypes: any[] = [];
-
-
-
   commentFormControl = new FormControl('', [Validators.required]);
+
+  hasFilters = false
+  typeFilter = 'all'
+  storeFilter = 'all'
+  periodFilter = null
 
   constructor(
     private configsService: ConfigsService,
@@ -97,12 +99,61 @@ export class TransactionsComponent implements OnInit {
     this.dialogService.open(content);
   }
 
-  changedFilters() {
-    console.log(this.storeFormControl.value);
+  isIncluded(t: Transaction){
+    let typePass = false
+    let storePass = false
+    let periodPass = false
+
+    if(this.storeFilter === 'all'){
+      storePass = true
+    } else {
+      storePass = t.store && t.store._id === this.storeFilter
+    }
+    if(this.typeFilter === 'all'){
+      typePass = true
+    } else {
+      typePass = t.type === this.typeFilter
+    }
+    if(!this.periodFilter){
+      periodPass = true
+    } else {
+      //@ts-ignore
+      const startDate = this.periodFilter.start || new Date('1900-01-01')
+      //@ts-ignore
+      const endDate = this.periodFilter.end || new Date()
+
+      // console.log(startDate, endDate);
+
+      console.log(new Date(startDate).getTime())
+      console.log(new Date(t.createdAt).getTime())
+      console.log(new Date(endDate).getTime())
+
+      if(new Date(startDate).getTime() <= new Date(t.createdAt).getTime() && new Date(endDate).getTime() >= new Date(t.createdAt).getTime()){
+        periodPass = true
+      } else {
+        periodPass = false
+      }
+    }
+
+    if(typePass && storePass && periodPass){
+      return true
+    } else {
+      return false
+    }
   }
 
-  changedPeriod() {
-    console.log(this.periodFormControl.value);
+  changedFilters() {
+    this.typeFilter = this.typeFormControl.value
+    this.storeFilter = this.storeFormControl.value
+    this.periodFilter = this.periodFormControl.value
+    this.hasFilters = true
+    let filtered = []
+    for (const transaction of this.transactions) {
+      if(this.isIncluded(transaction)){
+        filtered.push(transaction)
+      }
+    }
+    this.rerenderFilteredTransactions(filtered)
   }
 
   addComment(issue: string) {
@@ -153,6 +204,20 @@ export class TransactionsComponent implements OnInit {
     this.chRef.detectChanges();
   }
 
+  rerenderFilteredTransactions(transactions: Transaction[]): void {
+    this.transactionsTable.dtInstance.then((dtInstance: DataTables.Api) => {
+      // Destroy the table first
+      dtInstance.destroy();
+
+      this.tableTransactions = JSON.parse(JSON.stringify(transactions))
+      this.chRef.detectChanges();
+
+      // Call the dtTrigger to rerender again
+      this.dtTrigger.next();
+    });
+    this.chRef.detectChanges();
+  }
+
   cancelTransaction() {
     this.makingTransaction = false;
     this.transactionType = '';
@@ -172,7 +237,9 @@ export class TransactionsComponent implements OnInit {
   resetFilters(){
     this.storeFormControl.setValue('all')
     this.typeFormControl.setValue('all')
-    this.periodFormControl.setValue('all')
+    this.periodFormControl.setValue(null)
+    this.hasFilters = false
+    this.chRef.detectChanges()
   }
 
   ngOnDestroy(){

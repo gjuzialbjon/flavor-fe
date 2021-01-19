@@ -13,6 +13,7 @@ const transactionOne = `{
   }
   store {
     name
+    _id
   }
   comments {
     _id
@@ -58,6 +59,7 @@ const transactionMany = gql`
       }
       store {
         name
+        _id
       }
       comments {
         _id
