@@ -1,12 +1,12 @@
 <nb-card
-  class="mt-0"
+  class="mt-0 shadow"
   [nbSpinner]="loadingTransactions"
   nbSpinnerStatus="danger"
   nbSpinnerSize="large"
   nbSpinnerMessage="Loading transactions"
 >
   <nb-card-body>
-    <div class="row mb-3 ">
+    <div class="row mb-3">
       <div class="col-lg-9 col-sm-6">
         <nb-select
           placeholder="Store"
@@ -55,7 +55,16 @@
           <nb-option value="last_year">Last year</nb-option>
         </nb-select> -->
 
-        <span *ngIf="hasFilters" style="text-decoration: underline; color: rgb(55, 102, 204); cursor: pointer;" (click)="resetFilters()">Reset filters</span>
+        <span
+          *ngIf="hasFilters"
+          style="
+            text-decoration: underline;
+            color: rgb(55, 102, 204);
+            cursor: pointer;
+          "
+          (click)="resetFilters()"
+          >Reset filters</span
+        >
       </div>
       <div class="col-lg-3 col-sm-6 text-right">
         <input
@@ -75,7 +84,11 @@
           (click)="dateInput.click()"
         ></nb-icon>
 
-        <nb-rangepicker #rangepicker (rangeChange)="[periodFormControl.setValue($event), changedFilters()]" name="periodFormControl" ></nb-rangepicker>
+        <nb-rangepicker
+          #rangepicker
+          (rangeChange)="[periodFormControl.setValue($event), changedFilters()]"
+          name="periodFormControl"
+        ></nb-rangepicker>
 
         <div *ngIf="isAdminOrAgent" ngbDropdown class="d-inline-block">
           <button
@@ -110,12 +123,14 @@
             <app-transfer
               (onTransactionCancel)="cancelTransaction()"
               (onTransactionLock)="loadingTransactions = true"
+              (onTransactionCreate)="rerenderTransactions($event)"
             ></app-transfer>
           </div>
           <div *ngSwitchCase="'trade'">
             <app-trade
               (onTransactionCancel)="cancelTransaction()"
               (onTransactionLock)="loadingTransactions = true"
+              (onTransactionCreate)="rerenderTransactions($event)"
             ></app-trade>
           </div>
           <div *ngSwitchCase="'loan'">
@@ -170,6 +185,7 @@
           <tbody>
             <tr
               *ngFor="let transaction of tableTransactions"
+              style="cursor: pointer"
               [ngClass]="{
                 'row-issued': checkForFlag(transaction.comments),
                 'row-pending':
@@ -179,6 +195,7 @@
                   transaction.status === 'Closed' &&
                   !checkForFlag(transaction.comments)
               }"
+              (click)="openEditTransaction(transactionDialog, transaction)"
             >
               <td
                 [attr.data-sort]="
@@ -214,7 +231,7 @@
                 ({{ transaction.posts?.length }})
               </td>
               <td>{{ transaction.description }}</td>
-              <td (click)="openEditTransaction(transactionDialog, transaction)">
+              <td>
                 <nb-icon
                   icon="edit"
                   style="cursor: pointer"
@@ -275,11 +292,18 @@
                 class="text-muted text-uppercase font-weight-bold"
                 style="color: #959595"
               >
-                Posts
+                Movements
               </p>
             </div>
             <div class="col text-right">
-              <button nbButton status="warning" size="small">Add post</button>
+              <button
+                *ngIf="transaction.type === 'trade'"
+                nbButton
+                status="warning"
+                size="small"
+              >
+                Add sale
+              </button>
             </div>
           </div>
 

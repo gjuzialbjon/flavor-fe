@@ -300,4 +300,48 @@ export class TransactionsService {
       `,
     });
   }
+
+  makeTrade(trade: any) {
+    let hasCurrency = !!trade.currency
+      ? `currency: "${trade.currency}"`
+      : '';
+  
+    return this.apollo.mutate({
+      mutation: gql`
+        mutation {
+          makeTrade(
+            Store: "${trade.Store}"
+            vendorId: "${trade.vendorId}"
+            date: "${trade.date}"
+            description: "${trade.description}"
+            amount: ${trade.amount}
+            ${hasCurrency}
+          ) ${transactionOne}
+        }
+      `,
+    });
+  }
+
+  makeTransfer(deposit: any) {
+    let hasCurrency = !!deposit.currency
+      ? `currency: "${deposit.currency}"`
+      : '';
+    let hasFee = !!deposit.fee ? `fee: ${deposit.fee}` : '';
+
+    return this.apollo.mutate({
+      mutation: gql`
+        mutation {
+          makeWithdraw(
+            fromStore: "${deposit.fromStore}"
+            toEntity: "${deposit.toEntity}"
+            date: "${deposit.date}"
+            description: "${deposit.description}"
+            amount: ${deposit.amount}
+            ${hasFee}
+            ${hasCurrency}
+          ) ${transactionOne}
+        }
+      `,
+    });
+  }
 }

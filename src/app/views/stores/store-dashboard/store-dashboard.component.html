@@ -11,7 +11,7 @@
 
 <div class="row align-items-end">
   <div class="col-xl-4 col-lg-6 col-md-8">
-    <nb-card>
+    <nb-card class="shadow">
       <nb-card-body>
         <div class="row">
           <div class="col-md-6">
@@ -31,7 +31,7 @@
     </nb-card>
   </div>
   <div class="col-xl-2 col-lg-3 col-md-4" *ngFor="let balance of balances">
-    <nb-card>
+    <nb-card class="shadow">
       <nb-card-body>
         <p class="text-muted text-uppercase">BALANCE {{ balance.name }}</p>
         <p class="text-center mb-0 text-info" style="font-size: 1.5rem">
@@ -103,12 +103,14 @@
             <app-transfer
               (onTransactionCancel)="cancelTransaction()"
               (onTransactionLock)="loadingTransactions = true"
+              (onTransactionCreate)="rerenderTransactions($event)"
             ></app-transfer>
           </div>
           <div *ngSwitchCase="'trade'">
             <app-trade
               (onTransactionCancel)="cancelTransaction()"
               (onTransactionLock)="loadingTransactions = true"
+              (onTransactionCreate)="rerenderTransactions($event)"
             ></app-trade>
           </div>
           <div *ngSwitchCase="'loan'">

@@ -16,6 +16,8 @@ import { Transaction } from 'src/app/core/models/transaction';
 import { AuthenticationService } from 'src/app/core/services/authentication.service';
 import { TransactionsService } from 'src/app/core/services/transactions.service';
 
+import * as moment from 'moment'; // add this 1 of 4
+
 @Component({
   selector: 'app-transactions',
   templateUrl: './transactions.component.html',
@@ -42,8 +44,8 @@ export class TransactionsComponent implements OnInit {
 
   loadingTransactions = true;
 
-  makingTransaction = false;
-  transactionType = '';
+  makingTransaction = true;
+  transactionType = 'transfer';
   transactionTypes: any[] = [];
   commentFormControl = new FormControl('', [Validators.required]);
 
@@ -118,17 +120,15 @@ export class TransactionsComponent implements OnInit {
       periodPass = true
     } else {
       //@ts-ignore
-      const startDate = this.periodFilter.start || new Date('1900-01-01')
+      const startDate = this.periodFilter.start || moment('1900-01-01')
       //@ts-ignore
-      const endDate = this.periodFilter.end || new Date()
+      const endDate = this.periodFilter.end || moment.now()
 
-      // console.log(startDate, endDate);
+      // console.log(st)
+      // console.log(en)
+      // console.log(dt)
 
-      console.log(new Date(startDate).getTime())
-      console.log(new Date(t.createdAt).getTime())
-      console.log(new Date(endDate).getTime())
-
-      if(new Date(startDate).getTime() <= new Date(t.createdAt).getTime() && new Date(endDate).getTime() >= new Date(t.createdAt).getTime()){
+      if(moment(t.createdAt).isBetween(moment(startDate), moment(endDate))){
         periodPass = true
       } else {
         periodPass = false
@@ -239,7 +239,7 @@ export class TransactionsComponent implements OnInit {
     this.typeFormControl.setValue('all')
     this.periodFormControl.setValue(null)
     this.hasFilters = false
-    this.chRef.detectChanges()
+    this.rerenderFilteredTransactions(this.transactions)
   }
 
   ngOnDestroy(){

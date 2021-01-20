@@ -1,6 +1,11 @@
 <div class="row mb-3">
   <div class="col text-right">
-    <button nbButton status="info" class="shadow" (click)="openNewClientDialog(newClient)">
+    <button
+      nbButton
+      status="info"
+      class="shadow"
+      (click)="openNewClientDialog(newClient)"
+    >
       Add new client
     </button>
   </div>
@@ -35,22 +40,25 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let client of clients">
-              <td>
+            <tr *ngFor="let client of clients" style="cursor: pointer">
+              <td (click)="toggleFavorite(client)">
                 <nb-icon
                   icon="star"
                   [status]="client.favorite ? 'warning' : 'basic'"
                   style="cursor: pointer"
                   class="mr-2"
-                  (click)="toggleFavorite(client)"
                 ></nb-icon>
               </td>
-              <td class="text-capitalize">
+              <td class="text-capitalize" routerLink="{{ client._id }}">
                 {{ client.name }} {{ client.surname }}
               </td>
-              <td class="text-capitalize">{{ client.location }}</td>
-              <td>{{ client.createdAt | date: "mediumDate" }}</td>
-              <td>{{ client.description }}</td>
+              <td class="text-capitalize" routerLink="{{ client._id }}">
+                {{ client.location }}
+              </td>
+              <td routerLink="{{ client._id }}">
+                {{ client.createdAt | date: "mediumDate" }}
+              </td>
+              <td routerLink="{{ client._id }}">{{ client.description }}</td>
               <td routerLink="{{ client._id }}">
                 <nb-icon
                   icon="arrow-right"
@@ -103,7 +111,9 @@
         <input
           nbInput
           fullWidth
-          [status]="n.location.touched && n.location.errors ? 'danger' : 'basic'"
+          [status]="
+            n.location.touched && n.location.errors ? 'danger' : 'basic'
+          "
           formControlName="location"
           placeholder="Location *"
         />
@@ -117,7 +127,9 @@
         <input
           nbInput
           fullWidth
-          [status]="n.description.touched && n.description.errors ? 'danger' : 'basic'"
+          [status]="
+            n.description.touched && n.description.errors ? 'danger' : 'basic'
+          "
           formControlName="description"
           placeholder="Description *"
         />

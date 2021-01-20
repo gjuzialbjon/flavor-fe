@@ -32,11 +32,6 @@ export class ClientDashboardComponent implements OnInit {
 
   balances = [
     {
-      name: 'EURO',
-      amount: 32433,
-      symbol: 'EUR'
-    },
-    {
       name: 'DOLLAR',
       amount: 5433,
       symbol: 'USD'

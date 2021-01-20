@@ -72,6 +72,7 @@
   }
 
   nb-sidebar.compacted nb-menu .menu-item a.active::before {
+    width: 0px;
     background-color: white;
   }
 
@@ -88,7 +89,7 @@
       top: 0;
       left: 0;
       height: 100%;
-      width: 4px;
+      width: 0px;
       background: white;
     }
   }
@@ -125,4 +126,12 @@
       min-width: 100px;
     }
   }
+}
+
+:focus{
+  outline: none !important;
+}
+
+button:focus{
+  outline: none;
 }
