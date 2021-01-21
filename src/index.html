@@ -10,30 +10,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
-
-
-  <script
-      async
-      src="https://telegram.org/js/telegram-widget.js?14"
-      data-telegram-login="n0t1fyss_bot"
-      data-size="medium"
-      data-onauth="onTelegramAuth(user)"
-      data-request-access="write"
-    ></script>
-    <script type="text/javascript">
-      function onTelegramAuth(user) {
-        alert(
-          "Logged in as " +
-            user.first_name +
-            " " +
-            user.last_name +
-            " (" +
-            user.id +
-            (user.username ? ", @" + user.username : "") +
-            ")"
-        );
-      }
-    </script>
 </head>
 <body>
   <app-root></app-root>

@@ -6,10 +6,7 @@ import { HeaderComponent } from './theme/header/header.component';
 import { BaseComponent } from './theme/base/base.component';
 import { HttpClientModule } from '@angular/common/http';
 import { GraphQLModule } from './graphql.module';
-import { NotificationsComponent } from './theme/notifications/notifications.component';
-import { GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule } from 'angularx-social-login';
 import { NgModule } from '@angular/core';
-import { ScrollTopComponent } from './theme/scroll-top/scroll-top.component';
 import { SidebarComponent } from './theme/sidebar/sidebar.component';
 import { NbButtonModule, NbContextMenuModule, NbDatepickerModule, NbDialogModule, NbFormFieldModule, NbGlobalPhysicalPosition, NbIconModule, NbInputModule, NbLayoutModule, NbMenuModule, NbSearchModule, NbSidebarModule, NbThemeModule, NbToastrModule } from '@nebular/theme';
 import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
@@ -21,8 +18,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     HeaderComponent,
     BaseComponent,
     SidebarComponent,
-    NotificationsComponent,
-    ScrollTopComponent,
   ],
   imports: [
     BrowserModule,
@@ -30,7 +25,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     AppRoutingModule,
     HttpClientModule,
     GraphQLModule,
-    SocialLoginModule,
     LoadingBarRouterModule,
     NbThemeModule.forRoot(
       { name: 'corporate' }
@@ -55,22 +49,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [
-    {
-      provide: 'SocialAuthServiceConfig',
-      useValue: {
-        autoLogin: false,
-        providers: [
-          {
-            id: GoogleLoginProvider.PROVIDER_ID,
-            provider: new GoogleLoginProvider(
-              '259218453631-r8rschc1e0bic5tv78ue3kpn53jcjto0.apps.googleusercontent.com'
-            )
-          }
-        ]
-      } as SocialAuthServiceConfig,
-    },
-  ],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule {
