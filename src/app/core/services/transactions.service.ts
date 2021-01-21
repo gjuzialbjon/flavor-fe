@@ -46,55 +46,6 @@ const transactionOne = `{
   _id
 }`;
 
-const transactionMany = gql`
-  {
-    transactionMany {
-      type
-      createdAt
-      status
-      direction
-      description
-      user {
-        name
-      }
-      store {
-        name
-        _id
-      }
-      comments {
-        _id
-        comment
-        issue
-        createdAt
-        user {
-          name
-        }
-      }
-      posts {
-        date
-        type
-        details
-        ammount
-        fee
-        currency {
-          symbol
-        }
-        user {
-          name
-        }
-      }
-      currency {
-        symbol
-      }
-      client {
-        name
-        surname
-      }
-      _id
-    }
-  }
-`;
-
 const storeMany = gql`
   {
     storeMany {
@@ -137,9 +88,21 @@ export class TransactionsService {
   ) {}
 
   // QUERIES
-  getTransactions() {
+  getTransactions(storeId?: string, clientId?: string) {
+    let storeFilter = !!storeId ? `store: "${storeId}"` : ''
+    let clientFilter = !!clientId ? `client: "${clientId}"`: ''
+
     return this.apollo.query({
-      query: transactionMany,
+      query: gql `
+      {
+        transactionMany(
+          filter:{
+            ${storeFilter}
+            ${clientFilter}
+          }
+        )${transactionOne}
+      }
+      `,
     });
   }
 

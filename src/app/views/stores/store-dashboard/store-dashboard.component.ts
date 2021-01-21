@@ -25,13 +25,6 @@ import { StoreService } from 'src/app/core/services/store.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StoreDashboardComponent implements OnInit, OnDestroy {
-  @ViewChild(DataTableDirective) transactionsTable!: DataTableDirective;
-  dtOptions: DataTables.Settings;
-  dtTrigger = new Subject<any>();
-
-  transactions: Transaction[] = [];
-  tableTransactions: Transaction[] = [];
-
   balances = [
     {
       name: 'DOLLAR',
@@ -40,17 +33,9 @@ export class StoreDashboardComponent implements OnInit, OnDestroy {
     }
   ];
 
-  private subscriptions = new Subscription();
   storeId: string;
   store!: Store;
   loading = false;
-
-  loadingTransactions = true;
-
-
-  makingTransaction = false;
-  transactionType = '';
-  transactionTypes;
 
   constructor(
     private configsService: ConfigsService,
@@ -63,38 +48,10 @@ export class StoreDashboardComponent implements OnInit, OnDestroy {
     private router: Router
   ) {
     this.storeId = this.route.snapshot.params.storeId;
-    this.transactionTypes = this.configsService.getTransactionTypes();
-    this.dtOptions = this.configsService.getDTOptions();
-    this.dtOptions.columnDefs = [
-      // @ts-ignore
-      // { responsivePriority: 100, targets: [1,9] },
-    ];
   }
 
   ngOnInit(): void {
     this.getStoreInfo();
-    this.getStoreTransactions();
-  }
-
-  getStoreTransactions() {
-    this.storeService.getStoreTransactions(this.storeId).subscribe(
-      (res: any) => {
-        console.log(res);
-        this.transactions = JSON.parse(
-          JSON.stringify(res.data.transactionMany)
-        ) as Transaction[];
-        this.tableTransactions = JSON.parse(
-          JSON.stringify(res.data.transactionMany)
-        ) as Transaction[];
-        this.loadingTransactions = false;
-        this.dtTrigger.next();
-        this.chRef.detectChanges();
-      },
-      (e) => {
-        console.error(e);
-        this.msg.defaultError();
-      }
-    );
   }
 
   getStoreInfo() {
@@ -111,50 +68,7 @@ export class StoreDashboardComponent implements OnInit, OnDestroy {
     );
   }
 
-  make(transactionType: string) {
-    this.makingTransaction = true;
-    this.transactionType = transactionType;
-    console.log(this.storeId);
-    this.chRef.detectChanges();
-  }
-
-  rerenderTransactions(transaction?: Transaction): void {
-    this.transactionsTable.dtInstance.then((dtInstance: DataTables.Api) => {
-      // Destroy the table first
-      dtInstance.destroy();
-
-      if(transaction){
-        this.transactions.push(transaction)
-        this.loadingTransactions = false
-      }
-
-      this.tableTransactions = JSON.parse(JSON.stringify(this.transactions))
-      this.chRef.detectChanges();
-
-      // Call the dtTrigger to rerender again
-      this.dtTrigger.next();
-    });
-    this.chRef.detectChanges();
-  }
-
-  cancelTransaction() {
-    this.makingTransaction = false;
-    this.transactionType = '';
-    this.chRef.detectChanges();
-  }
-
-  checkForFlag(comments: any[]) {
-    for (const comment of comments) {
-      if (comment.issue === 'Open') {
-        return true;
-      }
-    }
-
-    return false;
-  }
-
   ngOnDestroy() {
-    this.dtTrigger.unsubscribe();
     this.chRef.detach();
   }
 }

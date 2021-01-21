@@ -15,50 +15,6 @@ const storeMany = gql`
     }
   }
 `;
-const transactionMany = gql`
-  query($storeId: MongoID!) {
-    transactionMany(filter: { store: $storeId }) {
-      type
-      createdAt
-      status
-      comments {
-        _id
-        comment
-        issue
-        createdAt
-        user {
-          name
-        }
-      }
-      direction
-      description
-      user {
-        name
-      }
-      posts {
-        date
-        type
-        details
-        ammount
-        fee
-        currency {
-          symbol
-        }
-        user {
-          name
-        }
-      }
-      currency {
-        symbol
-      }
-      client {
-        name
-        surname
-      }
-      _id
-    }
-  }
-`;
 
 const storeOne = gql`
   query($_id: MongoID!) {
@@ -111,16 +67,6 @@ export class StoreService {
       query: storeOne,
       variables: {
         _id: storeId,
-      },
-      fetchPolicy: 'network-only',
-    });
-  }
-
-  getStoreTransactions(storeId: string) {
-    return this.apollo.query({
-      query: transactionMany,
-      variables: {
-        storeId: storeId,
       },
       fetchPolicy: 'network-only',
     });

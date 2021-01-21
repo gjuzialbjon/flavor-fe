@@ -48,7 +48,6 @@ import { TransactionsModule } from '../transactions/transactions.module';
     NbSelectModule,
     NbSpinnerModule,
     NgbDropdownModule,
-    TransactionsModule
   ]
 })
 export class StoresModule { }
