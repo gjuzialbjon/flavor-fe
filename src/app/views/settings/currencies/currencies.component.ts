@@ -26,6 +26,8 @@ export class CurrenciesComponent implements OnInit {
   currency!: Currency
   loading = false
 
+  loadingCurrencies = true
+
   types = [
     {
       _id: "crypto",
@@ -91,10 +93,12 @@ export class CurrenciesComponent implements OnInit {
     this.currencyService.getCurrencies().subscribe(
       (res: any) => {
         this.currencies = JSON.parse(JSON.stringify(res.data.currencyMany)) as Currency[]
+        this.loadingCurrencies = false
       },
       e => { 
         console.error(e)
         this.msg.defaultError()
+        this.loadingCurrencies = false
       },
       () => {
         this.dtTrigger.next()

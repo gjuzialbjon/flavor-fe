@@ -1,4 +1,10 @@
-<div class="pt-3">
+<div
+  class="pt-3"
+  [nbSpinner]="loadingUsers"
+  nbSpinnerStatus="danger"
+  nbSpinnerSize="large"
+  nbSpinnerMessage="Loading users"
+>
   <div class="row no-gutters">
     <div class="col-12 text-right">
       <button
@@ -144,7 +150,11 @@
         </div>
       </div>
       <div *ngIf="!resettingPassword" class="form-group">
-        <a style="cursor: pointer; color: fuchsia;" (click)="resettingPassword = true">Reset password for this user</a>
+        <a
+          style="cursor: pointer; color: fuchsia"
+          (click)="resettingPassword = true"
+          >Reset password for this user</a
+        >
       </div>
       <div *ngIf="resettingPassword" class="form-group">
         <nb-form-field>
@@ -164,7 +174,7 @@
             >Password should have a minimum length of 6</span
           >
         </nb-form-field>
-    
+
         <nb-form-field>
           <label for="newpassr" class="label mt-3">Repeat new password</label>
           <input
@@ -182,15 +192,25 @@
         </nb-form-field>
         <div class="row">
           <div class="col text-center">
-            <button nbButton size="small" class="ml-3 mt-3" (click)="resettingPassword = false">
+            <button
+              nbButton
+              size="small"
+              class="ml-3 mt-3"
+              (click)="resettingPassword = false"
+            >
               Cancel
             </button>
-            <button nbButton size="small" class="ml-3 mt-3" status="info" (click)="resetPassword()">
+            <button
+              nbButton
+              size="small"
+              class="ml-3 mt-3"
+              status="info"
+              (click)="resetPassword()"
+            >
               Update password
             </button>
           </div>
         </div>
-        
       </div>
     </form>
 
@@ -204,9 +224,6 @@
         class=""
         status="success"
         (click)="saveUser(ref)"
-        [disabled]="loading"
-        [nbSpinner]="loading"
-        nbSpinnerStatus="danger"
       >
         Save
       </button>
@@ -280,7 +297,6 @@
           >Please select a role.</small
         >
       </div>
-
     </form>
 
     <nb-card-footer>

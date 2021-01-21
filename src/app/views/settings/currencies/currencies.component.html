@@ -1,4 +1,10 @@
-<div class="pt-3">
+<div
+  class="pt-3"
+  [nbSpinner]="loadingCurrencies"
+  nbSpinnerStatus="danger"
+  nbSpinnerSize="large"
+  nbSpinnerMessage="Loading currencies"
+>
   <table
     datatable
     [dtTrigger]="$any(dtTrigger)"
@@ -42,7 +48,9 @@
         <input
           nbInput
           fullWidth
-          [status]="f.currency.touched && f.currency.errors ? 'danger' : 'basic' "
+          [status]="
+            f.currency.touched && f.currency.errors ? 'danger' : 'basic'
+          "
           formControlName="currency"
           placeholder="Currency *"
         />
@@ -94,12 +102,7 @@
       </div>
     </form>
     <nb-card-footer>
-      <button
-        type="button"
-        nbButton
-        class="mr-3"
-        (click)="ref.close()"
-      >
+      <button type="button" nbButton class="mr-3" (click)="ref.close()">
         Close
       </button>
       <button
@@ -109,7 +112,6 @@
         status="success"
         (click)="saveCurrency(ref)"
         [disabled]="loading"
-        [nbSpinner]="loading" nbSpinnerStatus="danger"
       >
         Save
       </button>

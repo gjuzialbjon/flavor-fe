@@ -197,7 +197,7 @@
                 {{ transaction.store?.name }}
               </td>
               <td *ngIf="isAdminOrAgent && !isInClient" class="text-capitalize" (click)="openEditTransaction(transactionDialog, transaction)">
-                {{ transaction.client?.name }}
+                {{ transaction.client?.name }} {{ transaction.client?.surname }}
               </td>
               <td class="text-capitalize" (click)="openEditTransaction(transactionDialog, transaction)">{{ transaction.type }}</td>
               <td class="text-capitalize" (click)="openEditTransaction(transactionDialog, transaction)">{{ transaction.direction }}</td>
@@ -366,7 +366,7 @@
               class="d-flex align-items-center justify-content-between mb-2"
             >
               <strong class="mr-2 text-muted">Client</strong>
-              <span>{{ transaction.client?.name || "-" }}</span>
+              <span>{{ transaction.client?.name || "-" }} {{ transaction.client?.surname }}</span>
             </div>
             <div class="d-flex align-items-center justify-content-between mb-2">
               <strong class="mr-2 text-muted">Payment type</strong>
@@ -393,7 +393,7 @@
         </div>
         <div class="col-lg-6">
           <p
-            class="mb-2 text-muted text-uppercase font-weight-bold"
+            class="mt-md-0 mt-5 mb-2 text-muted text-uppercase font-weight-bold"
             style="color: #959595"
           >
             Comments

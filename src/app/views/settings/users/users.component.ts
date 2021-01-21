@@ -25,6 +25,7 @@ export class UsersComponent implements OnInit, OnDestroy {
   newUserForm!: FormGroup 
   user!: any
   loading = false
+  loadingUsers = true
 
   resettingPassword = false
   newPassFormControl = new FormControl('', [Validators.required, Validators.minLength(6)])
@@ -156,10 +157,12 @@ export class UsersComponent implements OnInit, OnDestroy {
    this.userService.getUsers().subscribe(
       (res: any) => {
         this.users = JSON.parse(JSON.stringify(res.data.userMany)) as User[]
+        this.loadingUsers = false
       },
       e => { 
         this.msg.defaultError()
         console.error(e)
+        this.loadingUsers = false
       },
       () => {
         this.dtTrigger.next()
