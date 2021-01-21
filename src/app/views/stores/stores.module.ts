@@ -11,6 +11,7 @@ import { StoreCardComponent } from './store-card/store-card.component';
 import { DataTablesModule } from 'angular-datatables';
 import { SharedTransactionsModule } from '../shared-transactions/shared-transactions.module';
 import { ClientCardComponent } from './client-card/client-card.component';
+import { TransactionsModule } from '../transactions/transactions.module';
 
 @NgModule({
   declarations: [StoresComponent, StoreDashboardComponent, StoreCardComponent, ClientCardComponent],
@@ -32,7 +33,7 @@ import { ClientCardComponent } from './client-card/client-card.component';
         data:{
           roles: ['admin', 'agent']
         }
-      }
+      },
     ]),
     DataTablesModule,
     FormsModule,
@@ -47,6 +48,7 @@ import { ClientCardComponent } from './client-card/client-card.component';
     NbSelectModule,
     NbSpinnerModule,
     NgbDropdownModule,
+    TransactionsModule
   ]
 })
 export class StoresModule { }

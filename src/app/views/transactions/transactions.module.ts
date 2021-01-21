@@ -37,6 +37,7 @@ import { SharedTransactionsModule } from '../shared-transactions/shared-transact
       dialogClass: 'dialog-width'
     }),
     SharedTransactionsModule
-  ]
+  ],
+  exports: [TransactionsComponent]
 })
 export class TransactionsModule { }

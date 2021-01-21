@@ -41,6 +41,7 @@ export class TransactionsComponent implements OnInit {
   stores: any[] = [];
 
   isAdminOrAgent = false
+  isAdmin = false
 
   loadingTransactions = true;
 
@@ -53,6 +54,9 @@ export class TransactionsComponent implements OnInit {
   typeFilter = 'all'
   storeFilter = 'all'
   periodFilter = null
+
+  editingTransactionDetails = false
+
 
   constructor(
     private configsService: ConfigsService,
@@ -69,6 +73,7 @@ export class TransactionsComponent implements OnInit {
 
   async ngOnInit() {
     this.isAdminOrAgent = this.authService.user.role === 'admin' || this.authService.user.role === 'agent'
+    this.isAdmin = this.authService.user.role === 'admin'
     this.getTransactions();
 
     this.stores = await this.transactionsService.getStores();
@@ -99,6 +104,16 @@ export class TransactionsComponent implements OnInit {
     this.transaction = transaction;
     this.commentFormControl.setValue('');
     this.dialogService.open(content);
+  }
+
+  editTransactionDetails(){
+    if(this.authService.user.role !== 'admin'){
+      return
+    }
+
+    this.editingTransactionDetails = true
+    this.chRef.detectChanges()
+
   }
 
   isIncluded(t: Transaction){

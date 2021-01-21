@@ -354,8 +354,9 @@
                 Transaction details
               </p>
             </div>
-            <div class="col-2 text-right">
-              <nb-icon icon="edit" style="cursor: pointer"></nb-icon>
+            <div *ngIf="isAdmin" class="col-2 text-right">
+              <nb-icon *ngIf="!editingTransactionDetails" icon="edit" style="cursor: pointer" status="info" (click)="editTransactionDetails()"></nb-icon>
+              <nb-icon *ngIf="editingTransactionDetails" icon="arrow-left" style="cursor: pointer" status="info" (click)="editingTransactionDetails = false"></nb-icon>
             </div>
           </div>
 
@@ -402,6 +403,9 @@
             <div class="d-flex align-items-center justify-content-between mb-2">
               <strong class="mr-2 text-muted">Description</strong>
               <span class="text-capitalize">{{ transaction.description }}</span>
+            </div>
+            <div class="text-center">
+              <button nbButton *ngIf="editingTransactionDetails && isAdmin" status="success" size="small" >Save</button>
             </div>
           </div>
         </div>

@@ -41,11 +41,12 @@
           </thead>
           <tbody>
             <tr *ngFor="let client of clients" style="cursor: pointer">
-              <td (click)="toggleFavorite(client)">
+              <td >
                 <nb-icon
                   icon="star"
                   [status]="client.favorite ? 'warning' : 'basic'"
                   style="cursor: pointer"
+                  (click)="toggleFavorite(client)"
                   class="mr-2"
                 ></nb-icon>
               </td>
@@ -63,7 +64,7 @@
                 <nb-icon
                   icon="arrow-right"
                   style="cursor: pointer"
-                  status="danger"
+                  status="info"
                 ></nb-icon>
               </td>
             </tr>
