@@ -9,6 +9,7 @@
     <div class="row mb-3">
       <div class="col-lg-9 col-sm-6">
         <nb-select
+          *ngIf="!isInStore"
           placeholder="Store"
           [formControl]="storeFormControl"
           filled
