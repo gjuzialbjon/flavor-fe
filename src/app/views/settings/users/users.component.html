@@ -54,8 +54,7 @@
 <ng-template #userContent let-data let-ref="dialogRef">
   <nb-card>
     <nb-card-header>UPDATE USER</nb-card-header>
-
-    <form [formGroup]="userForm" class="p-3">
+    <form [formGroup]="userForm" class="p-3 overflow-auto">
       <div class="form-group">
         <input
           type="text"
@@ -235,7 +234,7 @@
   <nb-card>
     <nb-card-header>NEW USER</nb-card-header>
 
-    <form [formGroup]="newUserForm" class="p-3">
+    <form [formGroup]="newUserForm" class="p-3 overflow-auto">
       <div class="form-group">
         <input
           nbInput
@@ -310,6 +309,8 @@
         status="success"
         (click)="createUser(ref)"
         [disabled]="loading"
+        [nbSpinner]="loading"
+        nbSpinnerStatus="danger"
       >
         Add
       </button>

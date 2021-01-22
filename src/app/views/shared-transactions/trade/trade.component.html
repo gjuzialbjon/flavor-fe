@@ -23,9 +23,9 @@
       class="my-ng-select"
       placeholder="Select vendor..."
     >
-      <ng-option *ngFor="let client of clients" [value]="client._id">{{
-        client.name
-      }}</ng-option>
+      <ng-option *ngFor="let entity of entities" [value]="entity._id">{{
+        entity.name
+      }} {{ entity.surname }}</ng-option>
     </ng-select>
     <small
         *ngIf="t.vendorId.touched && t.vendorId.errors"

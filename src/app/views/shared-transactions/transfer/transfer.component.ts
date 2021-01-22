@@ -20,6 +20,7 @@ export class TransferComponent implements OnInit {
 
   stores: any[] = []
   clients: any[] = []
+  entities: any[] = []
   currencies: any[] = []
 
   transactionForm!: FormGroup;
@@ -41,6 +42,7 @@ export class TransferComponent implements OnInit {
     this.stores = await this.transactionsService.getStores()
     this.clients = await this.transactionsService.getClients()
     this.currencies = await this.transactionsService.getCurrencies()
+    this.entities = [...this.stores, ...this.clients]
     this.chRef.detectChanges()
   }
 

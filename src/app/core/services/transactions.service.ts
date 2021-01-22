@@ -294,7 +294,7 @@ export class TransactionsService {
     return this.apollo.mutate({
       mutation: gql`
         mutation {
-          makeWithdraw(
+          makeTransfer(
             fromStore: "${deposit.fromStore}"
             toEntity: "${deposit.toEntity}"
             date: "${deposit.date}"
