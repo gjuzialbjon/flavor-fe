@@ -51,23 +51,23 @@
       </div>
       <div class="col-lg-3 col-sm-6 text-right mt-md-0 mt-3">
         <div *ngIf="isAdminOrAgent" ngbDropdown class="d-inline-block">
-            <button
-              nbButton
-              status="info"
-              style="text-transform: none; border-radius: 13px"
-              id="dropdownBasic1"
-              ngbDropdownToggle
-            >
-              Make a transaction
-            </button>
-            <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-              <button ngbDropdownItem (click)="make('transfer')">Transfer</button>
-              <button ngbDropdownItem (click)="make('loan')">Loan</button>
-              <button ngbDropdownItem (click)="make('trade')">Trade</button>
-              <button ngbDropdownItem (click)="make('deposit')">Deposit</button>
-              <button ngbDropdownItem (click)="make('withdraw')">Withdraw</button>
-            </div>
+          <button
+            nbButton
+            status="info"
+            style="text-transform: none; border-radius: 13px"
+            id="dropdownBasic1"
+            ngbDropdownToggle
+          >
+            Make a transaction
+          </button>
+          <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+            <button ngbDropdownItem (click)="make('transfer')">Transfer</button>
+            <button ngbDropdownItem (click)="make('loan')">Loan</button>
+            <button ngbDropdownItem (click)="make('trade')">Trade</button>
+            <button ngbDropdownItem (click)="make('deposit')">Deposit</button>
+            <button ngbDropdownItem (click)="make('withdraw')">Withdraw</button>
           </div>
+        </div>
 
         <nb-icon
           nbSuffix
@@ -190,18 +190,45 @@
                   "
                 ></nb-icon>
               </td>
-              <td class="text-capitalize" (click)="openEditTransaction(transactionDialog, transaction)">
+              <td
+                class="text-capitalize"
+                (click)="openEditTransaction(transactionDialog, transaction)"
+                [attr.data-sort]="transaction.createdAt"
+              >
                 {{ transaction.createdAt | date: "mediumDate" }}
               </td>
-              <td *ngIf="isAdminOrAgent && !isInStore" class="text-capitalize" (click)="openEditTransaction(transactionDialog, transaction)">
+              <td
+                *ngIf="isAdminOrAgent && !isInStore"
+                class="text-capitalize"
+                (click)="openEditTransaction(transactionDialog, transaction)"
+              >
                 {{ transaction.store?.name }}
               </td>
-              <td *ngIf="isAdminOrAgent && !isInClient" class="text-capitalize" (click)="openEditTransaction(transactionDialog, transaction)">
+              <td
+                *ngIf="isAdminOrAgent && !isInClient"
+                class="text-capitalize"
+                (click)="openEditTransaction(transactionDialog, transaction)"
+              >
                 {{ transaction.client?.name }} {{ transaction.client?.surname }}
               </td>
-              <td class="text-capitalize" (click)="openEditTransaction(transactionDialog, transaction)">{{ transaction.type }}</td>
-              <td class="text-capitalize" (click)="openEditTransaction(transactionDialog, transaction)">{{ transaction.direction }}</td>
-              <td class="text-capitalize" (click)="openEditTransaction(transactionDialog, transaction)">{{ transaction.user?.name }}</td>
+              <td
+                class="text-capitalize"
+                (click)="openEditTransaction(transactionDialog, transaction)"
+              >
+                {{ transaction.type }}
+              </td>
+              <td
+                class="text-capitalize"
+                (click)="openEditTransaction(transactionDialog, transaction)"
+              >
+                {{ transaction.direction }}
+              </td>
+              <td
+                class="text-capitalize"
+                (click)="openEditTransaction(transactionDialog, transaction)"
+              >
+                {{ transaction.user?.name }}
+              </td>
               <td
                 class="text-capitalize"
                 [ngClass]="{
@@ -212,7 +239,9 @@
                 {{ transaction.status === "Open" ? "Pending" : "Completed" }}
                 ({{ transaction.posts?.length }})
               </td>
-              <td (click)="openEditTransaction(transactionDialog, transaction)">{{ transaction.description }}</td>
+              <td (click)="openEditTransaction(transactionDialog, transaction)">
+                {{ transaction.description }}
+              </td>
               <td (click)="openEditTransaction(transactionDialog, transaction)">
                 <nb-icon
                   icon="edit"
@@ -337,8 +366,20 @@
               </p>
             </div>
             <div *ngIf="isAdmin" class="col-2 text-right">
-              <nb-icon *ngIf="!editingTransactionDetails" icon="edit" style="cursor: pointer" status="info" (click)="editTransactionDetails()"></nb-icon>
-              <nb-icon *ngIf="editingTransactionDetails" icon="arrow-left" style="cursor: pointer" status="info" (click)="editingTransactionDetails = false"></nb-icon>
+              <nb-icon
+                *ngIf="!editingTransactionDetails"
+                icon="edit"
+                style="cursor: pointer"
+                status="info"
+                (click)="editTransactionDetails()"
+              ></nb-icon>
+              <nb-icon
+                *ngIf="editingTransactionDetails"
+                icon="arrow-left"
+                style="cursor: pointer"
+                status="info"
+                (click)="editingTransactionDetails = false"
+              ></nb-icon>
             </div>
           </div>
 
@@ -366,7 +407,10 @@
               class="d-flex align-items-center justify-content-between mb-2"
             >
               <strong class="mr-2 text-muted">Client</strong>
-              <span>{{ transaction.client?.name || "-" }} {{ transaction.client?.surname }}</span>
+              <span
+                >{{ transaction.client?.name || "-" }}
+                {{ transaction.client?.surname }}</span
+              >
             </div>
             <div class="d-flex align-items-center justify-content-between mb-2">
               <strong class="mr-2 text-muted">Payment type</strong>
@@ -387,7 +431,14 @@
               <span class="text-capitalize">{{ transaction.description }}</span>
             </div>
             <div class="text-center">
-              <button nbButton *ngIf="editingTransactionDetails && isAdmin" status="success" size="small" >Save</button>
+              <button
+                nbButton
+                *ngIf="editingTransactionDetails && isAdmin"
+                status="success"
+                size="small"
+              >
+                Save
+              </button>
             </div>
           </div>
         </div>
