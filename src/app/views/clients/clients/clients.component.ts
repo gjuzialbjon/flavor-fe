@@ -109,11 +109,13 @@ export class ClientsComponent implements OnInit {
     this.clientsService.getFavoriteClients().subscribe(
       (res: any) => {
         let favs = res.data.Me[0].favorites as Client[];
-        for (const fav of favs) {
-          this.favoriteClients.push(fav._id);
+        if (!!favs) {
+          for (const fav of favs) {
+            this.favoriteClients.push(fav._id);
+          }
+          console.log(this.favoriteClients);
+          this.rerender();
         }
-        console.log(this.favoriteClients)
-        this.rerender()
       },
       (e) => {
         console.error(e);
@@ -130,7 +132,7 @@ export class ClientsComponent implements OnInit {
       (res: any) => {
         console.log(res.data.updateFavorite.favorites);
         let favs = res.data.updateFavorite.favorites;
-        this.favoriteClients = []
+        this.favoriteClients = [];
         for (const fav of favs) {
           this.favoriteClients.push(fav._id);
         }
@@ -143,8 +145,8 @@ export class ClientsComponent implements OnInit {
     );
   }
 
-  isFavorite(clientId: string){
-    return this.favoriteClients.includes(clientId)
+  isFavorite(clientId: string) {
+    return this.favoriteClients.includes(clientId);
   }
 
   rerender(client?: Client): void {

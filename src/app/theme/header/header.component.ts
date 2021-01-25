@@ -1,4 +1,3 @@
-import { Location } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -8,7 +7,8 @@ import {
 import { FormControl } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { NbMenuItem, NbSidebarService } from '@nebular/theme';
+import { environment } from '@env';
+import { NbMenuItem, NbSidebarService, NbThemeService } from '@nebular/theme';
 import { filter, map } from 'rxjs/operators';
 import { AuthenticationService } from 'src/app/core/services/authentication.service';
 
@@ -38,7 +38,9 @@ export class HeaderComponent implements OnInit {
   fullName = '';
   lastRoute = '';
 
-  sectionTitle = 'SWAP'
+  sectionTitle = 'SWAP';
+
+  production = environment.production
 
   constructor(
     private authService: AuthenticationService,
@@ -46,7 +48,8 @@ export class HeaderComponent implements OnInit {
     private sidebarService: NbSidebarService,
     private router: Router,
     private route: ActivatedRoute,
-    private titleService: Title
+    private titleService: Title,
+    private themeService: NbThemeService
   ) {}
 
   ngOnInit(): void {
@@ -80,14 +83,18 @@ export class HeaderComponent implements OnInit {
       )
       .subscribe((ttl: string) => {
         this.titleService.setTitle(ttl + ' | Swap');
-        this.sectionTitle = ttl
-        this.chRef.detectChanges()
+        this.sectionTitle = ttl;
+        this.chRef.detectChanges();
       });
   }
 
   toggle() {
     this.sidebarService.toggle(true);
   }
+
+  // darkTheme(){
+  //   this.themeService.changeTheme('dark')
+  // }
 
   waitForEnter(event: any) {
     if (event.keyCode === 13) {

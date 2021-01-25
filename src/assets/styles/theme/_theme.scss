@@ -1,6 +1,8 @@
 // // import Nebular Theme System and the default theme
 @import '~@nebular/theme/styles/theming';
 @import '~@nebular/theme/styles/themes/corporate';
+@import '~@nebular/theme/styles/themes/dark';
+
 
 $nb-themes: nb-register-theme((
     color-primary-500: #3886f7,
@@ -46,3 +48,8 @@ $nb-themes: nb-register-theme((
     input-basic-border-color: #ccc,
     datepicker-shadow: 0px 0px 30px rgba(0,0,0,0.2),
 ), corporate, corporate);
+
+// $nb-themes: nb-register-theme((
+//   text-basic-color: color-basic-800, // some styles we changed
+//   text-disabled-color: color-basic-600,
+// ), dark, dark);

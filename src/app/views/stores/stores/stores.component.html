@@ -63,7 +63,7 @@
           </div>
         </div>
 
-        <p *ngIf="favoriteClients.length === 0">Looks empty, no favorite clients yet... 
+        <p *ngIf="favoriteClients?.length === 0">Looks empty, no favorite clients yet... 
           <a routerLink="/clients" style="cursor: pointer;">Why not add one?</a>
         </p>
       </nb-card-body>

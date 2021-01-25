@@ -67,7 +67,6 @@ export class StoresComponent implements OnInit {
       (res: any) => {
         console.log(res)
         this.favoriteClients = res.data.Me[0].favorites as Client[];
-        // console.log(this.favoriteClients)
       },
       (e) => {
         console.error(e);

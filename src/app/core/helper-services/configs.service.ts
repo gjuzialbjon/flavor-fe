@@ -3,13 +3,10 @@ import { NbMenuItem } from '@nebular/theme';
 import { AuthenticationService } from '../services/authentication.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ConfigsService {
-
-  constructor(
-    private authService: AuthenticationService
-  ) { }
+  constructor(private authService: AuthenticationService) {}
 
   getDTOptions(): DataTables.Settings {
     return {
@@ -19,38 +16,54 @@ export class ConfigsService {
       responsive: true,
       // scrollCollapse: true,
       // scrollY: '500px',
-    }
+    };
   }
 
-  getTransactionTypes(){
+  getTransactionDTOptions(): DataTables.Settings {
+    return {
+      pagingType: 'full',
+      pageLength: 10,
+      lengthChange: false,
+      processing: true,
+      responsive: true,
+      dom:
+        "<'row'<'col-sm-12 col-md-6'B><'col-sm-12 col-md-6'f>>" +
+        "<'row'<'col-sm-12'tr>>" +
+        "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
+        //@ts-ignore
+      buttons: ['copy', 'csv', 'excel', 'print'],
+    };
+  }
+
+  getTransactionTypes() {
     return [
       {
         _id: 'transfer',
-        name: 'Transfer'
+        name: 'Transfer',
       },
       {
         _id: 'trade',
-        name: 'Trade'
+        name: 'Trade',
       },
       {
         _id: 'loan',
-        name: 'Loan'
+        name: 'Loan',
       },
       {
         _id: 'withdraw',
-        name: 'Withdraw'
+        name: 'Withdraw',
       },
       {
         _id: 'deposit',
-        name: 'Deposit'
-      }
+        name: 'Deposit',
+      },
     ];
   }
 
   getMenuByRole(): NbMenuItem[] {
-    let role = this.authService.user.role
+    let role = this.authService.user.role;
 
-    if(role === 'admin'){
+    if (role === 'admin') {
       return [
         {
           title: 'Stores',
@@ -95,7 +108,7 @@ export class ConfigsService {
           pathMatch: 'prefix',
         },
       ];
-    } else if(role === 'agent'){
+    } else if (role === 'agent') {
       return [
         {
           title: 'Stores',
@@ -122,7 +135,7 @@ export class ConfigsService {
           pathMatch: 'prefix',
         },
       ];
-    } else if( role === 'finance'){
+    } else if (role === 'finance') {
       return [
         {
           title: 'Transactions',
@@ -142,9 +155,9 @@ export class ConfigsService {
           },
           pathMatch: 'prefix',
         },
-      ]
+      ];
     } else {
-      return []
+      return [];
     }
   }
 }

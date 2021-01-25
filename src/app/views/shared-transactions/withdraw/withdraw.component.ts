@@ -18,7 +18,6 @@ import { TransactionsService } from 'src/app/core/services/transactions.service'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WithdrawComponent implements OnInit {
-  @Output() onTransactionCancel: EventEmitter<any> = new EventEmitter<any>();
   @Output() onTransactionLock: EventEmitter<any> = new EventEmitter<any>();
   @Output() onTransactionCreate: EventEmitter<any> = new EventEmitter<any>();
 
@@ -98,10 +97,6 @@ export class WithdrawComponent implements OnInit {
       date: [new Date().toISOString().split('T')[0]],
       currency: [null],
     });
-  }
-
-  cancelTransaction() {
-    this.onTransactionCancel.emit(true);
   }
 
   get t() {

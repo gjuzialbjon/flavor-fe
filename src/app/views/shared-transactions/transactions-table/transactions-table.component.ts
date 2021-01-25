@@ -51,8 +51,8 @@ export class TransactionsTableComponent implements OnInit {
 
   loadingTransactions = true;
 
-  makingTransaction = false;
-  transactionType = '';
+  makingTransaction = true;
+  transactionType = 'transfer';
   transactionTypes: any[] = [];
   commentFormControl = new FormControl('', [Validators.required]);
 
@@ -76,11 +76,10 @@ export class TransactionsTableComponent implements OnInit {
     private route: ActivatedRoute
   ) {
     this.transactionTypes = this.configsService.getTransactionTypes();
-    this.dtOptions = this.configsService.getDTOptions();
+    this.dtOptions = this.configsService.getTransactionDTOptions();
     this.dialogDtOptions = this.configsService.getDTOptions();
 
     this.dtOptions.order = [[0, 'asc'], [1, 'desc']];
-
     let routes = this.router.url.split('/');
     this.isInClient = routes.includes('clients');
     this.isInStore = routes.includes('stores');
@@ -262,8 +261,8 @@ export class TransactionsTableComponent implements OnInit {
   }
 
   cancelTransaction() {
-    this.makingTransaction = false;
-    this.transactionType = '';
+    // this.makingTransaction = false;
+    // this.transactionType = '';
     this.chRef.detectChanges();
   }
 
