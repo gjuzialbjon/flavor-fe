@@ -41,10 +41,10 @@
           </thead>
           <tbody>
             <tr *ngFor="let client of clients" style="cursor: pointer">
-              <td >
+              <td [attr.data-sort]="!isFavorite(client._id)">
                 <nb-icon
                   icon="star"
-                  [status]="client.favorite ? 'warning' : 'basic'"
+                  [status]="isFavorite(client._id) ? 'warning' : 'basic'"
                   style="cursor: pointer"
                   (click)="toggleFavorite(client)"
                   class="mr-2"
@@ -80,7 +80,8 @@
     <nb-card-header>NEW CLIENT</nb-card-header>
 
     <form [formGroup]="newClientForm" class="p-3">
-      <div class="form-group">
+      <div class="form-group mb-2">
+        <label class="label">Name *</label>
         <input
           nbInput
           fullWidth
@@ -94,13 +95,14 @@
           >Please enter a name.</small
         >
       </div>
-      <div class="form-group">
+      <div class="form-group mb-2">
+        <label class="label">Surname *</label>
         <input
           nbInput
           fullWidth
           [status]="n.surname.touched && n.surname.errors ? 'danger' : 'basic'"
           formControlName="surname"
-          placeholder="Surname *"
+          placeholder="Surname"
         />
         <small
           *ngIf="n.surname.touched && n.surname.errors"
@@ -108,7 +110,8 @@
           >Please enter a surname.</small
         >
       </div>
-      <div class="form-group">
+      <div class="form-group mb-2">
+        <label class="label">Location</label>
         <input
           nbInput
           fullWidth
@@ -116,7 +119,7 @@
             n.location.touched && n.location.errors ? 'danger' : 'basic'
           "
           formControlName="location"
-          placeholder="Location *"
+          placeholder="Location"
         />
         <small
           *ngIf="n.location.touched && n.location.errors"
@@ -124,7 +127,8 @@
           >Please enter a location.</small
         >
       </div>
-      <div class="form-group">
+      <div class="form-group mb-2">
+        <label class="label">Description</label>
         <input
           nbInput
           fullWidth
@@ -132,7 +136,7 @@
             n.description.touched && n.description.errors ? 'danger' : 'basic'
           "
           formControlName="description"
-          placeholder="Description *"
+          placeholder="Description"
         />
         <small
           *ngIf="n.description.touched && n.description.errors"

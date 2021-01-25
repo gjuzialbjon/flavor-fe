@@ -55,7 +55,8 @@
   <nb-card>
     <nb-card-header>UPDATE USER</nb-card-header>
     <form [formGroup]="userForm" class="p-3 overflow-auto">
-      <div class="form-group">
+      <div class="form-group mb-2">
+        <label class="label">Username *</label>
         <input
           type="text"
           nbInput
@@ -70,7 +71,9 @@
           >Please enter a name.</small
         >
       </div>
-      <div class="form-group">
+      <div class="form-group mb-2">
+        <label class="label">Email *</label>
+
         <input
           type="text"
           nbInput
@@ -85,7 +88,9 @@
           >Please enter an email.</small
         >
       </div>
-      <div class="form-group">
+      <div class="form-group mb-2">
+        <label class="label">Role *</label>
+
         <nb-select
           fullWidth
           formControlName="role"
@@ -96,7 +101,9 @@
           <nb-option value="finance">Finance</nb-option>
         </nb-select>
       </div>
-      <div class="form-group">
+      <div class="form-group mb-2">
+                <label class="label">Stores</label>
+
         <ng-select
           formControlName="stores"
           class="my-ng-select"
@@ -109,9 +116,11 @@
           }}</ng-option>
         </ng-select>
       </div>
-      <div class="form-group">
+      <div class="form-group mb-2">
         <div class="row">
           <div class="col">
+            <label class="label">Telegram ID</label>
+
             <input
               nbInput
               fullWidth
@@ -121,6 +130,8 @@
             />
           </div>
           <div class="col">
+            <label class="label">Telegram Name</label>
+
             <input
               nbInput
               fullWidth
@@ -131,7 +142,7 @@
           </div>
         </div>
       </div>
-      <div class="form-group">
+      <div class="form-group mb-2" >
         <div class="row">
           <div class="col-12">
             <div class="custom-control custom-checkbox">
@@ -235,7 +246,8 @@
     <nb-card-header>NEW USER</nb-card-header>
 
     <form [formGroup]="newUserForm" class="p-3 overflow-auto">
-      <div class="form-group">
+      <div class="form-group mb-2">
+        <label class="label">Username *</label>
         <input
           nbInput
           fullWidth
@@ -249,7 +261,9 @@
           >Please enter a name.</small
         >
       </div>
-      <div class="form-group">
+      <div class="form-group mb-2">
+        <label class="label">Email *</label>
+
         <input
           nbInput
           fullWidth
@@ -263,7 +277,9 @@
           >Please enter a valid e-mail address.</small
         >
       </div>
-      <div class="form-group">
+      <div class="form-group mb-2">
+        <label class="label">Password *</label>
+
         <input
           nbInput
           fullWidth
@@ -279,7 +295,9 @@
           >Please enter a password of minimum length 6.</small
         >
       </div>
-      <div class="form-group">
+      <div class="form-group mb-2">
+        <label class="label">Role *</label>
+
         <nb-select
           fullWidth
           formControlName="role"

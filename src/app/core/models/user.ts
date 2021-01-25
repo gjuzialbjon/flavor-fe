@@ -8,7 +8,7 @@ export interface User {
     name: string
     image: string
     role: string
-    passsword: string
+    password: string
     confirmed: Boolean
     stores: [Store]
     accounts: [Account]

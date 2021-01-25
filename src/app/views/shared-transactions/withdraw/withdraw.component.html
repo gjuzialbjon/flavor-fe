@@ -28,6 +28,15 @@
       }}</ng-option>
     </ng-select>
   </div>
+  <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-2">
+    <label class="label text-dark">Description *</label>
+    <input nbInput fullWidth placeholder="Description" formControlName="description" [status]="t.description.touched && t.description.errors ? 'danger' : 'basic'"/>
+    <small
+        *ngIf="t.description.touched && t.description.errors"
+        class="form-text text-danger"
+        >Please enter a short description</small
+      >
+  </div>
 
   <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-2">
     <label class="label text-dark">Amount *</label>
@@ -62,15 +71,7 @@
     </ng-select>
   </div>
 
-  <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-2">
-    <label class="label text-dark">Description *</label>
-    <input nbInput fullWidth placeholder="Description" formControlName="description" [status]="t.description.touched && t.description.errors ? 'danger' : 'basic'"/>
-    <small
-        *ngIf="t.description.touched && t.description.errors"
-        class="form-text text-danger"
-        >Please enter a short description</small
-      >
-  </div>
+  
 </form>
 
 <div class="row mt-3">

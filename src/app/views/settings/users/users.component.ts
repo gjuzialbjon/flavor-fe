@@ -146,6 +146,10 @@ export class UsersComponent implements OnInit, OnDestroy {
     this.userService.registerUser(this.newUserForm.value).subscribe(
       (res: any) => {
         console.log(res);
+        if(!!res.data.registerUser.message.user){
+          this.rerender(res.data.registerUser.message.user);
+          dialog.close()
+        }
       },
       (e) => {
         console.error(e);
@@ -225,10 +229,17 @@ export class UsersComponent implements OnInit, OnDestroy {
     return storeIds;
   }
 
-  rerender(): void {
+  rerender(newUser?: User): void {
     this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
       // Destroy the table first
       dtInstance.destroy();
+
+      if(newUser){
+        console.log(newUser)
+        this.users = [newUser, ...this.users];
+        console.log(this.users)
+        this.chRef.detectChanges();
+      }
 
       // Call the dtTrigger to rerender again
       this.dtTrigger.next();

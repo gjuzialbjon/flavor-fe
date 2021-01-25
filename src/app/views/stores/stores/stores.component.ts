@@ -3,8 +3,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ConfigsService } from 'src/app/core/helper-services/configs.service';
 import { MessageService } from 'src/app/core/helper-services/message.service';
+import { Client } from 'src/app/core/models/client';
 import { Currency } from 'src/app/core/models/currency';
 import { Store } from 'src/app/core/models/store';
+import { ClientsService } from 'src/app/core/services/clients.service';
 import { CurrencyService } from 'src/app/core/services/currency.service';
 import { StoreService } from 'src/app/core/services/store.service';
 
@@ -16,9 +18,11 @@ import { StoreService } from 'src/app/core/services/store.service';
 })
 export class StoresComponent implements OnInit {
   stores: Store[] = []
+  favoriteClients: Client[] = []
   currencies: Currency[] = []
   loading = false // Prevent duplicate store creation
   loadingStores = true
+  loadingFavorites = true
   newStoreForm!: FormGroup;
 
   totalBalance = 32322
@@ -29,6 +33,7 @@ export class StoresComponent implements OnInit {
     private fb: FormBuilder,
     private msg: MessageService,
     private storeService: StoreService,
+    private clientsService: ClientsService,
     private currencyService: CurrencyService,
     private chRef: ChangeDetectorRef
     ) {
@@ -36,6 +41,7 @@ export class StoresComponent implements OnInit {
 
   ngOnInit(): void {
     this.getStores()
+    this.getFavoriteClients()
     this.getCurrencies()
     this.initNewStoreForm()
   }
@@ -44,7 +50,7 @@ export class StoresComponent implements OnInit {
     this.storeService.getStores().subscribe(
       (res:any) => { 
         this.stores = res.data.storeMany as Store[]
-        // console.log(this.stores)
+        console.log(this.stores)
       },
       e => { 
         console.error(e);
@@ -54,6 +60,24 @@ export class StoresComponent implements OnInit {
         this.loadingStores = false
         this.chRef.detectChanges()
       })
+  }
+
+  getFavoriteClients(){
+    this.clientsService.getFavoriteClients().subscribe(
+      (res: any) => {
+        console.log(res)
+        this.favoriteClients = res.data.Me[0].favorites as Client[];
+        // console.log(this.favoriteClients)
+      },
+      (e) => {
+        console.error(e);
+        this.msg.defaultError();
+      },
+      () => {
+        this.loadingFavorites = false;
+        this.chRef.detectChanges();
+      }
+    );
   }
 
   getCurrencies(){
@@ -83,18 +107,18 @@ export class StoresComponent implements OnInit {
 
     this.loading = true
     // PROCEED TO CREATE NEW STORE AFTER LOCKING BUTTON
-    this.storeService.createStore(this.newStoreForm.value).subscribe(
-      (res: any) => {
-        this.getStores()
-        this.loading = false
-        modal.close('Completed')
-      },
-      e => { 
-        console.error(e)
-        this.msg.defaultError()
-        this.loading = false
-      }
-    )
+    // this.storeService.createStore(this.newStoreForm.value).subscribe(
+    //   (res: any) => {
+    //     this.getStores()
+    //     this.loading = false
+    //     modal.close('Completed')
+    //   },
+    //   e => { 
+    //     console.error(e)
+    //     this.msg.defaultError()
+    //     this.loading = false
+    //   }
+    // )
   }
 
   initNewStoreForm(){

@@ -1,6 +1,23 @@
 <form [formGroup]="transactionForm" class="form-row">
   <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-2">
-    <label class="label text-dark">Store *</label>
+    <label class="label text-dark">From *</label>
+    <ng-select
+      formControlName="vendorId"
+      class="my-ng-select"
+      placeholder="Select vendor..."
+    >
+      <ng-option *ngFor="let entity of entities" [value]="entity._id"
+        >{{ entity.name }} {{ entity.surname }}</ng-option
+      >
+    </ng-select>
+    <small
+      *ngIf="t.vendorId.touched && t.vendorId.errors"
+      class="form-text text-danger"
+      >Please select a vendor</small
+    >
+  </div>
+  <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-2">
+    <label class="label text-dark">To *</label>
     <ng-select
       formControlName="Store"
       class="my-ng-select"
@@ -11,37 +28,42 @@
       }}</ng-option>
     </ng-select>
     <small
-        *ngIf="t.Store.touched && t.Store.errors"
-        class="form-text text-danger"
-        >Please select a store</small
-      >
+      *ngIf="t.Store.touched && t.Store.errors"
+      class="form-text text-danger"
+      >Please select a store</small
+    >
   </div>
   <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-2">
-    <label class="label text-dark">Vendor *</label>
-    <ng-select
-      formControlName="vendorId"
-      class="my-ng-select"
-      placeholder="Select vendor..."
-    >
-      <ng-option *ngFor="let entity of entities" [value]="entity._id">{{
-        entity.name
-      }} {{ entity.surname }}</ng-option>
-    </ng-select>
+    <label class="label text-dark">Description *</label>
+    <input
+      nbInput
+      fullWidth
+      placeholder="Description"
+      formControlName="description"
+      [status]="
+        t.description.touched && t.description.errors ? 'danger' : 'basic'
+      "
+    />
     <small
-        *ngIf="t.vendorId.touched && t.vendorId.errors"
-        class="form-text text-danger"
-        >Please select a vendor</small
-      >
+      *ngIf="t.description.touched && t.description.errors"
+      class="form-text text-danger"
+      >Please enter a short description</small
+    >
   </div>
-
   <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-2">
     <label class="label text-dark">Amount *</label>
-    <input nbInput fullWidth formControlName="amount" placeholder="Amount *" [status]="t.amount.touched && t.amount.errors ? 'danger' : 'basic'"/>
+    <input
+      nbInput
+      fullWidth
+      formControlName="amount"
+      placeholder="Amount *"
+      [status]="t.amount.touched && t.amount.errors ? 'danger' : 'basic'"
+    />
     <small
-        *ngIf="t.amount.touched && t.amount.errors"
-        class="form-text text-danger"
-        >Please enter a valid amount (Only numbers allowed)</small
-      >
+      *ngIf="t.amount.touched && t.amount.errors"
+      class="form-text text-danger"
+      >Please enter a valid amount (Only numbers allowed)</small
+    >
   </div>
 
   <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-2">
@@ -56,16 +78,6 @@
       }}</ng-option>
     </ng-select>
   </div>
-
-  <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-2">
-    <label class="label text-dark">Description *</label>
-    <input nbInput fullWidth placeholder="Description" formControlName="description" [status]="t.description.touched && t.description.errors ? 'danger' : 'basic'"/>
-    <small
-        *ngIf="t.description.touched && t.description.errors"
-        class="form-text text-danger"
-        >Please enter a short description</small
-      >
-  </div>
 </form>
 
 <div class="row mt-3">
@@ -73,6 +85,8 @@
     <button nbButton ghost class="mr-3" (click)="cancelTransaction()">
       Cancel
     </button>
-    <button nbButton status="info" (click)="makeTransaction()">Make trade</button>
+    <button nbButton status="info" (click)="makeTransaction()">
+      Make trade
+    </button>
   </div>
 </div>

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Apollo, gql } from 'apollo-angular';
+import { Client } from '../models/client';
 
 const clientMany = gql`
   {
@@ -77,6 +78,18 @@ const transactionMany = gql`
   }
 `;
 
+const favoriteClients = gql`
+  {
+    Me {
+      favorites {
+        _id
+        name
+        surname
+      }
+    }
+  }
+`;
+
 @Injectable({
   providedIn: 'root',
 })
@@ -87,6 +100,12 @@ export class ClientsService {
   getClients() {
     return this.apollo.query({
       query: clientMany,
+    });
+  }
+
+  getFavoriteClients() {
+    return this.apollo.query({
+      query: favoriteClients,
     });
   }
 
@@ -107,6 +126,44 @@ export class ClientsService {
         clientId: clientId,
       },
       fetchPolicy: 'network-only',
+    });
+  }
+
+  //  MUTATIONS
+  toggleFavorite(clientId: string) {
+    return this.apollo.mutate({
+      mutation: gql`
+        mutation {
+          updateFavorite(clientId: "${clientId}") {
+            _id
+            favorites {
+              _id
+            }
+          }
+        }
+      `,
+    });
+  }
+
+  createClient(client: Client){
+    return this.apollo.mutate({
+      mutation: gql`
+        mutation {
+          createClient(
+            name: "${client.name}"
+            surname: "${client.surname}"
+            location: "${client.location}"
+            description: "${client.description}"
+          ) {
+            _id
+            name
+            surname
+            location
+            createdAt
+            description
+          }
+        }
+      `,
     });
   }
 }

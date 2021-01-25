@@ -6,7 +6,7 @@
           Total balance euro
         </div>
         <div class="text-right text-white mb-0" style="font-size: x-large">
-          {{ totalBalance | currency:'EUR' }}
+          {{ totalBalance | currency: "EUR" }}
         </div>
       </nb-card-body>
     </nb-card>
@@ -21,47 +21,51 @@
       </nb-card-header>
       <nb-card-body>
         <div class="row">
-          <div 
+          <div
             class="col-12"
             [nbSpinner]="loadingStores"
             nbSpinnerStatus="danger"
             nbSpinnerSize="large"
             nbSpinnerMessage="Loading stores"
-            style="min-height: 40px;">
-            <app-store-card 
+            style="min-height: 40px"
+          >
+            <app-store-card
               *ngFor="let store of stores"
               [name]="store.name"
               [id]="store._id"
-              >
+            >
             </app-store-card>
           </div>
         </div>
       </nb-card-body>
-    </nb-card> 
+    </nb-card>
   </div>
-  
+
   <div class="col-xl-6 col-lg-5">
-    <nb-card class="shadow">
+    <nb-card
+      class="shadow"
+      [nbSpinner]="loadingFavorites"
+      nbSpinnerStatus="danger"
+      nbSpinnerSize="large"
+      nbSpinnerMessage="Loading favorite clients"
+    >
       <nb-card-header>
         <h6>Favorite clients</h6>
       </nb-card-header>
       <nb-card-body>
         <div class="row">
-          <div class="col-md-6">
-            <app-client-card></app-client-card>
-            <app-client-card></app-client-card>
-            <app-client-card></app-client-card>
-            <app-client-card></app-client-card>
-            <app-client-card></app-client-card>
-          </div>
-          <div class="col-md-6">
-            <app-client-card></app-client-card>
-            <app-client-card></app-client-card>
-            <app-client-card></app-client-card>
-            <app-client-card></app-client-card>
-            <app-client-card></app-client-card>
+          <div class="col-md-6" *ngFor="let client of favoriteClients">
+            <app-client-card
+              [name]="client.name"
+              [surname]="client.surname"
+              [id]="client._id"
+            ></app-client-card>
           </div>
         </div>
+
+        <p *ngIf="favoriteClients.length === 0">Looks empty, no favorite clients yet... 
+          <a routerLink="/clients" style="cursor: pointer;">Why not add one?</a>
+        </p>
       </nb-card-body>
     </nb-card>
   </div>

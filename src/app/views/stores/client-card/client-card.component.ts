@@ -9,8 +9,9 @@ import { Router } from '@angular/router';
 })
 export class ClientCardComponent implements OnInit {
   @Input() name: string = '';
-  @Input() balance: number = 3444434;
-  @Input() id: string = '234234';
+  @Input() surname: string = ''
+  @Input() balance: number = 17553;
+  @Input() id: string = '0000';
 
   constructor(
     private router: Router
@@ -22,5 +23,4 @@ export class ClientCardComponent implements OnInit {
   goToClient(){
     this.router.navigate(['clients', this.id])
   }
-
 }

@@ -74,7 +74,7 @@ export class LoanComponent implements OnInit {
   initForm(){
     this.transactionForm = this.fb.group({
       storeId: [this.storeId, [Validators.required]],
-      clientId: [this.clientId, []],
+      clientId: [this.clientId, [Validators.required]],
       description: ['', [Validators.required]],
       amount: ['', [Validators.required, Validators.pattern(/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/)]],
       fee: ['', [Validators.pattern(/^(?:[1-9]\d*|0)?(?:\.\d+)?$/)]],

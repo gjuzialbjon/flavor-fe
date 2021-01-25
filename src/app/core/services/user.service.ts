@@ -100,7 +100,7 @@ export class UserService {
           email:"${user.email}"
           role:${user.role}
           name:"${user.name}"
-          password:"${user.passsword}"
+          password:"${user.password}"
         ){
           message
         }

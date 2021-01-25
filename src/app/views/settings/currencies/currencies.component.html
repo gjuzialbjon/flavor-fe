@@ -44,7 +44,9 @@
   <nb-card>
     <nb-card-header>UPDATE CURRENCY</nb-card-header>
     <form [formGroup]="currencyForm" class="p-3">
-      <div class="form-group">
+      <div class="form-group mb-2">
+        <label class="label">Currency *</label>
+
         <input
           nbInput
           fullWidth
@@ -60,7 +62,9 @@
           >Please enter a currency.</small
         >
       </div>
-      <div class="form-group">
+      <div class="form-group mb-2">
+        <label class="label">Symbol *</label>
+
         <input
           nbInput
           fullWidth
@@ -74,7 +78,9 @@
           >Please enter a symbol.</small
         >
       </div>
-      <div class="form-group">
+      <div class="form-group mb-2">
+        <label class="label">Name *</label>
+
         <input
           nbInput
           fullWidth
@@ -88,7 +94,9 @@
           >Please enter a name.</small
         >
       </div>
-      <div class="form-group">
+      <div class="form-group mb-2">
+        <label class="label">Type *</label>
+
         <nb-select
           fullWidth
           formControlName="type"

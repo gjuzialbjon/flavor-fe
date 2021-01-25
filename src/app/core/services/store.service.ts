@@ -72,33 +72,33 @@ export class StoreService {
     });
   }
 
-  createStore(store: any) {
-    var currency =
-      store.default_currency !== 0
-        ? `currencyID:"${store.default_currency}"`
-        : ''; // ADD CURRENCY OR NOT
+  // createStore(store: any) {
+  //   var currency =
+  //     store.default_currency !== 0
+  //       ? `currencyID:"${store.default_currency}"`
+  //       : ''; // ADD CURRENCY OR NOT
 
-    var mut = ` mutation{
-      createStore(
-        name:"${store.name}",
-        location:"${store.location}", 
-        description:"${store.description}" 
-        ${currency}){
-          name
-          location
-          description
-          accounts{
-            type
-            name
-          }
-      }
-    }`;
+  //   var mut = ` mutation{
+  //     createStore(
+  //       name:"${store.name}",
+  //       location:"${store.location}", 
+  //       description:"${store.description}" 
+  //       ${currency}){
+  //         name
+  //         location
+  //         description
+  //         accounts{
+  //           type
+  //           name
+  //         }
+  //     }
+  //   }`;
 
-    // console.log(mut)
-    return this.apollo.mutate({
-      mutation: gql`
-        ${mut}
-      `,
-    });
-  }
+  //   // console.log(mut)
+  //   return this.apollo.mutate({
+  //     mutation: gql`
+  //       ${mut}
+  //     `,
+  //   });
+  // }
 }
