@@ -9,7 +9,7 @@ import {
 import { Transaction } from 'src/app/core/models/transaction';
 
 import * as moment from 'moment'; // add this 1 of 4
-import { FormControl, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NbDialogService } from '@nebular/theme';
 import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
@@ -18,6 +18,7 @@ import { MessageService } from 'src/app/core/helper-services/message.service';
 import { AuthenticationService } from 'src/app/core/services/authentication.service';
 import { TransactionsService } from 'src/app/core/services/transactions.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Post } from 'src/app/core/models/post';
 
 @Component({
   selector: 'app-transactions-table',
@@ -61,10 +62,12 @@ export class TransactionsTableComponent implements OnInit {
   periodFilter = null;
 
   editingTransactionDetails = false;
+  postForm!: FormGroup;
 
   constructor(
     private configsService: ConfigsService,
     private chRef: ChangeDetectorRef,
+    private fb: FormBuilder,
     private dialogService: NbDialogService,
     private transactionsService: TransactionsService,
     private msg: MessageService,
@@ -124,6 +127,14 @@ export class TransactionsTableComponent implements OnInit {
     this.dialogService.open(content);
   }
 
+  openEditPost(content: TemplateRef<any>, post: Post){
+    this.postForm = this.fb.group({
+      ammount: [post.ammount, [Validators.required]],
+      date: [post.date, [Validators.required]],
+      details: [post.details, [Validators.required]],
+    });
+  }
+
   editTransactionDetails() {
     if (this.authService.user.role !== 'admin') {
       return;
@@ -160,7 +171,7 @@ export class TransactionsTableComponent implements OnInit {
       // console.log(en)
       // console.log(dt)
 
-      if (moment(t.createdAt).isBetween(moment(startDate), moment(endDate))) {
+      if (moment(t.createdAt).isBetween(moment(startDate), moment(endDate).add(1, "d"))) {
         periodPass = true;
       } else {
         periodPass = false;

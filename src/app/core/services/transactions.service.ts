@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Apollo, gql } from 'apollo-angular';
+import { Post } from '../models/post';
 import { AuthenticationService } from './authentication.service';
 
 const transactionOne = `{
@@ -303,6 +304,24 @@ export class TransactionsService {
             ${hasFee}
             ${hasCurrency}
           ) ${transactionOne}
+        }
+      `,
+    });
+  }
+
+  updatePost(postId: string, post: Post){
+    return this.apollo.mutate({
+      mutation: gql`
+        mutation {
+          postUpdateById(
+            record: { _id: "${postId}", date: "${post.date}", details: "${post.details}", ammount: ${post.ammount} }
+          ) {
+            record {
+              date
+              details
+              ammount
+            }
+          }
         }
       `,
     });
