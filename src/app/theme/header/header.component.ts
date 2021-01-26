@@ -92,9 +92,9 @@ export class HeaderComponent implements OnInit {
     this.sidebarService.toggle(true);
   }
 
-  // darkTheme(){
-  //   this.themeService.changeTheme('dark')
-  // }
+  darkTheme(){
+    this.themeService.changeTheme('dark')
+  }
 
   waitForEnter(event: any) {
     if (event.keyCode === 13) {

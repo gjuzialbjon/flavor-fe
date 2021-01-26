@@ -29,6 +29,8 @@ export class AuthenticationService {
     const token = localStorage.getItem('flavorToken')
     if(!!token && token.length > 10){
       this.user = this.jwtHelper.decodeToken(token)
+    } else {
+      this.router.navigateByUrl('/auth/login')
     }
   }
 

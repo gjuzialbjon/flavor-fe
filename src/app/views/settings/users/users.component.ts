@@ -196,6 +196,8 @@ export class UsersComponent implements OnInit, OnDestroy {
     this.userService.getUsers().subscribe(
       (res: any) => {
         this.users = JSON.parse(JSON.stringify(res.data.userMany)) as User[];
+        console.log(this.users);
+        
         this.loadingUsers = false;
       },
       (e) => {

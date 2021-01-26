@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { NbMenuItem } from '@nebular/theme';
 import { AuthenticationService } from '../services/authentication.service';
 
@@ -6,7 +7,7 @@ import { AuthenticationService } from '../services/authentication.service';
   providedIn: 'root',
 })
 export class ConfigsService {
-  constructor(private authService: AuthenticationService) {}
+  constructor(private authService: AuthenticationService, private router: Router) {}
 
   getDTOptions(): DataTables.Settings {
     return {
@@ -23,15 +24,29 @@ export class ConfigsService {
     return {
       pagingType: 'full',
       pageLength: 10,
-      lengthChange: false,
+      lengthChange: true,
       processing: true,
       responsive: true,
-      dom:
-        "<'row'<'col-sm-12 col-md-6'B><'col-sm-12 col-md-6'f>>" +
-        "<'row'<'col-sm-12'tr>>" +
-        "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
-        //@ts-ignore
-      buttons: ['copy', 'csv', 'excel', 'print'],
+      //@ts-ignore
+      buttons: [
+        {
+          extend: 'pdf',
+          text: '<i class="fas fa-file-pdf"></i>',
+          title: 'Download as PDF',
+        },
+        {
+          extend: 'csv',
+          text: '<i class="fas fa-file-csv"></i>',
+        },
+        {
+          extend: 'copy',
+          text: '<i class="fas fa-copy"></i>',
+        },
+        {
+          extend: 'print',
+          text: '<i class="fas fa-print"></i>',
+        },
+      ],
     };
   }
 
@@ -61,7 +76,13 @@ export class ConfigsService {
   }
 
   getMenuByRole(): NbMenuItem[] {
-    let role = this.authService.user.role;
+    let role = '';
+
+    if (this.authService.user) {
+       role = this.authService.user.role;
+    } else {
+      this.router.navigateByUrl('/auth/login')
+    }
 
     if (role === 'admin') {
       return [

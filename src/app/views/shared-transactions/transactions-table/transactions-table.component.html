@@ -7,8 +7,12 @@
 >
   <nb-card-body>
     <div class="row mb-3">
-      <div class="col-lg-3 col-sm-12 order-md-1 order-3">
-        <div *ngIf="isAdminOrAgent" ngbDropdown class="d-inline-block mr-5 mb-xl-0 mb-3">
+      <div class="col-12">
+        <div
+          *ngIf="isAdminOrAgent"
+          ngbDropdown
+          class="d-inline-block mr-5 mb-xl-0 mb-3"
+        >
           <button
             nbButton
             status="info"
@@ -26,72 +30,6 @@
             <button ngbDropdownItem (click)="make('withdraw')">Withdraw</button>
           </div>
         </div>
-      </div>
-      <div class="col-lg-7 col-sm-9 col-9 order-md-2 order-1">
-        <nb-select
-          *ngIf="!isInStore"
-          placeholder="Store"
-          [formControl]="storeFormControl"
-          filled
-          shape="round"
-          size="small"
-          status="info"
-          class="mr-4 mb-2"
-          (selectedChange)="changedFilters()"
-        >
-          <nb-option value="all">Store</nb-option>
-          <nb-option *ngFor="let store of stores" [value]="store._id">{{
-            store.name
-          }}</nb-option>
-        </nb-select>
-        <nb-select
-          placeholder="Type"
-          [formControl]="typeFormControl"
-          filled
-          shape="round"
-          size="small"
-          status="info"
-          class="mr-4 mb-2"
-          (selectedChange)="changedFilters()"
-        >
-          <nb-option value="all">Type</nb-option>
-          <nb-option *ngFor="let type of transactionTypes" [value]="type._id">{{
-            type.name
-          }}</nb-option>
-        </nb-select>
-        <span
-          *ngIf="hasFilters"
-          style="
-            text-decoration: underline;
-            color: rgb(55, 102, 204);
-            cursor: pointer;
-          "
-          (click)="resetFilters(true)"
-          >Reset filters</span
-        >
-      </div>
-      <div class="col-lg-2 col-sm-3 col-3 order-md-3 order-2 text-right mt-md-0 mt-3">
-        <nb-icon
-          nbSuffix
-          icon="calendar-alt"
-          status="info"
-          class="ml-4"
-          style="cursor: pointer; font-size: 1.9rem;"
-          (click)="dateInput.click()"
-        ></nb-icon>
-        <input
-          #dateInput
-          style="width: 0px; padding: 0; border: none"
-          nbInput
-          placeholder="Pick Date"
-          [nbDatepicker]="rangepicker"
-          [formControl]="periodFormControl"
-        />
-        <nb-rangepicker
-          #rangepicker
-          (rangeChange)="[periodFormControl.setValue($event), changedFilters()]"
-          name="periodFormControl"
-        ></nb-rangepicker>
       </div>
     </div>
 
@@ -138,6 +76,73 @@
     </div>
     <!-- END MAKING A TRANSACTION -->
 
+    <!-- <div class="row mt-3 mb-md-n5 mb-0">
+      <div class="col-12 text-center align-items-center">
+        <nb-select
+          *ngIf="!isInStore"
+          placeholder="Store"
+          [formControl]="storeFormControl"
+          filled
+          shape="round"
+          size="small"
+          status="info"
+          class="mr-4 mb-2"
+          (selectedChange)="changedFilters()"
+        >
+          <nb-option value="all">Store</nb-option>
+          <nb-option *ngFor="let store of stores" [value]="store._id">{{
+            store.name
+          }}</nb-option>
+        </nb-select>
+        <nb-select
+          placeholder="Type"
+          [formControl]="typeFormControl"
+          filled
+          shape="round"
+          size="small"
+          status="info"
+          class="mr-4 mb-2"
+          (selectedChange)="changedFilters()"
+        >
+          <nb-option value="all">Type</nb-option>
+          <nb-option *ngFor="let type of transactionTypes" [value]="type._id">{{
+            type.name
+          }}</nb-option>
+        </nb-select>
+        <span
+          *ngIf="hasFilters"
+          style="
+            text-decoration: underline;
+            color: rgb(55, 102, 204);
+            cursor: pointer;
+          "
+          (click)="resetFilters(true)"
+          >Reset filters</span
+        >
+        <nb-icon
+          nbSuffix
+          icon="calendar-alt"
+          status="info"
+          class="mt-1"
+          style="cursor: pointer; font-size: 1.4rem"
+          (click)="dateInput.click()"
+        ></nb-icon>
+        <input
+          #dateInput
+          style="width: 0px; padding: 0; border: none"
+          nbInput
+          placeholder="Pick Date"
+          [nbDatepicker]="rangepicker"
+          [formControl]="periodFormControl"
+        />
+        <nb-rangepicker
+          #rangepicker
+          (rangeChange)="[periodFormControl.setValue($event), changedFilters()]"
+          name="periodFormControl"
+        ></nb-rangepicker>
+      </div>
+    </div> -->
+
     <div class="row pt-2">
       <div class="col-12">
         <table
@@ -151,9 +156,11 @@
             <tr>
               <th width="20px">&nbsp;</th>
               <th>Date</th>
+              <th>Amount In</th>
+              <th>Amount Out</th>
+              <th>Fee</th>
               <th>Payment type</th>
               <th>Direction</th>
-
               <th *ngIf="isAdminOrAgent && !isInClient">Client</th>
               <th *ngIf="isAdminOrAgent && !isInStore">Store</th>
               <th *ngIf="!isInClient">Created By</th>
@@ -167,25 +174,17 @@
               *ngFor="let transaction of tableTransactions"
               style="cursor: pointer"
               [ngClass]="{
-                'row-issued': checkForFlag(transaction.comments),
+                'row-issued': transaction.issue,
                 'row-pending':
-                  transaction.status === 'Open' &&
-                  !checkForFlag(transaction.comments),
+                  transaction.status === 'Open' && !transaction.issue,
                 'row-closed':
-                  transaction.status === 'Closed' &&
-                  !checkForFlag(transaction.comments)
+                  transaction.status === 'Closed' && !transaction.issue
               }"
             >
-              <td
-                [attr.data-sort]="
-                  checkForFlag(transaction.comments) ? 'a' : 'b'
-                "
-              >
+              <td [attr.data-sort]="transaction.issue ? 'a' : 'b'">
                 <nb-icon
                   icon="flag"
-                  [status]="
-                    checkForFlag(transaction.comments) ? 'danger' : 'basic'
-                  "
+                  [status]="transaction.issue ? 'danger' : 'basic'"
                 ></nb-icon>
               </td>
               <td
@@ -194,6 +193,22 @@
                 [attr.data-sort]="transaction.createdAt"
               >
                 {{ transaction.createdAt | date: "medium" }}
+              </td>
+              <td [attr.data-sort]="transaction.amount_in">
+                {{
+                  transaction.amount_in | currency: transaction.currency?.symbol
+                }}
+              </td>
+              <td [attr.data-sort]="transaction.amount_out">
+                {{
+                  transaction.amount_out
+                    | currency: transaction.currency?.symbol
+                }}
+              </td>
+              <td [attr.data-sort]="transaction.revenue">
+                {{
+                  transaction.revenue | currency: transaction.currency?.symbol
+                }}
               </td>
               <td
                 class="text-capitalize"
@@ -232,6 +247,7 @@
               </td>
               <td
                 *ngIf="!isInClient"
+                style="word-wrap: break-word; max-width: 150px"
                 (click)="openEditTransaction(transactionDialog, transaction)"
               >
                 {{ transaction.description }}
@@ -262,11 +278,11 @@
   </nb-card-body>
 </nb-card>
 
-<ng-template #transactionDialog let-data let-ref="dialogRef">
+<ng-template #transactionDialog let-ref="dialogRef">
   <nb-card
     [status]="
       transaction.status === 'Open'
-        ? checkForFlag(transaction.comments)
+        ? transaction.issue
           ? 'danger'
           : 'info'
         : 'success'
@@ -346,7 +362,7 @@
                 <td>{{ post.ammount | currency: post.currency.symbol }}</td>
                 <td class="text-capitalize">{{ post.type }}</td>
                 <td *ngIf="!isInClient">{{ post.user?.name }}</td>
-                <td>
+                <td (click)="openEditPost(postContent, post)">
                   <nb-icon
                     icon="edit"
                     status="basic"
@@ -423,7 +439,7 @@
               class="d-flex align-items-center justify-content-between mb-2"
             >
               <strong class="mr-2 text-muted">Description</strong>
-              <span class="text-capitalize">{{ transaction.description }}</span>
+              <span>{{ transaction.description }}</span>
             </div>
             <div class="text-center">
               <button
@@ -497,5 +513,92 @@
         </div>
       </div>
     </nb-card-body>
+  </nb-card>
+</ng-template>
+
+<ng-template #postContent let-ref="dialogRef">
+  <nb-card>
+    <nb-card-header class="d-flex align-items-start justify-content-between">
+      <span> UPDATE MOVEMENT </span>
+      <span>
+        <nb-icon
+          icon="window-close"
+          (click)="ref.close()"
+          style="cursor: pointer"
+          status="basic"
+        ></nb-icon>
+      </span>
+    </nb-card-header>
+    <nb-card-body>
+      <form [formGroup]="postForm" class="overflow-auto">
+        <div class="form-group mb-2">
+          <label class="label">Amount *</label>
+          <input
+            type="text"
+            nbInput
+            fullWidth
+            [status]="p.amount.touched && p.amount.errors ? 'danger' : 'basic'"
+            formControlName="amount"
+            placeholder="Amount *"
+          />
+          <small
+            *ngIf="p.amount.touched && p.amount.errors"
+            class="form-text text-danger"
+            >Please enter a valid amount.</small
+          >
+        </div>
+        <div class="form-group mb-2">
+          <label class="label">Amount *</label>
+          <input
+            type="text"
+            [nbDatepicker]="datepicker"
+            nbInput
+            fullWidth
+            [status]="p.date.touched && p.date.errors ? 'danger' : 'basic'"
+            formControlName="date"
+            placeholder="Date *"
+          />
+          <nb-datepicker #datepicker></nb-datepicker>
+
+          <small
+            *ngIf="p.date.touched && p.date.errors"
+            class="form-text text-danger"
+            >Please enter a valid date.</small
+          >
+        </div>
+        <div class="form-group mb-2">
+          <label class="label">Details *</label>
+          <input
+            type="text"
+            nbInput
+            fullWidth
+            [status]="
+              p.details.touched && p.details.errors ? 'danger' : 'basic'
+            "
+            formControlName="details"
+            placeholder="Details *"
+          />
+          <small
+            *ngIf="p.details.touched && p.details.errors"
+            class="form-text text-danger"
+            >Please enter a description.</small
+          >
+        </div>
+      </form>
+    </nb-card-body>
+    <nb-card-footer>
+      <button type="button" nbButton class="mr-3" (click)="ref.close()">
+        Close
+      </button>
+      <button
+        type="button"
+        nbButton
+        class=""
+        status="success"
+        (click)="updateMovement(ref)"
+      >
+        Save
+      </button>
+    </nb-card-footer>
   </nb-card>
 </ng-template>

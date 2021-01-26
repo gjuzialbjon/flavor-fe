@@ -8,6 +8,10 @@ const transactionOne = `{
   createdAt
   status
   direction
+  revenue
+  issue
+  amount_in
+  amount_out
   description
   user {
     name

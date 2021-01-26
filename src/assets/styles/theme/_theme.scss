@@ -49,7 +49,7 @@ $nb-themes: nb-register-theme((
     datepicker-shadow: 0px 0px 30px rgba(0,0,0,0.2),
 ), corporate, corporate);
 
-// $nb-themes: nb-register-theme((
+$nb-themes: nb-register-theme((
 //   text-basic-color: color-basic-800, // some styles we changed
 //   text-disabled-color: color-basic-600,
-// ), dark, dark);
+), dark, dark);

@@ -9,7 +9,12 @@ import {
 import { Transaction } from 'src/app/core/models/transaction';
 
 import * as moment from 'moment'; // add this 1 of 4
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { NbDialogService } from '@nebular/theme';
 import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
@@ -77,9 +82,16 @@ export class TransactionsTableComponent implements OnInit {
   ) {
     this.transactionTypes = this.configsService.getTransactionTypes();
     this.dtOptions = this.configsService.getTransactionDTOptions();
-    this.dialogDtOptions = this.configsService.getDTOptions();
+    this.dtOptions.dom =
+      "<'row'<'col-sm-12 col-md-6'B><'col-sm-12 col-md-6'f>>" +
+      "<'row'<'col-sm-12'tr>>" +
+      "<'row'<'col-sm-12 col-md-5'l><'col-sm-12 col-md-7'p>>";
 
-    this.dtOptions.order = [[0, 'asc'], [1, 'desc']];
+    this.dtOptions.order = [
+      [0, 'asc'],
+      [1, 'desc'],
+    ];
+    this.dialogDtOptions = this.configsService.getDTOptions();
     let routes = this.router.url.split('/');
     this.isInClient = routes.includes('clients');
     this.isInStore = routes.includes('stores');
@@ -111,6 +123,7 @@ export class TransactionsTableComponent implements OnInit {
           ) as Transaction[];
           this.loadingTransactions = false;
           this.dtTrigger.next();
+
           this.chRef.detectChanges();
         },
         (e) => {
@@ -126,12 +139,14 @@ export class TransactionsTableComponent implements OnInit {
     this.dialogService.open(content);
   }
 
-  openEditPost(content: TemplateRef<any>, post: Post){
+  openEditPost(content: TemplateRef<any>, post: Post) {
     this.postForm = this.fb.group({
-      ammount: [post.ammount, [Validators.required]],
+      amount: [post.ammount, [Validators.required]],
       date: [post.date, [Validators.required]],
       details: [post.details, [Validators.required]],
     });
+    this.dialogService.open(content)
+    this.chRef.detectChanges()
   }
 
   editTransactionDetails() {
@@ -141,6 +156,10 @@ export class TransactionsTableComponent implements OnInit {
 
     this.editingTransactionDetails = true;
     this.chRef.detectChanges();
+  }
+
+  updateMovement(dialog: any){
+    
   }
 
   isIncluded(t: Transaction) {
@@ -166,11 +185,12 @@ export class TransactionsTableComponent implements OnInit {
       //@ts-ignore
       const endDate = this.periodFilter.end || moment.now();
 
-      // console.log(st)
-      // console.log(en)
-      // console.log(dt)
-
-      if (moment(t.createdAt).isBetween(moment(startDate), moment(endDate).add(1, "d"))) {
+      if (
+        moment(t.createdAt).isBetween(
+          moment(startDate),
+          moment(endDate).add(1, 'd')
+        )
+      ) {
         periodPass = true;
       } else {
         periodPass = false;
@@ -260,22 +280,6 @@ export class TransactionsTableComponent implements OnInit {
     this.chRef.detectChanges();
   }
 
-  cancelTransaction() {
-    // this.makingTransaction = false;
-    // this.transactionType = '';
-    this.chRef.detectChanges();
-  }
-
-  checkForFlag(comments: any[]) {
-    for (const comment of comments) {
-      if (comment.issue === 'Open') {
-        return true;
-      }
-    }
-
-    return false;
-  }
-
   resetFilters(reset: boolean) {
     this.storeFormControl.setValue('all');
     this.typeFormControl.setValue('all');
@@ -286,6 +290,8 @@ export class TransactionsTableComponent implements OnInit {
       this.rerenderFilteredTransactions(this.transactions);
     }
   }
+
+  get p () {return this.postForm.controls}
 
   ngOnDestroy() {
     this.chRef.detach();
