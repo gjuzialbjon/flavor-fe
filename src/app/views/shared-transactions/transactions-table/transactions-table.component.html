@@ -39,7 +39,7 @@
       *ngIf="makingTransaction && isAdminOrAgent"
       style="background-color: #f5f9ff; margin: 0rem -1rem"
     >
-      <div class="col-12 py-4 px-lg-5 px-3">
+      <div class="col-12 py-3 px-lg-5 px-3">
         <div [ngSwitch]="transactionType">
           <div *ngSwitchCase="'transfer'">
             <app-transfer
@@ -247,7 +247,13 @@
               </td>
               <td
                 *ngIf="!isInClient"
-                style="word-wrap: break-word; max-width: 150px"
+                style="
+                  overflow: hidden;
+                  white-space: nowrap;
+                  text-overflow: ellipsis;
+                  max-width: 150px;
+                "
+                class="text-ellipsis"
                 (click)="openEditTransaction(transactionDialog, transaction)"
               >
                 {{ transaction.description }}
@@ -357,7 +363,12 @@
             </thead>
             <tbody>
               <tr *ngFor="let post of transaction?.posts">
-                <td class="post-first-td">{{ post.details }}</td>
+                <td
+                  class="post-first-td"
+                  style="word-wrap: break-word; max-width: 150px"
+                >
+                  {{ post.details }}
+                </td>
                 <td>{{ post.date | date: "mediumDate" }}</td>
                 <td>{{ post.ammount | currency: post.currency.symbol }}</td>
                 <td class="text-capitalize">{{ post.type }}</td>

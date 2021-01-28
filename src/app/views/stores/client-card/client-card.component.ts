@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-client-card',
   templateUrl: './client-card.component.html',
-  styleUrls: ['./client-card.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ClientCardComponent implements OnInit {

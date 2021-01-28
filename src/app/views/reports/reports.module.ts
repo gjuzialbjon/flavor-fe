@@ -4,8 +4,6 @@ import { ReportsComponent } from './reports/reports.component';
 import { RouterModule } from '@angular/router';
 import { NbButtonModule, NbCardModule, NbIconModule, NbSelectModule } from '@nebular/theme';
 
-
-
 @NgModule({
   declarations: [ReportsComponent],
   imports: [

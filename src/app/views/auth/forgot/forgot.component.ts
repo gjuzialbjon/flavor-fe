@@ -6,7 +6,6 @@ import { AuthenticationService } from 'src/app/core/services/authentication.serv
 @Component({
   selector: 'app-forgot',
   templateUrl: './forgot.component.html',
-  styleUrls: ['./forgot.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ForgotComponent implements OnInit {

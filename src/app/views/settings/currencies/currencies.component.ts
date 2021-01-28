@@ -18,7 +18,6 @@ import { CurrencyService } from 'src/app/core/services/currency.service';
 @Component({
   selector: 'app-currencies',
   templateUrl: './currencies.component.html',
-  styleUrls: ['./currencies.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CurrenciesComponent implements OnInit {

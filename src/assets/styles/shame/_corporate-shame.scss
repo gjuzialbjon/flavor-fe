@@ -1,0 +1,38 @@
+.nb-theme-corporate {
+  .logo-name {
+    color: #284693;
+  }
+
+  .auth-top-bar {
+    background-color: #3886f7;
+  }
+
+  .section-title {
+    color: #284693;
+  }
+
+  .back-to-login {
+    color: #284693;
+  }
+
+  .table-hover tbody tr.row-issued:hover {
+    background-color: rgba(255, 0, 0, 0.2);
+  }
+
+  .table-hover tbody tr.row-pending:hover {
+    background-color: rgba(0, 0, 255, 0.2);
+  }
+
+  .table-hover tbody tr.row-closed:hover {
+    background-color: rgba(0, 255, 0, 0.2);
+  }
+
+  button.dt-button {
+    background-color: white;
+    color: grey;
+  }
+
+  nb-option:focus {
+    color: white;
+  }
+}

@@ -7,7 +7,6 @@ import { TransactionsService } from 'src/app/core/services/transactions.service'
 @Component({
   selector: 'app-deposit',
   templateUrl: './deposit.component.html',
-  styleUrls: ['./deposit.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DepositComponent implements OnInit {

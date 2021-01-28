@@ -3,42 +3,44 @@
     text-decoration: none;
   }
 
+  .auth-form{
+    width: 400px;
+  }
+
+  .auth-top-bar {
+    height: 76px;
+    font-size: xx-large;
+    font-weight: 900;
+  }
+
   .logo-name {
     letter-spacing: 2px;
-    color: #284693;
     font-size: xx-large;
     font-weight: bolder;
     margin-top: 10px;
+  }
+
+  .back-to-login {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+
+  .section-title {
+    letter-spacing: 2px;
+    font-size: 20px;
+    font-weight: bolder;
   }
 
   .posts-row {
     min-width: 800px;
   }
 
-  .table-hover tbody tr.row-issued:hover{
-    background-color: rgba(255, 0, 0, 0.2);
-  }
-
-  .table-hover tbody tr.row-pending:hover{
-    background-color: rgba(0, 0, 255, 0.2);
-  }
-
-  .table-hover tbody tr.row-closed:hover{
-    background-color: rgba(0, 255, 0, 0.2);
-  }
-
-  nb-option:focus{
-    color: white;
-  }
-
-  button.dt-button{
-    padding: .5rem;
-    background-color: white;
+  button.dt-button {
+    padding: 0.5rem;
     font-size: 1.4rem;
-    color: grey;
     border-radius: 6px;
     border: none;
-    margin-right: .5rem;
+    margin-right: 0.5rem;
   }
 
   .dialog-width {
@@ -64,12 +66,6 @@
     }
   }
 
-  nb-card.store-card {
-    background: #3886f7;
-    color: white;
-    border: none;
-  }
-
   nb-sidebar nb-menu .menu-item {
     .menu-icon {
       font-size: 1.8rem;
@@ -87,46 +83,14 @@
 
   nb-sidebar.compacted nb-menu .menu-item a.active::before {
     width: 0px;
-    background-color: white;
   }
 
   nb-sidebar nb-menu {
     margin: 0 -1.25rem 0 -1.25rem;
   }
 
-  nb-sidebar nb-menu .menu-item a.active {
-    position: relative;
-
-    &:before {
-      position: absolute;
-      content: "";
-      top: 0;
-      left: 0;
-      height: 100%;
-      width: 0px;
-      background: white;
-    }
-  }
-
   .post-first-td::before {
     top: 50% !important;
-  }
-
-  .transaction-menu-item {
-    color: #959595;
-    text-transform: uppercase;
-    font-weight: 700;
-    padding: 5px 10px;
-    cursor: pointer;
-
-    &:hover {
-      color: #3886f7;
-    }
-
-    &.active {
-      color: #3886f7;
-      border-bottom: 4px solid #3886f7;
-    }
   }
 
   .horizontal-line {
@@ -142,10 +106,10 @@
   }
 }
 
-:focus{
+:focus {
   outline: none !important;
 }
 
-button:focus{
+button:focus {
   outline: none;
 }

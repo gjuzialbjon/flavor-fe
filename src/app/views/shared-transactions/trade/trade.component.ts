@@ -7,7 +7,6 @@ import { TransactionsService } from 'src/app/core/services/transactions.service'
 @Component({
   selector: 'app-trade',
   templateUrl: './trade.component.html',
-  styleUrls: ['./trade.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TradeComponent implements OnInit {

@@ -29,6 +29,7 @@ const transactionOne = `{
     }
   }
   posts {
+    _id
     date
     type
     details
@@ -313,12 +314,12 @@ export class TransactionsService {
     });
   }
 
-  updatePost(postId: string, post: Post){
+  updatePost(postId: string, post: any){
     return this.apollo.mutate({
       mutation: gql`
         mutation {
           postUpdateById(
-            record: { _id: "${postId}", date: "${post.date}", details: "${post.details}", ammount: ${post.ammount} }
+            record: { _id: "${postId}", date: "${post.date}", details: "${post.details}", ammount: ${post.amount} }
           ) {
             record {
               date

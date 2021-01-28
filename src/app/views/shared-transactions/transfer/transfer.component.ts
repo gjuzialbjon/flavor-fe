@@ -7,7 +7,6 @@ import { TransactionsService } from 'src/app/core/services/transactions.service'
 @Component({
   selector: 'app-transfer',
   templateUrl: './transfer.component.html',
-  styleUrls: ['./transfer.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TransferComponent implements OnInit {

@@ -2,27 +2,8 @@
 @import 'fonts/menu-fonts';
 
 @import 'abstracts/variables';
-@import 'abstracts/mixins';
 
-@import 'base/reset';
-@import 'base/typography';
-
-@import 'layout/header';
-@import 'layout/footer';
-@import 'layout/content';
-@import 'layout/sidebar';
-
-@import 'components/buttons';
-@import 'components/modal';
-@import 'components/cards';
 @import 'components/selects';
-
-@import 'pages/auth';
-@import 'pages/dashboard';
-@import 'pages/transactions';
-@import 'pages/users';
-@import 'pages/stores';
-@import 'pages/profile';
 
 // NEBULAR STYLING
 // this is our just created themes.scss file, make sure the path to the file is correct
@@ -37,4 +18,6 @@
 };
 
 @import 'shame/shame';
+@import 'shame/corporate-shame';
+@import 'shame/dark-shame';
 

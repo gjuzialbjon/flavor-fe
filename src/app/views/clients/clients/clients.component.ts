@@ -18,7 +18,6 @@ import { ClientsService } from 'src/app/core/services/clients.service';
 @Component({
   selector: 'app-clients',
   templateUrl: './clients.component.html',
-  styleUrls: ['./clients.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ClientsComponent implements OnInit {
@@ -72,15 +71,17 @@ export class ClientsComponent implements OnInit {
       return;
     }
 
+    this.loading = true;
     this.clientsService.createClient(this.newClientForm.value).subscribe(
       (res: any) => {
-        console.log(res);
+        this.loading = false;
         this.rerender(res.data.createClient);
         dialog.close();
       },
       (e) => {
         console.error(e);
-        this.msg.error('Could not create client');
+        this.loading = false;
+        this.msg.error('Could not create client', 'Error!');
       }
     );
   }
@@ -91,7 +92,6 @@ export class ClientsComponent implements OnInit {
         this.clients = JSON.parse(
           JSON.stringify(res.data.clientMany)
         ) as Client[];
-        console.log(this.clients);
       },
       (e) => {
         console.error(e);
@@ -113,7 +113,6 @@ export class ClientsComponent implements OnInit {
           for (const fav of favs) {
             this.favoriteClients.push(fav._id);
           }
-          console.log(this.favoriteClients);
           this.rerender();
         }
       },
@@ -130,7 +129,6 @@ export class ClientsComponent implements OnInit {
   toggleFavorite(client: Client) {
     this.clientsService.toggleFavorite(client._id).subscribe(
       (res: any) => {
-        console.log(res.data.updateFavorite.favorites);
         let favs = res.data.updateFavorite.favorites;
         this.favoriteClients = [];
         for (const fav of favs) {

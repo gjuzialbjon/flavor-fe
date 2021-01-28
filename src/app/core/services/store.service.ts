@@ -6,6 +6,9 @@ const storeMany = gql`
     storeMany {
       _id
       name
+      debit_sum
+      credit_sum
+      fee_sum
       default_currency {
         currency
         symbol
@@ -81,8 +84,8 @@ export class StoreService {
   //   var mut = ` mutation{
   //     createStore(
   //       name:"${store.name}",
-  //       location:"${store.location}", 
-  //       description:"${store.description}" 
+  //       location:"${store.location}",
+  //       description:"${store.description}"
   //       ${currency}){
   //         name
   //         location

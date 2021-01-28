@@ -25,7 +25,6 @@ import { UserService } from 'src/app/core/services/user.service';
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
-  styleUrls: ['./users.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UsersComponent implements OnInit, OnDestroy {
@@ -72,7 +71,7 @@ export class UsersComponent implements OnInit, OnDestroy {
 
   openUpdate(content: TemplateRef<any>, user: User) {
     this.user = user;
-    this.resettingPassword = false
+    this.resettingPassword = false;
     this.initUserForm();
     this.dialogService.open(content);
   }
@@ -90,13 +89,34 @@ export class UsersComponent implements OnInit, OnDestroy {
       );
       return;
     }
-    if (
-      this.newPassRFormControl.invalid ||
-      this.newPassFormControl.value !== this.newPassRFormControl.value
-    ) {
-      this.msg.error('Passwords should match.', 'Error');
-      return;
-    }
+    // if (
+    //   this.newPassRFormControl.invalid ||
+    //   this.newPassFormControl.value !== this.newPassRFormControl.value
+    // ) {
+    //   this.msg.error('Passwords should match.', 'Error');
+    //   return;
+    // }
+
+    this.userService
+      .resetPasswordByAdmin(this.user._id, this.newPassFormControl.value)
+      .subscribe(
+        (res: any) => {
+          console.log(res);
+          if (res.data.resetPasswordAdmin.message === 'Done') {
+            this.msg.success('Password updated', 'Success!');
+            this.newPassFormControl.setValue('');
+            this.newPassRFormControl.setValue('');
+            this.resettingPassword = false
+            this.chRef.detectChanges()
+          } else {
+            console.error('Maybe password was not updated');
+          }
+        },
+        (e) => {
+          console.error(e);
+          this.msg.error('Could not reset password for this user.', 'Error!');
+        }
+      );
   }
 
   saveUser(dialog: any) {
@@ -146,9 +166,9 @@ export class UsersComponent implements OnInit, OnDestroy {
     this.userService.registerUser(this.newUserForm.value).subscribe(
       (res: any) => {
         console.log(res);
-        if(!!res.data.registerUser.message.user){
+        if (!!res.data.registerUser.message.user) {
           this.rerender(res.data.registerUser.message.user);
-          dialog.close()
+          dialog.close();
         }
       },
       (e) => {
@@ -197,7 +217,7 @@ export class UsersComponent implements OnInit, OnDestroy {
       (res: any) => {
         this.users = JSON.parse(JSON.stringify(res.data.userMany)) as User[];
         console.log(this.users);
-        
+
         this.loadingUsers = false;
       },
       (e) => {
@@ -236,10 +256,10 @@ export class UsersComponent implements OnInit, OnDestroy {
       // Destroy the table first
       dtInstance.destroy();
 
-      if(newUser){
-        console.log(newUser)
+      if (newUser) {
+        console.log(newUser);
         this.users = [newUser, ...this.users];
-        console.log(this.users)
+        console.log(this.users);
         this.chRef.detectChanges();
       }
 

@@ -14,7 +14,6 @@ import { TransactionsService } from 'src/app/core/services/transactions.service'
 @Component({
   selector: 'app-withdraw',
   templateUrl: './withdraw.component.html',
-  styleUrls: ['./withdraw.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WithdrawComponent implements OnInit {

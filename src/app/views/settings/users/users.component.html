@@ -54,175 +54,178 @@
 <ng-template #userContent let-data let-ref="dialogRef">
   <nb-card>
     <nb-card-header>UPDATE USER</nb-card-header>
-    <form [formGroup]="userForm" class="p-3 overflow-auto">
-      <div class="form-group mb-2">
-        <label class="label">Username *</label>
-        <input
-          type="text"
-          nbInput
-          fullWidth
-          [status]="u.name.touched && u.name.errors ? 'danger' : 'basic'"
-          formControlName="name"
-          placeholder="Name *"
-        />
-        <small
-          *ngIf="u.name.touched && u.name.errors"
-          class="form-text text-danger"
-          >Please enter a name.</small
-        >
-      </div>
-      <div class="form-group mb-2">
-        <label class="label">Email *</label>
-
-        <input
-          type="text"
-          nbInput
-          fullWidth
-          [status]="u.email.touched && u.email.errors ? 'danger' : 'basic'"
-          formControlName="email"
-          placeholder="Email *"
-        />
-        <small
-          *ngIf="u.email.touched && u.email.errors"
-          class="form-text text-danger"
-          >Please enter an email.</small
-        >
-      </div>
-      <div class="form-group mb-2">
-        <label class="label">Role *</label>
-
-        <nb-select
-          fullWidth
-          formControlName="role"
-          placeholder="Select role..."
-        >
-          <nb-option value="admin">Admin</nb-option>
-          <nb-option value="agent">Agent</nb-option>
-          <nb-option value="finance">Finance</nb-option>
-        </nb-select>
-      </div>
-      <div class="form-group mb-2">
-                <label class="label">Stores</label>
-
-        <ng-select
-          formControlName="stores"
-          class="my-ng-select"
-          [multiple]="true"
-          [clearable]="true"
-          placeholder="Select stores..."
-        >
-          <ng-option *ngFor="let store of stores" [value]="store._id">{{
-            store.name
-          }}</ng-option>
-        </ng-select>
-      </div>
-      <div class="form-group mb-2">
-        <div class="row">
-          <div class="col">
-            <label class="label">Telegram ID</label>
-
-            <input
-              nbInput
-              fullWidth
-              status="basic"
-              formControlName="telegramId"
-              placeholder="Telegram ID"
-            />
-          </div>
-          <div class="col">
-            <label class="label">Telegram Name</label>
-
-            <input
-              nbInput
-              fullWidth
-              status="basic"
-              formControlName="telegramName"
-              placeholder="Telegram Name"
-            />
-          </div>
+    <nb-card-body>
+      <form [formGroup]="userForm">
+        <div class="form-group mb-2">
+          <label class="label">Username *</label>
+          <input
+            type="text"
+            nbInput
+            fullWidth
+            [status]="u.name.touched && u.name.errors ? 'danger' : 'basic'"
+            formControlName="name"
+            placeholder="Name *"
+          />
+          <small
+            *ngIf="u.name.touched && u.name.errors"
+            class="form-text text-danger"
+            >Please enter a name.</small
+          >
         </div>
-      </div>
-      <div class="form-group mb-2" >
-        <div class="row">
-          <div class="col-12">
-            <div class="custom-control custom-checkbox">
+        <div class="form-group mb-2">
+          <label class="label">Email *</label>
+
+          <input
+            type="text"
+            nbInput
+            fullWidth
+            [status]="u.email.touched && u.email.errors ? 'danger' : 'basic'"
+            formControlName="email"
+            placeholder="Email *"
+          />
+          <small
+            *ngIf="u.email.touched && u.email.errors"
+            class="form-text text-danger"
+            >Please enter an email.</small
+          >
+        </div>
+        <div class="form-group mb-2">
+          <label class="label">Role *</label>
+
+          <nb-select
+            fullWidth
+            formControlName="role"
+            placeholder="Select role..."
+          >
+            <nb-option value="admin">Admin</nb-option>
+            <nb-option value="agent">Agent</nb-option>
+            <nb-option value="finance">Finance</nb-option>
+          </nb-select>
+        </div>
+        <div class="form-group mb-2">
+          <label class="label">Stores</label>
+
+          <ng-select
+            formControlName="stores"
+            class="my-ng-select"
+            [multiple]="true"
+            [clearable]="true"
+            placeholder="Select stores..."
+          >
+            <ng-option *ngFor="let store of stores" [value]="store._id">{{
+              store.name
+            }}</ng-option>
+          </ng-select>
+        </div>
+        <div class="form-group mb-2">
+          <div class="row">
+            <div class="col">
+              <label class="label">Telegram ID</label>
+
               <input
-                type="checkbox"
-                class="custom-control-input"
-                id="confirmed"
-                formControlName="confirmed"
+                nbInput
+                fullWidth
+                status="basic"
+                formControlName="telegramId"
+                placeholder="Telegram ID"
               />
-              <label class="custom-control-label" for="confirmed"
-                >Confirmed</label
-              >
+            </div>
+            <div class="col">
+              <label class="label">Telegram Name</label>
+
+              <input
+                nbInput
+                fullWidth
+                status="basic"
+                formControlName="telegramName"
+                placeholder="Telegram Name"
+              />
             </div>
           </div>
         </div>
-      </div>
-      <div *ngIf="!resettingPassword" class="form-group">
-        <a
-          style="cursor: pointer; color: fuchsia"
-          (click)="resettingPassword = true"
-          >Reset password for this user</a
-        >
-      </div>
-      <div *ngIf="resettingPassword" class="form-group">
-        <nb-form-field>
-          <label for="newpass" class="label">New password</label>
-          <input
-            nbInput
-            id="newpass"
-            #newpass
-            [formControl]="newPassFormControl"
-            [status]="
-              newPassFormControl.touched && newPassFormControl.invalid
-                ? 'danger'
-                : 'basic'
-            "
-          />
-          <span class="text-hint" style="font-size: 11px"
-            >Password should have a minimum length of 6</span
-          >
-        </nb-form-field>
-
-        <nb-form-field>
-          <label for="newpassr" class="label mt-3">Repeat new password</label>
-          <input
-            nbInput
-            id="newpassr"
-            #newpassr
-            [formControl]="newPassRFormControl"
-            [status]="
-              newPassRFormControl.touched &&
-              (newPassFormControl.invalid || newpass.value !== newpassr.value)
-                ? 'danger'
-                : 'basic'
-            "
-          />
-        </nb-form-field>
-        <div class="row">
-          <div class="col text-center">
-            <button
-              nbButton
-              size="small"
-              class="ml-3 mt-3"
-              (click)="resettingPassword = false"
-            >
-              Cancel
-            </button>
-            <button
-              nbButton
-              size="small"
-              class="ml-3 mt-3"
-              status="info"
-              (click)="resetPassword()"
-            >
-              Update password
-            </button>
+        <div class="form-group mb-2">
+          <div class="row">
+            <div class="col-12">
+              <div class="custom-control custom-checkbox">
+                <input
+                  type="checkbox"
+                  class="custom-control-input"
+                  id="confirmed"
+                  formControlName="confirmed"
+                />
+                <label class="custom-control-label" for="confirmed"
+                  >Confirmed</label
+                >
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </form>
+        <div *ngIf="!resettingPassword" class="form-group">
+          <a
+            style="cursor: pointer; color: fuchsia"
+            (click)="resettingPassword = true"
+            >Reset password for this user</a
+          >
+        </div>
+        <div *ngIf="resettingPassword" class="form-group">
+          <p class="mt-4 mb-2 font-weight-bold">Do not forget this password, as it is the only way for this user to enter inside the app.</p>
+          <nb-form-field>
+            <label for="newpass" class="label">New password</label>
+            <input
+              nbInput
+              id="newpass"
+              #newpass
+              [formControl]="newPassFormControl"
+              [status]="
+                newPassFormControl.touched && newPassFormControl.invalid
+                  ? 'danger'
+                  : 'basic'
+              "
+            />
+            <span class="text-hint" style="font-size: 11px"
+              >Password should have a minimum length of 6</span
+            >
+          </nb-form-field>
+
+          <!-- <nb-form-field>
+            <label for="newpassr" class="label mt-3">Repeat new password</label>
+            <input
+              nbInput
+              id="newpassr"
+              #newpassr
+              [formControl]="newPassRFormControl"
+              [status]="
+                newPassRFormControl.touched &&
+                (newPassFormControl.invalid || newpass.value !== newpassr.value)
+                  ? 'danger'
+                  : 'basic'
+              "
+            />
+          </nb-form-field> -->
+          <div class="row">
+            <div class="col text-center">
+              <button
+                nbButton
+                size="small"
+                class="ml-3 mt-3"
+                (click)="resettingPassword = false"
+              >
+                Cancel
+              </button>
+              <button
+                nbButton
+                size="small"
+                class="ml-3 mt-3"
+                status="info"
+                (click)="resetPassword()"
+              >
+                Update password
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </nb-card-body>
 
     <nb-card-footer>
       <button type="button" nbButton class="mr-3" (click)="ref.close()">

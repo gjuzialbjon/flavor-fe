@@ -28,11 +28,11 @@ import { Post } from 'src/app/core/models/post';
 @Component({
   selector: 'app-transactions-table',
   templateUrl: './transactions-table.component.html',
-  styleUrls: ['./transactions-table.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TransactionsTableComponent implements OnInit {
   @ViewChild(DataTableDirective) transactionsTable!: DataTableDirective;
+
   dtOptions;
   dialogDtOptions;
   dtTrigger = new Subject<any>();
@@ -44,6 +44,7 @@ export class TransactionsTableComponent implements OnInit {
   transactions: Transaction[] = [];
   tableTransactions: Transaction[] = [];
   transaction!: Transaction;
+  post!: Post;
 
   stores: any[] = [];
 
@@ -140,13 +141,13 @@ export class TransactionsTableComponent implements OnInit {
   }
 
   openEditPost(content: TemplateRef<any>, post: Post) {
+    this.post = post;
     this.postForm = this.fb.group({
       amount: [post.ammount, [Validators.required]],
       date: [post.date, [Validators.required]],
       details: [post.details, [Validators.required]],
     });
-    this.dialogService.open(content)
-    this.chRef.detectChanges()
+    this.dialogService.open(content, { autoFocus: false });
   }
 
   editTransactionDetails() {
@@ -158,8 +159,28 @@ export class TransactionsTableComponent implements OnInit {
     this.chRef.detectChanges();
   }
 
-  updateMovement(dialog: any){
-    
+  updateMovement(dialog: any) {
+    if (this.postForm.invalid) {
+      this.msg.error('Invalid inputs for movement', 'Error!');
+      return;
+    }
+
+    this.transactionsService
+      .updatePost(this.post._id, this.postForm.value)
+      .subscribe(
+        (res: any) => {
+          console.log(res);
+          let newPost = res.data.postUpdateById.record;
+          this.post.ammount = newPost.ammount;
+          this.post.date = newPost.date;
+          this.post.details = newPost.details;
+          // this.dia
+        },
+        (e) => {
+          console.error(e);
+          this.msg.error('Could not update movement', 'Error!');
+        }
+      );
   }
 
   isIncluded(t: Transaction) {
@@ -291,7 +312,9 @@ export class TransactionsTableComponent implements OnInit {
     }
   }
 
-  get p () {return this.postForm.controls}
+  get p() {
+    return this.postForm.controls;
+  }
 
   ngOnDestroy() {
     this.chRef.detach();

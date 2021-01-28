@@ -19,7 +19,6 @@ import { Client } from 'src/app/core/models/client';
 @Component({
   selector: 'app-client-dashboard',
   templateUrl: './client-dashboard.component.html',
-  styleUrls: ['./client-dashboard.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ClientDashboardComponent implements OnInit {
@@ -29,14 +28,6 @@ export class ClientDashboardComponent implements OnInit {
 
   transactions: Transaction[] = [];
   tableTransactions: Transaction[] = [];
-
-  balances = [
-    {
-      name: 'DOLLAR',
-      amount: 5433,
-      symbol: 'USD'
-    }
-  ];
 
   clientId: string;
   client!: Client;

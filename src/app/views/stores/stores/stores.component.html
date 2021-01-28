@@ -2,10 +2,10 @@
   <div class="col-xl-4 col-lg-5 col-md-7">
     <nb-card class="store-card shadow mb-4">
       <nb-card-body class="p-3">
-        <div class="text-uppercase font-weight-normal text-white mb-1">
+        <div class="text-uppercase text-info font-weight-normal text-white mb-1">
           Total balance euro
         </div>
-        <div class="text-right text-white mb-0" style="font-size: x-large">
+        <div class="text-right text-info text-white mb-0" style="font-size: x-large">
           {{ totalBalance | currency: "EUR" }}
         </div>
       </nb-card-body>
@@ -32,6 +32,7 @@
             <app-store-card
               *ngFor="let store of stores"
               [name]="store.name"
+              [profit]="store.fee_sum"
               [id]="store._id"
             >
             </app-store-card>
@@ -50,7 +51,7 @@
       nbSpinnerMessage="Loading favorite clients"
     >
       <nb-card-header>
-        <h6>Favorite clients</h6>
+        <h6>Top clients</h6>
       </nb-card-header>
       <nb-card-body>
         <div class="row">
