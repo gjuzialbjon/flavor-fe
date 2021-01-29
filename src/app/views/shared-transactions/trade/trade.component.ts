@@ -77,7 +77,7 @@ export class TradeComponent implements OnInit {
       vendorId: [this.clientId, [Validators.required]],
       description: ['', [Validators.required]],
       amount: ['', [Validators.required, Validators.pattern(/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/)]],
-      date: [new Date().toISOString().split('T')[0]],
+      date: [new Date().toISOString()],
       currency: [null]
     })
   }

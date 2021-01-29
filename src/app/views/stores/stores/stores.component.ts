@@ -70,9 +70,8 @@ export class StoresComponent implements OnInit {
   getFavoriteClients() {
     this.clientsService.getFavoriteClients().subscribe(
       (res: any) => {
-        console.log(res);
         this.loadingFavorites = false;
-        this.favoriteClients = res.data.Me[0].favorites as Client[];
+        this.favoriteClients = res.data.Me.favorites as Client[];
         this.chRef.detectChanges();
       },
       (e) => {

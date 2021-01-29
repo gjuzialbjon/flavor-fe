@@ -1,0 +1,87 @@
+.nb-theme-dark {
+  .section-title {
+    color: #ffaa00;
+  }
+
+  .auth-top-bar {
+    background-color: #3886f7;
+  }
+
+  .total-card {
+    background-color: #3886f7;
+    color: #ffffff;
+  }
+
+  .store-card {
+    background-color: #3886f7;
+    color: #ffffff;
+  }
+
+  .client-card {
+    background-color: #3886f7;
+    color: #ffffff;
+  }
+
+  .transactions-bg {
+    background-color: rgba(76, 0, 130, 0.568);
+  }
+
+  .text-nb-info {
+    color: #3886f7;
+  }
+
+  .bg-nb-info {
+    background-color: #3886f7;
+  }
+
+  .text-nb-white {
+    color: #ffffff;
+  }
+
+  .bg-nb-white {
+    background-color: #ffffff;
+  }
+
+  .back-to-login {
+    color: #284693;
+  }
+
+  .table-hover {
+    tbody {
+      tr.row-issued:hover {
+        background-color: rgba(255, 0, 0, 0.2);
+      }
+      tr.row-pending:hover {
+        background-color: rgba(0, 0, 255, 0.2);
+      }
+      tr.row-closed:hover {
+        background-color: rgba(0, 255, 0, 0.2);
+      }
+    }
+
+    th,
+    td {
+      color: white;
+    }
+  }
+
+  button.dt-button {
+    background-color: white;
+    color: grey;
+  }
+
+  nb-option:focus {
+    color: white;
+  }
+
+  .ng-select.my-ng-select.ng-select-single .ng-select-container,
+  .ng-select.my-ng-select.ng-select-multiple .ng-select-container {
+    background-color: #192038;
+    color: white;
+    border-color: #101426;
+
+    .ng-value{
+        color: #1f2024;
+    }
+  }
+}

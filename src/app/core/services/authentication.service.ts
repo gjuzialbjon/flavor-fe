@@ -7,6 +7,16 @@ import { environment } from '@env';
 import { Apollo, gql } from 'apollo-angular';
 import { MessageService } from '../helper-services/message.service';
 
+const myData = gql`
+  {
+    Me {
+      name
+      email
+      role
+    }
+  }
+`;
+
 @Injectable({
   providedIn: 'root',
 })
@@ -22,32 +32,39 @@ export class AuthenticationService {
     private http: HttpClient
   ) {
     this.jwtHelper = new JwtHelperService();
-    this.initUserFromToken()
+    this.initUserFromToken();
   }
 
-  initUserFromToken(){
-    const token = localStorage.getItem('flavorToken')
-    if(!!token && token.length > 10){
-      this.user = this.jwtHelper.decodeToken(token)
+  initUserFromToken() {
+    const token = localStorage.getItem('flavorToken');
+    if (!!token && token.length > 10) {
+      this.user = this.jwtHelper.decodeToken(token);
     } else {
-      this.router.navigateByUrl('/auth/login')
+      this.router.navigateByUrl('/auth/login');
     }
   }
 
-  isTokenExpired(){
-    if(!!localStorage.getItem('flavorToken')){
-      return this.jwtHelper.isTokenExpired(localStorage.getItem('flavorToken') + '')
+  getMyData() {
+    return this.apollo.query({
+      query: myData,
+    });
+  }
+
+  isTokenExpired() {
+    if (!!localStorage.getItem('flavorToken')) {
+      return this.jwtHelper.isTokenExpired(
+        localStorage.getItem('flavorToken') + ''
+      );
     } else {
-      return true
+      return true;
     }
   }
 
   login(email: string, password: string) {
-    return this.http
-      .post(`https${environment.API_URL}login`, {
-        email: `${email}`,
-        password: `${password}`,
-      })
+    return this.http.post(`https${environment.API_URL}login`, {
+      email: `${email}`,
+      password: `${password}`,
+    });
   }
 
   resetPassword(newPassword: string) {
@@ -64,7 +81,7 @@ export class AuthenticationService {
     });
   }
 
-  forgotPassword(email: string){
+  forgotPassword(email: string) {
     return this.apollo.mutate({
       mutation: gql`
       mutation{
@@ -74,11 +91,11 @@ export class AuthenticationService {
           message
         }
       }
-      `
-    })
+      `,
+    });
   }
 
-  resetForgotPassword(newPassword: string, token: string){
+  resetForgotPassword(newPassword: string, token: string) {
     return this.apollo.mutate({
       mutation: gql`
       mutation{
@@ -89,7 +106,7 @@ export class AuthenticationService {
           message
         }
       }
-      `
-    })
+      `,
+    });
   }
 }

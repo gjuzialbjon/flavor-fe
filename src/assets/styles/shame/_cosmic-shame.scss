@@ -1,6 +1,6 @@
-.nb-theme-corporate {
+.nb-theme-cosmic {
   .section-title {
-    color: #284693;
+    color: #ffaa00;
   }
 
   .auth-top-bar {
@@ -23,7 +23,7 @@
   }
 
   .transactions-bg {
-    background-color: #f5f9ff;
+    background-color: rgba(76, 0, 130, 0.568);
   }
 
   .text-nb-info {
@@ -42,10 +42,6 @@
     background-color: #ffffff;
   }
 
-  .section-title {
-    color: #284693;
-  }
-
   .back-to-login {
     color: #284693;
   }
@@ -62,6 +58,11 @@
         background-color: rgba(0, 255, 0, 0.2);
       }
     }
+
+    th,
+    td {
+      color: white;
+    }
   }
 
   button.dt-button {
@@ -71,5 +72,16 @@
 
   nb-option:focus {
     color: white;
+  }
+
+  .ng-select.my-ng-select.ng-select-single .ng-select-container,
+  .ng-select.my-ng-select.ng-select-multiple .ng-select-container {
+    background-color: #192038;
+    color: white;
+    border-color: #101426;
+
+    .ng-value{
+        color: #1f2024;
+    }
   }
 }

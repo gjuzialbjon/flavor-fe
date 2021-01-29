@@ -1,22 +1,78 @@
 <div class="container-fluid p-0">
   <div class="d-flex align-items-center justify-content-between">
     <span>
-      <nb-icon (click)="toggle()" icon="bars" style="cursor: pointer; margin-right: .8rem;"></nb-icon>
-      <a class="d-md-inline d-none mr-md-4 section-title">{{ sectionTitle }}</a>
-      <!-- <button nbButton *ngIf="!production" (click)="darkTheme()">Dark theme</button> -->
-      <nb-icon (click)="goBack()" *ngIf="routesLength > 2" icon="arrow-left" class="ml-md-5 ml-2 d-md-inline d-none" style="cursor: pointer;" status="info"></nb-icon>
+      <nb-icon
+        (click)="toggle()"
+        icon="bars"
+        style="cursor: pointer; margin-right: 0.8rem"
+      ></nb-icon>
+      <span
+        class="d-md-inline d-none section-title"
+        style="margin-right: 7rem"
+        >{{ sectionTitle }}</span
+      >
+      <button
+        nbButton
+        ghost
+        class="d-none d-md-inline"
+        *ngIf="!production"
+        (click)="darkTheme()"
+      >
+        <nb-icon icon="moon" status="info" class="mt-1"></nb-icon>
+      </button>
+      <button
+        nbButton
+        ghost
+        class="d-none d-md-inline"
+        *ngIf="!production"
+        (click)="corporateTheme()"
+      >
+        <nb-icon icon="sun" status="info" class="mt-1"></nb-icon></button
+      >
+      <button
+        nbButton
+        ghost
+        class="d-none d-md-inline"
+        *ngIf="!production"
+        (click)="cosmicTheme()"
+      >
+        <nb-icon icon="user-astronaut" status="info" class="mt-1"></nb-icon>
+      </button>
+      <nb-icon
+        (click)="goBack()"
+        *ngIf="routesLength > 2"
+        icon="arrow-left"
+        class="ml-md-5 ml-2 d-md-inline d-none"
+        style="cursor: pointer"
+        status="info"
+      ></nb-icon>
     </span>
     <span class="d-flex align-items-center">
       <nb-form-field size="small">
-        <input nbInput shape="round" status="basic" fieldSize="small" (keyup)="waitForEnter($event)" [formControl]="searchFormControl">
-        <button nbPrefix nbButton status="info" shape="round" size="small" ghost (click)="search()">
+        <input
+          nbInput
+          shape="round"
+          status="basic"
+          fieldSize="small"
+          (keyup)="waitForEnter($event)"
+          [formControl]="searchFormControl"
+        />
+        <button
+          nbPrefix
+          nbButton
+          status="info"
+          shape="round"
+          size="small"
+          ghost
+          (click)="search()"
+        >
           <nb-icon icon="search"></nb-icon>
         </button>
       </nb-form-field>
 
       <span class="d-flex align-items-center ml-4" [nbContextMenu]="userMenu">
         <a class="d-none d-md-block pr-3">{{ fullName }}</a>
-        <nb-icon icon="user" status="info" ></nb-icon>
+        <nb-icon icon="user" status="info"></nb-icon>
       </span>
     </span>
   </div>

@@ -35,9 +35,9 @@
 
     <!-- MAKING A TRANSACTION SECTION -->
     <div
-      class="row"
+      class="row transactions-bg"
       *ngIf="makingTransaction && isAdminOrAgent"
-      style="background-color: #f5f9ff; margin: 0rem -1rem"
+      style="margin: 0rem -1rem"
     >
       <div class="col-12 py-3 px-lg-5 px-3">
         <div [ngSwitch]="transactionType">
@@ -192,20 +192,29 @@
                 (click)="openEditTransaction(transactionDialog, transaction)"
                 [attr.data-sort]="transaction.createdAt"
               >
-                {{ transaction.createdAt | date: "medium" }}
+                {{ transaction.createdAt | date: "MMM d, y HH:mm" }}
               </td>
-              <td [attr.data-sort]="transaction.amount_in">
+              <td
+                [attr.data-sort]="transaction.amount_in"
+                (click)="openEditTransaction(transactionDialog, transaction)"
+              >
                 {{
                   transaction.amount_in | currency: transaction.currency?.symbol
                 }}
               </td>
-              <td [attr.data-sort]="transaction.amount_out">
+              <td
+                [attr.data-sort]="transaction.amount_out"
+                (click)="openEditTransaction(transactionDialog, transaction)"
+              >
                 {{
                   transaction.amount_out
                     | currency: transaction.currency?.symbol
                 }}
               </td>
-              <td [attr.data-sort]="transaction.revenue">
+              <td
+                [attr.data-sort]="transaction.revenue"
+                (click)="openEditTransaction(transactionDialog, transaction)"
+              >
                 {{
                   transaction.revenue | currency: transaction.currency?.symbol
                 }}
@@ -311,7 +320,7 @@
         {{ transaction.status === "Open" ? "Pending" : "Completed" }}
       </span>
       <span class="mx-4">
-        {{ transaction.createdAt | date: "mediumDate" }}
+        {{ transaction.createdAt | date: "MMM d, y HH:mm" }}
       </span>
       <span>
         <nb-icon
@@ -325,15 +334,15 @@
       <div class="row mb-5 posts-row">
         <div class="col-12">
           <div class="row mb-2">
-            <div class="col text-left">
+            <div class="col-4 text-left">
               <p
-                class="text-muted text-uppercase font-weight-bold"
+                class="text-disabled text-uppercase font-weight-bold"
                 style="color: #959595"
               >
                 Movements
               </p>
             </div>
-            <div class="col text-right">
+            <div class="col-8 text-right">
               <button
                 *ngIf="transaction.type === 'trade'"
                 nbButton
@@ -342,14 +351,34 @@
               >
                 Add sale
               </button>
+              <button
+                *ngIf="transaction.type === 'loan'"
+                nbButton
+                status="warning"
+                size="small"
+              >
+                Add repayment
+              </button>
+              <button
+                *ngIf="
+                  (isAdmin || (isAdminOrAgent && !transaction.issue)) &&
+                  transaction.status === 'Open'
+                "
+                nbButton
+                class="ml-3"
+                status="success"
+                size="small"
+              >
+                Complete
+              </button>
             </div>
           </div>
 
           <table
-            datatable
-            [dtOptions]="dialogDtOptions"
-            class="table table-hover table-sm mt-3"
+            id="postsTable"
+            class="table table-hover table-sm table-responsive mt-3"
             width="100%"
+            style="min-width: 100%"
           >
             <thead>
               <tr>
@@ -369,7 +398,7 @@
                 >
                   {{ post.details }}
                 </td>
-                <td>{{ post.date | date: "mediumDate" }}</td>
+                <td>{{ post.date | date: "MMM d, y HH:mm" }}</td>
                 <td>{{ post.ammount | currency: post.currency.symbol }}</td>
                 <td class="text-capitalize">{{ post.type }}</td>
                 <td *ngIf="!isInClient">{{ post.user?.name }}</td>
@@ -391,7 +420,7 @@
           <div class="row">
             <div class="col-12">
               <p
-                class="mb-2 text-muted text-uppercase font-weight-bold"
+                class="mb-2 text-disabled text-uppercase font-weight-bold"
                 style="color: #959595"
               >
                 Transaction details
@@ -408,39 +437,41 @@
             "
           >
             <div class="d-flex align-items-center justify-content-between mb-2">
-              <strong class="mr-2 text-muted font-smaller">Created At</strong>
+              <strong class="mr-2 text-disabled font-smaller"
+                >Created At</strong
+              >
               <span>{{ transaction.createdAt | date: "mediumDate" }}</span>
             </div>
             <div
               *ngIf="isAdminOrAgent"
               class="d-flex align-items-center justify-content-between mb-2"
             >
-              <strong class="mr-2 text-muted">Store</strong>
+              <strong class="mr-2 text-disabled">Store</strong>
               <span>{{ transaction.store?.name || "-" }}</span>
             </div>
             <div
               *ngIf="isAdminOrAgent"
               class="d-flex align-items-center justify-content-between mb-2"
             >
-              <strong class="mr-2 text-muted">Client</strong>
+              <strong class="mr-2 text-disabled">Client</strong>
               <span
                 >{{ transaction.client?.name || "-" }}
                 {{ transaction.client?.surname }}</span
               >
             </div>
             <div class="d-flex align-items-center justify-content-between mb-2">
-              <strong class="mr-2 text-muted">Payment type</strong>
+              <strong class="mr-2 text-disabled">Payment type</strong>
               <span class="text-capitalize">{{ transaction.type }}</span>
             </div>
             <div class="d-flex align-items-center justify-content-between mb-2">
-              <strong class="mr-2 text-muted">Direction</strong>
+              <strong class="mr-2 text-disabled">Direction</strong>
               <span class="text-capitalize">{{ transaction.direction }}</span>
             </div>
             <div
               *ngIf="!isInClient"
               class="d-flex align-items-center justify-content-between mb-2"
             >
-              <strong class="mr-2 text-muted">Created By</strong>
+              <strong class="mr-2 text-disabled">Created By</strong>
               <span class="text-capitalize">{{
                 transaction.user?.name || "-"
               }}</span>
@@ -449,7 +480,7 @@
               *ngIf="!isInClient"
               class="d-flex align-items-center justify-content-between mb-2"
             >
-              <strong class="mr-2 text-muted">Description</strong>
+              <strong class="mr-2 text-disabled">Description</strong>
               <span>{{ transaction.description }}</span>
             </div>
             <div class="text-center">
@@ -466,7 +497,7 @@
         </div>
         <div class="col-lg-6">
           <p
-            class="mt-md-0 mt-5 mb-2 text-muted text-uppercase font-weight-bold"
+            class="mt-md-0 mt-5 mb-2 text-disabled text-uppercase font-weight-bold"
             style="color: #959595"
           >
             Comments
@@ -487,7 +518,7 @@
                 <strong>{{ comment.user?.name || "Unknown" }}:</strong>
                 {{ comment.comment }}
               </span>
-              <span style="font-size: 12px" class="text-muted">
+              <span style="font-size: 12px" class="text-disabled">
                 {{ comment.createdAt | date: "MMM d, y, HH:mm" }}
               </span>
             </p>

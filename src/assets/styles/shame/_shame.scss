@@ -1,6 +1,10 @@
-.nb-theme-corporate {
+.nb-theme-corporate, .nb-theme-dark, .nb-theme-cosmic {
   a {
     text-decoration: none;
+  }
+
+  .logo-name {
+    color: #284693;
   }
 
   .auth-form{

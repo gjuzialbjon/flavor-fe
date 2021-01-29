@@ -1,23 +1,35 @@
 <nb-card class="shadow border-0 mb-3">
-    <nb-card-body class="p-0">
-        <div class="row no-gutters">
-            <div class="col-lg-10 col-9 text-white bg-info rounded">
-                <div class="d-flex flex-column align-items-center justify-content-between flex-wrap px-3 py-2">
-                    <div class="text-uppercase">
-                        {{name}} {{surname}}
-                    </div>
-                    <div class="text-right">
-                        <span style="font-size: large;">{{ balance | currency:'EUR' }}</span> 
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-2 col-3 p-1" (click)="goToClient()" style="border-top-right-radius: 6px; border-bottom-right-radius: 6px; cursor: pointer;">
-                <div class="d-flex h-100 flex-column align-items-center justify-content-center">
-                    <div>
-                        <nb-icon icon="arrow-right" status="danger"></nb-icon>
-                    </div>
-                </div>
-            </div>
+  <nb-card-body class="p-0">
+    <div class="row no-gutters">
+      <div class="col-lg-10 col-9 client-card rounded">
+        <div
+          class="d-flex flex-column align-items-center justify-content-between flex-wrap px-3 py-2"
+        >
+          <div class="text-uppercase">{{ name }} {{ surname }}</div>
+          <div class="text-right">
+            <span style="font-size: large">{{
+              balance | currency: "EUR"
+            }}</span>
+          </div>
         </div>
-    </nb-card-body>
+      </div>
+      <div
+        class="col-lg-2 col-3 p-1"
+        (click)="goToClient()"
+        style="
+          border-top-right-radius: 6px;
+          border-bottom-right-radius: 6px;
+          cursor: pointer;
+        "
+      >
+        <div
+          class="d-flex h-100 flex-column align-items-center justify-content-center"
+        >
+          <div>
+            <nb-icon icon="arrow-right" status="danger"></nb-icon>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nb-card-body>
 </nb-card>

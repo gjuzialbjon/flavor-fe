@@ -36,6 +36,7 @@ export class TransactionsTableComponent implements OnInit {
   dtOptions;
   dialogDtOptions;
   dtTrigger = new Subject<any>();
+  dtTriggerPosts = new Subject<any>();
 
   storeFormControl = new FormControl('all');
   typeFormControl = new FormControl('all');
@@ -134,6 +135,26 @@ export class TransactionsTableComponent implements OnInit {
       );
   }
 
+  updateTransactions(){
+    this.transactionsService
+      .getTransactions(this.storeId, this.clientId)
+      .subscribe(
+        (res: any) => {
+          console.log(res);
+          this.transactions = JSON.parse(
+            JSON.stringify(res.data.transactionMany)
+          ) as Transaction[];
+          this.loadingTransactions = false;
+
+          this.rerenderFilteredTransactions(this.transactions)
+        },
+        (e) => {
+          console.error(e);
+          this.msg.defaultError();
+        }
+      );
+  }
+
   openEditTransaction(content: TemplateRef<any>, transaction: Transaction) {
     this.transaction = transaction;
     this.commentFormControl.setValue('');
@@ -174,7 +195,9 @@ export class TransactionsTableComponent implements OnInit {
           this.post.ammount = newPost.ammount;
           this.post.date = newPost.date;
           this.post.details = newPost.details;
-          // this.dia
+          dialog.close();
+          this.msg.success('Movement updated successfully', 'Success');
+          this.updateTransactions()
         },
         (e) => {
           console.error(e);

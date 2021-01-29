@@ -40,7 +40,7 @@ export class HeaderComponent implements OnInit {
 
   sectionTitle = 'SWAP';
 
-  production = environment.production
+  production = environment.production;
 
   constructor(
     private authService: AuthenticationService,
@@ -82,7 +82,7 @@ export class HeaderComponent implements OnInit {
         })
       )
       .subscribe((ttl: string) => {
-        this.titleService.setTitle(ttl + ' | Swap');
+        this.titleService.setTitle(ttl + ' | SWAP');
         this.sectionTitle = ttl;
         this.chRef.detectChanges();
       });
@@ -92,8 +92,16 @@ export class HeaderComponent implements OnInit {
     this.sidebarService.toggle(true);
   }
 
-  darkTheme(){
-    this.themeService.changeTheme('dark')
+  darkTheme() {
+    this.themeService.changeTheme('dark');
+  }
+
+  corporateTheme() {
+    this.themeService.changeTheme('corporate');
+  }
+
+  cosmicTheme() {
+    this.themeService.changeTheme('cosmic');
   }
 
   waitForEnter(event: any) {

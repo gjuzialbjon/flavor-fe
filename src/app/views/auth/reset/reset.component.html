@@ -10,33 +10,24 @@
       <p class="logo-name">SWAP</p>
     </div>
 
-    <div *ngIf="tokenInvalid"  class="text-center">
+    <div *ngIf="tokenInvalid" class="text-center">
       <nb-alert status="danger">
         This link has expired. Please try again.
       </nb-alert>
-  
-      <a
-        class="back-to-login"
-        routerLink="/auth/forgot"
-        >Resend your code</a
-      >
+
+      <a class="back-to-login" routerLink="/auth/forgot">Resend your code</a>
     </div>
 
     <div *ngIf="changed" class="text-center">
       <nb-alert status="success">
         Password updated successfully. Login again with your new password.
       </nb-alert>
-  
-      <a
-        class="back-to-login"
-        routerLink="/auth/login"
-        >Go to login</a
-      >
+
+      <a class="back-to-login" routerLink="/auth/login">Go to login</a>
     </div>
-    
 
     <div *ngIf="!tokenInvalid && !changed">
-      <p class="text-muted">Please enter your new password twice.</p>
+      <p class="text-disabled">Please enter your new password twice.</p>
 
       <input
         #pass
@@ -74,11 +65,7 @@
       >
 
       <div class="d-flex w-100 align-items-center justify-content-between mt-1">
-        <a
-          class="back-to-login"
-          routerLink="/auth/login"
-          >Back to login</a
-        >
+        <a class="back-to-login" routerLink="/auth/login">Back to login</a>
         <button
           type="button"
           nbButton

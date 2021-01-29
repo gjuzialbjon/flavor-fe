@@ -108,7 +108,7 @@ export class ClientsComponent implements OnInit {
   getFavoriteClients() {
     this.clientsService.getFavoriteClients().subscribe(
       (res: any) => {
-        let favs = res.data.Me[0].favorites as Client[];
+        let favs = res.data.Me.favorites as Client[];
         if (!!favs) {
           for (const fav of favs) {
             this.favoriteClients.push(fav._id);
@@ -130,6 +130,7 @@ export class ClientsComponent implements OnInit {
     this.clientsService.toggleFavorite(client._id).subscribe(
       (res: any) => {
         let favs = res.data.updateFavorite.favorites;
+        console.log(favs)
         this.favoriteClients = [];
         for (const fav of favs) {
           this.favoriteClients.push(fav._id);

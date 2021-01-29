@@ -9,7 +9,7 @@
       />
       <p class="logo-name">SWAP</p>
     </div>
-    <p *ngIf="!success" class="text-muted">
+    <p *ngIf="!success" class="text-disabled">
       Please enter your email address to receive a link to reset your password.
     </p>
 
@@ -40,11 +40,7 @@
     >
 
     <div class="d-flex w-100 align-items-center justify-content-between mt-1">
-      <a
-        class="back-to-login"
-        routerLink="/auth/login"
-        >Back to login</a
-      >
+      <a class="back-to-login" routerLink="/auth/login">Back to login</a>
       <button
         *ngIf="!success"
         type="button"

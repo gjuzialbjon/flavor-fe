@@ -1,11 +1,11 @@
 <div class="row mb-3">
   <div class="col">
     <p
-    class="text-uppercase font-weight-bold m-0"
-    style="color: #3886f7; font-size: 28px"
-  >
-    {{ store?.name }}
-  </p>
+      class="text-uppercase font-weight-bold m-0"
+      style="color: #3886f7; font-size: 28px"
+    >
+      {{ store?.name }}
+    </p>
   </div>
 </div>
 
@@ -15,16 +15,16 @@
       <nb-card-body>
         <div class="row">
           <div class="col-md-6">
-            <p class="text-muted text-uppercase">BALANCE TOT</p>
-        <p class="text-center mb-0 text-info" style="font-size: 1.5rem">
-          <span >{{ '233232' | currency: 'EUR' }}</span>
-        </p>
+            <p class="text-disabled text-uppercase">BALANCE TOT</p>
+            <p class="text-center mb-0 text-nb-info" style="font-size: 1.5rem">
+              <span>{{ "233232" | currency: "EUR" }}</span>
+            </p>
           </div>
           <div class="col-md-6 mt-md-0 mt-3">
-            <p class="text-muted text-uppercase">PROFIT TOT</p>
-        <p class="text-center mb-0 text-info" style="font-size: 1.5rem">
-          <span >{{ '2133232' | currency: 'EUR' }}</span>
-        </p>
+            <p class="text-disabled text-uppercase">PROFIT TOT</p>
+            <p class="text-center mb-0 text-nb-info" style="font-size: 1.5rem">
+              <span>{{ "2133232" | currency: "EUR" }}</span>
+            </p>
           </div>
         </div>
       </nb-card-body>
@@ -33,9 +33,9 @@
   <div class="col-xl-2 col-lg-3 col-md-4" *ngFor="let balance of balances">
     <nb-card class="shadow">
       <nb-card-body>
-        <p class="text-muted text-uppercase">BALANCE {{ balance.name }}</p>
-        <p class="text-center mb-0 text-info" style="font-size: 1.5rem">
-          <span >{{ balance.amount | currency: balance.symbol }}</span>
+        <p class="text-disabled text-uppercase">BALANCE {{ balance.name }}</p>
+        <p class="text-center mb-0 text-nb-info" style="font-size: 1.5rem">
+          <span>{{ balance.amount | currency: balance.symbol }}</span>
         </p>
       </nb-card-body>
     </nb-card>

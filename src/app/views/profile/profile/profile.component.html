@@ -1,15 +1,15 @@
 <nb-card style="max-width: 500px" class="shadow">
   <nb-card-body>
-    <p class="text-muted text-uppercase font-weight-bold">General</p>
+    <p class="text-disabled text-uppercase font-weight-bold">General</p>
 
     <nb-card style="background: #f5f9ff; border: none">
       <nb-card-body class="p-0">
         <table>
           <tbody>
             <tr>
-              <td class="pr-4 pl-2 py-3 text-muted">Name</td>
-              <td class="px-4 py-3 text-muted">
-                <span *ngIf="!editingName"> {{ userName }} </span>
+              <td class="pr-4 pl-2 py-3 text-disabled">Name</td>
+              <td class="px-4 py-3 text-disabled">
+                <span *ngIf="!editingName"> {{ user?.name }} </span>
                 <input
                   *ngIf="editingName"
                   nbInput
@@ -37,9 +37,9 @@
               </td>
             </tr>
             <tr>
-              <td class="pr-4 pl-2 py-3 text-muted">Email</td>
-              <td class="px-4 py-3 text-muted">
-                <span *ngIf="!editingEmail"> {{ userEmail }}</span>
+              <td class="pr-4 pl-2 py-3 text-disabled">Email</td>
+              <td class="px-4 py-3 text-disabled">
+                <span *ngIf="!editingEmail"> {{ user?.email }}</span>
                 <input
                   *ngIf="editingEmail"
                   nbInput
@@ -67,15 +67,17 @@
               </td>
             </tr>
             <tr>
-              <td class="pr-4 pl-2 py-3 text-muted">Role</td>
-              <td class="px-4 py-3 text-muted">Role</td>
+              <td class="pr-4 pl-2 py-3 text-disabled">Role</td>
+              <td class="px-4 py-3 text-disabled text-capitalize">
+                {{ user?.role }}
+              </td>
             </tr>
           </tbody>
         </table>
       </nb-card-body>
     </nb-card>
 
-    <p class="text-muted text-uppercase font-weight-bold">Notifications</p>
+    <p class="text-disabled text-uppercase font-weight-bold">Notifications</p>
 
     <a
       href="tg://resolve?domain=n0t1fyss_bot"
@@ -95,7 +97,7 @@
       <img src="https://telegram.org/img/t_logo.svg?1" alt="" width="40"
     /></a>
 
-    <p class="text-muted text-uppercase font-weight-bold mt-5">
+    <p class="text-disabled text-uppercase font-weight-bold mt-5">
       Change password
     </p>
 

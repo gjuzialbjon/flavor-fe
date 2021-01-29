@@ -1,45 +1,53 @@
 <nb-card class="border-0 shadow mb-4">
-    <nb-card-body class="p-0">
-        <div class="row no-gutters">
-            <div class="col-lg-10 col-9 bg-info text-white rounded">
-                <div class="row no-gutters px-3 pt-3 pb-1">
-                    <div class="col-12 text-uppercase text-white font-weight-bold">
-                        {{ name }}
-                    </div>
-                </div>
-                <div class="row no-gutters align-items-center">
-                    <div class="col-md-6 px-3 mb-3">
-                        <div class="row no-gutters">
-                            <div class="col-6 text-uppercase">
-                                Balance
-                            </div>
-                            <div class="col-6 text-right">
-                                <span style="font-size: large;">{{ balance | currency:'EUR' }}</span> 
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 d-md-block d-none px-3 mb-3 horizontal-line">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col-6 text-uppercase">
-                                Profit
-                            </div>
-                            <div class="col-6 text-right">
-                                <span style="font-size: large;">{{ profit | currency:'EUR' }}</span> 
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-2 col-3 p-1" routerLink="{{ id }}" style="border-top-right-radius: 6px; border-bottom-right-radius: 6px; cursor: pointer;">
-                <div class="d-flex h-100 flex-column align-items-center justify-content-center">
-                    <div class="text-center mb-1">
-                        OPEN STORE
-                    </div>
-                    <div>
-                        <nb-icon icon="arrow-right" status="danger"></nb-icon>
-                    </div>
-                </div>
-            </div>
+  <nb-card-body class="p-0">
+    <div class="row no-gutters">
+      <div class="col-lg-10 col-9 store-card rounded">
+        <div class="row no-gutters px-3 pt-3 pb-1">
+          <div class="col-12 text-uppercase text-nb-white font-weight-bold">
+            {{ name }}
+          </div>
         </div>
-    </nb-card-body>
+        <div class="row no-gutters align-items-center">
+          <div class="col-md-6 px-3 mb-3">
+            <div class="row no-gutters">
+              <div class="col-6 text-uppercase">Balance</div>
+              <div class="col-6 text-right">
+                <span style="font-size: large">{{
+                  balance | currency: "EUR"
+                }}</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 d-md-block d-none px-3 mb-3 horizontal-line">
+            <div class="row no-gutters align-items-center">
+              <div class="col-6 text-uppercase">Profit</div>
+              <div class="col-6 text-right">
+                <span style="font-size: large">{{
+                  profit | currency: "EUR"
+                }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="col-lg-2 col-3 p-1"
+        routerLink="{{ id }}"
+        style="
+          border-top-right-radius: 6px;
+          border-bottom-right-radius: 6px;
+          cursor: pointer;
+        "
+      >
+        <div
+          class="d-flex h-100 flex-column align-items-center justify-content-center"
+        >
+          <div class="text-center mb-1">OPEN STORE</div>
+          <div>
+            <nb-icon icon="arrow-right" status="danger"></nb-icon>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nb-card-body>
 </nb-card>
