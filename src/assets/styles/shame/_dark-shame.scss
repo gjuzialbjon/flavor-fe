@@ -66,8 +66,8 @@
   }
 
   button.dt-button {
-    background-color: white;
-    color: grey;
+    background-color: #222b45;
+    color: rgb(241, 229, 229);
   }
 
   nb-option:focus {
@@ -83,5 +83,9 @@
     .ng-value{
         color: #1f2024;
     }
+  }
+
+  .ng-select.my-ng-select.ng-select-single .ng-select-container .ng-value{
+    color: #ffffff;
   }
 }

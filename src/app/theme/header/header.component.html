@@ -8,9 +8,20 @@
       ></nb-icon>
       <span
         class="d-md-inline d-none section-title"
-        style="margin-right: 7rem"
+        style="margin-right: 3rem"
         >{{ sectionTitle }}</span
       >
+       <button nbButton ghost class="ml-md-2 ml-2 d-md-inline d-none">
+        <nb-icon
+          (click)="goBack()"
+          *ngIf="routesLength > 2"
+          icon="arrow-left"
+          class="mt-1"
+          status="info"
+        ></nb-icon>
+      </button>
+    </span>
+    <span class="d-flex align-items-center">
       <button
         nbButton
         ghost
@@ -27,27 +38,18 @@
         *ngIf="!production"
         (click)="corporateTheme()"
       >
-        <nb-icon icon="sun" status="info" class="mt-1"></nb-icon></button
-      >
+        <nb-icon icon="sun" status="info" class="mt-1"></nb-icon>
+      </button>
       <button
         nbButton
         ghost
         class="d-none d-md-inline"
+        style="margin-right: 7rem;"
         *ngIf="!production"
         (click)="cosmicTheme()"
       >
         <nb-icon icon="user-astronaut" status="info" class="mt-1"></nb-icon>
       </button>
-      <nb-icon
-        (click)="goBack()"
-        *ngIf="routesLength > 2"
-        icon="arrow-left"
-        class="ml-md-5 ml-2 d-md-inline d-none"
-        style="cursor: pointer"
-        status="info"
-      ></nb-icon>
-    </span>
-    <span class="d-flex align-items-center">
       <nb-form-field size="small">
         <input
           nbInput
