@@ -30,7 +30,7 @@ export class StoresComponent implements OnInit {
   loadingFavorites = true;
   newStoreForm!: FormGroup;
 
-  totalBalance = 32322;
+  totalBalance = 666;
 
   constructor(
     private configsService: ConfigsService,

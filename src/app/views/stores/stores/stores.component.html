@@ -32,7 +32,7 @@
             <app-store-card
               *ngFor="let store of stores"
               [name]="store.name"
-              [profit]="store.fee_sum"
+              [profit]="store.revenue_sum"
               [id]="store._id"
             >
             </app-store-card>
@@ -60,6 +60,7 @@
               [name]="client.name"
               [surname]="client.surname"
               [id]="client._id"
+              [balance]="client.balance"
             ></app-client-card>
           </div>
         </div>

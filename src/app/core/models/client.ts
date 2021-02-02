@@ -11,6 +11,7 @@ export interface Client {
   liability_sum: number;
   debit_sum: number;
   fee_sum: number;
+  balance: number;
   description: string;
   favorite: boolean;
   createdAt: Date;

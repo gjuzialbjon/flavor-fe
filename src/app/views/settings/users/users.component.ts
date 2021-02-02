@@ -89,13 +89,6 @@ export class UsersComponent implements OnInit, OnDestroy {
       );
       return;
     }
-    // if (
-    //   this.newPassRFormControl.invalid ||
-    //   this.newPassFormControl.value !== this.newPassRFormControl.value
-    // ) {
-    //   this.msg.error('Passwords should match.', 'Error');
-    //   return;
-    // }
 
     this.userService
       .resetPasswordByAdmin(this.user._id, this.newPassFormControl.value)

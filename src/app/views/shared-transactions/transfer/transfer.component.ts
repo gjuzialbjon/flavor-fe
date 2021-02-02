@@ -55,6 +55,11 @@ export class TransferComponent implements OnInit {
       return
     }
 
+    if(this.transactionForm.get('fromStore')?.value === this.transactionForm.get('toEntity')?.value){
+      this.msg.error('Please choose another destination', 'Error!');
+      return;
+    }
+
     this.onTransactionLock.emit(true)
     this.transactionsService.makeTransfer(this.transactionForm.value).subscribe(
       (res: any) => {

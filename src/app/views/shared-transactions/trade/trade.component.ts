@@ -16,9 +16,8 @@ export class TradeComponent implements OnInit {
   storeId: string
   clientId: string
 
+  vendors: any[] = []
   stores: any[] = []
-  clients: any[] = []
-  entities: any[] = []
   currencies: any[] = []
 
   transactionForm!: FormGroup;
@@ -37,10 +36,8 @@ export class TradeComponent implements OnInit {
   async ngOnInit() {
     this.initForm()
 
+    this.vendors = await this.transactionsService.getVendors()  
     this.stores = await this.transactionsService.getStores()
-    this.clients = await this.transactionsService.getClients()
-    this.currencies = await this.transactionsService.getCurrencies()
-    this.entities = [...this.stores, ...this.clients]    
     this.chRef.detectChanges()
   }
 
@@ -74,7 +71,7 @@ export class TradeComponent implements OnInit {
   initForm(){
     this.transactionForm = this.fb.group({
       Store: [this.storeId, [Validators.required]],
-      vendorId: [this.clientId, [Validators.required]],
+      vendorId: [null, [Validators.required]],
       description: ['', [Validators.required]],
       amount: ['', [Validators.required, Validators.pattern(/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/)]],
       date: [new Date().toISOString()],

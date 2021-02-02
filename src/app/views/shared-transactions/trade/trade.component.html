@@ -6,8 +6,8 @@
       class="my-ng-select"
       placeholder="Select vendor..."
     >
-      <ng-option *ngFor="let entity of entities" [value]="entity._id"
-        >{{ entity.name }} {{ entity.surname }}</ng-option
+      <ng-option *ngFor="let vendor of vendors" [value]="vendor._id"
+        >{{ vendor.name }} {{ vendor.surname }}</ng-option
       >
     </ng-select>
     <small

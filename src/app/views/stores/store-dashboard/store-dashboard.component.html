@@ -15,31 +15,31 @@
       <nb-card-body>
         <div class="row">
           <div class="col-md-6">
-            <p class="text-disabled font-weight-bold text-uppercase">BALANCE TOT</p>
+            <p class="text-disabled mb-2 font-weight-bold text-uppercase">BALANCE TOT</p>
             <p class="text-center mb-0 text-nb-info" style="font-size: 1.5rem">
-              <span>{{ "233232" | currency: "EUR" }}</span>
+              <span>{{ store?.balance | currency: "EUR" }}</span>
             </p>
           </div>
-          <div class="col-md-6 mt-md-0 mt-3">
-            <p class="text-disabled font-weight-bold text-uppercase">PROFIT TOT</p>
+          <div class="col-md-6 mt-md-0 mt-4">
+            <p class="text-disabled mb-2 font-weight-bold text-uppercase">PROFIT TOT</p>
             <p class="text-center mb-0 text-nb-info" style="font-size: 1.5rem">
-              <span>{{ "2133232" | currency: "EUR" }}</span>
+              <span>{{ store?.revenue_sum | currency: "EUR" }}</span>
             </p>
           </div>
         </div>
       </nb-card-body>
     </nb-card>
   </div>
-  <div class="col-xl-2 col-lg-3 col-md-4" *ngFor="let balance of balances">
+  <!-- <div class="col-xl-2 col-lg-3 col-md-4" *ngFor="let balance of balances">
     <nb-card class="shadow">
       <nb-card-body>
-        <p class="text-disabled font-weight-bold text-uppercase">BALANCE {{ balance.name }}</p>
+        <p class="text-disabled mb-2 font-weight-bold text-uppercase">BALANCE {{ balance.name }}</p>
         <p class="text-center mb-0 text-nb-info" style="font-size: 1.5rem">
           <span>{{ balance.amount | currency: balance.symbol }}</span>
         </p>
       </nb-card-body>
     </nb-card>
-  </div>
+  </div> -->
 </div>
 
 <app-transactions-table></app-transactions-table>

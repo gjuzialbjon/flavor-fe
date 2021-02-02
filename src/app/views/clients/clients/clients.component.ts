@@ -99,7 +99,6 @@ export class ClientsComponent implements OnInit {
       },
       () => {
         this.loading = false;
-        this.dtTrigger.next();
         this.chRef.detectChanges();
       }
     );
@@ -113,7 +112,6 @@ export class ClientsComponent implements OnInit {
           for (const fav of favs) {
             this.favoriteClients.push(fav._id);
           }
-          this.rerender();
         }
       },
       (e) => {
@@ -121,6 +119,7 @@ export class ClientsComponent implements OnInit {
         this.msg.defaultError();
       },
       () => {
+        this.dtTrigger.next();
         this.chRef.detectChanges();
       }
     );
@@ -130,7 +129,7 @@ export class ClientsComponent implements OnInit {
     this.clientsService.toggleFavorite(client._id).subscribe(
       (res: any) => {
         let favs = res.data.updateFavorite.favorites;
-        console.log(favs)
+        console.log(favs);
         this.favoriteClients = [];
         for (const fav of favs) {
           this.favoriteClients.push(fav._id);

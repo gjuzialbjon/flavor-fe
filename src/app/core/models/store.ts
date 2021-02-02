@@ -9,7 +9,9 @@ export interface Store {
   description: string;
   debit_sum: number;
   credit_sum: number;
+  balance: number;
   fee_sum: number;
+  revenue_sum: number;
   default_currency: Currency;
   users: [User];
   clients: [Client];

@@ -17,7 +17,6 @@ export class StoreCardComponent implements OnInit {
   @Input() name: string = '';
   @Input() balance: number = 0;
   @Input() profit: number = 0;
-  @Input() percentage: number = 0;
   @Input() id: string = '';
 
   constructor(

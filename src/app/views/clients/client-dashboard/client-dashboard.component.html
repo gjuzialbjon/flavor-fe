@@ -15,15 +15,15 @@
       <nb-card-body>
         <div class="row">
           <div class="col-md-6">
-            <p class="text-disabled font-weight-bold text-uppercase">BALANCE TOT</p>
+            <p class="text-disabled mb-2 font-weight-bold text-uppercase">BALANCE TOT</p>
             <p class="text-center mb-0 text-nb-info" style="font-size: 1.5rem">
-              <span>{{ "233232" | currency: "EUR" }}</span>
+              <span>{{ client?.balance | currency: "EUR" }}</span>
             </p>
           </div>
-          <div class="col-md-6 mt-md-0 mt-3">
-            <p class="text-disabled font-weight-bold text-uppercase">PROFIT TOT</p>
+          <div class="col-md-6 mt-md-0 mt-4">
+            <p class="text-disabled mb-2 font-weight-bold text-uppercase">PROFIT TOT</p>
             <p class="text-center mb-0 text-nb-info" style="font-size: 1.5rem">
-              <span>{{ "2133232" | currency: "EUR" }}</span>
+              <span>{{ client?.revenue | currency: "EUR" }}</span>
             </p>
           </div>
         </div>

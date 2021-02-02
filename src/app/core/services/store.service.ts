@@ -6,9 +6,8 @@ const storeMany = gql`
     storeMany {
       _id
       name
-      debit_sum
-      credit_sum
-      fee_sum
+      revenue_sum
+      balance
       default_currency {
         currency
         symbol
@@ -26,6 +25,8 @@ const storeOne = gql`
       name
       location
       description
+      revenue_sum
+      balance
       default_currency {
         currency
         symbol

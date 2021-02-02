@@ -80,6 +80,16 @@ const currencyMany = gql`
   }
 `;
 
+const vendorMany = gql`
+  {
+    clientMany(filter: { isVendor: true }) {
+      _id
+      name
+      surname
+    }
+  }
+`;
+
 @Injectable({
   providedIn: 'root',
 })
@@ -87,6 +97,7 @@ export class TransactionsService {
   stores: any[] = [];
   clients: any[] = [];
   currencies: any[] = [];
+  vendors: any[] = [];
 
   constructor(
     private apollo: Apollo,
@@ -95,11 +106,11 @@ export class TransactionsService {
 
   // QUERIES
   getTransactions(storeId?: string, clientId?: string) {
-    let storeFilter = !!storeId ? `store: "${storeId}"` : ''
-    let clientFilter = !!clientId ? `client: "${clientId}"`: ''
+    let storeFilter = !!storeId ? `store: "${storeId}"` : '';
+    let clientFilter = !!clientId ? `client: "${clientId}"` : '';
 
     return this.apollo.query({
-      query: gql `
+      query: gql`
       {
         transactionMany(
           filter:{
@@ -140,6 +151,26 @@ export class TransactionsService {
     await this.apollo
       .query({
         query: clientMany,
+      })
+      .toPromise()
+      .then((res: any) => {
+        this.clients = res.data.clientMany;
+      })
+      .catch((e) => {
+        console.error(e);
+      });
+
+    return this.clients;
+  }
+
+  async getVendors() {
+    if (this.vendors.length > 0) {
+      return this.vendors;
+    }
+
+    await this.apollo
+      .query({
+        query: vendorMany,
       })
       .toPromise()
       .then((res: any) => {
@@ -271,10 +302,8 @@ export class TransactionsService {
   }
 
   makeTrade(trade: any) {
-    let hasCurrency = !!trade.currency
-      ? `currency: "${trade.currency}"`
-      : '';
-  
+    let hasCurrency = !!trade.currency ? `currency: "${trade.currency}"` : '';
+
     return this.apollo.mutate({
       mutation: gql`
         mutation {
@@ -314,7 +343,7 @@ export class TransactionsService {
     });
   }
 
-  updatePost(postId: string, post: any){
+  updatePost(postId: string, post: any) {
     return this.apollo.mutate({
       mutation: gql`
         mutation {

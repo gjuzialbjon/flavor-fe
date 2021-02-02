@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 export class ClientCardComponent implements OnInit {
   @Input() name: string = '';
   @Input() surname: string = ''
-  @Input() balance: number = 17553;
+  @Input() balance: number = 0;
   @Input() id: string = '0000';
 
   constructor(

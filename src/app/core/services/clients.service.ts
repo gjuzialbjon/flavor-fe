@@ -24,11 +24,8 @@ const clientOne = gql`
       surname
       location
       description
-      accounts {
-        type
-        name
-        description
-      }
+      revenue
+      balance
     }
   }
 `;
@@ -85,6 +82,7 @@ const favoriteClients = gql`
         _id
         name
         surname
+        balance
       }
     }
   }
