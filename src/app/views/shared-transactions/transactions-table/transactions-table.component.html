@@ -387,7 +387,7 @@
                 <th>amount</th>
                 <th>type</th>
                 <th *ngIf="!isInClient">Created By</th>
-                <th></th>
+                <th *ngIf="isAdmin" style="width: 20px;"></th>
               </tr>
             </thead>
             <tbody>
@@ -402,7 +402,7 @@
                 <td>{{ post.ammount | currency: post.currency.symbol }}</td>
                 <td class="text-capitalize">{{ post.type }}</td>
                 <td *ngIf="!isInClient">{{ post.user?.name }}</td>
-                <td (click)="openEditPost(postContent, post)">
+                <td *ngIf="isAdmin" (click)="openEditPost(postContent, post)">
                   <nb-icon
                     icon="edit"
                     status="basic"
@@ -572,7 +572,7 @@
       </span>
     </nb-card-header>
     <nb-card-body>
-      <form [formGroup]="postForm" class="overflow-auto">
+      <form [formGroup]="postForm" class="overflow-auto" *ngIf="isAdmin">
         <div class="form-group mb-2">
           <label class="label">Amount *</label>
           <input
@@ -629,7 +629,7 @@
       </form>
     </nb-card-body>
     <nb-card-footer>
-      <button type="button" nbButton class="mr-3" (click)="ref.close()">
+      <button type="button" nbButton class="mr-3" ghost (click)="ref.close()">
         Close
       </button>
       <button

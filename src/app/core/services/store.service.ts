@@ -6,8 +6,6 @@ const storeMany = gql`
     storeMany {
       _id
       name
-      revenue_sum
-      balance
     }
   }
 `;
@@ -21,28 +19,6 @@ const storeOne = gql`
       description
       revenue_sum
       balance
-      default_currency {
-        currency
-        symbol
-        name
-        type
-      }
-      users {
-        email
-        name
-        image
-      }
-      clients {
-        name
-        surname
-        location
-        description
-      }
-      accounts {
-        type
-        name
-        description
-      }
       createdAt
     }
   }
