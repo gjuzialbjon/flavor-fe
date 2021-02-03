@@ -5,7 +5,7 @@ import {
   ViewChild,
   ChangeDetectorRef,
 } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NbDialogService } from '@nebular/theme';
 import { DataTableDirective } from 'angular-datatables';
@@ -39,6 +39,8 @@ export class ClientDashboardComponent implements OnInit {
   transactionType = '';
   transactionTypes;
 
+  vendorTypeFormControl = new FormControl('', [Validators.required])
+
   constructor(
     private configsService: ConfigsService,
     private chRef: ChangeDetectorRef,
@@ -50,7 +52,7 @@ export class ClientDashboardComponent implements OnInit {
     private router: Router
   ) {
     this.clientId = this.route.snapshot.params.clientId;
-    console.log(this.clientId)
+    console.log(this.clientId);
     this.transactionTypes = this.configsService.getTransactionTypes();
     this.dtOptions = this.configsService.getDTOptions();
     this.dtOptions.columnDefs = [
@@ -110,12 +112,12 @@ export class ClientDashboardComponent implements OnInit {
       // Destroy the table first
       dtInstance.destroy();
 
-      if(transaction){
-        this.transactions.push(transaction)
-        this.loadingTransactions = false
+      if (transaction) {
+        this.transactions.push(transaction);
+        this.loadingTransactions = false;
       }
 
-      this.tableTransactions = JSON.parse(JSON.stringify(this.transactions))
+      this.tableTransactions = JSON.parse(JSON.stringify(this.transactions));
       this.chRef.detectChanges();
 
       // Call the dtTrigger to rerender again
@@ -130,14 +132,30 @@ export class ClientDashboardComponent implements OnInit {
     this.chRef.detectChanges();
   }
 
-  checkForFlag(comments: any[]) {
-    for (const comment of comments) {
-      if (comment.issue === 'Open') {
-        return true;
-      }
+  openMakeVendor(vendorContent: any) {
+    this.vendorTypeFormControl.setValue('');
+    this.dialogService.open(vendorContent);
+  }
+
+  makeVendor(dialog: any){
+    if(this.vendorTypeFormControl.invalid){
+      this.msg.error('Please set a vendor type', 'Error!')
+      return
     }
 
-    return false;
+    this.clientsService.makeVendor(this.clientId, this.vendorTypeFormControl.value).subscribe(
+      (res: any) => {
+        console.log(res)
+        let nClient = res.data.clientUpdateById.record
+        this.client.isVendor = nClient.isVendor
+        this.client.vendorType = nClient.vendorType
+        this.chRef.detectChanges()
+        dialog.close()
+      },
+      e => {
+        this.msg.error('Sorry, something went wrong', 'Error!')
+      }
+    )
   }
 
   ngOnDestroy() {

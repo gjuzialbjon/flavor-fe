@@ -38,6 +38,7 @@ export class TradeComponent implements OnInit {
 
     this.vendors = await this.transactionsService.getVendors()  
     this.stores = await this.transactionsService.getStores()
+    this.currencies = await this.transactionsService.getCurrencies()
     this.chRef.detectChanges()
   }
 

@@ -5,6 +5,8 @@ import {
   ChangeDetectorRef,
   TemplateRef,
   ViewChild,
+  Output,
+  EventEmitter,
 } from '@angular/core';
 import { Transaction } from 'src/app/core/models/transaction';
 
@@ -32,6 +34,8 @@ import { Post } from 'src/app/core/models/post';
 })
 export class TransactionsTableComponent implements OnInit {
   @ViewChild(DataTableDirective) transactionsTable!: DataTableDirective;
+
+  @Output() onTransactionUpdate: EventEmitter<any> = new EventEmitter<any>();
 
   dtOptions;
   dialogDtOptions;
@@ -135,7 +139,9 @@ export class TransactionsTableComponent implements OnInit {
       );
   }
 
-  updateTransactions(){
+  updateTransactions() {
+    this.onTransactionUpdate.next()
+
     this.transactionsService
       .getTransactions(this.storeId, this.clientId)
       .subscribe(
@@ -145,8 +151,8 @@ export class TransactionsTableComponent implements OnInit {
             JSON.stringify(res.data.transactionMany)
           ) as Transaction[];
           this.loadingTransactions = false;
-
-          this.rerenderFilteredTransactions(this.transactions)
+          
+          this.rerenderFilteredTransactions(this.transactions);
         },
         (e) => {
           console.error(e);
@@ -197,7 +203,7 @@ export class TransactionsTableComponent implements OnInit {
           this.post.details = newPost.details;
           dialog.close();
           this.msg.success('Movement updated successfully', 'Success');
-          this.updateTransactions()
+          this.updateTransactions();
         },
         (e) => {
           console.error(e);
@@ -291,6 +297,7 @@ export class TransactionsTableComponent implements OnInit {
   }
 
   rerenderTransactions(transaction?: Transaction): void {
+    this.onTransactionUpdate.next()
     this.transactionsTable.dtInstance.then((dtInstance: DataTables.Api) => {
       // Destroy the table first
       dtInstance.destroy();

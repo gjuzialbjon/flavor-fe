@@ -86,6 +86,7 @@ const vendorMany = gql`
       _id
       name
       surname
+      vendorType
     }
   }
 `;
@@ -164,23 +165,19 @@ export class TransactionsService {
   }
 
   async getVendors() {
-    if (this.vendors.length > 0) {
-      return this.vendors;
-    }
-
     await this.apollo
       .query({
         query: vendorMany,
       })
       .toPromise()
       .then((res: any) => {
-        this.clients = res.data.clientMany;
+        this.vendors = res.data.clientMany;
       })
       .catch((e) => {
         console.error(e);
       });
 
-    return this.clients;
+    return this.vendors;
   }
 
   async getCurrencies() {

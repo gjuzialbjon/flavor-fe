@@ -7,6 +7,8 @@ export interface Client {
   surname: string;
   location: string;
   revenue: string;
+  isVendor: boolean;
+  vendorType: string
   credit_sum: string;
   liability_sum: number;
   debit_sum: number;

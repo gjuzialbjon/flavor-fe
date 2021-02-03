@@ -8,12 +8,6 @@ const storeMany = gql`
       name
       revenue_sum
       balance
-      default_currency {
-        currency
-        symbol
-        name
-      }
-      location
     }
   }
 `;
@@ -54,6 +48,19 @@ const storeOne = gql`
   }
 `;
 
+const myStores = gql`
+  {
+    Me {
+      stores {
+        _id
+        name
+        balance
+        revenue_sum
+      }
+    }
+  }
+`;
+
 @Injectable({
   providedIn: 'root',
 })
@@ -63,6 +70,12 @@ export class StoreService {
   getStores() {
     return this.apollo.query({
       query: storeMany,
+    });
+  }
+  
+  getMyStores(){
+    return this.apollo.query({
+      query: myStores,
     });
   }
 

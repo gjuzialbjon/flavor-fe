@@ -1,11 +1,16 @@
 <div class="row mb-3">
-  <div class="col">
+  <div class="col-sm-6">
     <p
       class="text-uppercase text-nb-info font-weight-bold m-0"
       style="font-size: 28px"
     >
       {{ client?.name }} {{ client?.surname }}
     </p>
+  </div>
+  <div *ngIf="!(client?.isVendor)" class="col-sm-6 text-right pt-sm-0 pt-3">
+    <button nbButton status="warning" (click)="openMakeVendor(vendorContent)">
+      Make vendor
+    </button>
   </div>
 </div>
 
@@ -15,13 +20,17 @@
       <nb-card-body>
         <div class="row">
           <div class="col-md-6">
-            <p class="text-disabled mb-2 font-weight-bold text-uppercase">BALANCE TOT</p>
+            <p class="text-disabled mb-2 font-weight-bold text-uppercase">
+              BALANCE TOT
+            </p>
             <p class="text-center mb-0 text-nb-info" style="font-size: 1.5rem">
               <span>{{ client?.balance | currency: "EUR" }}</span>
             </p>
           </div>
           <div class="col-md-6 mt-md-0 mt-4">
-            <p class="text-disabled mb-2 font-weight-bold text-uppercase">PROFIT TOT</p>
+            <p class="text-disabled mb-2 font-weight-bold text-uppercase">
+              PROFIT TOT
+            </p>
             <p class="text-center mb-0 text-nb-info" style="font-size: 1.5rem">
               <span>{{ client?.revenue | currency: "EUR" }}</span>
             </p>
@@ -42,4 +51,45 @@
   </div> -->
 </div>
 
-<app-transactions-table></app-transactions-table>
+<app-transactions-table
+  (onTransactionUpdate)="getClientInfo()"
+></app-transactions-table>
+
+<ng-template #vendorContent let-ref="dialogRef">
+  <nb-card>
+    <nb-card-header class="d-flex align-items-start justify-content-between">
+      <span
+        class="mr-2"
+        style="
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          max-width: 25ch;
+        "
+      >
+        MAKE VENDOR</span
+      >
+      <span>
+        <nb-icon
+          icon="window-close"
+          (click)="ref.close()"
+          style="cursor: pointer"
+        ></nb-icon>
+      </span>
+    </nb-card-header>
+    <nb-card-body class="p-3">
+      <div class="form-group">
+        <label class="label">Enter vendor type *</label>
+        <input nbInput fullWidth [status]="vendorTypeFormControl.invalid && vendorTypeFormControl.invalid ? 'danger' : 'basic'" [formControl]="vendorTypeFormControl">
+      </div>
+    </nb-card-body>
+    <nb-card-footer>
+      <button
+      nbButton
+      status="success"
+      (click)="makeVendor(ref)">
+        Make vendor
+      </button>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>

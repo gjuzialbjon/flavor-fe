@@ -26,6 +26,8 @@ const clientOne = gql`
       description
       revenue
       balance
+      isVendor
+      vendorType
     }
   }
 `;
@@ -143,7 +145,7 @@ export class ClientsService {
     });
   }
 
-  createClient(client: Client){
+  createClient(client: Client) {
     return this.apollo.mutate({
       mutation: gql`
         mutation {
@@ -159,6 +161,23 @@ export class ClientsService {
             location
             createdAt
             description
+          }
+        }
+      `,
+    });
+  }
+
+  makeVendor(clientId: string, vendorType: string) {
+    return this.apollo.mutate({
+      mutation: gql`
+        mutation {
+          clientUpdateById(
+            record: { _id: "${clientId}", isVendor: true, vendorType: "${vendorType}" }
+          ) {
+            record {
+              isVendor
+              vendorType
+            }
           }
         }
       `,

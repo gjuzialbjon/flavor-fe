@@ -30,7 +30,7 @@ export class StoresComponent implements OnInit {
   loadingFavorites = true;
   newStoreForm!: FormGroup;
 
-  totalBalance = 666;
+  totalBalance = 0;
 
   constructor(
     private configsService: ConfigsService,
@@ -51,10 +51,15 @@ export class StoresComponent implements OnInit {
   }
 
   getStores() {
-    this.storeService.getStores().subscribe(
+    this.storeService.getMyStores().subscribe(
       (res: any) => {
-        this.stores = res.data.storeMany as Store[];
-        console.log(this.stores);
+        this.stores = res.data.Me.stores as Store[];
+        
+        this.totalBalance = 0
+        for (const store of this.stores) {
+          this.totalBalance += store.balance
+        }
+
         this.loadingStores = false;
         this.chRef.detectChanges();
       },
