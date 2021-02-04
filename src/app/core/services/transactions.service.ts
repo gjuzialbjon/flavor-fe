@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Apollo, gql } from 'apollo-angular';
-import { Post } from '../models/post';
 import { AuthenticationService } from './authentication.service';
 
 const transactionOne = `{
@@ -113,12 +112,19 @@ export class TransactionsService {
     return this.apollo.query({
       query: gql`
       {
-        transactionMany(
-          filter:{
-            ${storeFilter}
-            ${clientFilter}
+        Me{
+          stores(
+            filter:{
+              ${storeFilter}
+            }
+          ){
+            transactions(
+              filter:{
+                ${clientFilter}
+              }
+            )${transactionOne}
           }
-        )${transactionOne}
+        }
       }
       `,
     });

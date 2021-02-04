@@ -35,7 +35,6 @@ export class ClientDashboardComponent implements OnInit {
 
   loadingTransactions = true;
 
-  makingTransaction = false;
   transactionType = '';
   transactionTypes;
 
@@ -63,28 +62,6 @@ export class ClientDashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.getClientInfo();
-    this.getClientTransactions();
-  }
-
-  getClientTransactions() {
-    this.clientsService.getClientTransactions(this.clientId).subscribe(
-      (res: any) => {
-        console.log(res);
-        this.transactions = JSON.parse(
-          JSON.stringify(res.data.transactionMany)
-        ) as Transaction[];
-        this.tableTransactions = JSON.parse(
-          JSON.stringify(res.data.transactionMany)
-        ) as Transaction[];
-        this.loadingTransactions = false;
-        this.dtTrigger.next();
-        this.chRef.detectChanges();
-      },
-      (e) => {
-        console.error(e);
-        this.msg.defaultError();
-      }
-    );
   }
 
   getClientInfo() {
@@ -102,7 +79,6 @@ export class ClientDashboardComponent implements OnInit {
   }
 
   make(transactionType: string) {
-    this.makingTransaction = true;
     this.transactionType = transactionType;
     this.chRef.detectChanges();
   }
@@ -123,12 +99,6 @@ export class ClientDashboardComponent implements OnInit {
       // Call the dtTrigger to rerender again
       this.dtTrigger.next();
     });
-    this.chRef.detectChanges();
-  }
-
-  cancelTransaction() {
-    this.makingTransaction = false;
-    this.transactionType = '';
     this.chRef.detectChanges();
   }
 

@@ -26,6 +26,7 @@ import { AuthenticationService } from 'src/app/core/services/authentication.serv
 import { TransactionsService } from 'src/app/core/services/transactions.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Post } from 'src/app/core/models/post';
+import { Store } from 'src/app/core/models/store';
 
 @Component({
   selector: 'app-transactions-table',
@@ -60,9 +61,8 @@ export class TransactionsTableComponent implements OnInit {
   storeId;
   clientId;
 
-  loadingTransactions = true;
+  loadingTransactions = false;
 
-  makingTransaction = true;
   transactionType = 'transfer';
   transactionTypes: any[] = [];
   commentFormControl = new FormControl('', [Validators.required]);
@@ -120,13 +120,15 @@ export class TransactionsTableComponent implements OnInit {
       .getTransactions(this.storeId, this.clientId)
       .subscribe(
         (res: any) => {
-          console.log(res);
-          this.transactions = JSON.parse(
-            JSON.stringify(res.data.transactionMany)
-          ) as Transaction[];
-          this.tableTransactions = JSON.parse(
-            JSON.stringify(res.data.transactionMany)
-          ) as Transaction[];
+          // console.log(res);
+          this.transactions = []
+          let stores = JSON.parse(JSON.stringify(res.data.Me.stores)) as Store[]
+
+          for (const store of stores) {
+            this.transactions = [...this.transactions, ...store.transactions]
+          }
+
+          this.tableTransactions = JSON.parse(JSON.stringify(this.transactions))          
           this.loadingTransactions = false;
           this.dtTrigger.next();
 
@@ -146,12 +148,21 @@ export class TransactionsTableComponent implements OnInit {
       .getTransactions(this.storeId, this.clientId)
       .subscribe(
         (res: any) => {
-          console.log(res);
-          this.transactions = JSON.parse(
-            JSON.stringify(res.data.transactionMany)
-          ) as Transaction[];
+          // console.log(res);
+          this.transactions = [];
+          let stores = JSON.parse(
+            JSON.stringify(res.data.Me.stores)
+          ) as Store[];
+
+          for (const store of stores) {
+            this.transactions = [...this.transactions, ...store.transactions];
+          }
+
+          this.tableTransactions = JSON.parse(
+            JSON.stringify(this.transactions)
+          );
           this.loadingTransactions = false;
-          
+
           this.rerenderFilteredTransactions(this.transactions);
         },
         (e) => {
@@ -291,7 +302,6 @@ export class TransactionsTableComponent implements OnInit {
   }
 
   make(transactionType: string) {
-    this.makingTransaction = true;
     this.transactionType = transactionType;
     this.chRef.detectChanges();
   }

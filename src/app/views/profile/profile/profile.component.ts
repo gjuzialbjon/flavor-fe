@@ -1,4 +1,9 @@
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+} from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MessageService } from 'src/app/core/helper-services/message.service';
 import { AuthenticationService } from 'src/app/core/services/authentication.service';
@@ -16,7 +21,10 @@ export class ProfileComponent implements OnInit {
   editingEmail = false;
 
   nameFormControl = new FormControl('', [Validators.required]);
-  emailFormControl = new FormControl('', [Validators.required, Validators.email]);
+  emailFormControl = new FormControl('', [
+    Validators.required,
+    Validators.email,
+  ]);
 
   newPassFormControl = new FormControl('', [
     Validators.required,
@@ -26,7 +34,6 @@ export class ProfileComponent implements OnInit {
     Validators.required,
     Validators.minLength(6),
   ]);
-
 
   constructor(
     private chRef: ChangeDetectorRef,
@@ -39,9 +46,9 @@ export class ProfileComponent implements OnInit {
       (res: any) => {
         console.log(res);
         this.user = JSON.parse(JSON.stringify(res.data.Me));
-        this.emailFormControl.setValue(this.user.email)
-        this.nameFormControl.setValue(this.user.name)
-        this.chRef.detectChanges()
+        this.emailFormControl.setValue(this.user.email);
+        this.nameFormControl.setValue(this.user.name);
+        this.chRef.detectChanges();
       },
       (e) => {
         console.error(e);
@@ -61,13 +68,43 @@ export class ProfileComponent implements OnInit {
   }
 
   saveNewMail() {
-    this.user.email = this.emailFormControl.value;
-    this.editingEmail = false;
+    if (this.emailFormControl.invalid) {
+      this.msg.error('Please insert a valid email address', 'Error');
+      return;
+    }
+
+    this.authService.updateMyEmail(this.emailFormControl.value).subscribe(
+      (res: any) => {
+        console.log(res);
+        this.user.email = this.emailFormControl.value;
+        this.editingEmail = false;
+        this.chRef.detectChanges();
+      },
+      (e) => {
+        console.error(e);
+        this.msg.defaultError();
+      }
+    );
   }
 
   saveNewName() {
-    this.user.name = this.nameFormControl.value;
-    this.editingName = false;
+    if (this.nameFormControl.invalid) {
+      this.msg.error('Please insert a name', 'Error');
+      return;
+    }
+
+    this.authService.updateMyName(this.nameFormControl.value).subscribe(
+      (res: any) => {
+        console.log(res);
+        this.user.name = this.nameFormControl.value;
+        this.editingName = false;
+        this.chRef.detectChanges();
+      },
+      (e) => {
+        console.error(e);
+        this.msg.defaultError();
+      }
+    );
   }
 
   updatePassword() {

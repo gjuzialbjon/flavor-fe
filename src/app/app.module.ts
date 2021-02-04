@@ -27,7 +27,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     GraphQLModule,
     LoadingBarRouterModule,
     NbThemeModule.forRoot(
-      { name: 'corporate' }
+      { name: 'dark' }
     ),
     NbLayoutModule,
     NbSidebarModule.forRoot(), // NbSidebarModule.forRoot(), //if this is your app.module

@@ -109,4 +109,28 @@ export class AuthenticationService {
       `,
     });
   }
+
+  updateMyName(newName: string) {
+    return this.apollo.mutate({
+      mutation: gql`
+      mutation {
+          updateMyName(name: "${newName}") {
+            name
+          }
+        }
+      `,
+    });
+  }
+
+  updateMyEmail(newEmail: string) {
+    return this.apollo.mutate({
+      mutation: gql`
+        mutation {
+          updateMyEmail(email: "${newEmail}") {
+            name
+          }
+        }
+      `,
+    });
+  }
 }
