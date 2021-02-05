@@ -106,7 +106,7 @@ export class TransactionsService {
 
   // QUERIES
   getTransactions(storeId?: string, clientId?: string) {
-    let storeFilter = !!storeId ? `store: "${storeId}"` : '';
+    let storeFilter = !!storeId ? `_id: "${storeId}"` : '';
     let clientFilter = !!clientId ? `client: "${clientId}"` : '';
 
     return this.apollo.query({
