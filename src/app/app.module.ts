@@ -8,9 +8,26 @@ import { HttpClientModule } from '@angular/common/http';
 import { GraphQLModule } from './graphql.module';
 import { NgModule } from '@angular/core';
 import { SidebarComponent } from './theme/sidebar/sidebar.component';
-import { NbButtonModule, NbContextMenuModule, NbDatepickerModule, NbDialogModule, NbFormFieldModule, NbGlobalPhysicalPosition, NbIconModule, NbInputModule, NbLayoutModule, NbMenuModule, NbSearchModule, NbSidebarModule, NbThemeModule, NbToastrModule } from '@nebular/theme';
+import {
+  NbButtonModule,
+  NbContextMenuModule,
+  NbDatepickerModule,
+  NbDialogModule,
+  NbFormFieldModule,
+  NbGlobalPhysicalPosition,
+  NbIconModule,
+  NbInputModule,
+  NbLayoutModule,
+  NbMenuModule,
+  NbSearchModule,
+  NbSelectModule,
+  NbSidebarModule,
+  NbThemeModule,
+  NbToastrModule,
+} from '@nebular/theme';
 import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { environment } from '@env';
 
 @NgModule({
   declarations: [
@@ -26,9 +43,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     HttpClientModule,
     GraphQLModule,
     LoadingBarRouterModule,
-    NbThemeModule.forRoot(
-      { name: 'dark' }
-    ),
+    NbThemeModule.forRoot({ name: environment.theme }),
     NbLayoutModule,
     NbSidebarModule.forRoot(), // NbSidebarModule.forRoot(), //if this is your app.module
     NbMenuModule.forRoot(),
@@ -38,21 +53,21 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
       limit: 3,
       preventDuplicates: true,
       position: NbGlobalPhysicalPosition.TOP_LEFT,
-      toastClass: 'toastr-class'
+      toastClass: 'toastr-class',
     }),
     NbDatepickerModule.forRoot(),
     NbIconModule,
+    NbSelectModule,
     NbButtonModule,
     NbSearchModule,
     NbInputModule,
     NbFormFieldModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {
-  constructor() {
-  }
+  constructor() {}
 }

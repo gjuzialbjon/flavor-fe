@@ -69,8 +69,7 @@ export class ClientsService {
       query: clientOne,
       variables: {
         _id: clientId,
-      },
-      fetchPolicy: 'network-only',
+      }
     });
   }
 

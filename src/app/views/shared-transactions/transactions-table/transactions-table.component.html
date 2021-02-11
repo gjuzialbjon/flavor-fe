@@ -161,8 +161,8 @@
               <th>Fee</th>
               <th>Payment type</th>
               <th>Direction</th>
-              <th *ngIf="isAdminOrAgent && !isInClient">Client</th>
-              <th *ngIf="isAdminOrAgent && !isInStore">Store</th>
+              <th *ngIf="isAdminOrAgent ">Client</th>
+              <th *ngIf="isAdminOrAgent ">Store</th>
               <th *ngIf="!isInClient">Created By</th>
               <th *ngIf="!isInClient">Description</th>
               <th>Status</th>
@@ -233,14 +233,14 @@
               </td>
 
               <td
-                *ngIf="isAdminOrAgent && !isInClient"
+                *ngIf="isAdminOrAgent "
                 class="text-capitalize"
                 (click)="openEditTransaction(transactionDialog, transaction)"
               >
                 {{ transaction.client?.name }} {{ transaction.client?.surname }}
               </td>
               <td
-                *ngIf="isAdminOrAgent && !isInStore"
+                *ngIf="isAdminOrAgent "
                 class="text-capitalize"
                 (click)="openEditTransaction(transactionDialog, transaction)"
               >

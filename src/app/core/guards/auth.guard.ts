@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { MessageService } from '../helper-services/message.service';
 import { AuthenticationService } from '../services/authentication.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
-  constructor(private authService: AuthenticationService, private router: Router){
+  constructor(private authService: AuthenticationService, private router: Router, private msg: MessageService){
   }
 
   canActivate(
@@ -29,7 +30,17 @@ export class AuthGuard implements CanActivate {
         if(route.data.roles.includes(this.authService.user.role)){
           return true
         } else {
-          alert('Not enough permissions to visit this page')
+          this.msg.error('Not enough permissions to visit this page', 'Error!')
+          if (
+            this.authService.user.role === 'admin' ||
+            this.authService.user.role === 'agent'
+          ) {
+            this.router.navigateByUrl('/stores');
+          } else if (this.authService.user.role === 'finance') {
+            this.router.navigateByUrl('/reports');
+          } else {
+            console.error('Unknown role in base component');
+          }
           return false
         }
       }

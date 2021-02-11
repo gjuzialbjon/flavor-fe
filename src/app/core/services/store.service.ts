@@ -60,8 +60,7 @@ export class StoreService {
       query: storeOne,
       variables: {
         _id: storeId,
-      },
-      fetchPolicy: 'network-only',
+      }
     });
   }
 

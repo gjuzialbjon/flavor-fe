@@ -10,6 +10,8 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { environment } from '@env';
 import { NbMenuItem, NbSidebarService, NbThemeService } from '@nebular/theme';
 import { filter, map } from 'rxjs/operators';
+import { MessageService } from 'src/app/core/helper-services/message.service';
+import { User } from 'src/app/core/models/user';
 import { AuthenticationService } from 'src/app/core/services/authentication.service';
 
 @Component({
@@ -38,8 +40,12 @@ export class HeaderComponent implements OnInit {
   fullName = '';
   lastRoute = '';
 
+  usersToImpersonate: any[] = [];
+  hasSecondToken = false;
+
   sectionTitle = 'SWAP';
 
+  isAdmin = this.authService.user.role === 'admin'
   production = environment.production;
 
   constructor(
@@ -49,12 +55,23 @@ export class HeaderComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private titleService: Title,
-    private themeService: NbThemeService
+    private themeService: NbThemeService,
+    private msg: MessageService
   ) {}
 
   ngOnInit(): void {
     this.fullName = this.authService.username;
-    this.chRef.detectChanges();
+    this.hasSecondToken = !!localStorage.getItem('flavorFakeToken')?.toString();
+
+    this.authService.getUsersToImpersonate().subscribe(
+      (res: any) => {
+        this.usersToImpersonate = res.data.userMany as User[];
+        this.chRef.detectChanges();
+      },
+      (e) => {
+        console.error('Cannot get other users');
+      }
+    );
 
     this.router.events
       .pipe(filter((e): e is NavigationEnd => e instanceof NavigationEnd))
@@ -92,16 +109,32 @@ export class HeaderComponent implements OnInit {
     this.sidebarService.toggle(true);
   }
 
-  darkTheme() {
-    this.themeService.changeTheme('dark');
+  changeTheme(theme: string) {
+    this.themeService.changeTheme(theme);
   }
 
-  corporateTheme() {
-    this.themeService.changeTheme('corporate');
-  }
-
-  cosmicTheme() {
-    this.themeService.changeTheme('cosmic');
+  userSelected(userId: any) {
+    this.authService.impersonate(userId).subscribe(
+      (res: any) => {
+        if (
+          res.data.impersonate.status ===
+          'this is the latest and greatest token'
+        ) {
+          const fakeToken = res.data.impersonate.token;
+          localStorage.setItem('flavorFakeToken', fakeToken);
+          window.location.reload();
+        } else {
+          this.msg.error(
+            'Could not login as this user. We are sorry!',
+            'Error!'
+          );
+        }
+      },
+      (e) => {
+        this.msg.error('Could not login as this user. We are sorry!', 'Error!');
+        console.error(e);
+      }
+    );
   }
 
   waitForEnter(event: any) {
@@ -119,6 +152,11 @@ export class HeaderComponent implements OnInit {
     });
     this.searchFormControl.setValue('');
     this.chRef.detectChanges();
+  }
+
+  removeImpersonate(){
+    localStorage.removeItem('flavorFakeToken')
+    window.location.reload()
   }
 
   goBack() {

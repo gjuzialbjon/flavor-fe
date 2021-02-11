@@ -23,8 +23,7 @@ export class CurrencyService {
   getCurrencies() {
     return this.apollo.query(
       {
-        query: currencyMany,
-        fetchPolicy:"network-only"
+        query: currencyMany
       },
     )
   }

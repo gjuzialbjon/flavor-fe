@@ -25,8 +25,7 @@ export class EmailService {
   getEmailConfig() {
     return this.apollo.query(
       {
-        query: emailMany,
-        fetchPolicy:"network-only"
+        query: emailMany
       },
     )
   }

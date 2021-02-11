@@ -17,16 +17,22 @@
         icon="arrow-left"
         class="ml-2 d-md-inline d-none"
         status="info"
-        style="cursor: pointer;"
+        style="cursor: pointer"
       ></nb-icon>
     </span>
     <span class="d-flex align-items-center">
+      <nb-select *ngIf="!hasSecondToken && isAdmin" placeholder="Select User" class="mr-5" (selectedChange)="userSelected($event)">
+        <nb-option *ngFor="let user of usersToImpersonate" value="{{user._id}}">{{ user.name }}</nb-option>
+      </nb-select>
+
+      <a *ngIf="hasSecondToken" (click)="removeImpersonate()" style="cursor: pointer;" class="mr-5">Go back to your account</a>
+
       <button
         nbButton
         ghost
         class="d-none d-md-inline"
         *ngIf="!production"
-        (click)="darkTheme()"
+        (click)="changeTheme('dark')"
       >
         <nb-icon icon="moon" status="info" class="mt-1"></nb-icon>
       </button>
@@ -35,7 +41,7 @@
         ghost
         class="d-none d-md-inline"
         *ngIf="!production"
-        (click)="corporateTheme()"
+        (click)="changeTheme('corporate')"
       >
         <nb-icon icon="sun" status="info" class="mt-1"></nb-icon>
       </button>
@@ -45,7 +51,7 @@
         class="d-none d-md-inline"
         style="margin-right: 7rem"
         *ngIf="!production"
-        (click)="cosmicTheme()"
+        (click)="changeTheme('cosmic')"
       >
         <nb-icon icon="user-astronaut" status="info" class="mt-1"></nb-icon>
       </button>

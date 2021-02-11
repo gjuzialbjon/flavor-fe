@@ -17,6 +17,15 @@ const myData = gql`
   }
 `;
 
+const userMany = gql`
+  {
+    userMany {
+      _id
+      name
+    }
+  }
+`;
+
 @Injectable({
   providedIn: 'root',
 })
@@ -37,7 +46,11 @@ export class AuthenticationService {
 
   initUserFromToken() {
     const token = localStorage.getItem('flavorToken');
-    if (!!token && token.length > 10) {
+    const fakeToken = localStorage.getItem('flavorFakeToken')
+
+    if (!!fakeToken && fakeToken.length > 10) {
+      this.user = this.jwtHelper.decodeToken(fakeToken)
+    } else if (!!token && token.length > 10) {
       this.user = this.jwtHelper.decodeToken(token);
     } else {
       this.router.navigateByUrl('/auth/login');
@@ -50,8 +63,18 @@ export class AuthenticationService {
     });
   }
 
+  getUsersToImpersonate(){
+    return this.apollo.query({
+      query: userMany
+    })
+  }
+
   isTokenExpired() {
-    if (!!localStorage.getItem('flavorToken')) {
+    if (!!localStorage.getItem('flavorFakeToken')) {
+      return this.jwtHelper.isTokenExpired(
+        localStorage.getItem('flavorFakeToken') + ''
+      );
+    } else if (!!localStorage.getItem('flavorToken')) {
       return this.jwtHelper.isTokenExpired(
         localStorage.getItem('flavorToken') + ''
       );
@@ -129,6 +152,16 @@ export class AuthenticationService {
           updateMyEmail(email: "${newEmail}") {
             name
           }
+        }
+      `,
+    });
+  }
+
+  impersonate(userId: string){
+    return this.apollo.mutate({
+      mutation: gql`
+        mutation {
+          impersonate(userId: "${userId}")
         }
       `,
     });

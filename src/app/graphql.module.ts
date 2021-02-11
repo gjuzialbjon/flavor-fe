@@ -27,15 +27,24 @@ export function createApollo(httpLink: HttpLink) {
 
   const auth = setContext((operation, context) => {
     const token = localStorage.getItem('flavorToken');
+    const fakeToken = localStorage.getItem('flavorFakeToken');
 
-    if (token === null) {
-      return {};
+    if (fakeToken === null) {
+      if (token === null) {
+        return {};
+      } else {
+        return {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        };
+      }
     } else {
       return {
         headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      };
+          Authorization: `Bearer ${fakeToken}`
+        }
+      }
     }
   });
 
