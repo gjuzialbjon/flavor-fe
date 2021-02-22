@@ -1,0 +1,124 @@
+<div class="row">
+  <div class="col-xl-8 col-lg-6">
+    <nb-card
+      class="mt-0 shadow"
+      style="border: none"
+      [nbSpinner]="loadingTransactions"
+      nbSpinnerStatus="danger"
+      nbSpinnerSize="large"
+      nbSpinnerMessage="Loading"
+    >
+      <nb-card-body>
+        <table
+          datatable
+          [dtOptions]="dtOptions"
+          class="table table-hover btc-table table-sm"
+          width="100%"
+        >
+          <thead>
+            <tr>
+              <th>bank</th>
+              <th>btc part</th>
+              <th>price</th>
+              <th>total</th>
+              <th>minus fee</th>
+              <th>fee</th>
+              <th>profit</th>
+              <th>client</th>
+              <th width="20px">&nbsp;</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let transaction of transactions"
+              style="cursor: pointer"
+            >
+              <td class="post-first-td">bank</td>
+              <td>btc part</td>
+              <td>price</td>
+              <td>total</td>
+              <td>minus fee</td>
+              <td>fee</td>
+              <td>profit</td>
+              <td>client</td>
+              <td>
+                <nb-icon
+                  icon="edit"
+                  style="cursor: pointer"
+                  status="basic"
+                ></nb-icon>
+              </td>
+            </tr>
+          </tbody>
+          <tfoot class="bitcoin-table-footer">
+              <tr>
+                  <td class="text-uppercase text-right post-first-td">Total</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td class="text-right">22313</td>
+                  <td></td>
+                  <td >22313</td>
+                  <td></td>
+                  <td></td>
+              </tr>
+              <tr>
+                  <td class="text-uppercase text-right post-first-td">Remaining Total</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td class="text-right">22313</td>
+                  <td></td>
+                  <td >22313</td>
+                  <td></td>
+                  <td></td>
+              </tr>
+              <tr>
+                  <td class="text-uppercase text-right post-first-td" style="border-bottom-left-radius: .7rem;">Grand Total</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td class="text-right">22313</td>
+                  <td></td>
+                  <td >22313</td>
+                  <td></td>
+                  <td style="border-bottom-right-radius: .7rem;"></td>
+              </tr>
+          </tfoot>
+        </table>
+      </nb-card-body>
+    </nb-card>
+  </div>
+  <div class="col-xl-4 col-lg-6">
+    <nb-card class="bitcoin-second-card">
+      <nb-card-body>
+        <table
+          datatable
+          [dtOptions]="dtOptions2"
+          class="table table-hover table-sm"
+          width="100%"
+        >
+          <thead>
+            <tr>
+              <th>bill</th>
+              <th>paid</th>
+              <th>description</th>
+              <th>remaining</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let transaction of transactions"
+              style="cursor: pointer"
+            >
+              <td class="post-first-td">bill</td>
+              <td>paid</td>
+              <td>description</td>
+              <td>remaining</td>
+            </tr>
+          </tbody>
+        </table>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>

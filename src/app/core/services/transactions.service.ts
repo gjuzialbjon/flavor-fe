@@ -47,6 +47,7 @@ const transactionOne = `{
   client {
     name
     surname
+    _id
   }
   _id
 }`;
@@ -361,6 +362,16 @@ export class TransactionsService {
           }
         }
       `,
+    });
+  }
+
+  completeTransaction(transactionId: string) {
+    return this.apollo.mutate({
+      mutation: gql`mutation{
+        closeTransaction(
+          transaction:"${transactionId}"
+          )${transactionOne}
+      }`,
     });
   }
 }

@@ -72,4 +72,51 @@
   nb-option:focus {
     color: white;
   }
+
+  .bitcoin-second-card {
+    background-color: #3886f7;
+    color: white;
+
+    .table-hover {
+      th,
+      td {
+        color: white;
+      }
+
+      th {
+        border-top: 1px solid #0063f2;
+        border-bottom: 2px solid #0063f2;
+      }
+    }
+  }
+
+  .bitcoin-table-footer{
+    tr{
+      background: #3886f7;
+      td{
+        color: white;
+      }
+    }
+  }
+
+  .transaction-transfer {
+    background-color: rgba(214, 24, 205, 0.726);
+    color: white;
+  }
+  .transaction-trade {
+    background-color: rgba(174, 0, 255, 0.664);
+    color: white;
+  }
+  .transaction-loan {
+    background-color: rgba(214, 214, 23, 0.781);
+    color: white;
+  }
+  .transaction-deposit {
+    background-color: rgba(0, 0, 255, 0.692);
+    color: white;
+  }
+  .transaction-withdraw {
+    background-color: rgba(30, 211, 30, 0.63);
+    color: white;
+  }
 }

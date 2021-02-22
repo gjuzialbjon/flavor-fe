@@ -21,11 +21,11 @@
       ></nb-icon>
     </span>
     <span class="d-flex align-items-center">
-      <nb-select *ngIf="!hasSecondToken && isAdmin" placeholder="Select User" class="mr-5" (selectedChange)="userSelected($event)">
+      <nb-select *ngIf="!hasSecondToken && isAdmin" placeholder="Select User" style="margin-right: 7rem;" (selectedChange)="userSelected($event)">
         <nb-option *ngFor="let user of usersToImpersonate" value="{{user._id}}">{{ user.name }}</nb-option>
       </nb-select>
 
-      <a *ngIf="hasSecondToken" (click)="removeImpersonate()" style="cursor: pointer;" class="mr-5">Go back to your account</a>
+      <a *ngIf="hasSecondToken" (click)="removeImpersonate()" style="margin-right: 7rem; cursor: pointer;">Go back to your account</a>
 
       <button
         nbButton

@@ -16,7 +16,7 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         data: {
           roles: ['admin', 'agent'],
-          breadcrumb: 'Clients'
+          breadcrumb: 'Clients',
         },
       },
       {
@@ -26,7 +26,7 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         data: {
           roles: ['admin', 'agent'],
-          breadcrumb: 'Stores'
+          breadcrumb: 'Stores',
         },
       },
       {
@@ -38,7 +38,19 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         data: {
           roles: ['admin', 'agent', 'finance'],
-          breadcrumb: 'Transactions'
+          breadcrumb: 'Transactions',
+        },
+      },
+      {
+        path: 'btc',
+        loadChildren: () =>
+          import('./views/btc/btc.module').then(
+            (m) => m.BtcModule
+          ),
+        canActivate: [AuthGuard],
+        data: {
+          roles: ['admin', 'agent'],
+          breadcrumb: 'BTC',
         },
       },
       {
@@ -48,7 +60,7 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         data: {
           roles: ['admin', 'finance'],
-          breadcrumb: 'Reports'
+          breadcrumb: 'Reports',
         },
       },
       {
@@ -60,7 +72,7 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         data: {
           roles: ['admin'],
-          breadcrumb: 'Settings'
+          breadcrumb: 'Settings',
         },
       },
       {
@@ -70,7 +82,7 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         data: {
           roles: ['admin', 'agent', 'finance'],
-          breadcrumb: 'Profile'
+          breadcrumb: 'Profile',
         },
       },
       {
@@ -80,7 +92,7 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         data: {
           roles: ['admin', 'agent'],
-          breadcrumb: 'Search'
+          breadcrumb: 'Search',
         },
       },
     ],

@@ -7,7 +7,10 @@ import { AuthenticationService } from '../services/authentication.service';
   providedIn: 'root',
 })
 export class ConfigsService {
-  constructor(private authService: AuthenticationService, private router: Router) {}
+  constructor(
+    private authService: AuthenticationService,
+    private router: Router
+  ) {}
 
   getDTOptions(): DataTables.Settings {
     return {
@@ -15,8 +18,15 @@ export class ConfigsService {
       pageLength: 10,
       processing: true,
       responsive: true,
-      // scrollCollapse: true,
-      // scrollY: '500px',
+    };
+  }
+
+  getBTCDTOptions(): DataTables.Settings {
+    return {
+      paging: false,
+      processing: true,
+      responsive: true,
+      dom: "ft"
     };
   }
 
@@ -79,9 +89,9 @@ export class ConfigsService {
     let role = '';
 
     if (this.authService.user) {
-       role = this.authService.user.role;
+      role = this.authService.user.role;
     } else {
-      this.router.navigateByUrl('/auth/login')
+      this.router.navigateByUrl('/auth/login');
     }
 
     if (role === 'admin') {
@@ -107,6 +117,15 @@ export class ConfigsService {
           icon: {
             icon: 'transactions',
             pack: 'menu',
+          },
+          pathMatch: 'prefix',
+        },
+        {
+          title: 'BTC',
+          link: '/btc',
+          icon: {
+            icon: 'btc',
+            pack: 'brand',
           },
           pathMatch: 'prefix',
         },
@@ -152,6 +171,15 @@ export class ConfigsService {
           icon: {
             icon: 'transactions',
             pack: 'menu',
+          },
+          pathMatch: 'prefix',
+        },
+        {
+          title: 'BTC',
+          link: '/btc',
+          icon: {
+            icon: 'btc',
+            pack: 'brand',
           },
           pathMatch: 'prefix',
         },

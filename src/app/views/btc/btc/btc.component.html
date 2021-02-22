@@ -1,0 +1,46 @@
+<nb-card
+  class="mt-0 shadow"
+  style="border: none"
+  [nbSpinner]="loadingDates"
+  nbSpinnerStatus="danger"
+  nbSpinnerSize="large"
+  nbSpinnerMessage="Loading"
+>
+  <nb-card-body>
+    <table
+      datatable
+      [dtOptions]="dtOptions"
+      class="table table-hover"
+      width="100%"
+    >
+      <thead>
+        <tr>
+          <th>date</th>
+          <th>status</th>
+          <th>amount</th>
+          <th width="20px">&nbsp;</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of btcDates" style="cursor: pointer">
+          <td class="text-capitalize">
+            {{ row.createdAt | date: "mediumDate" }}
+          </td>
+          <td class="text-capitalize" routerLink="{{ row._id }}">
+            {{ row.status }}
+          </td>
+          <td routerLink="{{ row._id }}">
+            {{ row.amount | currency }}
+          </td>
+          <td routerLink="{{ row._id }}">
+            <nb-icon
+              icon="arrow-right"
+              style="cursor: pointer"
+              status="danger"
+            ></nb-icon>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </nb-card-body>
+</nb-card>

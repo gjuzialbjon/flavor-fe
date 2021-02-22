@@ -121,14 +121,18 @@ export class TransactionsTableComponent implements OnInit {
       .subscribe(
         (res: any) => {
           // console.log(res);
-          this.transactions = []
-          let stores = JSON.parse(JSON.stringify(res.data.Me.stores)) as Store[]
+          this.transactions = [];
+          let stores = JSON.parse(
+            JSON.stringify(res.data.Me.stores)
+          ) as Store[];
 
           for (const store of stores) {
-            this.transactions = [...this.transactions, ...store.transactions]
+            this.transactions = [...this.transactions, ...store.transactions];
           }
 
-          this.tableTransactions = JSON.parse(JSON.stringify(this.transactions))          
+          this.tableTransactions = JSON.parse(
+            JSON.stringify(this.transactions)
+          );
           this.loadingTransactions = false;
           this.dtTrigger.next();
 
@@ -142,7 +146,7 @@ export class TransactionsTableComponent implements OnInit {
   }
 
   updateTransactions() {
-    this.onTransactionUpdate.next()
+    this.onTransactionUpdate.next();
 
     this.transactionsService
       .getTransactions(this.storeId, this.clientId)
@@ -175,6 +179,7 @@ export class TransactionsTableComponent implements OnInit {
   openEditTransaction(content: TemplateRef<any>, transaction: Transaction) {
     this.transaction = transaction;
     this.commentFormControl.setValue('');
+    console.log(transaction)
     this.dialogService.open(content);
   }
 
@@ -306,8 +311,21 @@ export class TransactionsTableComponent implements OnInit {
     this.chRef.detectChanges();
   }
 
+  completeTransaction(transactionId: string, dialog: any) {
+    this.transactionsService.completeTransaction(transactionId).subscribe(
+      (res: any) => {
+        console.log(res);
+        dialog.close();
+        this.updateTransactions();
+      },
+      (e) => {
+        console.error(e);
+      }
+    );
+  }
+
   rerenderTransactions(transaction?: Transaction): void {
-    this.onTransactionUpdate.next()
+    this.onTransactionUpdate.next();
     this.transactionsTable.dtInstance.then((dtInstance: DataTables.Api) => {
       // Destroy the table first
       dtInstance.destroy();
