@@ -44,7 +44,6 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
     this.authService.getMyData().subscribe(
       (res: any) => {
-        console.log(res);
         this.user = JSON.parse(JSON.stringify(res.data.Me));
         this.emailFormControl.setValue(this.user.email);
         this.nameFormControl.setValue(this.user.name);
@@ -75,7 +74,6 @@ export class ProfileComponent implements OnInit {
 
     this.authService.updateMyEmail(this.emailFormControl.value).subscribe(
       (res: any) => {
-        console.log(res);
         this.user.email = this.emailFormControl.value;
         this.editingEmail = false;
         this.chRef.detectChanges();
@@ -95,7 +93,6 @@ export class ProfileComponent implements OnInit {
 
     this.authService.updateMyName(this.nameFormControl.value).subscribe(
       (res: any) => {
-        console.log(res);
         this.user.name = this.nameFormControl.value;
         this.editingName = false;
         this.chRef.detectChanges();
@@ -125,7 +122,6 @@ export class ProfileComponent implements OnInit {
 
     this.authService.resetPassword(this.newPassFormControl.value).subscribe(
       (res: any) => {
-        console.log(res);
         if (res.data.resetPassword.message === 'Done') {
           this.msg.success('Password updated successfully', 'Success!');
           this.resetPasswordFormControls();

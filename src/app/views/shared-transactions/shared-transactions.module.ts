@@ -4,7 +4,6 @@ import { TransferComponent } from './transfer/transfer.component';
 import { DepositComponent } from './deposit/deposit.component';
 import { WithdrawComponent } from './withdraw/withdraw.component';
 import { LoanComponent } from './loan/loan.component';
-import { TradeComponent } from './trade/trade.component';
 import {
   NbFormFieldModule,
   NbIconModule,
@@ -28,7 +27,6 @@ import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
     DepositComponent,
     WithdrawComponent,
     LoanComponent,
-    TradeComponent,
     TransactionsTableComponent,
   ],
   imports: [
@@ -47,7 +45,7 @@ import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
     NgbDropdownModule,
     NbSpinnerModule,
     NbDialogModule.forChild({
-      dialogClass: 'dialog-width'
+      dialogClass: 'dialog-width',
     }),
   ],
   exports: [
@@ -55,8 +53,7 @@ import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
     DepositComponent,
     WithdrawComponent,
     LoanComponent,
-    TradeComponent,
-    TransactionsTableComponent
+    TransactionsTableComponent,
   ],
 })
 export class SharedTransactionsModule {}

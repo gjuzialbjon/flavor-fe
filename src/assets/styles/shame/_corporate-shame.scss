@@ -90,33 +90,33 @@
     }
   }
 
-  .bitcoin-table-footer{
-    tr{
+  .bitcoin-table-footer {
+    tr {
       background: #3886f7;
-      td{
+      td {
         color: white;
       }
     }
   }
 
-  .transaction-transfer {
-    background-color: rgba(214, 24, 205, 0.726);
-    color: white;
-  }
-  .transaction-trade {
-    background-color: rgba(174, 0, 255, 0.664);
-    color: white;
-  }
-  .transaction-loan {
-    background-color: rgba(214, 214, 23, 0.781);
-    color: white;
-  }
-  .transaction-deposit {
-    background-color: rgba(0, 0, 255, 0.692);
-    color: white;
-  }
-  .transaction-withdraw {
-    background-color: rgba(30, 211, 30, 0.63);
-    color: white;
-  }
+  // .transaction-transfer {
+  //   background-color: rgba(30, 211, 30, 0.63);
+  //   color: white;
+  // }
+  // .transaction-trade {
+  //   background-color: rgba(174, 0, 255, 0.664);
+  //   color: white;
+  // }
+  // .transaction-loan {
+  //   background-color: rgba(214, 214, 23, 0.781);
+  //   color: #1a1818;
+  // }
+  // .transaction-deposit {
+  //   background-color: rgba(0, 0, 255, 0.692);
+  //   color: white;
+  // }
+  // .transaction-withdraw {
+  //   background-color: rgba(221, 25, 179, 0.699);
+  //   color: white;
+  // }
 }

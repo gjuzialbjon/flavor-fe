@@ -56,7 +56,6 @@ export class DepositComponent implements OnInit {
     this.onTransactionLock.emit(true)
     this.transactionsService.makeDeposit(this.transactionForm.value).subscribe(
       (res: any) => {
-        console.log(res)
         this.onTransactionCreate.emit(JSON.parse(JSON.stringify(res.data.makeDeposit)))
         this.initForm()
         this.chRef.detectChanges()

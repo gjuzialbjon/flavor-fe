@@ -14,7 +14,6 @@ import { ConfigsService } from 'src/app/core/helper-services/configs.service';
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SidebarComponent implements OnInit {
   destroyed$: ReplaySubject<boolean> = new ReplaySubject(1);
@@ -49,13 +48,8 @@ export class SidebarComponent implements OnInit {
       });
   }
 
-  ngAfterViewInit(){
-    this.chRef.detectChanges()
-  }
-
   ngOnDestroy() {
     this.destroyed$.next(true);
     this.destroyed$.complete();
-    this.chRef.detach();
   }
 }

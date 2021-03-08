@@ -29,7 +29,6 @@ export class SearchComponent implements OnInit {
     private searchService: SearchService,
     private chRef: ChangeDetectorRef
   ) {
-    console.log('Construcing search');
     this.route.queryParams.subscribe(
       (res) => {
         this.keyword = res.key;

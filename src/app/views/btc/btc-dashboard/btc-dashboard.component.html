@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-xl-8 col-lg-6">
+  <div class="col-xl-8">
     <nb-card
       class="mt-0 shadow"
       style="border: none"
@@ -9,9 +9,239 @@
       nbSpinnerMessage="Loading"
     >
       <nb-card-body>
+        <!-- MAKING A TRANSACTION SECTION -->
+        <div class="row transactions-bg mb-3" style="margin: 0rem -1rem">
+          <div class="col-12 py-3 px-lg-5 px-3">
+            <form [formGroup]="tradeForm" class="form-row">
+              <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-2">
+                <label class="label">From Account *</label>
+                <input
+                  nbInput
+                  fullWidth
+                  placeholder="From Account"
+                  formControlName="from_account"
+                  [status]="
+                    trade.from_account.touched && trade.from_account.errors
+                      ? 'danger'
+                      : 'basic'
+                  "
+                />
+
+                <small
+                  *ngIf="
+                    trade.from_account.touched && trade.from_account.errors
+                  "
+                  class="form-text text-danger"
+                  >Please enter from account</small
+                >
+              </div>
+
+              <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-2">
+                <label class="label">Crypto Ammount *</label>
+                <input
+                  nbInput
+                  fullWidth
+                  type="number"
+                  min="0"
+                  placeholder="Crypto Ammount"
+                  formControlName="crypto_ammount"
+                  [status]="
+                    trade.crypto_ammount.touched && trade.crypto_ammount.errors
+                      ? 'danger'
+                      : 'basic'
+                  "
+                />
+                <small
+                  *ngIf="
+                    trade.crypto_ammount.touched && trade.crypto_ammount.errors
+                  "
+                  class="form-text text-danger"
+                  >Please enter Crypto Ammount</small
+                >
+              </div>
+              <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-2">
+                <label class="label">Price Current *</label>
+                <nb-form-field
+                  ><input
+                    nbInput
+                    fullWidth
+                    type="number"
+                    placeholder="Price Current"
+                    formControlName="price_current"
+                    [status]="
+                      trade.price_current.touched && trade.price_current.errors
+                        ? 'danger'
+                        : 'basic'
+                    "
+                  />
+                  <nb-icon nbSuffix icon="euro-sign"></nb-icon>
+                </nb-form-field>
+
+                <small
+                  *ngIf="
+                    trade.price_current.touched && trade.price_current.errors
+                  "
+                  class="form-text text-danger"
+                  >Please enter Price Current</small
+                >
+              </div>
+              <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-2">
+                <label class="label">Total Bought *</label>
+                <nb-form-field>
+                  <input
+                    nbInput
+                    fullWidth
+                    type="number"
+                    placeholder="Total Bought"
+                    formControlName="total_bought"
+                    [readonly]="true"
+                    [status]="
+                      trade.total_bought.touched && trade.total_bought.errors
+                        ? 'danger'
+                        : 'basic'
+                    "
+                  />
+                  <nb-icon nbSuffix icon="euro-sign"></nb-icon>
+                </nb-form-field>
+
+                <small
+                  *ngIf="
+                    trade.total_bought.touched && trade.total_bought.errors
+                  "
+                  class="form-text text-danger"
+                  >Please enter Total Bought</small
+                >
+              </div>
+              <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-2">
+                <label class="label">Fee % *</label>
+                <nb-form-field>
+                  <input
+                    nbInput
+                    fullWidth
+                    type="number"
+                    placeholder="Fee"
+                    formControlName="fee"
+                    [status]="
+                      trade.fee.touched && trade.fee.errors ? 'danger' : 'basic'
+                    "
+                  />
+                  <nb-icon nbSuffix icon="percent"></nb-icon>
+                </nb-form-field>
+
+                <small
+                  *ngIf="trade.fee.touched && trade.fee.errors"
+                  class="form-text text-danger"
+                  >Please enter Fee</small
+                >
+              </div>
+              <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-2">
+                <label class="label">Amount Sold *</label>
+                <nb-form-field>
+                  <input
+                    nbInput
+                    fullWidth
+                    type="number"
+                    placeholder="Amount Sold"
+                    formControlName="ammount_sold"
+                    [readonly]="true"
+                    [status]="
+                      trade.ammount_sold.touched && trade.ammount_sold.errors
+                        ? 'danger'
+                        : 'basic'
+                    "
+                  />
+                  <nb-icon nbSuffix icon="euro-sign"></nb-icon>
+                </nb-form-field>
+
+                <small
+                  *ngIf="
+                    trade.ammount_sold.touched && trade.ammount_sold.errors
+                  "
+                  class="form-text text-danger"
+                  >Please enter Amount Sold</small
+                >
+              </div>
+
+              <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-2">
+                <label class="label">Description *</label>
+                <input
+                  nbInput
+                  fullWidth
+                  placeholder="Description"
+                  formControlName="description"
+                  [status]="
+                    trade.description.touched && trade.description.errors
+                      ? 'danger'
+                      : 'basic'
+                  "
+                />
+                <small
+                  *ngIf="trade.description.touched && trade.description.errors"
+                  class="form-text text-danger"
+                  >Please enter Description</small
+                >
+              </div>
+              <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-2">
+                <label class="label">Date *</label>
+                <input
+                  nbInput
+                  fullWidth
+                  placeholder="Date"
+                  formControlName="date"
+                  [nbDatepicker]="dateTimePicker"
+                  [status]="
+                    trade.date.touched && trade.date.errors ? 'danger' : 'basic'
+                  "
+                />
+                <nb-datepicker #dateTimePicker></nb-datepicker>
+                <small
+                  *ngIf="trade.date.touched && trade.date.errors"
+                  class="form-text text-danger"
+                  >Please enter Date</small
+                >
+              </div>
+              <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-2">
+                <label class="label">Client </label>
+                <ng-select
+                  formControlName="client"
+                  class="my-ng-select"
+                  placeholder="Select client..."
+                >
+                  <ng-option
+                    *ngFor="let client of clients"
+                    [value]="client._id"
+                    >{{ client.name | uppercase }}</ng-option
+                  >
+                </ng-select>
+                <small
+                  *ngIf="trade.client.touched && trade.client.errors"
+                  class="form-text text-danger"
+                  >Please select a client</small
+                >
+              </div>
+              <div class="col-md-4 col-sm-6 pt-4">
+                <button
+                  nbButton
+                  status="info"
+                  class="ml-3"
+                  (click)="makeTrade()"
+                  [disabled]="makingTrade"
+                >
+                  make sale
+                </button>
+                <button nbButton ghost class="ml-4" (click)="initTradeForm()">
+                  Reset
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <!-- END MAKING A TRANSACTION -->
+
         <table
           datatable
           [dtOptions]="dtOptions"
+          [dtTrigger]="$any(dtTrigger)"
           class="table table-hover btc-table table-sm"
           width="100%"
         >
@@ -29,18 +259,25 @@
             </tr>
           </thead>
           <tbody>
-            <tr
-              *ngFor="let transaction of transactions"
-              style="cursor: pointer"
-            >
-              <td class="post-first-td">bank</td>
-              <td>btc part</td>
-              <td>price</td>
-              <td>total</td>
-              <td>minus fee</td>
-              <td>fee</td>
-              <td>profit</td>
-              <td>client</td>
+            <tr *ngFor="let row of posts" style="cursor: pointer">
+              <td class="post-first-td">{{ row.from_account }}</td>
+              <td>{{ row.crypto_ammount }}</td>
+              <td>{{ row.price_current | currency: "EUR" }}</td>
+              <td>{{ row.total_bought | currency: "EUR" }}</td>
+              <td>{{ row.ammount | currency: "EUR" }}</td>
+              <td>
+                {{
+                  (
+                    ((row.total_bought - row.ammount) / row.total_bought) *
+                    100
+                  ).toFixed(2)
+                }}
+                %
+              </td>
+              <td>
+                {{ row.total_bought - row.ammount | currency: "EUR" }}
+              </td>
+              <td class="text-uppercase">{{ row.client?.name }}</td>
               <td>
                 <nb-icon
                   icon="edit"
@@ -51,53 +288,158 @@
             </tr>
           </tbody>
           <tfoot class="bitcoin-table-footer">
-              <tr>
-                  <td class="text-uppercase text-right post-first-td">Total</td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td class="text-right">22313</td>
-                  <td></td>
-                  <td >22313</td>
-                  <td></td>
-                  <td></td>
-              </tr>
-              <tr>
-                  <td class="text-uppercase text-right post-first-td">Remaining Total</td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td class="text-right">22313</td>
-                  <td></td>
-                  <td >22313</td>
-                  <td></td>
-                  <td></td>
-              </tr>
-              <tr>
-                  <td class="text-uppercase text-right post-first-td" style="border-bottom-left-radius: .7rem;">Grand Total</td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td class="text-right">22313</td>
-                  <td></td>
-                  <td >22313</td>
-                  <td></td>
-                  <td style="border-bottom-right-radius: .7rem;"></td>
-              </tr>
+            <tr>
+              <td class="text-uppercase text-right post-first-td">Total</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td class="text-right">{{ totalMinusFee | currency: "EUR" }}</td>
+              <td></td>
+              <td>{{ totalProfit | currency: "EUR" }}</td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td class="text-uppercase text-right post-first-td">
+                Remaining Total
+              </td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td class="text-right">
+                {{ remainingTotalMinusFee | currency: "EUR" }}
+              </td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td
+                class="text-uppercase text-right post-first-td"
+                style="border-bottom-left-radius: 0.7rem"
+              >
+                Grand Total
+              </td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td class="text-right">
+                {{ grandTotalMinusFee | currency: "EUR" }}
+              </td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td style="border-bottom-right-radius: 0.7rem"></td>
+            </tr>
           </tfoot>
         </table>
       </nb-card-body>
     </nb-card>
   </div>
-  <div class="col-xl-4 col-lg-6">
-    <nb-card class="bitcoin-second-card">
+
+  <div class="col-xl-4">
+    <nb-card class="bitcoin-second-card shadow">
       <nb-card-body>
-        <table
-          datatable
-          [dtOptions]="dtOptions2"
-          class="table table-hover table-sm"
-          width="100%"
-        >
+        <!-- MAKING A TRANSACTION SECTION -->
+        <div class="row transactions-bg mb-3" style="margin: 0rem -1rem">
+          <div class="col-12 py-3 px-3">
+            <form [formGroup]="transferForm" class="form-row">
+              <div class="col-lg-3 col-md-4 col-sm-6 mb-2">
+                <label class="label">To *</label>
+                <ng-select
+                  formControlName="toEntity"
+                  class="my-ng-select"
+                  placeholder="Select entity..."
+                >
+                  <ng-option *ngFor="let store of stores" [value]="store._id">{{
+                    store.name | uppercase
+                  }}</ng-option>
+                </ng-select>
+                <small
+                  *ngIf="t.toEntity.touched && t.toEntity.errors"
+                  class="form-text text-danger"
+                  >Please select an entity</small
+                >
+              </div>
+              <div class="col-lg-3 col-md-4 col-sm-6 mb-2">
+                <label class="label">Description *</label>
+                <input
+                  nbInput
+                  fullWidth
+                  placeholder="Description"
+                  formControlName="description"
+                  [status]="
+                    t.description.touched && t.description.errors
+                      ? 'danger'
+                      : 'basic'
+                  "
+                />
+                <small
+                  *ngIf="t.description.touched && t.description.errors"
+                  class="form-text text-danger"
+                  >Please enter a short description</small
+                >
+              </div>
+
+              <div class="col-lg-3 col-md-4 col-sm-6 mb-2">
+                <label class="label">Amount *</label>
+                <nb-form-field>
+                  <input
+                    nbInput
+                    fullWidth
+                    formControlName="amount"
+                    placeholder="Amount *"
+                    [status]="
+                      t.amount.touched && t.amount.errors ? 'danger' : 'basic'
+                    "
+                  />
+                  <nb-icon nbSuffix icon="euro-sign"></nb-icon>
+                </nb-form-field>
+
+                <small
+                  *ngIf="t.amount.touched && t.amount.errors"
+                  class="form-text text-danger"
+                  >Please enter a valid amount</small
+                >
+              </div>
+
+              <div class="col-lg-3 col-md-4 col-sm-6 mb-2">
+                <label class="label">Fee (optional)</label>
+                <nb-form-field>
+                  <input
+                    nbInput
+                    fullWidth
+                    formControlName="fee"
+                    placeholder="Fee"
+                    [status]="
+                      t.fee.touched && t.fee.errors ? 'danger' : 'basic'
+                    "
+                  />
+                  <nb-icon nbSuffix icon="euro-sign"></nb-icon>
+                </nb-form-field>
+
+                <small
+                  *ngIf="t.fee.touched && t.fee.errors"
+                  class="form-text text-danger"
+                  >Please enter a valid fee or leave this field empty (Only
+                  numbers allowed)</small
+                >
+              </div>
+            </form>
+          </div>
+          <div class="col-12 text-right mb-3">
+            <button nbButton status="info" [disabled]="makingTransfer" (click)="makeTransfer()">
+              Make transfer
+            </button>
+            <button nbButton ghost class="ml-3" (click)="initTransferForm()">
+              reset
+            </button>
+          </div>
+        </div>
+        <!-- END MAKING A TRANSACTION -->
+
+        <table class="table table-hover table-sm" width="100%">
           <thead>
             <tr>
               <th>bill</th>
@@ -107,14 +449,11 @@
             </tr>
           </thead>
           <tbody>
-            <tr
-              *ngFor="let transaction of transactions"
-              style="cursor: pointer"
-            >
-              <td class="post-first-td">bill</td>
-              <td>paid</td>
-              <td>description</td>
-              <td>remaining</td>
+            <tr *ngFor="let row of transfers" style="cursor: pointer">
+              <td class="post-first-td">{{ row.total | currency: "EUR" }}</td>
+              <td>{{ row.amount_in | currency: "EUR" }}</td>
+              <td>{{ row.description }}</td>
+              <td>{{ row.total - row.amount_in | currency: "EUR" }}</td>
             </tr>
           </tbody>
         </table>

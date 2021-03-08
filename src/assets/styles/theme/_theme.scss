@@ -1,8 +1,8 @@
 // // import Nebular Theme System and the default theme
 @import "~@nebular/theme/styles/theming";
 @import "~@nebular/theme/styles/themes/corporate";
-@import "~@nebular/theme/styles/themes/dark";
-@import "~@nebular/theme/styles/themes/cosmic";
+// @import "~@nebular/theme/styles/themes/dark";
+// @import "~@nebular/theme/styles/themes/cosmic";
 
 $nb-themes: nb-register-theme(
   (
@@ -55,56 +55,56 @@ $nb-themes: nb-register-theme(
   corporate
 );
 
-$nb-themes: nb-register-theme(
-  (
-    // color-primary-500: #3886f7,
-    // color-basic-transparent-600: #6c757d,
-    // layout-scrollbar-color: #3886f7,
-    // layout-background-color: #F5F9FF,
-    border-radius: 6px,
-    font-family-primary: "Roboto",
-    header-padding: 1rem 1.25rem,
-    // sidebar-background-color: #3886f7,
-    sidebar-width: 11rem,
-    // menu-background-color: #3886f7,
-    menu-item-divider-width: 0px,
-    menu-text-font-size: 1rem,
-    menu-item-padding: 1rem 1rem,
-    // menu-text-color: #ffffff,
-    // menu-item-icon-color: #ffffff,
-    // menu-item-icon-hover-color: #ffffff,
-    // menu-item-hover-text-color:#ffffff,
-    // menu-item-hover-background-color: #0063F2,
-    // menu-item-active-background-color: #0063F2,
-    // menu-item-active-text-color: #ffffff,
-    // menu-item-icon-active-color: #ffffff,
-    context-menu-border-width: 0px,
-    card-border-width: 0px,
-    card-padding: 1rem 1rem,
-    tabset-tab-padding: 0.5rem 1rem,
-    tabset-content-padding: 0.5rem 0.4rem,
-    // tabset-tab-active-text-color: #0063F2,
-    // tabset-tab-active-underline-color: #0063F2,
-    // tabset-tab-focus-text-color: #0063F2,
-    // tabset-tab-focus-underline-color:  #0063F2,
-    // tabset-tab-hover-text-color: #0063F2,
-    // tabset-tab-hover-underline-color:#0063F2,
-    select-min-width: 10rem,
-    select-filled-border-width: 0px,
-    select-outline-width: 0px,
-    // option-selected-focus-background-color: #3886f7,
-    // option-focus-background-color: #3886f7,
-    // option-selected-background-color: #3886f7,
-    // option-active-background-color: #3886f7,
-    // color-info-500: #3886f7,
-    // input-basic-background-color: #ffffff,
-    // input-basic-focus-background-color: #e4e9f2,
-    // input-basic-border-color: #ccc,
-    datepicker-shadow: 0px 0px 30px rgba(0, 0, 0, 0.2)
-  ),
-  dark,
-  dark
-);
+// $nb-themes: nb-register-theme(
+//   (
+//     // color-primary-500: #3886f7,
+//     // color-basic-transparent-600: #6c757d,
+//     // layout-scrollbar-color: #3886f7,
+//     // layout-background-color: #F5F9FF,
+//     border-radius: 6px,
+//     font-family-primary: "Roboto",
+//     header-padding: 1rem 1.25rem,
+//     // sidebar-background-color: #3886f7,
+//     sidebar-width: 11rem,
+//     // menu-background-color: #3886f7,
+//     menu-item-divider-width: 0px,
+//     menu-text-font-size: 1rem,
+//     menu-item-padding: 1rem 1rem,
+//     // menu-text-color: #ffffff,
+//     // menu-item-icon-color: #ffffff,
+//     // menu-item-icon-hover-color: #ffffff,
+//     // menu-item-hover-text-color:#ffffff,
+//     // menu-item-hover-background-color: #0063F2,
+//     // menu-item-active-background-color: #0063F2,
+//     // menu-item-active-text-color: #ffffff,
+//     // menu-item-icon-active-color: #ffffff,
+//     context-menu-border-width: 0px,
+//     card-border-width: 0px,
+//     card-padding: 1rem 1rem,
+//     tabset-tab-padding: 0.5rem 1rem,
+//     tabset-content-padding: 0.5rem 0.4rem,
+//     // tabset-tab-active-text-color: #0063F2,
+//     // tabset-tab-active-underline-color: #0063F2,
+//     // tabset-tab-focus-text-color: #0063F2,
+//     // tabset-tab-focus-underline-color:  #0063F2,
+//     // tabset-tab-hover-text-color: #0063F2,
+//     // tabset-tab-hover-underline-color:#0063F2,
+//     select-min-width: 10rem,
+//     select-filled-border-width: 0px,
+//     select-outline-width: 0px,
+//     // option-selected-focus-background-color: #3886f7,
+//     // option-focus-background-color: #3886f7,
+//     // option-selected-background-color: #3886f7,
+//     // option-active-background-color: #3886f7,
+//     // color-info-500: #3886f7,
+//     // input-basic-background-color: #ffffff,
+//     // input-basic-focus-background-color: #e4e9f2,
+//     // input-basic-border-color: #ccc,
+//     datepicker-shadow: 0px 0px 30px rgba(0, 0, 0, 0.2)
+//   ),
+//   dark,
+//   dark
+// );
 
 // $nb-themes: nb-register-theme(
 //   (

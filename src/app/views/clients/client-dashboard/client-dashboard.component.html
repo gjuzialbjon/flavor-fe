@@ -7,7 +7,10 @@
       {{ client?.name }} {{ client?.surname }}
     </p>
   </div>
-  <div *ngIf="!(client?.isVendor)" class="col-sm-6 text-right pt-sm-0 pt-3">
+  <div
+    *ngIf="!client?.isVendor && !loadingTransactions"
+    class="col-sm-6 text-right pt-sm-0 pt-3"
+  >
     <button nbButton status="warning" (click)="openMakeVendor(vendorContent)">
       Make vendor
     </button>
@@ -80,14 +83,20 @@
     <nb-card-body class="p-3">
       <div class="form-group">
         <label class="label">Enter vendor type *</label>
-        <input nbInput fullWidth [status]="vendorTypeFormControl.invalid && vendorTypeFormControl.invalid ? 'danger' : 'basic'" [formControl]="vendorTypeFormControl">
+        <input
+          nbInput
+          fullWidth
+          [status]="
+            vendorTypeFormControl.invalid && vendorTypeFormControl.invalid
+              ? 'danger'
+              : 'basic'
+          "
+          [formControl]="vendorTypeFormControl"
+        />
       </div>
     </nb-card-body>
     <nb-card-footer>
-      <button
-      nbButton
-      status="success"
-      (click)="makeVendor(ref)">
+      <button nbButton status="success" (click)="makeVendor(ref)">
         Make vendor
       </button>
     </nb-card-footer>

@@ -27,6 +27,7 @@ import { TransactionsService } from 'src/app/core/services/transactions.service'
 import { ActivatedRoute, Router } from '@angular/router';
 import { Post } from 'src/app/core/models/post';
 import { Store } from 'src/app/core/models/store';
+import { Client } from 'src/app/core/models/client';
 
 @Component({
   selector: 'app-transactions-table',
@@ -53,6 +54,8 @@ export class TransactionsTableComponent implements OnInit {
   post!: Post;
 
   stores: any[] = [];
+  clients: Client[] = [];
+  entities: any[] = [];
 
   isAdminOrAgent = false;
   isAdmin = false;
@@ -61,7 +64,7 @@ export class TransactionsTableComponent implements OnInit {
   storeId;
   clientId;
 
-  loadingTransactions = false;
+  loadingTransactions = true;
 
   transactionType = 'transfer';
   transactionTypes: any[] = [];
@@ -74,6 +77,7 @@ export class TransactionsTableComponent implements OnInit {
 
   editingTransactionDetails = false;
   postForm!: FormGroup;
+  repaymentForm!: FormGroup;
 
   constructor(
     private configsService: ConfigsService,
@@ -113,6 +117,20 @@ export class TransactionsTableComponent implements OnInit {
 
     this.getTransactions();
     this.stores = await this.transactionsService.getStores();
+    this.clients = await this.transactionsService.getClients();
+    this.entities = [...this.stores, ...this.clients];
+  }
+
+  openRepayment(transaction: Transaction, content: any) {
+    this.repaymentForm = this.fb.group({
+      amount: ['', [Validators.required]],
+      date: [new Date().toISOString(), [Validators.required]],
+      details: ['', [Validators.required]],
+      entity: [null, [Validators.required]],
+      transaction: [this.transaction._id],
+    });
+
+    this.dialogService.open(content, { autoFocus: false });
   }
 
   getTransactions() {
@@ -120,11 +138,14 @@ export class TransactionsTableComponent implements OnInit {
       .getTransactions(this.storeId, this.clientId)
       .subscribe(
         (res: any) => {
-          // console.log(res);
+          console.log(res);
           this.transactions = [];
           let stores = JSON.parse(
             JSON.stringify(res.data.Me.stores)
           ) as Store[];
+
+          // FILTER CRYPTOS
+          stores = stores.filter((s) => s.name !== 'CRYPTO STORE');
 
           for (const store of stores) {
             this.transactions = [...this.transactions, ...store.transactions];
@@ -146,28 +167,45 @@ export class TransactionsTableComponent implements OnInit {
   }
 
   updateTransactions() {
-    this.onTransactionUpdate.next();
-
     this.transactionsService
       .getTransactions(this.storeId, this.clientId)
       .subscribe(
         (res: any) => {
-          // console.log(res);
-          this.transactions = [];
-          let stores = JSON.parse(
-            JSON.stringify(res.data.Me.stores)
-          ) as Store[];
+          this.transactionsTable.dtInstance.then(
+            (dtInstance: DataTables.Api) => {
+              // Destroy the table first
+              dtInstance.destroy();
 
-          for (const store of stores) {
-            this.transactions = [...this.transactions, ...store.transactions];
-          }
+              this.transactions = [];
 
-          this.tableTransactions = JSON.parse(
-            JSON.stringify(this.transactions)
+              let stores = JSON.parse(
+                JSON.stringify(res.data.Me.stores)
+              ) as Store[];
+
+              // FILTER CRYPTOS
+              stores = stores.filter((s) => s.name !== 'CRYPTO STORE');
+
+              for (const store of stores) {
+                this.transactions = [
+                  ...this.transactions,
+                  ...store.transactions,
+                ];
+              }
+
+              this.tableTransactions = JSON.parse(
+                JSON.stringify(this.transactions)
+              );
+              this.loadingTransactions = false;
+              this.tableTransactions = JSON.parse(
+                JSON.stringify(this.transactions)
+              );
+              this.chRef.detectChanges();
+
+              // Call the dtTrigger to rerender again
+              this.dtTrigger.next();
+            }
           );
-          this.loadingTransactions = false;
-
-          this.rerenderFilteredTransactions(this.transactions);
+          this.chRef.detectChanges();
         },
         (e) => {
           console.error(e);
@@ -179,7 +217,7 @@ export class TransactionsTableComponent implements OnInit {
   openEditTransaction(content: TemplateRef<any>, transaction: Transaction) {
     this.transaction = transaction;
     this.commentFormControl.setValue('');
-    console.log(transaction)
+    console.log(transaction);
     this.dialogService.open(content);
   }
 
@@ -220,12 +258,35 @@ export class TransactionsTableComponent implements OnInit {
           dialog.close();
           this.msg.success('Movement updated successfully', 'Success');
           this.updateTransactions();
+          this.onTransactionUpdate.next();
         },
         (e) => {
           console.error(e);
           this.msg.error('Could not update movement', 'Error!');
         }
       );
+  }
+
+  addRepayment(ref: any) {
+    console.log(this.repaymentForm.value);
+
+    if (this.repaymentForm.invalid) {
+      this.msg.error('Invalid inputs, cannot add repayment', 'Error!');
+      this.repaymentForm.markAllAsTouched();
+      return;
+    }
+
+    this.transactionsService.makeRepayment(this.repaymentForm.value).subscribe(
+      (res: any) => {
+        console.log(res);
+        this.msg.success('Movement updated successfully', 'Success');
+        this.updateTransactions();
+        this.onTransactionUpdate.next();
+      },
+      (e) => {
+        console.error(e);
+      }
+    );
   }
 
   isIncluded(t: Transaction) {
@@ -372,6 +433,10 @@ export class TransactionsTableComponent implements OnInit {
 
   get p() {
     return this.postForm.controls;
+  }
+
+  get r() {
+    return this.repaymentForm.controls;
   }
 
   ngOnDestroy() {

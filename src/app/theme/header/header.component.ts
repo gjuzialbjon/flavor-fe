@@ -122,7 +122,7 @@ export class HeaderComponent implements OnInit {
         ) {
           const fakeToken = res.data.impersonate.token;
           localStorage.setItem('flavorFakeToken', fakeToken);
-          window.location.reload();
+          window.location.replace('/');
         } else {
           this.msg.error(
             'Could not login as this user. We are sorry!',

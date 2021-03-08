@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Apollo, gql } from 'apollo-angular';
 import { AuthenticationService } from './authentication.service';
+import * as moment from 'moment'; // add this 1 of 4
+import { environment } from '@env';
 
 const transactionOne = `{
   type
@@ -12,6 +14,7 @@ const transactionOne = `{
   amount_in
   amount_out
   description
+  date
   user {
     name
   }
@@ -52,14 +55,59 @@ const transactionOne = `{
   _id
 }`;
 
-const storeMany = gql`
-  {
-    storeMany {
-      _id
+const transactionOneForCryptos = `
+{
+ type
+  createdAt
+  status
+  direction
+  revenue
+  issue
+  amount_in
+  amount_out
+  description
+  user {
+    name
+  }
+  store {
+    name
+    _id
+  }
+  comments {
+    _id
+    comment
+    issue
+    user {
       name
     }
   }
-`;
+  posts {
+    date
+    type
+    details
+    ammount
+    crypto_ammount
+    price_current
+    total_bought
+    from_account
+    fee
+    client{
+      name
+      surname
+      _id
+    }
+    createdAt
+  }
+  currency {
+    symbol
+  }
+  client {
+    name
+    surname
+    _id
+  }
+  _id
+}`;
 
 const clientMany = gql`
   {
@@ -91,6 +139,19 @@ const vendorMany = gql`
   }
 `;
 
+const myStores = gql`
+  {
+    Me {
+      stores {
+        _id
+        name
+        balance
+        revenue_sum
+      }
+    }
+  }
+`;
+
 @Injectable({
   providedIn: 'root',
 })
@@ -107,26 +168,83 @@ export class TransactionsService {
 
   // QUERIES
   getTransactions(storeId?: string, clientId?: string) {
-    let storeFilter = !!storeId ? `_id: "${storeId}"` : '';
+    let storeFilter = !!storeId
+      ? `in:["${storeId}"]`
+      : `nin:["${environment.btc_store_id}"]`;
     let clientFilter = !!clientId ? `client: "${clientId}"` : '';
 
     return this.apollo.query({
       query: gql`
       {
         Me{
-          stores(
-            filter:{
-              ${storeFilter}
-            }
-          ){
-            transactions(
-              filter:{
-                ${clientFilter}
+          stores(filter:{
+            _operators:{
+              _id:{
+                ${storeFilter}
               }
-            )${transactionOne}
+            }
+          }){
+            _id
+            transactions(filter:{
+              _operators:{
+                type:{
+                  nin: crypto
+                }
+              }
+              ${clientFilter}
+            })${transactionOne}
           }
         }
       }
+      `,
+    });
+  }
+
+  getCryptoTransactions() {
+    return this.apollo.query({
+      query: gql`
+      {
+        Me{
+          stores(filter:{
+              _operators:{
+                _id:{
+                  in:["${environment.btc_store_id}"]
+                }
+              }
+            }){
+            transactions(filter: { type: crypto }) 
+            ${transactionOne}
+          }
+        }
+      }
+      `,
+    });
+  }
+
+  getCryptoTransactionById(transactionId: string) {
+    return this.apollo.query({
+      query: gql`{
+        transactionById(_id:"${transactionId}")${transactionOneForCryptos}
+      }`,
+    });
+  }
+
+  getCryptoTransfers() {
+    return this.apollo.query({
+      query: gql`
+        {
+          Me {
+            stores(filter:{
+              _operators:{
+                _id:{
+                  in:["${environment.btc_store_id}"]
+                }
+              }
+            }) {
+              transactions(filter: { type: transfer }) ${transactionOne}
+            }
+          }
+        }
       `,
     });
   }
@@ -138,15 +256,17 @@ export class TransactionsService {
 
     await this.apollo
       .query({
-        query: storeMany,
+        query: myStores,
       })
       .toPromise()
       .then((res: any) => {
-        this.stores = res.data.storeMany;
+        this.stores = res.data.Me.stores;
       })
       .catch((e) => {
         console.error(e);
       });
+
+    this.stores = this.stores.filter((store) => store.name !== 'CRYPTO STORE');
 
     return this.stores;
   }
@@ -305,25 +425,6 @@ export class TransactionsService {
     });
   }
 
-  makeTrade(trade: any) {
-    let hasCurrency = !!trade.currency ? `currency: "${trade.currency}"` : '';
-
-    return this.apollo.mutate({
-      mutation: gql`
-        mutation {
-          makeTrade(
-            Store: "${trade.Store}"
-            vendorId: "${trade.vendorId}"
-            date: "${trade.date}"
-            description: "${trade.description}"
-            amount: ${trade.amount}
-            ${hasCurrency}
-          ) ${transactionOne}
-        }
-      `,
-    });
-  }
-
   makeTransfer(deposit: any) {
     let hasCurrency = !!deposit.currency
       ? `currency: "${deposit.currency}"`
@@ -342,6 +443,24 @@ export class TransactionsService {
             ${hasFee}
             ${hasCurrency}
           ) ${transactionOne}
+        }
+      `,
+    });
+  }
+
+  makeRepayment(repayment: any) {
+    return this.apollo.mutate({
+      mutation: gql`
+        mutation {
+          repayInstallments(
+            transaction: "${repayment.transaction}"
+            amount: ${repayment.amount}
+            entity: "${repayment.entity}"
+            details: "${repayment.details}"
+            date: "${repayment.date}"
+          ) {
+            createdAt
+          }
         }
       `,
     });
@@ -372,6 +491,48 @@ export class TransactionsService {
           transaction:"${transactionId}"
           )${transactionOne}
       }`,
+    });
+  }
+
+  createCryptoTransaction(transaction: any) {
+    let date = new Date(transaction.date);
+    date.setHours(12, 0, 0, 0);
+
+    return this.apollo.mutate({
+      mutation: gql`mutation{
+        createCryptoTransaction(
+          date:"${date.toISOString()}"
+          description:"${transaction.description}"
+          Store: "${transaction.Store}"
+        )${transactionOne}
+      }`,
+    });
+  }
+
+  makeCryptoSale(sale: any) {
+    let hasClient = !!sale.client ? `client: "${sale.client}"` : '';
+    let date = new Date(sale.date);
+    date.setHours(12, 0, 0, 0);
+
+    return this.apollo.mutate({
+      mutation: gql`
+        mutation {
+          makeCryptoSale(
+            transaction: "${sale.transaction}"
+            crypto_ammount: ${sale.crypto_ammount}
+            price_current: ${sale.price_current}
+            total_bought: ${sale.total_bought}
+            from_account: "${sale.from_account}"
+            ammount_sold: ${sale.ammount_sold}
+            fee: ${sale.fee}
+            ${hasClient}
+            description: "${sale.description}"
+            date:"${date.toISOString()}"
+          ) {
+            createdAt
+          }
+        }
+      `,
     });
   }
 }

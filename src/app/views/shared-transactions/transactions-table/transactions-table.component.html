@@ -4,6 +4,7 @@
   nbSpinnerStatus="danger"
   nbSpinnerSize="large"
   nbSpinnerMessage="Loading transactions"
+  style="min-height: 300px"
 >
   <nb-card-body>
     <div class="row mb-3">
@@ -16,7 +17,14 @@
           <button
             nbButton
             status="info"
-            style="text-transform: uppercase; border-radius: 13px"
+            class="shadow"
+            style="
+              text-transform: uppercase;
+              border-radius: 13px;
+              min-width: 150px;
+              letter-spacing: 0.5px;
+              font-size: 1rem;
+            "
             id="dropdownBasic1"
             ngbDropdownToggle
           >
@@ -25,7 +33,6 @@
           <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
             <button ngbDropdownItem (click)="make('transfer')">Transfer</button>
             <button ngbDropdownItem (click)="make('loan')">Loan</button>
-            <button ngbDropdownItem (click)="make('trade')">Trade</button>
             <button ngbDropdownItem (click)="make('deposit')">Deposit</button>
             <button ngbDropdownItem (click)="make('withdraw')">Withdraw</button>
           </div>
@@ -46,12 +53,6 @@
               (onTransactionLock)="loadingTransactions = true"
               (onTransactionCreate)="rerenderTransactions($event)"
             ></app-transfer>
-          </div>
-          <div *ngSwitchCase="'trade'">
-            <app-trade
-              (onTransactionLock)="loadingTransactions = true"
-              (onTransactionCreate)="rerenderTransactions($event)"
-            ></app-trade>
           </div>
           <div *ngSwitchCase="'loan'">
             <app-loan
@@ -161,8 +162,8 @@
               <th>Fee</th>
               <th>Payment type</th>
               <th>Direction</th>
-              <th>Client</th>
-              <th>Store</th>
+              <th *ngIf="!isInClient">Client</th>
+              <th *ngIf="!isInStore">Store</th>
               <th *ngIf="!isInClient">Created By</th>
               <th *ngIf="!isInClient">Description</th>
               <th>Status</th>
@@ -224,17 +225,11 @@
                 (click)="openEditTransaction(transactionDialog, transaction)"
                 [attr.data-sort]="transaction.type"
                 [attr.data-search]="transaction.type"
-                style="vertical-align: middle; text-align: center; padding: 0px"
+                style="vertical-align: middle; text-align: left; padding: 0px"
               >
                 <div
                   [ngClass]="'transaction-' + transaction.type"
-                  style="
-                    font-weight: 800;
-                    border-radius: 6px;
-                    padding: 8px;
-                    width: 90px;
-                    min-width: 90px;
-                  "
+                  style="font-weight: 800; border-radius: 6px; padding: 8px"
                 >
                   {{ transaction.type }}
                 </div>
@@ -247,6 +242,7 @@
               </td>
 
               <td
+                *ngIf="!isInClient"
                 class="text-capitalize"
                 (click)="openEditTransaction(transactionDialog, transaction)"
               >
@@ -259,6 +255,7 @@
                 </span>
               </td>
               <td
+                *ngIf="!isInStore"
                 class="text-capitalize"
                 (click)="openEditTransaction(transactionDialog, transaction)"
               >
@@ -362,25 +359,18 @@
             </div>
             <div class="col-8 text-right">
               <button
-                *ngIf="transaction.type === 'trade'"
-                nbButton
-                status="warning"
-                size="small"
-              >
-                Add sale
-              </button>
-              <button
                 *ngIf="transaction.type === 'loan'"
                 nbButton
                 status="warning"
                 size="small"
+                (click)="openRepayment(transaction, repaymentContent)"
               >
                 Add repayment
               </button>
               <button
                 *ngIf="
                   (isAdmin || (isAdminOrAgent && !transaction.issue)) &&
-                  transaction.status !== 'Open'
+                  transaction.status === 'Open'
                 "
                 nbButton
                 class="ml-3"
@@ -657,6 +647,116 @@
         class=""
         status="success"
         (click)="updateMovement(ref)"
+      >
+        Save
+      </button>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>
+
+<ng-template #repaymentContent let-ref="dialogRef">
+  <nb-card>
+    <nb-card-header class="d-flex align-items-start justify-content-between">
+      <span> ADD REPAYMENT</span>
+      <span>
+        <nb-icon
+          icon="window-close"
+          (click)="ref.close()"
+          style="cursor: pointer"
+          status="basic"
+        ></nb-icon>
+      </span>
+    </nb-card-header>
+    <nb-card-body>
+      <form [formGroup]="repaymentForm" class="overflow-auto" *ngIf="isAdmin">
+        <div class="form-group">
+          <label class="label">Entity *</label>
+          <ng-select
+            formControlName="entity"
+            class="my-ng-select"
+            placeholder="Select entity..."
+          >
+            <ng-option *ngFor="let entity of entities" [value]="entity._id">{{
+              entity.name | uppercase
+            }}</ng-option>
+          </ng-select>
+          <small
+            *ngIf="r.entity.touched && r.entity.errors"
+            class="form-text text-danger"
+            >Please select an entity</small
+          >
+        </div>
+         <div class="form-group mb-2">
+          <label class="label">Amount *</label>
+          <nb-form-field>
+            <input
+              type="text"
+              nbInput
+              fullWidth
+              [status]="
+                r.amount.touched && r.amount.errors ? 'danger' : 'basic'
+              "
+              formControlName="amount"
+              placeholder="Amount *"
+            />
+            <nb-icon nbSuffix icon="euro-sign"></nb-icon>
+          </nb-form-field>
+
+          <small
+            *ngIf="r.amount.touched && r.amount.errors"
+            class="form-text text-danger"
+            >Please enter a valid amount.</small
+          >
+        </div>
+        <!-- <div class="form-group mb-2">
+          <label class="label">Date *</label>
+          <input
+            type="text"
+            [nbDatepicker]="datepicker"
+            nbInput
+            fullWidth
+            [status]="r.date.touched && r.date.errors ? 'danger' : 'basic'"
+            formControlName="date"
+            placeholder="Date *"
+          />
+          <nb-datepicker #datepicker></nb-datepicker>
+
+          <small
+            *ngIf="r.date.touched && r.date.errors"
+            class="form-text text-danger"
+            >Please enter a valid date.</small
+          >
+        </div> -->
+        <div class="form-group mb-2">
+          <label class="label">Details *</label>
+          <input
+            type="text"
+            nbInput
+            fullWidth
+            [status]="
+              r.details.touched && r.details.errors ? 'danger' : 'basic'
+            "
+            formControlName="details"
+            placeholder="Details *"
+          />
+          <small
+            *ngIf="r.details.touched && r.details.errors"
+            class="form-text text-danger"
+            >Please enter a description.</small
+          >
+        </div>
+      </form>
+    </nb-card-body>
+    <nb-card-footer>
+      <button type="button" nbButton class="mr-3" ghost (click)="ref.close()">
+        Close
+      </button>
+      <button
+        type="button"
+        nbButton
+        class=""
+        status="success"
+        (click)="addRepayment(ref)"
       >
         Save
       </button>

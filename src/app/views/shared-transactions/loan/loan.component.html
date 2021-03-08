@@ -7,7 +7,7 @@
       placeholder="Select store..."
     >
       <ng-option *ngFor="let store of stores" [value]="store._id">{{
-        store.name
+        store.name | uppercase
       }}</ng-option>
     </ng-select>
     <small
@@ -24,7 +24,7 @@
       placeholder="Select client..."
     >
       <ng-option *ngFor="let client of clients" [value]="client._id">{{
-        client.name
+        client.name | uppercase
       }}</ng-option>
     </ng-select>
     <small
@@ -54,13 +54,17 @@
 
   <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-2">
     <label class="label">Amount *</label>
-    <input
-      nbInput
-      fullWidth
-      formControlName="amount"
-      placeholder="Amount *"
-      [status]="t.amount.touched && t.amount.errors ? 'danger' : 'basic'"
-    />
+    <nb-form-field>
+      <input
+        nbInput
+        fullWidth
+        formControlName="amount"
+        placeholder="Amount *"
+        [status]="t.amount.touched && t.amount.errors ? 'danger' : 'basic'"
+      />
+      <nb-icon nbSuffix icon="euro-sign"></nb-icon>
+    </nb-form-field>
+
     <small
       *ngIf="t.amount.touched && t.amount.errors"
       class="form-text text-danger"
@@ -70,13 +74,17 @@
 
   <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-2">
     <label class="label">Fee (optional)</label>
-    <input
-      nbInput
-      fullWidth
-      formControlName="fee"
-      placeholder="Fee"
-      [status]="t.fee.touched && t.fee.errors ? 'danger' : 'basic'"
-    />
+    <nb-form-field>
+      <input
+        nbInput
+        fullWidth
+        formControlName="fee"
+        placeholder="Fee"
+        [status]="t.fee.touched && t.fee.errors ? 'danger' : 'basic'"
+      />
+      <nb-icon nbSuffix icon="euro-sign"></nb-icon>
+    </nb-form-field>
+
     <small *ngIf="t.fee.touched && t.fee.errors" class="form-text text-danger"
       >Please enter a valid fee or leave this field empty (Only numbers
       allowed)</small
@@ -99,9 +107,9 @@
 
 <div class="row mt-3">
   <div class="col-12 text-right">
-    <button nbButton ghost class="mr-3" (click)="initForm()">reset</button>
     <button nbButton status="info" (click)="makeTransaction()">
       Make loan
     </button>
+    <button nbButton ghost class="ml-3" (click)="initForm()">reset</button>
   </div>
 </div>

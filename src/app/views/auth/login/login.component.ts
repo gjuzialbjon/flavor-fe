@@ -6,6 +6,7 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { environment } from '@env';
 import { NbDialogService } from '@nebular/theme';
 import { Apollo } from 'apollo-angular';
 import { MessageService } from 'src/app/core/helper-services/message.service';
@@ -33,10 +34,13 @@ export class LoginComponent implements OnInit {
   ) {
     this.loginForm = this.fb.group({
       email: [
-        'albjon.gjuzi@gmail.com',
+        environment.production ? '' : 'albjon.gjuzi@gmail.com',
         [Validators.required, Validators.email],
       ],
-      password: ['123123', [Validators.required, Validators.minLength(6)]],
+      password: [
+        environment.production ? '' : '123123',
+        [Validators.required, Validators.minLength(6)],
+      ],
     });
   }
 

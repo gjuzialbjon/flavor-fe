@@ -157,7 +157,6 @@ export class UsersComponent implements OnInit, OnDestroy {
     this.loading = true;
     this.userService.registerUser(this.newUserForm.value).subscribe(
       (res: any) => {
-        console.log(res);
         if (!!res.data.registerUser.message.user) {
           this.rerender(res.data.registerUser.message.user);
           dialog.close();
@@ -247,7 +246,6 @@ export class UsersComponent implements OnInit, OnDestroy {
       dtInstance.destroy();
 
       if (newUser) {
-        console.log(newUser);
         this.users = [newUser, ...this.users];
         console.log(this.users);
         this.chRef.detectChanges();

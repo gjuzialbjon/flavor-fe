@@ -21,13 +21,40 @@
       ></nb-icon>
     </span>
     <span class="d-flex align-items-center">
-      <nb-select *ngIf="!hasSecondToken && isAdmin" placeholder="Select User" style="margin-right: 7rem;" (selectedChange)="userSelected($event)">
-        <nb-option *ngFor="let user of usersToImpersonate" value="{{user._id}}">{{ user.name }}</nb-option>
+      <span
+        *ngIf="!hasSecondToken && isAdmin"
+        style="font-weight: bold; color: darkorange"
+        >Act as</span
+      >
+      <nb-select
+        *ngIf="!hasSecondToken && isAdmin"
+        placeholder="Select User"
+        shape="round"
+        size="small"
+        status="basic"
+        style="margin-right: 7rem; margin-left: 1rem"
+        (selectedChange)="userSelected($event)"
+      >
+        <nb-option
+          *ngFor="let user of usersToImpersonate"
+          value="{{ user._id }}"
+          >{{ user.name }}</nb-option
+        >
       </nb-select>
 
-      <a *ngIf="hasSecondToken" (click)="removeImpersonate()" style="margin-right: 7rem; cursor: pointer;">Go back to your account</a>
+      <a
+        *ngIf="hasSecondToken"
+        (click)="removeImpersonate()"
+        style="
+          margin-right: 7rem;
+          cursor: pointer;
+          font-weight: bold;
+          color: darkorange;
+        "
+        >Go back to your account</a
+      >
 
-      <button
+      <!-- <button
         nbButton
         ghost
         class="d-none d-md-inline"
@@ -54,7 +81,7 @@
         (click)="changeTheme('cosmic')"
       >
         <nb-icon icon="user-astronaut" status="info" class="mt-1"></nb-icon>
-      </button>
+      </button> -->
       <nb-form-field size="small">
         <input
           nbInput

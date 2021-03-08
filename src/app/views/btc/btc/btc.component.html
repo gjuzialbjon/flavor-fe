@@ -1,15 +1,74 @@
 <nb-card
   class="mt-0 shadow"
   style="border: none"
-  [nbSpinner]="loadingDates"
+  [nbSpinner]="loadingTransactions"
   nbSpinnerStatus="danger"
   nbSpinnerSize="large"
   nbSpinnerMessage="Loading"
 >
   <nb-card-body>
+    <div class="row transactions-bg mb-3" style="margin: 0rem -1rem">
+      <div class="col-12 py-3 px-lg-5 px-3">
+        <form [formGroup]="cryptoForm" class="form-row">
+          <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-2">
+            <label class="label">Description *</label>
+            <input
+              nbInput
+              fullWidth
+              placeholder="Description"
+              formControlName="description"
+              [status]="
+                t.description.touched && t.description.errors
+                  ? 'danger'
+                  : 'basic'
+              "
+            />
+            <small
+              *ngIf="t.description.touched && t.description.errors"
+              class="form-text text-danger"
+              >Please enter a short description</small
+            >
+          </div>
+          <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-2">
+            <label class="label">Date *</label>
+            <input
+              nbInput
+              fullWidth
+              formControlName="date"
+              placeholder="Date *"
+              [nbDatepicker]="dateTimePicker"
+              [status]="t.date.touched && t.date.errors ? 'danger' : 'basic'"
+            />
+            <nb-datepicker #dateTimePicker></nb-datepicker>
+
+            <small
+              *ngIf="t.date.touched && t.date.errors"
+              class="form-text text-danger"
+              >Please enter a valid date</small
+            >
+          </div>
+          <div class="col-md-4 col-sm-6 pt-4">
+            <button
+              nbButton
+              status="info"
+              class="ml-3"
+              [disabled]="makingTrade"
+              (click)="makeTransaction()"
+            >
+              start trade
+            </button>
+            <button nbButton ghost class="ml-3" (click)="initForm()">
+              reset
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
     <table
       datatable
       [dtOptions]="dtOptions"
+      [dtTrigger]="$any(dtTrigger)"
       class="table table-hover"
       width="100%"
     >
@@ -18,20 +77,22 @@
           <th>date</th>
           <th>status</th>
           <th>amount</th>
+          <th>description</th>
           <th width="20px">&nbsp;</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let row of btcDates" style="cursor: pointer">
+        <tr *ngFor="let row of transactions" style="cursor: pointer">
           <td class="text-capitalize">
-            {{ row.createdAt | date: "mediumDate" }}
+            {{ row.date | date: "MMM d, y" }}
           </td>
           <td class="text-capitalize" routerLink="{{ row._id }}">
             {{ row.status }}
           </td>
           <td routerLink="{{ row._id }}">
-            {{ row.amount | currency }}
+            {{ row.amount_in | currency }}
           </td>
+          <td routerLink="{{ row._id }}">{{ row.description }}</td>
           <td routerLink="{{ row._id }}">
             <nb-icon
               icon="arrow-right"

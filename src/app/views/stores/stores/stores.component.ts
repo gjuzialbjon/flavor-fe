@@ -6,12 +6,14 @@ import {
   ChangeDetectorRef,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NbDialogService } from '@nebular/theme';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ConfigsService } from 'src/app/core/helper-services/configs.service';
 import { MessageService } from 'src/app/core/helper-services/message.service';
 import { Client } from 'src/app/core/models/client';
 import { Currency } from 'src/app/core/models/currency';
 import { Store } from 'src/app/core/models/store';
+import { AuthenticationService } from 'src/app/core/services/authentication.service';
 import { ClientsService } from 'src/app/core/services/clients.service';
 import { CurrencyService } from 'src/app/core/services/currency.service';
 import { StoreService } from 'src/app/core/services/store.service';
@@ -29,21 +31,24 @@ export class StoresComponent implements OnInit {
   loadingStores = true;
   loadingFavorites = true;
   newStoreForm!: FormGroup;
+  isAdmin = false;
 
   totalBalance = 0;
 
   constructor(
     private configsService: ConfigsService,
-    private modalService: NgbModal,
+    private dialogService: NbDialogService,
     private fb: FormBuilder,
     private msg: MessageService,
     private storeService: StoreService,
     private clientsService: ClientsService,
     private currencyService: CurrencyService,
-    private chRef: ChangeDetectorRef
+    private chRef: ChangeDetectorRef,
+    private authService: AuthenticationService
   ) {}
 
   ngOnInit(): void {
+    this.isAdmin = this.authService.user.role === 'admin';
     this.getStores();
     this.getFavoriteClients();
     this.getCurrencies();
@@ -54,10 +59,15 @@ export class StoresComponent implements OnInit {
     this.storeService.getMyStores().subscribe(
       (res: any) => {
         this.stores = res.data.Me.stores as Store[];
-        
-        this.totalBalance = 0
+
+        // IF ADMIN PRIVILEGES ARE REQUIRED FOR CRYPTO STORE MANAGEMENT
+        this.stores = this.stores.filter(
+          (store) => store.name !== 'CRYPTO STORE'
+        );
+
+        this.totalBalance = 0;
         for (const store of this.stores) {
-          this.totalBalance += store.balance
+          this.totalBalance += store.balance;
         }
 
         this.loadingStores = false;
@@ -101,13 +111,11 @@ export class StoresComponent implements OnInit {
 
   openNewStoreModal(content: TemplateRef<any>) {
     this.initNewStoreForm();
-    this.modalService.open(content);
+    this.dialogService.open(content, { autoFocus: false });
   }
 
   createStore(modal: NgbActiveModal) {
     if (this.newStoreForm.invalid) {
-      console.log(this.newStoreForm.value);
-
       this.newStoreForm.markAllAsTouched();
       this.msg.error(
         'Make sure to complete the form before proceeding.',
@@ -118,26 +126,26 @@ export class StoresComponent implements OnInit {
 
     this.loading = true;
     // PROCEED TO CREATE NEW STORE AFTER LOCKING BUTTON
-    // this.storeService.createStore(this.newStoreForm.value).subscribe(
-    //   (res: any) => {
-    //     this.getStores()
-    //     this.loading = false
-    //     modal.close('Completed')
-    //   },
-    //   e => {
-    //     console.error(e)
-    //     this.msg.defaultError()
-    //     this.loading = false
-    //   }
-    // )
+    this.storeService.createStore(this.newStoreForm.value).subscribe(
+      (res: any) => {
+        this.getStores();
+        this.loading = false;
+        modal.close();
+      },
+      (e) => {
+        console.error(e);
+        this.msg.defaultError();
+        this.loading = false;
+      }
+    );
   }
 
   initNewStoreForm() {
     this.newStoreForm = this.fb.group({
       name: ['', [Validators.required]],
-      location: ['', [Validators.required]],
+      location: ['', []],
       description: ['', []],
-      default_currency: [0, []],
+      default_currency: [null, []],
     });
   }
 

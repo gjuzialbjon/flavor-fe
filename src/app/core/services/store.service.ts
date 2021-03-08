@@ -48,8 +48,8 @@ export class StoreService {
       query: storeMany,
     });
   }
-  
-  getMyStores(){
+
+  getMyStores() {
     return this.apollo.query({
       query: myStores,
     });
@@ -60,37 +60,33 @@ export class StoreService {
       query: storeOne,
       variables: {
         _id: storeId,
-      }
+      },
     });
   }
 
-  // createStore(store: any) {
-  //   var currency =
-  //     store.default_currency !== 0
-  //       ? `currencyID:"${store.default_currency}"`
-  //       : ''; // ADD CURRENCY OR NOT
+  createStore(store: any) {
+    var currency =
+      store.default_currency
+        ? `currencyID:"${store.default_currency}"`
+        : ''; // ADD CURRENCY OR NOT
 
-  //   var mut = ` mutation{
-  //     createStore(
-  //       name:"${store.name}",
-  //       location:"${store.location}",
-  //       description:"${store.description}"
-  //       ${currency}){
-  //         name
-  //         location
-  //         description
-  //         accounts{
-  //           type
-  //           name
-  //         }
-  //     }
-  //   }`;
+    var mut = ` mutation{
+      createStore(
+        name:"${store.name}",
+        location:"${store.location}",
+        description:"${store.description}"
+        ${currency}){
+          name
+          location
+          description
+      }
+    }`;
 
-  //   // console.log(mut)
-  //   return this.apollo.mutate({
-  //     mutation: gql`
-  //       ${mut}
-  //     `,
-  //   });
-  // }
+    // console.log(mut)
+    return this.apollo.mutate({
+      mutation: gql`
+        ${mut}
+      `,
+    });
+  }
 }
