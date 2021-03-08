@@ -92,7 +92,7 @@ export class BtcDashboardComponent implements OnInit {
             this.totalProfit += post.total_bought - post.ammount;
           }
 
-          this.transactionsService.getCryptoTransfers().subscribe(
+          this.transactionsService.getCryptoTransfers(this.transactionId).subscribe(
             (res: any) => {
               console.log(res);
               this.transfers = JSON.parse(
@@ -177,6 +177,7 @@ export class BtcDashboardComponent implements OnInit {
 
   initTransferForm() {
     this.transferForm = this.fb.group({
+      transfer_origin: [this.transactionId, []],
       fromStore: [environment.btc_store_id, [Validators.required]],
       toEntity: [null, [Validators.required]],
       description: ['', [Validators.required]],

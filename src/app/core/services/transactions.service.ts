@@ -229,7 +229,7 @@ export class TransactionsService {
     });
   }
 
-  getCryptoTransfers() {
+  getCryptoTransfers(transactionId: string) {
     return this.apollo.query({
       query: gql`
         {
@@ -241,7 +241,7 @@ export class TransactionsService {
                 }
               }
             }) {
-              transactions(filter: { type: transfer }) ${transactionOne}
+              transactions(filter: { type: transfer  cryptoOrigin:"${transactionId}" }) ${transactionOne}
             }
           }
         }
@@ -425,23 +425,27 @@ export class TransactionsService {
     });
   }
 
-  makeTransfer(deposit: any) {
-    let hasCurrency = !!deposit.currency
-      ? `currency: "${deposit.currency}"`
+  makeTransfer(transfer: any) {
+    let hasCurrency = !!transfer.currency
+      ? `currency: "${transfer.currency}"`
       : '';
-    let hasFee = !!deposit.fee ? `fee: ${deposit.fee}` : '';
+    let hasFee = !!transfer.fee ? `fee: ${transfer.fee}` : '';
+    let hasTransferOrigin = !!transfer.transfer_origin
+      ? `transaction_origin: "${transfer.transfer_origin}"`
+      : '';
 
     return this.apollo.mutate({
       mutation: gql`
         mutation {
           makeTransfer(
-            fromStore: "${deposit.fromStore}"
-            toEntity: "${deposit.toEntity}"
-            date: "${deposit.date}"
-            description: "${deposit.description}"
-            amount: ${deposit.amount}
+            fromStore: "${transfer.fromStore}"
+            toEntity: "${transfer.toEntity}"
+            date: "${transfer.date}"
+            description: "${transfer.description}"
+            amount: ${transfer.amount}
             ${hasFee}
             ${hasCurrency}
+            ${hasTransferOrigin}
           ) ${transactionOne}
         }
       `,

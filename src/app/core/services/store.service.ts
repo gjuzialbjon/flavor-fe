@@ -1,15 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Apollo, gql } from 'apollo-angular';
 
-const storeMany = gql`
-  {
-    storeMany {
-      _id
-      name
-    }
-  }
-`;
-
 const storeOne = gql`
   query($_id: MongoID!) {
     storeById(_id: $_id) {
@@ -27,7 +18,9 @@ const storeOne = gql`
 const myStores = gql`
   {
     Me {
-      stores {
+      stores(
+        filter: { _operators: { _id: { nin: ["603d48daeab0d70008bbc19f"] } } }
+      ) {
         _id
         name
         balance
@@ -42,12 +35,6 @@ const myStores = gql`
 })
 export class StoreService {
   constructor(private apollo: Apollo) {}
-
-  getStores() {
-    return this.apollo.query({
-      query: storeMany,
-    });
-  }
 
   getMyStores() {
     return this.apollo.query({
@@ -65,10 +52,9 @@ export class StoreService {
   }
 
   createStore(store: any) {
-    var currency =
-      store.default_currency
-        ? `currencyID:"${store.default_currency}"`
-        : ''; // ADD CURRENCY OR NOT
+    var currency = store.default_currency
+      ? `currencyID:"${store.default_currency}"`
+      : ''; // ADD CURRENCY OR NOT
 
     var mut = ` mutation{
       createStore(
