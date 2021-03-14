@@ -14,26 +14,18 @@
           <div class="col-12 py-3 px-lg-5 px-3">
             <form [formGroup]="tradeForm" class="form-row">
               <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-2">
-                <label class="label">From Account *</label>
-                <input
-                  nbInput
+                <label class="label d-inline-block">From Account *</label>
+                <nb-select
+                  class="from-account-select"
                   fullWidth
                   placeholder="From Account"
-                  formControlName="from_account"
-                  [status]="
-                    trade.from_account.touched && trade.from_account.errors
-                      ? 'danger'
-                      : 'basic'
-                  "
-                />
-
-                <small
-                  *ngIf="
-                    trade.from_account.touched && trade.from_account.errors
-                  "
-                  class="form-text text-danger"
-                  >Please enter from account</small
+                  [(ngModel)]="from_account"
+                  [ngModelOptions]="{ standalone: true }"
                 >
+                  <nb-option *ngFor="let type of tradeTypes" [value]="type">{{
+                    type
+                  }}</nb-option>
+                </nb-select>
               </div>
 
               <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-2">
@@ -159,26 +151,6 @@
                   "
                   class="form-text text-danger"
                   >Please enter Amount Sold</small
-                >
-              </div>
-
-              <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-2">
-                <label class="label">Description *</label>
-                <input
-                  nbInput
-                  fullWidth
-                  placeholder="Description"
-                  formControlName="description"
-                  [status]="
-                    trade.description.touched && trade.description.errors
-                      ? 'danger'
-                      : 'basic'
-                  "
-                />
-                <small
-                  *ngIf="trade.description.touched && trade.description.errors"
-                  class="form-text text-danger"
-                  >Please enter Description</small
                 >
               </div>
               <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-2">
@@ -352,9 +324,11 @@
                   class="my-ng-select"
                   placeholder="Select entity..."
                 >
-                  <ng-option *ngFor="let store of stores" [value]="store._id">{{
-                    store.name | uppercase
-                  }}</ng-option>
+                  <ng-option
+                    *ngFor="let entity of entities"
+                    [value]="entity._id"
+                    >{{ entity.name | uppercase }}</ng-option
+                  >
                 </ng-select>
                 <small
                   *ngIf="t.toEntity.touched && t.toEntity.errors"
@@ -429,7 +403,12 @@
             </form>
           </div>
           <div class="col-12 text-right mb-3">
-            <button nbButton status="info" [disabled]="makingTransfer" (click)="makeTransfer()">
+            <button
+              nbButton
+              status="info"
+              [disabled]="makingTransfer"
+              (click)="makeTransfer()"
+            >
               Make transfer
             </button>
             <button nbButton ghost class="ml-3" (click)="initTransferForm()">

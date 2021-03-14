@@ -56,7 +56,6 @@ import { NgSelectModule } from '@ng-select/ng-select';
     ReactiveFormsModule,
     NbSpinnerModule,
     NgbDropdownModule,
-
     NbDialogModule.forChild({
       dialogClass: 'dialog-width',
     }),

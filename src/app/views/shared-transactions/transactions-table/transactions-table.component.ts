@@ -140,15 +140,27 @@ export class TransactionsTableComponent implements OnInit {
         (res: any) => {
           console.log(res);
           this.transactions = [];
+          let allTransactions: any[] = [];
           let stores = JSON.parse(
             JSON.stringify(res.data.Me.stores)
           ) as Store[];
 
-          // FILTER CRYPTOS
-          stores = stores.filter((s) => s.name !== 'CRYPTO STORE');
-
           for (const store of stores) {
-            this.transactions = [...this.transactions, ...store.transactions];
+            allTransactions = [...allTransactions, ...store.transactions];
+          }
+
+          for (const t of allTransactions) {
+            if (this.storeId && t.store._id === this.storeId) {
+              if (this.hasT(t._id)) {
+              } else {
+                this.transactions.push(t);
+              }
+            } else if (!this.storeId) {
+              if (this.hasT(t._id)) {
+              } else {
+                this.transactions.push(t);
+              }
+            }
           }
 
           this.tableTransactions = JSON.parse(
@@ -166,6 +178,15 @@ export class TransactionsTableComponent implements OnInit {
       );
   }
 
+  hasT(tId: string) {
+    for (const t of this.transactions) {
+      if (t._id === tId) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   updateTransactions() {
     this.transactionsService
       .getTransactions(this.storeId, this.clientId)
@@ -177,19 +198,27 @@ export class TransactionsTableComponent implements OnInit {
               dtInstance.destroy();
 
               this.transactions = [];
-
+              let allTransactions: any[] = [];
               let stores = JSON.parse(
                 JSON.stringify(res.data.Me.stores)
               ) as Store[];
 
-              // FILTER CRYPTOS
-              stores = stores.filter((s) => s.name !== 'CRYPTO STORE');
-
               for (const store of stores) {
-                this.transactions = [
-                  ...this.transactions,
-                  ...store.transactions,
-                ];
+                allTransactions = [...allTransactions, ...store.transactions];
+              }
+
+              for (const t of allTransactions) {
+                if (this.storeId && t.store._id === this.storeId) {
+                  if (this.hasT(t._id)) {
+                  } else {
+                    this.transactions.push(t);
+                  }
+                } else if (!this.storeId) {
+                  if (this.hasT(t._id)) {
+                  } else {
+                    this.transactions.push(t);
+                  }
+                }
               }
 
               this.tableTransactions = JSON.parse(

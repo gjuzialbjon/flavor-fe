@@ -30,6 +30,8 @@ export class BtcDashboardComponent implements OnInit {
   dtOptions2: DataTables.Settings;
   dtTrigger = new Subject<any>();
 
+  tradeTypes = ['BTC', 'USDT']
+
   transactions: any[] = [];
   posts: any[] = [];
   transfers: any[] = [];
@@ -47,6 +49,8 @@ export class BtcDashboardComponent implements OnInit {
   totalProfit = 0;
   remainingTotalMinusFee = 0;
   grandTotalMinusFee = 0;
+
+  from_account = ''
 
   constructor(
     private configsService: ConfigsService,
@@ -76,6 +80,8 @@ export class BtcDashboardComponent implements OnInit {
     this.getTransactionDetails();
     this.clients = await this.transactionsService.getClients();
     this.stores = await this.transactionsService.getStores();
+    this.entities = [...this.stores, ...this.clients];
+    this.chRef.detectChanges()
   }
 
   getTransactionDetails() {
@@ -231,7 +237,6 @@ export class BtcDashboardComponent implements OnInit {
           Validators.pattern(/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/),
         ],
       ],
-      description: [null, [Validators.required]],
       client: [null, []],
       from_account: [null, [Validators.required]],
       date: [null, [Validators.required]],
