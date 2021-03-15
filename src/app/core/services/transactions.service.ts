@@ -91,6 +91,8 @@ const transactionOneForCryptos = `
     total_bought
     from_account
     fee
+    service_fee
+    conversion_fee
     client{
       name
       surname
@@ -172,6 +174,7 @@ export class TransactionsService {
       ? `in:["${storeId}"]`
       : `nin:["${environment.btc_store_id}"]`;
     let clientFilter = !!clientId ? `client: "${clientId}"` : '';
+    let tStoreFilter = !!storeId ? `store: "${storeId}"` : '';
 
     return this.apollo.query({
       query: gql`
@@ -528,9 +531,10 @@ export class TransactionsService {
             total_bought: ${sale.total_bought}
             from_account: "${sale.from_account}"
             ammount_sold: ${sale.ammount_sold}
-            fee: ${sale.fee}
+            conversion_fee: ${sale.conversion_fee}
+            service_fee: ${sale.service_fee}
             ${hasClient}
-            description: "${sale.description}"
+            description: "BTC trade"
             date:"${date.toISOString()}"
           ) {
             createdAt

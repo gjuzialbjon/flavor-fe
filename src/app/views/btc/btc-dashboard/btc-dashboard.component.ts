@@ -30,8 +30,7 @@ export class BtcDashboardComponent implements OnInit {
   dtOptions2: DataTables.Settings;
   dtTrigger = new Subject<any>();
 
-  tradeTypes = ['BTC', 'USDT']
-
+  tradeTypes = ['BTC', 'USDT'];
   transactions: any[] = [];
   posts: any[] = [];
   transfers: any[] = [];
@@ -40,9 +39,11 @@ export class BtcDashboardComponent implements OnInit {
   entities: any[] = [];
 
   transferForm!: FormGroup;
-  tradeForm!: FormGroup;
+  btcForm!: FormGroup;
+  usdtForm!: FormGroup;
 
-  makingTrade = false;
+  makingBtc = false;
+  makingUsdt = false;
   makingTransfer = false;
 
   totalMinusFee = 0;
@@ -50,7 +51,8 @@ export class BtcDashboardComponent implements OnInit {
   remainingTotalMinusFee = 0;
   grandTotalMinusFee = 0;
 
-  from_account = ''
+  from_account = '';
+  tradeType = 'BTC';
 
   constructor(
     private configsService: ConfigsService,
@@ -75,13 +77,13 @@ export class BtcDashboardComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.initTradeForm();
+    this.initBtcForm();
     this.initTransferForm();
     this.getTransactionDetails();
     this.clients = await this.transactionsService.getClients();
     this.stores = await this.transactionsService.getStores();
     this.entities = [...this.stores, ...this.clients];
-    this.chRef.detectChanges()
+    this.chRef.detectChanges();
   }
 
   getTransactionDetails() {
@@ -95,32 +97,34 @@ export class BtcDashboardComponent implements OnInit {
           this.posts = this.transaction.posts.filter((p) => p.type !== 'fee');
           for (const post of this.posts) {
             this.totalMinusFee += post.ammount;
-            this.totalProfit += post.total_bought - post.ammount;
+            this.totalProfit += post.conversion_fee - post.service_fee;
           }
 
-          this.transactionsService.getCryptoTransfers(this.transactionId).subscribe(
-            (res: any) => {
-              console.log(res);
-              this.transfers = JSON.parse(
-                JSON.stringify(res.data.Me.stores[0].transactions)
-              );
-              this.transfers = this.transfers.reverse();
+          this.transactionsService
+            .getCryptoTransfers(this.transactionId)
+            .subscribe(
+              (res: any) => {
+                console.log(res);
+                this.transfers = JSON.parse(
+                  JSON.stringify(res.data.Me.stores[0].transactions)
+                );
+                this.transfers = this.transfers.reverse();
 
-              for (let i = 0; i < this.transfers.length; i++) {
-                if (i === 0) {
-                  this.transfers[i].total = this.totalMinusFee;
-                } else {
-                  this.transfers[i].total =
-                    this.transfers[i - 1].total -
-                    this.transfers[i - 1].amount_in;
+                for (let i = 0; i < this.transfers.length; i++) {
+                  if (i === 0) {
+                    this.transfers[i].total = this.totalMinusFee;
+                  } else {
+                    this.transfers[i].total =
+                      this.transfers[i - 1].total -
+                      this.transfers[i - 1].amount_in;
+                  }
                 }
+                this.chRef.detectChanges();
+              },
+              (e) => {
+                console.error(e);
               }
-              this.chRef.detectChanges();
-            },
-            (e) => {
-              console.error(e);
-            }
-          );
+            );
 
           this.dtTrigger.next();
           this.chRef.detectChanges();
@@ -131,30 +135,44 @@ export class BtcDashboardComponent implements OnInit {
       );
   }
 
-  makeTrade() {
-    if (this.tradeForm.invalid) {
+  make(tradeType: string) {
+    if (tradeType === 'BTC') {
+      this.initBtcForm();
+    } else {
+      this.initUsdtForm();
+    }
+    this.tradeType = tradeType;
+    this.chRef.detectChanges();
+  }
+
+  makeBtc() {
+    if (this.btcForm.invalid) {
       this.msg.error('Invalid inputs, cannot perform sale', 'Error!');
-      this.tradeForm.markAllAsTouched();
+      this.btcForm.markAllAsTouched();
       return;
     }
 
-    this.makingTrade = true;
-    this.transactionsService.makeCryptoSale(this.tradeForm.value).subscribe(
+    let req = JSON.parse(JSON.stringify(this.btcForm.value));
+    req.conversion_fee = (req.conversion_fee / 100) * req.total_bought;
+    req.service_fee = (req.service_fee / 100) * req.total_bought;
+
+    this.makingBtc = true;
+    this.transactionsService.makeCryptoSale(req).subscribe(
       (res: any) => {
         // console.log(res);
-        this.makingTrade = false;
+        this.makingBtc = false;
         if (res.data.makeCryptoSale) {
           window.location.reload();
         } else {
           console.error(res);
           this.msg.error('Could not make sale', 'Error!');
-          this.makingTrade = false;
+          this.makingBtc = false;
         }
       },
       (e) => {
         console.error(e);
         this.msg.error('Could not make sale', 'Error!');
-        this.makingTrade = false;
+        this.makingBtc = false;
       }
     );
   }
@@ -199,8 +217,9 @@ export class BtcDashboardComponent implements OnInit {
     });
   }
 
-  initTradeForm() {
-    this.tradeForm = this.fb.group({
+  initBtcForm() {
+    this.btcForm = this.fb.group({
+      from_account: ['BTC'],
       transaction: [this.transactionId, [Validators.required]],
       crypto_ammount: [
         null,
@@ -217,75 +236,107 @@ export class BtcDashboardComponent implements OnInit {
         ],
       ],
       total_bought: [
-        null,
+        0,
         [
           Validators.required,
           Validators.pattern(/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/),
         ],
       ],
       ammount_sold: [
-        null,
+        0,
         [
           Validators.required,
           Validators.pattern(/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/),
         ],
       ],
-      fee: [
-        null,
+      conversion_fee: [
+        0,
         [
           Validators.required,
           Validators.pattern(/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/),
+          Validators.max(100),
+        ],
+      ],
+      service_fee: [
+        0,
+        [
+          Validators.required,
+          Validators.pattern(/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/),
+          Validators.max(100),
         ],
       ],
       client: [null, []],
-      from_account: [null, [Validators.required]],
       date: [null, [Validators.required]],
     });
 
-    this.tradeForm.get('crypto_ammount')?.valueChanges.subscribe((res) => {
+    this.btcForm.get('crypto_ammount')?.valueChanges.subscribe((res) => {
       if (
         typeof +res === 'number' &&
-        typeof +this.tradeForm.get('price_current')?.value === 'number'
+        typeof +this.btcForm.get('price_current')?.value === 'number'
       ) {
-        this.tradeForm
+        this.btcForm
           .get('total_bought')
-          ?.setValue(+res * +this.tradeForm.get('price_current')?.value);
+          ?.setValue(+res * +this.btcForm.get('price_current')?.value);
       }
     });
 
-    this.tradeForm.get('price_current')?.valueChanges.subscribe((res) => {
+    this.btcForm.get('price_current')?.valueChanges.subscribe((res) => {
       if (
         typeof +res === 'number' &&
-        typeof +this.tradeForm.get('crypto_ammount')?.value === 'number'
+        typeof +this.btcForm.get('crypto_ammount')?.value === 'number'
       ) {
-        this.tradeForm
+        this.btcForm
           .get('total_bought')
-          ?.setValue(+res * +this.tradeForm.get('crypto_ammount')?.value);
+          ?.setValue(+res * +this.btcForm.get('crypto_ammount')?.value);
       }
     });
 
-    this.tradeForm.get('fee')?.valueChanges.subscribe((res) => {
+    this.btcForm.get('conversion_fee')?.valueChanges.subscribe((res) => {
       if (
-        typeof +res === 'number' &&
-        typeof +this.tradeForm.get('total_bought')?.value === 'number'
+        typeof res === 'number' &&
+        typeof this.btcForm.get('total_bought')?.value === 'number'
       ) {
-        this.tradeForm
+        this.btcForm
           .get('ammount_sold')
           ?.setValue(
-            +this.tradeForm.get('total_bought')?.value -
-              (+res / 100) * +this.tradeForm.get('total_bought')?.value
+            +this.btcForm.get('total_bought')?.value -
+              (+res / 100) * +this.btcForm.get('total_bought')?.value -
+              (+this.btcForm.get('service_fee')?.value / 100) *
+                +this.btcForm.get('total_bought')?.value
+          );
+      }
+    });
+
+    this.btcForm.get('service_fee')?.valueChanges.subscribe((res) => {
+      if (
+        typeof res === 'number' &&
+        typeof this.btcForm.get('total_bought')?.value === 'number'
+      ) {
+        this.btcForm
+          .get('ammount_sold')
+          ?.setValue(
+            +this.btcForm.get('total_bought')?.value -
+              (+res / 100) * +this.btcForm.get('total_bought')?.value -
+              (+this.btcForm.get('conversion_fee')?.value / 100) *
+                +this.btcForm.get('total_bought')?.value
           );
       }
     });
   }
 
-  get trade() {
-    return this.tradeForm.controls;
+  initUsdtForm(){
+    this.usdtForm = this.fb.group({})
+  }
+
+  get btrade() {
+    return this.btcForm.controls;
+  }
+  get utrade() {
+    return this.usdtForm.controls;
   }
   get t() {
     return this.transferForm.controls;
   }
-
   ngOnDestroy() {
     this.chRef.detach();
   }

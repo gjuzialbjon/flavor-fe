@@ -10,24 +10,39 @@
     >
       <nb-card-body>
         <!-- MAKING A TRANSACTION SECTION -->
-        <div class="row transactions-bg mb-3" style="margin: 0rem -1rem">
-          <div class="col-12 py-3 px-lg-5 px-3">
-            <form [formGroup]="tradeForm" class="form-row">
-              <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-2">
-                <label class="label d-inline-block">From Account *</label>
-                <nb-select
-                  class="from-account-select"
-                  fullWidth
-                  placeholder="From Account"
-                  [(ngModel)]="from_account"
-                  [ngModelOptions]="{ standalone: true }"
-                >
-                  <nb-option *ngFor="let type of tradeTypes" [value]="type">{{
-                    type
-                  }}</nb-option>
-                </nb-select>
+        <div class="row mb-3">
+          <div class="col-12">
+            <div ngbDropdown class="d-inline-block mr-5 mb-xl-0 mb-3">
+              <button
+                nbButton
+                status="info"
+                class="shadow"
+                style="
+                  text-transform: uppercase;
+                  border-radius: 13px;
+                  min-width: 150px;
+                  letter-spacing: 0.5px;
+                  font-size: 1rem;
+                "
+                id="dropdownBasic3"
+                ngbDropdownToggle
+              >
+                {{ tradeType }} &nbsp; &nbsp;
+              </button>
+              <div ngbDropdownMenu aria-labelledby="dropdownBasic3">
+                <button ngbDropdownItem (click)="make('BTC')">
+                  BTC
+                </button>
+                <button ngbDropdownItem (click)="make('USDT')">USDT</button>
               </div>
+            </div>
+          </div>
+        </div>
 
+        <!-- BTC -->
+        <div *ngIf="tradeType === 'BTC'" class="row transactions-bg mb-3" style="margin: 0rem -1rem">
+          <div class="col-12 py-3 px-lg-5 px-3">
+            <form [formGroup]="btcForm" class="form-row">
               <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-2">
                 <label class="label">Crypto Ammount *</label>
                 <input
@@ -38,14 +53,16 @@
                   placeholder="Crypto Ammount"
                   formControlName="crypto_ammount"
                   [status]="
-                    trade.crypto_ammount.touched && trade.crypto_ammount.errors
+                    btrade.crypto_ammount.touched &&
+                    btrade.crypto_ammount.errors
                       ? 'danger'
                       : 'basic'
                   "
                 />
                 <small
                   *ngIf="
-                    trade.crypto_ammount.touched && trade.crypto_ammount.errors
+                    btrade.crypto_ammount.touched &&
+                    btrade.crypto_ammount.errors
                   "
                   class="form-text text-danger"
                   >Please enter Crypto Ammount</small
@@ -61,7 +78,8 @@
                     placeholder="Price Current"
                     formControlName="price_current"
                     [status]="
-                      trade.price_current.touched && trade.price_current.errors
+                      btrade.price_current.touched &&
+                      btrade.price_current.errors
                         ? 'danger'
                         : 'basic'
                     "
@@ -71,10 +89,68 @@
 
                 <small
                   *ngIf="
-                    trade.price_current.touched && trade.price_current.errors
+                    btrade.price_current.touched && btrade.price_current.errors
                   "
                   class="form-text text-danger"
                   >Please enter Price Current</small
+                >
+              </div>
+              <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-2">
+                <label class="label">Conversion Fee % *</label>
+                <nb-form-field>
+                  <input
+                    nbInput
+                    fullWidth
+                    type="number"
+                    min="0"
+                    max="100"
+                    placeholder="Fee"
+                    formControlName="conversion_fee"
+                    [status]="
+                      btrade.conversion_fee.touched &&
+                      btrade.conversion_fee.errors
+                        ? 'danger'
+                        : 'basic'
+                    "
+                  />
+                  <nb-icon nbSuffix icon="percent"></nb-icon>
+                </nb-form-field>
+
+                <small
+                  *ngIf="
+                    btrade.conversion_fee.touched &&
+                    btrade.conversion_fee.errors
+                  "
+                  class="form-text text-danger"
+                  >Please enter Conversion Fee</small
+                >
+              </div>
+              <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-2">
+                <label class="label">Service Fee % *</label>
+                <nb-form-field>
+                  <input
+                    nbInput
+                    fullWidth
+                    type="number"
+                    min="0"
+                    max="100"
+                    placeholder="Fee"
+                    formControlName="service_fee"
+                    [status]="
+                      btrade.service_fee.touched && btrade.service_fee.errors
+                        ? 'danger'
+                        : 'basic'
+                    "
+                  />
+                  <nb-icon nbSuffix icon="percent"></nb-icon>
+                </nb-form-field>
+
+                <small
+                  *ngIf="
+                    btrade.service_fee.touched && btrade.service_fee.errors
+                  "
+                  class="form-text text-danger"
+                  >Please enter Fee</small
                 >
               </div>
               <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-2">
@@ -88,7 +164,7 @@
                     formControlName="total_bought"
                     [readonly]="true"
                     [status]="
-                      trade.total_bought.touched && trade.total_bought.errors
+                      btrade.total_bought.touched && btrade.total_bought.errors
                         ? 'danger'
                         : 'basic'
                     "
@@ -98,32 +174,10 @@
 
                 <small
                   *ngIf="
-                    trade.total_bought.touched && trade.total_bought.errors
+                    btrade.total_bought.touched && btrade.total_bought.errors
                   "
                   class="form-text text-danger"
                   >Please enter Total Bought</small
-                >
-              </div>
-              <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-2">
-                <label class="label">Fee % *</label>
-                <nb-form-field>
-                  <input
-                    nbInput
-                    fullWidth
-                    type="number"
-                    placeholder="Fee"
-                    formControlName="fee"
-                    [status]="
-                      trade.fee.touched && trade.fee.errors ? 'danger' : 'basic'
-                    "
-                  />
-                  <nb-icon nbSuffix icon="percent"></nb-icon>
-                </nb-form-field>
-
-                <small
-                  *ngIf="trade.fee.touched && trade.fee.errors"
-                  class="form-text text-danger"
-                  >Please enter Fee</small
                 >
               </div>
               <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-2">
@@ -137,7 +191,7 @@
                     formControlName="ammount_sold"
                     [readonly]="true"
                     [status]="
-                      trade.ammount_sold.touched && trade.ammount_sold.errors
+                      btrade.ammount_sold.touched && btrade.ammount_sold.errors
                         ? 'danger'
                         : 'basic'
                     "
@@ -147,7 +201,7 @@
 
                 <small
                   *ngIf="
-                    trade.ammount_sold.touched && trade.ammount_sold.errors
+                    btrade.ammount_sold.touched && btrade.ammount_sold.errors
                   "
                   class="form-text text-danger"
                   >Please enter Amount Sold</small
@@ -162,12 +216,14 @@
                   formControlName="date"
                   [nbDatepicker]="dateTimePicker"
                   [status]="
-                    trade.date.touched && trade.date.errors ? 'danger' : 'basic'
+                    btrade.date.touched && btrade.date.errors
+                      ? 'danger'
+                      : 'basic'
                   "
                 />
                 <nb-datepicker #dateTimePicker></nb-datepicker>
                 <small
-                  *ngIf="trade.date.touched && trade.date.errors"
+                  *ngIf="btrade.date.touched && btrade.date.errors"
                   class="form-text text-danger"
                   >Please enter Date</small
                 >
@@ -186,7 +242,7 @@
                   >
                 </ng-select>
                 <small
-                  *ngIf="trade.client.touched && trade.client.errors"
+                  *ngIf="btrade.client.touched && btrade.client.errors"
                   class="form-text text-danger"
                   >Please select a client</small
                 >
@@ -196,15 +252,24 @@
                   nbButton
                   status="info"
                   class="ml-3"
-                  (click)="makeTrade()"
-                  [disabled]="makingTrade"
+                  (click)="makeBtc()"
+                  [disabled]="makingBtc"
                 >
                   make sale
                 </button>
-                <button nbButton ghost class="ml-4" (click)="initTradeForm()">
+                <button nbButton ghost class="ml-4" (click)="initBtcForm()">
                   Reset
                 </button>
               </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- USDT -->
+        <div *ngIf="tradeType === 'USDT'" class="row transactions-bg mb-3" style="margin: 0rem -1rem">
+          <div class="col-12 py-3 px-lg-5 px-3">
+            <form [formGroup]="usdtForm" class="form-row">
+              USDT FORM
             </form>
           </div>
         </div>
@@ -219,12 +284,13 @@
         >
           <thead>
             <tr>
-              <th>bank</th>
+              <th>from account</th>
               <th>btc part</th>
               <th>price</th>
               <th>total</th>
               <th>minus fee</th>
-              <th>fee</th>
+              <th>conversion fee</th>
+              <th>service fee</th>
               <th>profit</th>
               <th>client</th>
               <th width="20px">&nbsp;</th>
@@ -237,17 +303,10 @@
               <td>{{ row.price_current | currency: "EUR" }}</td>
               <td>{{ row.total_bought | currency: "EUR" }}</td>
               <td>{{ row.ammount | currency: "EUR" }}</td>
+              <td>{{ row.conversion_fee | currency: "EUR" }}</td>
+              <td>{{ row.service_fee | currency: "EUR" }}</td>
               <td>
-                {{
-                  (
-                    ((row.total_bought - row.ammount) / row.total_bought) *
-                    100
-                  ).toFixed(2)
-                }}
-                %
-              </td>
-              <td>
-                {{ row.total_bought - row.ammount | currency: "EUR" }}
+                {{ row.conversion_fee - row.service_fee | currency: "EUR" }}
               </td>
               <td class="text-uppercase">{{ row.client?.name }}</td>
               <td>
@@ -267,6 +326,7 @@
               <td></td>
               <td class="text-right">{{ totalMinusFee | currency: "EUR" }}</td>
               <td></td>
+              <td></td>
               <td>{{ totalProfit | currency: "EUR" }}</td>
               <td></td>
               <td></td>
@@ -285,6 +345,7 @@
               <td></td>
               <td></td>
               <td></td>
+              <td></td>
             </tr>
             <tr>
               <td
@@ -299,6 +360,7 @@
               <td class="text-right">
                 {{ grandTotalMinusFee | currency: "EUR" }}
               </td>
+              <td></td>
               <td></td>
               <td></td>
               <td></td>
