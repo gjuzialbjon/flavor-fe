@@ -168,7 +168,7 @@ export class ClientsComponent implements OnInit {
   }
 
   ngOnDestroy() {
+    this.dtTrigger.unsubscribe();
     this.chRef.detach();
-    this.dtTrigger.complete
   }
 }

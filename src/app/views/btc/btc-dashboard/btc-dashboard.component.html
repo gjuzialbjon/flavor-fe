@@ -306,7 +306,7 @@
               <td>{{ row.conversion_fee | currency: "EUR" }}</td>
               <td>{{ row.service_fee | currency: "EUR" }}</td>
               <td>
-                {{ row.conversion_fee - row.service_fee | currency: "EUR" }}
+                {{ row.service_fee - row.conversion_fee | currency: "EUR" }}
               </td>
               <td class="text-uppercase">{{ row.client?.name }}</td>
               <td>
@@ -379,7 +379,7 @@
         <div class="row transactions-bg mb-3" style="margin: 0rem -1rem">
           <div class="col-12 py-3 px-3">
             <form [formGroup]="transferForm" class="form-row">
-              <div class="col-lg-3 col-md-4 col-sm-6 mb-2">
+              <div class="col-md-4 col-sm-6 mb-2">
                 <label class="label">To *</label>
                 <ng-select
                   formControlName="toEntity"
@@ -398,7 +398,7 @@
                   >Please select an entity</small
                 >
               </div>
-              <div class="col-lg-3 col-md-4 col-sm-6 mb-2">
+              <div class="col-md-4 col-sm-6 mb-2">
                 <label class="label">Description *</label>
                 <input
                   nbInput
@@ -418,7 +418,7 @@
                 >
               </div>
 
-              <div class="col-lg-3 col-md-4 col-sm-6 mb-2">
+              <div class="col-md-4 col-sm-6 mb-2">
                 <label class="label">Amount *</label>
                 <nb-form-field>
                   <input
@@ -440,7 +440,7 @@
                 >
               </div>
 
-              <div class="col-lg-3 col-md-4 col-sm-6 mb-2">
+              <!-- <div class="col-lg-3 col-md-4 col-sm-6 mb-2">
                 <label class="label">Fee (optional)</label>
                 <nb-form-field>
                   <input
@@ -461,7 +461,7 @@
                   >Please enter a valid fee or leave this field empty (Only
                   numbers allowed)</small
                 >
-              </div>
+              </div> -->
             </form>
           </div>
           <div class="col-12 text-right mb-3">

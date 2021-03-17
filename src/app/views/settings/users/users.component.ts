@@ -274,5 +274,6 @@ export class UsersComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.dtTrigger.unsubscribe();
+    this.chRef.detach()
   }
 }

@@ -252,6 +252,30 @@ export class TransactionsService {
     });
   }
 
+  getClientCryptoPosts(clientId: string) {
+    return this.apollo.query({
+      query: gql`{
+        clientMany(filter:{
+          _id:"${clientId}"
+        }){
+          crypto_posts{
+            date
+            type
+            details
+            ammount
+            crypto_ammount
+            price_current
+            total_bought
+            from_account
+            fee
+            service_fee
+            conversion_fee
+          }
+        }
+      }`,
+    });
+  }
+
   async getStores() {
     if (this.stores.length > 0) {
       return this.stores;

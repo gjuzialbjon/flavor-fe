@@ -97,7 +97,7 @@ export class BtcDashboardComponent implements OnInit {
           this.posts = this.transaction.posts.filter((p) => p.type !== 'fee');
           for (const post of this.posts) {
             this.totalMinusFee += post.ammount;
-            this.totalProfit += post.conversion_fee - post.service_fee;
+            this.totalProfit += post.service_fee - post.conversion_fee;
           }
 
           this.transactionsService

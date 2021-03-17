@@ -15,6 +15,7 @@ import { ConfigsService } from 'src/app/core/helper-services/configs.service';
 import { MessageService } from 'src/app/core/helper-services/message.service';
 import { ClientsService } from 'src/app/core/services/clients.service';
 import { Client } from 'src/app/core/models/client';
+import { TransactionsService } from 'src/app/core/services/transactions.service';
 
 @Component({
   selector: 'app-client-dashboard',
@@ -22,13 +23,11 @@ import { Client } from 'src/app/core/models/client';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ClientDashboardComponent implements OnInit {
-  @ViewChild(DataTableDirective) transactionsTable!: DataTableDirective;
+  @ViewChild(DataTableDirective) postsTable!: DataTableDirective;
   dtOptions: DataTables.Settings;
   dtTrigger = new Subject<any>();
 
-  transactions: Transaction[] = [];
-  tableTransactions: Transaction[] = [];
-
+  posts: any[] = []
   clientId: string;
   client!: Client;
   loading = false;
@@ -38,7 +37,7 @@ export class ClientDashboardComponent implements OnInit {
   transactionType = '';
   transactionTypes;
 
-  vendorTypeFormControl = new FormControl('', [Validators.required])
+  vendorTypeFormControl = new FormControl('', [Validators.required]);
 
   constructor(
     private configsService: ConfigsService,
@@ -48,10 +47,10 @@ export class ClientDashboardComponent implements OnInit {
     private clientsService: ClientsService,
     private msg: MessageService,
     private dialogService: NbDialogService,
-    private router: Router
+    private router: Router,
+    private transactionsService: TransactionsService
   ) {
     this.clientId = this.route.snapshot.params.clientId;
-    console.log(this.clientId);
     this.transactionTypes = this.configsService.getTransactionTypes();
     this.dtOptions = this.configsService.getDTOptions();
     this.dtOptions.columnDefs = [
@@ -62,13 +61,14 @@ export class ClientDashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.getClientInfo();
+    this.getClientCryptoPosts();
   }
 
   getClientInfo() {
     this.clientsService.getClientById(this.clientId).subscribe(
       (res: any) => {
         this.client = res.data.clientById as Client;
-        console.log(this.client);
+        // console.log(this.client);
         this.chRef.detectChanges();
       },
       (e: any) => {
@@ -78,28 +78,19 @@ export class ClientDashboardComponent implements OnInit {
     );
   }
 
-  make(transactionType: string) {
-    this.transactionType = transactionType;
-    this.chRef.detectChanges();
-  }
-
-  rerenderTransactions(transaction?: Transaction): void {
-    this.transactionsTable.dtInstance.then((dtInstance: DataTables.Api) => {
-      // Destroy the table first
-      dtInstance.destroy();
-
-      if (transaction) {
-        this.transactions.push(transaction);
-        this.loadingTransactions = false;
+  getClientCryptoPosts(){
+    this.transactionsService.getClientCryptoPosts(this.clientId).subscribe(
+      (res: any) => {
+        this.posts = res.data.clientMany[0].crypto_posts
+        console.log(this.posts);
+        this.dtTrigger.next()
+        this.chRef.detectChanges();
+      },
+      (e: any) => {
+        console.error(e);
+        this.msg.defaultError();
       }
-
-      this.tableTransactions = JSON.parse(JSON.stringify(this.transactions));
-      this.chRef.detectChanges();
-
-      // Call the dtTrigger to rerender again
-      this.dtTrigger.next();
-    });
-    this.chRef.detectChanges();
+    );
   }
 
   openMakeVendor(vendorContent: any) {
@@ -107,25 +98,27 @@ export class ClientDashboardComponent implements OnInit {
     this.dialogService.open(vendorContent);
   }
 
-  makeVendor(dialog: any){
-    if(this.vendorTypeFormControl.invalid){
-      this.msg.error('Please set a vendor type', 'Error!')
-      return
+  makeVendor(dialog: any) {
+    if (this.vendorTypeFormControl.invalid) {
+      this.msg.error('Please set a vendor type', 'Error!');
+      return;
     }
 
-    this.clientsService.makeVendor(this.clientId, this.vendorTypeFormControl.value).subscribe(
-      (res: any) => {
-        console.log(res)
-        let nClient = res.data.clientUpdateById.record
-        this.client.isVendor = nClient.isVendor
-        this.client.vendorType = nClient.vendorType
-        this.chRef.detectChanges()
-        dialog.close()
-      },
-      e => {
-        this.msg.error('Sorry, something went wrong', 'Error!')
-      }
-    )
+    this.clientsService
+      .makeVendor(this.clientId, this.vendorTypeFormControl.value)
+      .subscribe(
+        (res: any) => {
+          console.log(res);
+          let nClient = res.data.clientUpdateById.record;
+          this.client.isVendor = nClient.isVendor;
+          this.client.vendorType = nClient.vendorType;
+          this.chRef.detectChanges();
+          dialog.close();
+        },
+        (e) => {
+          this.msg.error('Sorry, something went wrong', 'Error!');
+        }
+      );
   }
 
   ngOnDestroy() {
