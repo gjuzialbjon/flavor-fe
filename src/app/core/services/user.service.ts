@@ -1,61 +1,61 @@
-import { Injectable } from '@angular/core';
-import { Apollo, gql } from 'apollo-angular';
-import { User } from '../models/user';
+import { Injectable } from '@angular/core'
+import { Apollo, gql } from 'apollo-angular'
+import { User } from '../models/user'
 
 const userMany = gql`
-  {
-    userMany {
-      _id
-      email
-      name
-      role
-      confirmed
-      telegram {
-        id
-        name
-        _id
-      }
-      stores {
-        _id
-        name
-      }
-    }
-  }
-`;
+	{
+		userMany {
+			_id
+			email
+			name
+			role
+			confirmed
+			telegram {
+				id
+				name
+				_id
+			}
+			stores {
+				_id
+				name
+			}
+		}
+	}
+`
 
 const storeMany = gql`
-  {
-    storeMany {
-      _id
-      name
-    }
-  }
-`;
+	{
+		storeMany {
+			_id
+			name
+		}
+	}
+`
 
 @Injectable({
-  providedIn: 'root',
+	providedIn: 'root',
 })
 export class UserService {
-  constructor(private apollo: Apollo) {}
+	constructor(private apollo: Apollo) {}
 
-  //QUERIES
-  getUsers() {
-    return this.apollo.query({
-      query: userMany,
-    });
-  }
+	//QUERIES
+	getUsers() {
+		return this.apollo.query({
+			query: userMany,
+		})
+	}
 
-  getStores() {
-    return this.apollo.query({
-      query: storeMany,
-      fetchPolicy: 'cache-first',
-    });
-  }
+	getStores() {
+		return this.apollo.query({
+			query: storeMany,
+			fetchPolicy: 'cache-first',
+		})
+	}
 
-  //MUTATIONS
-  updateUser(userId: string, user: User) {
-    return this.apollo.mutate({
-      mutation: gql`
+	//MUTATIONS
+	updateUser(userId: string, user: User) {
+		return this.apollo.mutate({
+			mutation: gql`
       mutation{
         userUpdateById(
           record:{
@@ -86,12 +86,12 @@ export class UserService {
         }
       }
       `,
-    });
-  }
+		})
+	}
 
-  registerUser(user: User) {
-    return this.apollo.mutate({
-      mutation: gql`
+	registerUser(user: User) {
+		return this.apollo.mutate({
+			mutation: gql`
       mutation{
         registerUser(
           email:"${user.email}"
@@ -103,18 +103,18 @@ export class UserService {
         }
       }
       `,
-    });
-  }
+		})
+	}
 
-  resetPasswordByAdmin(userId: string, newPassword: string) {
-    return this.apollo.mutate({
-      mutation: gql`
+	resetPasswordByAdmin(userId: string, newPassword: string) {
+		return this.apollo.mutate({
+			mutation: gql`
         mutation {
           resetPasswordAdmin(new: "${newPassword}", user: "${userId}") {
             message
           }
         }
       `,
-    });
-  }
+		})
+	}
 }

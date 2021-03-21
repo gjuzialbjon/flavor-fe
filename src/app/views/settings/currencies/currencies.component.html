@@ -1,128 +1,99 @@
 <div
-  class="pt-3"
-  [nbSpinner]="loadingCurrencies"
-  nbSpinnerStatus="danger"
-  nbSpinnerSize="large"
-  nbSpinnerMessage="Loading currencies"
+	class="pt-3"
+	[nbSpinner]="loadingCurrencies"
+	nbSpinnerStatus="danger"
+	nbSpinnerSize="large"
+	nbSpinnerMessage="Loading currencies"
 >
-  <table
-    datatable
-    [dtTrigger]="$any(dtTrigger)"
-    [dtOptions]="dtOptions"
-    class="table table-hover"
-    width="100%"
-  >
-    <thead>
-      <tr>
-        <th>Currency</th>
-        <th>Symbol</th>
-        <th>Name</th>
-        <th>Type</th>
-        <th width="20px">&nbsp;</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let currency of currencies">
-        <td class="text-capitalize">{{ currency.currency }}</td>
-        <td>{{ currency.symbol }}</td>
-        <td class="text-capitalize">{{ currency.name }}</td>
-        <td class="text-capitalize">{{ currency.type }}</td>
-        <td class="text-center px-0 py-2" width="8%">
-          <nb-icon
-            icon="edit"
-            status="info"
-            style="cursor: pointer"
-            (click)="openUpdate(currencyContent, currency)"
-          ></nb-icon>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+	<table datatable [dtTrigger]="$any(dtTrigger)" [dtOptions]="dtOptions" class="table table-hover" width="100%">
+		<thead>
+			<tr>
+				<th>Currency</th>
+				<th>Symbol</th>
+				<th>Name</th>
+				<th>Type</th>
+				<th width="20px">&nbsp;</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let currency of currencies">
+				<td class="text-capitalize">{{ currency.currency }}</td>
+				<td>{{ currency.symbol }}</td>
+				<td class="text-capitalize">{{ currency.name }}</td>
+				<td class="text-capitalize">{{ currency.type }}</td>
+				<td class="text-center px-0 py-2" width="8%">
+					<nb-icon
+						icon="edit"
+						status="info"
+						style="cursor: pointer"
+						(click)="openUpdate(currencyContent, currency)"
+					></nb-icon>
+				</td>
+			</tr>
+		</tbody>
+	</table>
 </div>
 
 <ng-template #currencyContent let-data let-ref="dialogRef">
-  <nb-card>
-    <nb-card-header>UPDATE CURRENCY</nb-card-header>
-    <form [formGroup]="currencyForm" class="p-3">
-      <div class="form-group mb-2">
-        <label class="label">Currency *</label>
+	<nb-card>
+		<nb-card-header>UPDATE CURRENCY</nb-card-header>
+		<form [formGroup]="currencyForm" class="p-3">
+			<div class="form-group mb-2">
+				<label class="label">Currency *</label>
 
-        <input
-          nbInput
-          fullWidth
-          [status]="
-            f.currency.touched && f.currency.errors ? 'danger' : 'basic'
-          "
-          formControlName="currency"
-          placeholder="Currency *"
-        />
-        <small
-          *ngIf="f.currency.touched && f.currency.errors"
-          class="form-text text-danger"
-          >Please enter a currency.</small
-        >
-      </div>
-      <div class="form-group mb-2">
-        <label class="label">Symbol *</label>
+				<input
+					nbInput
+					fullWidth
+					[status]="f.currency.touched && f.currency.errors ? 'danger' : 'basic'"
+					formControlName="currency"
+					placeholder="Currency *"
+				/>
+				<small *ngIf="f.currency.touched && f.currency.errors" class="form-text text-danger"
+					>Please enter a currency.</small
+				>
+			</div>
+			<div class="form-group mb-2">
+				<label class="label">Symbol *</label>
 
-        <input
-          nbInput
-          fullWidth
-          [status]="f.symbol.touched && f.symbol.errors ? 'danger' : 'basic'"
-          formControlName="symbol"
-          placeholder="Symbol *"
-        />
-        <small
-          *ngIf="f.symbol.touched && f.symbol.errors"
-          class="form-text text-danger"
-          >Please enter a symbol.</small
-        >
-      </div>
-      <div class="form-group mb-2">
-        <label class="label">Name *</label>
+				<input
+					nbInput
+					fullWidth
+					[status]="f.symbol.touched && f.symbol.errors ? 'danger' : 'basic'"
+					formControlName="symbol"
+					placeholder="Symbol *"
+				/>
+				<small *ngIf="f.symbol.touched && f.symbol.errors" class="form-text text-danger">Please enter a symbol.</small>
+			</div>
+			<div class="form-group mb-2">
+				<label class="label">Name *</label>
 
-        <input
-          nbInput
-          fullWidth
-          [status]="f.name.touched && f.name.errors ? 'danger' : 'basic'"
-          formControlName="name"
-          placeholder="Name *"
-        />
-        <small
-          *ngIf="f.name.touched && f.name.errors"
-          class="form-text text-danger"
-          >Please enter a name.</small
-        >
-      </div>
-      <div class="form-group mb-2">
-        <label class="label">Type *</label>
+				<input
+					nbInput
+					fullWidth
+					[status]="f.name.touched && f.name.errors ? 'danger' : 'basic'"
+					formControlName="name"
+					placeholder="Name *"
+				/>
+				<small *ngIf="f.name.touched && f.name.errors" class="form-text text-danger">Please enter a name.</small>
+			</div>
+			<div class="form-group mb-2">
+				<label class="label">Type *</label>
 
-        <nb-select
-          fullWidth
-          formControlName="type"
-          placeholder="Select type..."
-          [status]="f.type.touched && f.type.errors ? 'danger' : 'basic'"
-        >
-          <nb-option *ngFor="let type of types" [value]="type._id">{{
-            type.name
-          }}</nb-option>
-        </nb-select>
-      </div>
-    </form>
-    <nb-card-footer>
-      <button type="button" nbButton class="mr-3" ghost (click)="ref.close()">
-        Close
-      </button>
-      <button
-        type="button"
-        nbButton
-        class=""
-        status="success"
-        (click)="saveCurrency(ref)"
-        [disabled]="loading"
-      >
-        Save
-      </button>
-    </nb-card-footer>
-  </nb-card>
+				<nb-select
+					fullWidth
+					formControlName="type"
+					placeholder="Select type..."
+					[status]="f.type.touched && f.type.errors ? 'danger' : 'basic'"
+				>
+					<nb-option *ngFor="let type of types" [value]="type._id">{{ type.name }}</nb-option>
+				</nb-select>
+			</div>
+		</form>
+		<nb-card-footer>
+			<button type="button" nbButton class="mr-3" ghost (click)="ref.close()">Close</button>
+			<button type="button" nbButton class="" status="success" (click)="saveCurrency(ref)" [disabled]="loading">
+				Save
+			</button>
+		</nb-card-footer>
+	</nb-card>
 </ng-template>

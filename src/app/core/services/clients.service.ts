@@ -1,82 +1,82 @@
-import { Injectable } from '@angular/core';
-import { Apollo, gql } from 'apollo-angular';
-import { Client } from '../models/client';
+import { Injectable } from '@angular/core'
+import { Apollo, gql } from 'apollo-angular'
+import { Client } from '../models/client'
 
 const clientMany = gql`
-  {
-    clientMany {
-      _id
-      name
-      surname
-      location
-      description
-      createdAt
-      isVendor
-      vendorType
-    }
-  }
-`;
+	{
+		clientMany {
+			_id
+			name
+			surname
+			location
+			description
+			createdAt
+			isVendor
+			vendorType
+		}
+	}
+`
 
 const clientOne = gql`
-  query($_id: MongoID!) {
-    clientById(_id: $_id) {
-      name
-      surname
-      location
-      description
-      revenue
-      balance
-      isVendor
-      vendorType
-    }
-  }
-`;
+	query($_id: MongoID!) {
+		clientById(_id: $_id) {
+			name
+			surname
+			location
+			description
+			revenue
+			balance
+			isVendor
+			vendorType
+		}
+	}
+`
 
 const favoriteClients = gql`
-  {
-    Me {
-      favorites {
-        _id
-        name
-        surname
-        balance
-      }
-    }
-  }
-`;
+	{
+		Me {
+			favorites {
+				_id
+				name
+				surname
+				balance
+			}
+		}
+	}
+`
 
 @Injectable({
-  providedIn: 'root',
+	providedIn: 'root',
 })
 export class ClientsService {
-  constructor(private apollo: Apollo) {}
+	constructor(private apollo: Apollo) {}
 
-  //  QUERIES
-  getClients() {
-    return this.apollo.query({
-      query: clientMany,
-    });
-  }
+	//  QUERIES
+	getClients() {
+		return this.apollo.query({
+			query: clientMany,
+		})
+	}
 
-  getFavoriteClients() {
-    return this.apollo.query({
-      query: favoriteClients,
-    });
-  }
+	getFavoriteClients() {
+		return this.apollo.query({
+			query: favoriteClients,
+		})
+	}
 
-  getClientById(clientId: string) {
-    return this.apollo.query({
-      query: clientOne,
-      variables: {
-        _id: clientId,
-      }
-    });
-  }
+	getClientById(clientId: string) {
+		return this.apollo.query({
+			query: clientOne,
+			variables: {
+				_id: clientId,
+			},
+		})
+	}
 
-  //  MUTATIONS
-  toggleFavorite(clientId: string) {
-    return this.apollo.mutate({
-      mutation: gql`
+	//  MUTATIONS
+	toggleFavorite(clientId: string) {
+		return this.apollo.mutate({
+			mutation: gql`
         mutation {
           updateFavorite(clientId: "${clientId}") {
             _id
@@ -86,12 +86,12 @@ export class ClientsService {
           }
         }
       `,
-    });
-  }
+		})
+	}
 
-  createClient(client: Client) {
-    return this.apollo.mutate({
-      mutation: gql`
+	createClient(client: Client) {
+		return this.apollo.mutate({
+			mutation: gql`
         mutation {
           createClient(
             name: "${client.name}"
@@ -108,12 +108,12 @@ export class ClientsService {
           }
         }
       `,
-    });
-  }
+		})
+	}
 
-  makeVendor(clientId: string, vendorType: string) {
-    return this.apollo.mutate({
-      mutation: gql`
+	makeVendor(clientId: string, vendorType: string) {
+		return this.apollo.mutate({
+			mutation: gql`
         mutation {
           clientUpdateById(
             record: { _id: "${clientId}", isVendor: true, vendorType: "${vendorType}" }
@@ -125,6 +125,6 @@ export class ClientsService {
           }
         }
       `,
-    });
-  }
+		})
+	}
 }

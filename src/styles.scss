@@ -1,5 +1,5 @@
 /* NG-SELECT styles*/
-@import "~@ng-select/ng-select/themes/default.theme.css";
+@import '~@ng-select/ng-select/themes/default.theme.css';
 
 /* Importing VARIABLES WHICH CONTAIN Bootstrap Override variables */
 @import './assets/styles/abstracts/variables';
@@ -19,7 +19,6 @@
 @import '~bootstrap/scss/custom-forms';
 @import '~bootstrap/scss/pagination';
 @import '~bootstrap/scss/utilities';
-
 
 /* CUSTOM STYLES */
 @import './assets/styles/main';

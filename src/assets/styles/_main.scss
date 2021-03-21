@@ -14,12 +14,10 @@
 
 // install the framework styles
 @include nb-install() {
-  @include nb-theme-global();
-};
+	@include nb-theme-global();
+}
 
 @import 'shame/shame';
 @import 'shame/corporate-shame';
 @import 'shame/dark-shame';
 @import 'shame/cosmic-shame';
-
-

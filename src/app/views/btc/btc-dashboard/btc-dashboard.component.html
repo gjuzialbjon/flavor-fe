@@ -1,446 +1,488 @@
 <div class="row">
-  <div class="col-xl-8">
-    <nb-card
-      class="mt-0 shadow"
-      style="border: none"
-      [nbSpinner]="loadingTransactions"
-      nbSpinnerStatus="danger"
-      nbSpinnerSize="large"
-      nbSpinnerMessage="Loading"
-    >
-      <nb-card-body>
-        <!-- MAKING A TRANSACTION SECTION -->
-        <div class="row mb-3">
-          <div class="col-12">
-            <div ngbDropdown class="d-inline-block mr-5 mb-xl-0 mb-3">
-              <button
-                nbButton
-                status="info"
-                class="shadow"
-                style="
-                  text-transform: uppercase;
-                  border-radius: 13px;
-                  min-width: 150px;
-                  letter-spacing: 0.5px;
-                  font-size: 1rem;
-                "
-                id="dropdownBasic3"
-                ngbDropdownToggle
-              >
-                {{ tradeType }} &nbsp; &nbsp;
-              </button>
-              <div ngbDropdownMenu aria-labelledby="dropdownBasic3">
-                <button ngbDropdownItem (click)="make('BTC')">
-                  BTC
-                </button>
-                <button ngbDropdownItem (click)="make('USDT')">USDT</button>
-              </div>
-            </div>
-          </div>
-        </div>
+	<div class="col-xl-8">
+		<nb-card
+			class="mt-0 shadow"
+			style="border: none"
+			[nbSpinner]="loadingTransactions"
+			nbSpinnerStatus="danger"
+			nbSpinnerSize="large"
+			nbSpinnerMessage="Loading"
+		>
+			<nb-card-body>
+				<!-- MAKING A TRANSACTION SECTION -->
+				<div class="row mb-3">
+					<div class="col-12">
+						<div ngbDropdown class="d-inline-block mr-5 mb-xl-0 mb-3">
+							<button
+								nbButton
+								status="info"
+								class="shadow"
+								style="
+									text-transform: uppercase;
+									border-radius: 13px;
+									min-width: 150px;
+									letter-spacing: 0.5px;
+									font-size: 1rem;
+								"
+								id="dropdownBasic3"
+								ngbDropdownToggle
+							>
+								{{ tradeType }} &nbsp; &nbsp;
+							</button>
+							<div ngbDropdownMenu aria-labelledby="dropdownBasic3">
+								<button ngbDropdownItem (click)="make('BTC')">BTC</button>
+								<button ngbDropdownItem (click)="make('USDT')">USDT</button>
+							</div>
+						</div>
+					</div>
+				</div>
 
-        <!-- BTC -->
-        <div *ngIf="tradeType === 'BTC'" class="row transactions-bg mb-3" style="margin: 0rem -1rem">
-          <div class="col-12 py-3 px-lg-5 px-3">
-            <form [formGroup]="btcForm" class="form-row">
-              <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-2">
-                <label class="label">Crypto Ammount *</label>
-                <input
-                  nbInput
-                  fullWidth
-                  type="number"
-                  min="0"
-                  placeholder="Crypto Ammount"
-                  formControlName="crypto_ammount"
-                  [status]="
-                    btrade.crypto_ammount.touched &&
-                    btrade.crypto_ammount.errors
-                      ? 'danger'
-                      : 'basic'
-                  "
-                />
-                <small
-                  *ngIf="
-                    btrade.crypto_ammount.touched &&
-                    btrade.crypto_ammount.errors
-                  "
-                  class="form-text text-danger"
-                  >Please enter Crypto Ammount</small
-                >
-              </div>
-              <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-2">
-                <label class="label">Price Current *</label>
-                <nb-form-field
-                  ><input
-                    nbInput
-                    fullWidth
-                    type="number"
-                    placeholder="Price Current"
-                    formControlName="price_current"
-                    [status]="
-                      btrade.price_current.touched &&
-                      btrade.price_current.errors
-                        ? 'danger'
-                        : 'basic'
-                    "
-                  />
-                  <nb-icon nbSuffix icon="euro-sign"></nb-icon>
-                </nb-form-field>
+				<!-- BTC -->
+				<div *ngIf="tradeType === 'BTC'" class="row transactions-bg mb-3" style="margin: 0rem -1rem">
+					<div class="col-12 py-3 px-lg-5 px-3">
+						<form [formGroup]="btcForm" class="form-row">
+							<div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-2">
+								<label class="label">Crypto Ammount *</label>
+								<input
+									nbInput
+									fullWidth
+									type="number"
+									min="0"
+									placeholder="Crypto Ammount"
+									formControlName="crypto_ammount"
+									[status]="btrade.crypto_ammount.touched && btrade.crypto_ammount.errors ? 'danger' : 'basic'"
+								/>
+								<small
+									*ngIf="btrade.crypto_ammount.touched && btrade.crypto_ammount.errors"
+									class="form-text text-danger"
+									>Please enter Crypto Ammount</small
+								>
+							</div>
+							<div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-2">
+								<label class="label">Price Current *</label>
+								<nb-form-field
+									><input
+										nbInput
+										fullWidth
+										type="number"
+										placeholder="Price Current"
+										formControlName="price_current"
+										[status]="btrade.price_current.touched && btrade.price_current.errors ? 'danger' : 'basic'"
+									/>
+									<nb-icon nbSuffix icon="euro-sign"></nb-icon>
+								</nb-form-field>
 
-                <small
-                  *ngIf="
-                    btrade.price_current.touched && btrade.price_current.errors
-                  "
-                  class="form-text text-danger"
-                  >Please enter Price Current</small
-                >
-              </div>
-              <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-2">
-                <label class="label">Conversion Fee % *</label>
-                <nb-form-field>
-                  <input
-                    nbInput
-                    fullWidth
-                    type="number"
-                    min="0"
-                    max="100"
-                    placeholder="Fee"
-                    formControlName="conversion_fee"
-                    [status]="
-                      btrade.conversion_fee.touched &&
-                      btrade.conversion_fee.errors
-                        ? 'danger'
-                        : 'basic'
-                    "
-                  />
-                  <nb-icon nbSuffix icon="percent"></nb-icon>
-                </nb-form-field>
+								<small *ngIf="btrade.price_current.touched && btrade.price_current.errors" class="form-text text-danger"
+									>Please enter Price Current</small
+								>
+							</div>
+							<div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-2">
+								<label class="label">Conversion Fee % *</label>
+								<nb-form-field>
+									<input
+										nbInput
+										fullWidth
+										type="number"
+										placeholder="Fee"
+										formControlName="conversion_fee"
+										[status]="btrade.conversion_fee.touched && btrade.conversion_fee.errors ? 'danger' : 'basic'"
+									/>
+									<nb-icon nbSuffix icon="percent"></nb-icon>
+								</nb-form-field>
 
-                <small
-                  *ngIf="
-                    btrade.conversion_fee.touched &&
-                    btrade.conversion_fee.errors
-                  "
-                  class="form-text text-danger"
-                  >Please enter Conversion Fee</small
-                >
-              </div>
-              <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-2">
-                <label class="label">Service Fee % *</label>
-                <nb-form-field>
-                  <input
-                    nbInput
-                    fullWidth
-                    type="number"
-                    min="0"
-                    max="100"
-                    placeholder="Fee"
-                    formControlName="service_fee"
-                    [status]="
-                      btrade.service_fee.touched && btrade.service_fee.errors
-                        ? 'danger'
-                        : 'basic'
-                    "
-                  />
-                  <nb-icon nbSuffix icon="percent"></nb-icon>
-                </nb-form-field>
+								<small
+									*ngIf="btrade.conversion_fee.touched && btrade.conversion_fee.errors"
+									class="form-text text-danger"
+									>Please enter Conversion Fee</small
+								>
+							</div>
+							<div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-2">
+								<label class="label">Service Fee % *</label>
+								<nb-form-field>
+									<input
+										nbInput
+										fullWidth
+										type="number"
+										min="0"
+										max="100"
+										placeholder="Fee"
+										formControlName="service_fee"
+										[status]="btrade.service_fee.touched && btrade.service_fee.errors ? 'danger' : 'basic'"
+									/>
+									<nb-icon nbSuffix icon="percent"></nb-icon>
+								</nb-form-field>
 
-                <small
-                  *ngIf="
-                    btrade.service_fee.touched && btrade.service_fee.errors
-                  "
-                  class="form-text text-danger"
-                  >Please enter Fee</small
-                >
-              </div>
-              <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-2">
-                <label class="label">Total Bought *</label>
-                <nb-form-field>
-                  <input
-                    nbInput
-                    fullWidth
-                    type="number"
-                    placeholder="Total Bought"
-                    formControlName="total_bought"
-                    [readonly]="true"
-                    [status]="
-                      btrade.total_bought.touched && btrade.total_bought.errors
-                        ? 'danger'
-                        : 'basic'
-                    "
-                  />
-                  <nb-icon nbSuffix icon="euro-sign"></nb-icon>
-                </nb-form-field>
+								<small *ngIf="btrade.service_fee.touched && btrade.service_fee.errors" class="form-text text-danger"
+									>Please enter Fee</small
+								>
+							</div>
+							<div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-2">
+								<label class="label">Total Bought *</label>
+								<nb-form-field>
+									<input
+										nbInput
+										fullWidth
+										type="number"
+										placeholder="Total Bought"
+										formControlName="total_bought"
+										[readonly]="true"
+										[status]="btrade.total_bought.touched && btrade.total_bought.errors ? 'danger' : 'basic'"
+									/>
+									<nb-icon nbSuffix icon="euro-sign"></nb-icon>
+								</nb-form-field>
 
-                <small
-                  *ngIf="
-                    btrade.total_bought.touched && btrade.total_bought.errors
-                  "
-                  class="form-text text-danger"
-                  >Please enter Total Bought</small
-                >
-              </div>
-              <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-2">
-                <label class="label">Amount Sold *</label>
-                <nb-form-field>
-                  <input
-                    nbInput
-                    fullWidth
-                    type="number"
-                    placeholder="Amount Sold"
-                    formControlName="ammount_sold"
-                    [readonly]="true"
-                    [status]="
-                      btrade.ammount_sold.touched && btrade.ammount_sold.errors
-                        ? 'danger'
-                        : 'basic'
-                    "
-                  />
-                  <nb-icon nbSuffix icon="euro-sign"></nb-icon>
-                </nb-form-field>
+								<small *ngIf="btrade.total_bought.touched && btrade.total_bought.errors" class="form-text text-danger"
+									>Please enter Total Bought</small
+								>
+							</div>
+							<div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-2">
+								<label class="label">Amount Sold *</label>
+								<nb-form-field>
+									<input
+										nbInput
+										fullWidth
+										type="number"
+										placeholder="Amount Sold"
+										formControlName="ammount_sold"
+										[readonly]="true"
+										[status]="btrade.ammount_sold.touched && btrade.ammount_sold.errors ? 'danger' : 'basic'"
+									/>
+									<nb-icon nbSuffix icon="euro-sign"></nb-icon>
+								</nb-form-field>
 
-                <small
-                  *ngIf="
-                    btrade.ammount_sold.touched && btrade.ammount_sold.errors
-                  "
-                  class="form-text text-danger"
-                  >Please enter Amount Sold</small
-                >
-              </div>
-              <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-2">
-                <label class="label">Date *</label>
-                <input
-                  nbInput
-                  fullWidth
-                  placeholder="Date"
-                  formControlName="date"
-                  [nbDatepicker]="dateTimePicker"
-                  [status]="
-                    btrade.date.touched && btrade.date.errors
-                      ? 'danger'
-                      : 'basic'
-                  "
-                />
-                <nb-datepicker #dateTimePicker></nb-datepicker>
-                <small
-                  *ngIf="btrade.date.touched && btrade.date.errors"
-                  class="form-text text-danger"
-                  >Please enter Date</small
-                >
-              </div>
-              <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-2">
-                <label class="label">Client </label>
-                <ng-select
-                  formControlName="client"
-                  class="my-ng-select"
-                  placeholder="Select client..."
-                >
-                  <ng-option
-                    *ngFor="let client of clients"
-                    [value]="client._id"
-                    >{{ client.name | uppercase }}</ng-option
-                  >
-                </ng-select>
-                <small
-                  *ngIf="btrade.client.touched && btrade.client.errors"
-                  class="form-text text-danger"
-                  >Please select a client</small
-                >
-              </div>
-              <div class="col-md-4 col-sm-6 pt-4">
-                <button
-                  nbButton
-                  status="info"
-                  class="ml-3"
-                  (click)="makeBtc()"
-                  [disabled]="makingBtc"
-                >
-                  make sale
-                </button>
-                <button nbButton ghost class="ml-4" (click)="initBtcForm()">
-                  Reset
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
+								<small *ngIf="btrade.ammount_sold.touched && btrade.ammount_sold.errors" class="form-text text-danger"
+									>Please enter Amount Sold</small
+								>
+							</div>
+							<div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-2">
+								<label class="label">Date *</label>
+								<input
+									nbInput
+									fullWidth
+									placeholder="Date"
+									formControlName="date"
+									[nbDatepicker]="dateTimePicker"
+									[status]="btrade.date.touched && btrade.date.errors ? 'danger' : 'basic'"
+								/>
+								<nb-datepicker #dateTimePicker></nb-datepicker>
+								<small *ngIf="btrade.date.touched && btrade.date.errors" class="form-text text-danger"
+									>Please enter Date</small
+								>
+							</div>
+							<div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-2">
+								<label class="label">Client </label>
+								<ng-select formControlName="client" class="my-ng-select" placeholder="Select client...">
+									<ng-option *ngFor="let client of clients" [value]="client._id">{{
+										client.name | uppercase
+									}}</ng-option>
+								</ng-select>
+								<small *ngIf="btrade.client.touched && btrade.client.errors" class="form-text text-danger"
+									>Please select a client</small
+								>
+							</div>
+							<div class="col-md-4 col-sm-6 pt-4">
+								<button nbButton status="info" class="ml-3" (click)="makeBtc()" [disabled]="makingBtc">
+									make sale
+								</button>
+								<button nbButton ghost class="ml-4" (click)="initBtcForm()">Reset</button>
+							</div>
+						</form>
+					</div>
+				</div>
 
-        <!-- USDT -->
-        <div *ngIf="tradeType === 'USDT'" class="row transactions-bg mb-3" style="margin: 0rem -1rem">
-          <div class="col-12 py-3 px-lg-5 px-3">
-            <form [formGroup]="usdtForm" class="form-row">
-              USDT FORM
-            </form>
-          </div>
-        </div>
-        <!-- END MAKING A TRANSACTION -->
+				<!-- USDT -->
+				<div *ngIf="tradeType === 'USDT'" class="row transactions-bg mb-3" style="margin: 0rem -1rem">
+					<div class="col-12 py-3 px-lg-5 px-3">
+						<form [formGroup]="usdtForm" class="form-row">
+							<div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-2">
+								<label class="label">Crypto Ammount *</label>
+								<input
+									nbInput
+									fullWidth
+									type="number"
+									min="0"
+									placeholder="Crypto Ammount"
+									formControlName="crypto_ammount"
+									[status]="utrade.crypto_ammount.touched && utrade.crypto_ammount.errors ? 'danger' : 'basic'"
+								/>
+								<small
+									*ngIf="utrade.crypto_ammount.touched && utrade.crypto_ammount.errors"
+									class="form-text text-danger"
+									>Please enter Crypto Ammount</small
+								>
+							</div>
+							<div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-2">
+								<label class="label">Price Current *</label>
+								<nb-form-field
+									><input
+										nbInput
+										fullWidth
+										type="number"
+										placeholder="Price Current"
+										formControlName="price_current"
+										[status]="utrade.price_current.touched && utrade.price_current.errors ? 'danger' : 'basic'"
+									/>
+									<nb-icon nbSuffix icon="euro-sign"></nb-icon>
+								</nb-form-field>
 
-        <table
-          datatable
-          [dtOptions]="dtOptions"
-          [dtTrigger]="$any(dtTrigger)"
-          class="table table-hover btc-table table-sm"
-          width="100%"
-        >
-          <thead>
-            <tr>
-              <th>from account</th>
-              <th>btc part</th>
-              <th>price</th>
-              <th>total</th>
-              <th>minus fee</th>
-              <th>conversion fee</th>
-              <th>service fee</th>
-              <th>profit</th>
-              <th>client</th>
-              <th width="20px">&nbsp;</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let row of posts" style="cursor: pointer">
-              <td class="post-first-td">{{ row.from_account }}</td>
-              <td>{{ row.crypto_ammount }}</td>
-              <td>{{ row.price_current | currency: "EUR" }}</td>
-              <td>{{ row.total_bought | currency: "EUR" }}</td>
-              <td>{{ row.ammount | currency: "EUR" }}</td>
-              <td>{{ row.conversion_fee | currency: "EUR" }}</td>
-              <td>{{ row.service_fee | currency: "EUR" }}</td>
-              <td>
-                {{ row.service_fee - row.conversion_fee | currency: "EUR" }}
-              </td>
-              <td class="text-uppercase">{{ row.client?.name }}</td>
-              <td>
-                <nb-icon
-                  icon="edit"
-                  style="cursor: pointer"
-                  status="basic"
-                ></nb-icon>
-              </td>
-            </tr>
-          </tbody>
-          <tfoot class="bitcoin-table-footer">
-            <tr>
-              <td class="text-uppercase text-right post-first-td">Total</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td class="text-right">{{ totalMinusFee | currency: "EUR" }}</td>
-              <td></td>
-              <td></td>
-              <td>{{ totalProfit | currency: "EUR" }}</td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td class="text-uppercase text-right post-first-td">
-                Remaining Total
-              </td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td class="text-right">
-                {{ remainingTotalMinusFee | currency: "EUR" }}
-              </td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td
-                class="text-uppercase text-right post-first-td"
-                style="border-bottom-left-radius: 0.7rem"
-              >
-                Grand Total
-              </td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td class="text-right">
-                {{ grandTotalMinusFee | currency: "EUR" }}
-              </td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td style="border-bottom-right-radius: 0.7rem"></td>
-            </tr>
-          </tfoot>
-        </table>
-      </nb-card-body>
-    </nb-card>
-  </div>
+								<small *ngIf="utrade.price_current.touched && utrade.price_current.errors" class="form-text text-danger"
+									>Please enter Price Current</small
+								>
+							</div>
+							<div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-2">
+								<label class="label">Conversion Fee % *</label>
+								<nb-form-field>
+									<input
+										nbInput
+										fullWidth
+										type="number"
+										placeholder="Fee"
+										formControlName="conversion_fee"
+										[status]="utrade.conversion_fee.touched && utrade.conversion_fee.errors ? 'danger' : 'basic'"
+									/>
+									<nb-icon nbSuffix icon="percent"></nb-icon>
+								</nb-form-field>
 
-  <div class="col-xl-4">
-    <nb-card class="bitcoin-second-card shadow">
-      <nb-card-body>
-        <!-- MAKING A TRANSACTION SECTION -->
-        <div class="row transactions-bg mb-3" style="margin: 0rem -1rem">
-          <div class="col-12 py-3 px-3">
-            <form [formGroup]="transferForm" class="form-row">
-              <div class="col-md-4 col-sm-6 mb-2">
-                <label class="label">To *</label>
-                <ng-select
-                  formControlName="toEntity"
-                  class="my-ng-select"
-                  placeholder="Select entity..."
-                >
-                  <ng-option
-                    *ngFor="let entity of entities"
-                    [value]="entity._id"
-                    >{{ entity.name | uppercase }}</ng-option
-                  >
-                </ng-select>
-                <small
-                  *ngIf="t.toEntity.touched && t.toEntity.errors"
-                  class="form-text text-danger"
-                  >Please select an entity</small
-                >
-              </div>
-              <div class="col-md-4 col-sm-6 mb-2">
-                <label class="label">Description *</label>
-                <input
-                  nbInput
-                  fullWidth
-                  placeholder="Description"
-                  formControlName="description"
-                  [status]="
-                    t.description.touched && t.description.errors
-                      ? 'danger'
-                      : 'basic'
-                  "
-                />
-                <small
-                  *ngIf="t.description.touched && t.description.errors"
-                  class="form-text text-danger"
-                  >Please enter a short description</small
-                >
-              </div>
+								<small
+									*ngIf="utrade.conversion_fee.touched && utrade.conversion_fee.errors"
+									class="form-text text-danger"
+									>Please enter Conversion Fee</small
+								>
+							</div>
+							<div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-2">
+								<label class="label">Service Fee % *</label>
+								<nb-form-field>
+									<input
+										nbInput
+										fullWidth
+										type="number"
+										min="0"
+										max="100"
+										placeholder="Fee"
+										formControlName="service_fee"
+										[status]="utrade.service_fee.touched && utrade.service_fee.errors ? 'danger' : 'basic'"
+									/>
+									<nb-icon nbSuffix icon="percent"></nb-icon>
+								</nb-form-field>
 
-              <div class="col-md-4 col-sm-6 mb-2">
-                <label class="label">Amount *</label>
-                <nb-form-field>
-                  <input
-                    nbInput
-                    fullWidth
-                    formControlName="amount"
-                    placeholder="Amount *"
-                    [status]="
-                      t.amount.touched && t.amount.errors ? 'danger' : 'basic'
-                    "
-                  />
-                  <nb-icon nbSuffix icon="euro-sign"></nb-icon>
-                </nb-form-field>
+								<small *ngIf="utrade.service_fee.touched && utrade.service_fee.errors" class="form-text text-danger"
+									>Please enter Fee</small
+								>
+							</div>
+							<div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-2">
+								<label class="label">Total Bought *</label>
+								<nb-form-field>
+									<input
+										nbInput
+										fullWidth
+										type="number"
+										placeholder="Total Bought"
+										formControlName="total_bought"
+										[readonly]="true"
+										[status]="utrade.total_bought.touched && utrade.total_bought.errors ? 'danger' : 'basic'"
+									/>
+									<nb-icon nbSuffix icon="euro-sign"></nb-icon>
+								</nb-form-field>
 
-                <small
-                  *ngIf="t.amount.touched && t.amount.errors"
-                  class="form-text text-danger"
-                  >Please enter a valid amount</small
-                >
-              </div>
+								<small *ngIf="utrade.total_bought.touched && utrade.total_bought.errors" class="form-text text-danger"
+									>Please enter Total Bought</small
+								>
+							</div>
+							<div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-2">
+								<label class="label">Amount Sold *</label>
+								<nb-form-field>
+									<input
+										nbInput
+										fullWidth
+										type="number"
+										placeholder="Amount Sold"
+										formControlName="ammount_sold"
+										[readonly]="true"
+										[status]="utrade.ammount_sold.touched && utrade.ammount_sold.errors ? 'danger' : 'basic'"
+									/>
+									<nb-icon nbSuffix icon="euro-sign"></nb-icon>
+								</nb-form-field>
 
-              <!-- <div class="col-lg-3 col-md-4 col-sm-6 mb-2">
+								<small *ngIf="utrade.ammount_sold.touched && utrade.ammount_sold.errors" class="form-text text-danger"
+									>Please enter Amount Sold</small
+								>
+							</div>
+							<div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-2">
+								<label class="label">Date *</label>
+								<input
+									nbInput
+									fullWidth
+									placeholder="Date"
+									formControlName="date"
+									[nbDatepicker]="dateTimePicker"
+									[status]="utrade.date.touched && utrade.date.errors ? 'danger' : 'basic'"
+								/>
+								<nb-datepicker #dateTimePicker></nb-datepicker>
+								<small *ngIf="utrade.date.touched && utrade.date.errors" class="form-text text-danger"
+									>Please enter Date</small
+								>
+							</div>
+							<div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-2">
+								<label class="label">Client </label>
+								<ng-select formControlName="client" class="my-ng-select" placeholder="Select client...">
+									<ng-option *ngFor="let client of clients" [value]="client._id">{{
+										client.name | uppercase
+									}}</ng-option>
+								</ng-select>
+								<small *ngIf="utrade.client.touched && utrade.client.errors" class="form-text text-danger"
+									>Please select a client</small
+								>
+							</div>
+							<div class="col-md-4 col-sm-6 pt-4">
+								<button nbButton status="info" class="ml-3" (click)="makeUsdt()" [disabled]="makingUsdt">
+									make btcsde sale
+								</button>
+								<button nbButton ghost class="ml-4" (click)="initUsdtForm()">Reset</button>
+							</div>
+						</form>
+					</div>
+				</div>
+				<!-- END MAKING A TRANSACTION -->
+
+				<table
+					datatable
+					[dtOptions]="dtOptions"
+					[dtTrigger]="$any(dtTrigger)"
+					class="table table-hover btc-table table-sm"
+					width="100%"
+				>
+					<thead>
+						<tr>
+							<th>from account</th>
+							<th>btc part</th>
+							<th>price</th>
+							<th>total</th>
+							<th>minus fee</th>
+							<th>conversion fee</th>
+							<th>service fee</th>
+							<th>profit</th>
+							<th>client</th>
+							<th width="20px">&nbsp;</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr *ngFor="let row of posts" style="cursor: pointer">
+							<td class="post-first-td">{{ row.from_account }}</td>
+							<td>{{ row.crypto_ammount }}</td>
+							<td>{{ row.price_current | currency: 'EUR' }}</td>
+							<td>{{ row.total_bought | currency: 'EUR' }}</td>
+							<td>{{ row.ammount | currency: 'EUR' }}</td>
+							<td>{{ row.conversion_fee | currency: 'EUR' }}</td>
+							<td>{{ row.service_fee | currency: 'EUR' }}</td>
+							<td>
+								{{ row.service_fee - row.conversion_fee | currency: 'EUR' }}
+							</td>
+							<td class="text-uppercase">{{ row.client?.name }}</td>
+							<td>
+								<nb-icon icon="edit" style="cursor: pointer" status="basic"></nb-icon>
+							</td>
+						</tr>
+					</tbody>
+					<tfoot class="bitcoin-table-footer">
+						<tr>
+							<td class="text-uppercase text-right post-first-td">Total</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td class="text-right">{{ totalMinusFee | currency: 'EUR' }}</td>
+							<td></td>
+							<td></td>
+							<td>{{ totalProfit | currency: 'EUR' }}</td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td class="text-uppercase text-right post-first-td">Remaining Total</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td class="text-right">
+								{{ remainingTotalMinusFee | currency: 'EUR' }}
+							</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td class="text-uppercase text-right post-first-td" style="border-bottom-left-radius: 0.7rem">
+								Grand Total
+							</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td class="text-right">
+								{{ grandTotalMinusFee | currency: 'EUR' }}
+							</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td style="border-bottom-right-radius: 0.7rem"></td>
+						</tr>
+					</tfoot>
+				</table>
+			</nb-card-body>
+		</nb-card>
+	</div>
+
+	<div class="col-xl-4">
+		<nb-card class="bitcoin-second-card shadow">
+			<nb-card-body>
+				<!-- MAKING A TRANSACTION SECTION -->
+				<div class="row transactions-bg mb-3" style="margin: 0rem -1rem">
+					<div class="col-12 py-3 px-3">
+						<form [formGroup]="transferForm" class="form-row">
+							<div class="col-md-4 col-sm-6 mb-2">
+								<label class="label">To *</label>
+								<ng-select formControlName="toEntity" class="my-ng-select" placeholder="Select entity...">
+									<ng-option *ngFor="let entity of entities" [value]="entity._id">{{
+										entity.name | uppercase
+									}}</ng-option>
+								</ng-select>
+								<small *ngIf="t.toEntity.touched && t.toEntity.errors" class="form-text text-danger"
+									>Please select an entity</small
+								>
+							</div>
+							<div class="col-md-4 col-sm-6 mb-2">
+								<label class="label">Description *</label>
+								<input
+									nbInput
+									fullWidth
+									placeholder="Description"
+									formControlName="description"
+									[status]="t.description.touched && t.description.errors ? 'danger' : 'basic'"
+								/>
+								<small *ngIf="t.description.touched && t.description.errors" class="form-text text-danger"
+									>Please enter a short description</small
+								>
+							</div>
+
+							<div class="col-md-4 col-sm-6 mb-2">
+								<label class="label">Amount *</label>
+								<nb-form-field>
+									<input
+										nbInput
+										fullWidth
+										formControlName="amount"
+										placeholder="Amount *"
+										[status]="t.amount.touched && t.amount.errors ? 'danger' : 'basic'"
+									/>
+									<nb-icon nbSuffix icon="euro-sign"></nb-icon>
+								</nb-form-field>
+
+								<small *ngIf="t.amount.touched && t.amount.errors" class="form-text text-danger"
+									>Please enter a valid amount</small
+								>
+							</div>
+
+							<!-- <div class="col-lg-3 col-md-4 col-sm-6 mb-2">
                 <label class="label">Fee (optional)</label>
                 <nb-form-field>
                   <input
@@ -462,43 +504,34 @@
                   numbers allowed)</small
                 >
               </div> -->
-            </form>
-          </div>
-          <div class="col-12 text-right mb-3">
-            <button
-              nbButton
-              status="info"
-              [disabled]="makingTransfer"
-              (click)="makeTransfer()"
-            >
-              Make transfer
-            </button>
-            <button nbButton ghost class="ml-3" (click)="initTransferForm()">
-              reset
-            </button>
-          </div>
-        </div>
-        <!-- END MAKING A TRANSACTION -->
+						</form>
+					</div>
+					<div class="col-12 text-right mb-3">
+						<button nbButton status="info" [disabled]="makingTransfer" (click)="makeTransfer()">Make transfer</button>
+						<button nbButton ghost class="ml-3" (click)="initTransferForm()">reset</button>
+					</div>
+				</div>
+				<!-- END MAKING A TRANSACTION -->
 
-        <table class="table table-hover table-sm" width="100%">
-          <thead>
-            <tr>
-              <th>bill</th>
-              <th>paid</th>
-              <th>description</th>
-              <th>remaining</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let row of transfers" style="cursor: pointer">
-              <td class="post-first-td">{{ row.total | currency: "EUR" }}</td>
-              <td>{{ row.amount_in | currency: "EUR" }}</td>
-              <td>{{ row.description }}</td>
-              <td>{{ row.total - row.amount_in | currency: "EUR" }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </nb-card-body>
-    </nb-card>
-  </div>
+				<table class="table table-hover table-sm" width="100%">
+					<thead>
+						<tr>
+							<th>bill</th>
+							<th>paid</th>
+							<th>description</th>
+							<th>remaining</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr *ngFor="let row of transfers" style="cursor: pointer">
+							<td class="post-first-td">{{ row.total | currency: 'EUR' }}</td>
+							<td>{{ row.amount_in | currency: 'EUR' }}</td>
+							<td>{{ row.description }}</td>
+							<td>{{ row.total - row.amount_in | currency: 'EUR' }}</td>
+						</tr>
+					</tbody>
+				</table>
+			</nb-card-body>
+		</nb-card>
+	</div>
 </div>

@@ -1,48 +1,36 @@
 <div class="row mb-3">
-  <div class="col-sm-6">
-    <p
-      class="text-uppercase text-nb-info font-weight-bold m-0"
-      style="font-size: 28px"
-    >
-      {{ client?.name }} {{ client?.surname }}
-    </p>
-  </div>
-  <div
-    *ngIf="!client?.isVendor && !loadingTransactions"
-    class="col-sm-6 text-right pt-sm-0 pt-3"
-  >
-    <button nbButton status="warning" (click)="openMakeVendor(vendorContent)">
-      Make vendor
-    </button>
-  </div>
+	<div class="col-sm-6">
+		<p class="text-uppercase text-nb-info font-weight-bold m-0" style="font-size: 28px">
+			{{ client?.name }} {{ client?.surname }}
+		</p>
+	</div>
+	<div *ngIf="!client?.isVendor && !loadingTransactions" class="col-sm-6 text-right pt-sm-0 pt-3">
+		<button nbButton status="warning" (click)="openMakeVendor(vendorContent)">Make vendor</button>
+	</div>
 </div>
 
 <div class="row align-items-end">
-  <div class="col-xl-4 col-lg-6 col-md-8">
-    <nb-card class="shadow">
-      <nb-card-body>
-        <div class="row">
-          <div class="col-md-6">
-            <p class="text-disabled mb-2 font-weight-bold text-uppercase">
-              BALANCE TOT
-            </p>
-            <p class="text-center mb-0 text-nb-info" style="font-size: 1.5rem">
-              <span>{{ client?.balance | currency: "EUR" }}</span>
-            </p>
-          </div>
-          <div class="col-md-6 mt-md-0 mt-4">
-            <p class="text-disabled mb-2 font-weight-bold text-uppercase">
-              PROFIT TOT
-            </p>
-            <p class="text-center mb-0 text-nb-info" style="font-size: 1.5rem">
-              <span>{{ client?.revenue | currency: "EUR" }}</span>
-            </p>
-          </div>
-        </div>
-      </nb-card-body>
-    </nb-card>
-  </div>
-  <!-- <div class="col-xl-2 col-lg-3 col-md-4" *ngFor="let balance of balances">
+	<div class="col-xl-4 col-lg-6 col-md-8">
+		<nb-card class="shadow">
+			<nb-card-body>
+				<div class="row">
+					<div class="col-md-6">
+						<p class="text-disabled mb-2 font-weight-bold text-uppercase">BALANCE TOT</p>
+						<p class="text-center mb-0 text-nb-info" style="font-size: 1.5rem">
+							<span>{{ client?.balance | currency: 'EUR' }}</span>
+						</p>
+					</div>
+					<div class="col-md-6 mt-md-0 mt-4">
+						<p class="text-disabled mb-2 font-weight-bold text-uppercase">PROFIT TOT</p>
+						<p class="text-center mb-0 text-nb-info" style="font-size: 1.5rem">
+							<span>{{ client?.revenue | currency: 'EUR' }}</span>
+						</p>
+					</div>
+				</div>
+			</nb-card-body>
+		</nb-card>
+	</div>
+	<!-- <div class="col-xl-2 col-lg-3 col-md-4" *ngFor="let balance of balances">
     <nb-card class="shadow">
       <nb-card-body>
         <p class="text-disabled text-uppercase">BALANCE {{ balance.name }}</p>
@@ -54,103 +42,81 @@
   </div> -->
 </div>
 
-<app-transactions-table
-  (onTransactionUpdate)="getClientInfo()"
-></app-transactions-table>
+<app-transactions-table (onTransactionUpdate)="getClientInfo()"></app-transactions-table>
 
 <nb-card>
-  <nb-card-body>
-    <div class="row mb-3">
-      <div class="col-12" style="font-weight: 800; color: gray;">
-        CRYPTO TRANSACTIONS
-      </div>
-    </div>
-    <table
-          datatable
-          [dtOptions]="dtOptions"
-          [dtTrigger]="$any(dtTrigger)"
-          class="table table-hover table-sm"
-          width="100%"
-        >
-          <thead>
-            <tr>
-              <th>from account</th>
-              <th>btc part</th>
-              <th>price</th>
-              <th>total</th>
-              <th>minus fee</th>
-              <th>conversion fee</th>
-              <th>service fee</th>
-              <th>profit</th>
-              <!-- <th width="20px">&nbsp;</th> -->
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let row of posts" style="cursor: pointer">
-              <td class="post-first-td">{{ row.from_account }}</td>
-              <td>{{ row.crypto_ammount }}</td>
-              <td>{{ row.price_current | currency: "EUR" }}</td>
-              <td>{{ row.total_bought | currency: "EUR" }}</td>
-              <td>{{ row.ammount | currency: "EUR" }}</td>
-              <td>{{ row.conversion_fee | currency: "EUR" }}</td>
-              <td>{{ row.service_fee | currency: "EUR" }}</td>
-              <td>
-                {{ row.service_fee - row.conversion_fee | currency: "EUR" }}
-              </td>
-              <!-- <td>
+	<nb-card-body>
+		<div class="row mb-3">
+			<div class="col-12" style="font-weight: 800; color: gray">CRYPTO TRANSACTIONS</div>
+		</div>
+		<table
+			datatable
+			[dtOptions]="dtOptions"
+			[dtTrigger]="$any(dtTrigger)"
+			class="table table-hover table-sm"
+			width="100%"
+		>
+			<thead>
+				<tr>
+					<th>from account</th>
+					<th>btc part</th>
+					<th>price</th>
+					<th>total</th>
+					<th>minus fee</th>
+					<th>conversion fee</th>
+					<th>service fee</th>
+					<th>profit</th>
+					<!-- <th width="20px">&nbsp;</th> -->
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let row of posts" style="cursor: pointer">
+					<td class="post-first-td">{{ row.from_account }}</td>
+					<td>{{ row.crypto_ammount }}</td>
+					<td>{{ row.price_current | currency: 'EUR' }}</td>
+					<td>{{ row.total_bought | currency: 'EUR' }}</td>
+					<td>{{ row.ammount | currency: 'EUR' }}</td>
+					<td>{{ row.conversion_fee | currency: 'EUR' }}</td>
+					<td>{{ row.service_fee | currency: 'EUR' }}</td>
+					<td>
+						{{ row.service_fee - row.conversion_fee | currency: 'EUR' }}
+					</td>
+					<!-- <td>
                 <nb-icon
                   icon="edit"
                   style="cursor: pointer"
                   status="basic"
                 ></nb-icon>
               </td> -->
-            </tr>
-          </tbody>
-        </table>
-  </nb-card-body>
+				</tr>
+			</tbody>
+		</table>
+	</nb-card-body>
 </nb-card>
 
 <ng-template #vendorContent let-ref="dialogRef">
-  <nb-card>
-    <nb-card-header class="d-flex align-items-start justify-content-between">
-      <span
-        class="mr-2"
-        style="
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          max-width: 25ch;
-        "
-      >
-        MAKE VENDOR</span
-      >
-      <span>
-        <nb-icon
-          icon="window-close"
-          (click)="ref.close()"
-          style="cursor: pointer"
-        ></nb-icon>
-      </span>
-    </nb-card-header>
-    <nb-card-body class="p-3">
-      <div class="form-group">
-        <label class="label">Enter vendor type *</label>
-        <input
-          nbInput
-          fullWidth
-          [status]="
-            vendorTypeFormControl.invalid && vendorTypeFormControl.invalid
-              ? 'danger'
-              : 'basic'
-          "
-          [formControl]="vendorTypeFormControl"
-        />
-      </div>
-    </nb-card-body>
-    <nb-card-footer>
-      <button nbButton status="success" (click)="makeVendor(ref)">
-        Make vendor
-      </button>
-    </nb-card-footer>
-  </nb-card>
+	<nb-card>
+		<nb-card-header class="d-flex align-items-start justify-content-between">
+			<span class="mr-2" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 25ch">
+				MAKE VENDOR</span
+			>
+			<span>
+				<nb-icon icon="window-close" (click)="ref.close()" style="cursor: pointer"></nb-icon>
+			</span>
+		</nb-card-header>
+		<nb-card-body class="p-3">
+			<div class="form-group">
+				<label class="label">Enter vendor type *</label>
+				<input
+					nbInput
+					fullWidth
+					[status]="vendorTypeFormControl.invalid && vendorTypeFormControl.invalid ? 'danger' : 'basic'"
+					[formControl]="vendorTypeFormControl"
+				/>
+			</div>
+		</nb-card-body>
+		<nb-card-footer>
+			<button nbButton status="success" (click)="makeVendor(ref)">Make vendor</button>
+		</nb-card-footer>
+	</nb-card>
 </ng-template>

@@ -1,141 +1,100 @@
 <nb-card style="max-width: 500px" class="shadow">
-  <nb-card-body>
-    <p class="text-disabled text-uppercase font-weight-bold">General</p>
+	<nb-card-body>
+		<p class="text-disabled text-uppercase font-weight-bold">General</p>
 
-    <nb-card style="background: #f5f9ff; border: none">
-      <nb-card-body class="p-0">
-        <table>
-          <tbody>
-            <tr>
-              <td class="pr-4 pl-2 py-3 text-disabled">Name</td>
-              <td class="px-4 py-3 text-disabled">
-                <span *ngIf="!editingName"> {{ user?.name }} </span>
-                <input
-                  *ngIf="editingName"
-                  nbInput
-                  [formControl]="nameFormControl"
-                  style="margin: -1rem -1rem"
-                />
-              </td>
-              <td class="px-4 py-3">
-                <nb-icon
-                  *ngIf="!editingName"
-                  icon="pen"
-                  status="basic"
-                  style="cursor: pointer"
-                  (click)="startNameEdit()"
-                ></nb-icon>
-                <button
-                  nbButton
-                  *ngIf="editingName"
-                  (click)="saveNewName()"
-                  status="info"
-                  style="margin: -1rem -1rem"
-                >
-                  Save
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <td class="pr-4 pl-2 py-3 text-disabled">Email</td>
-              <td class="px-4 py-3 text-disabled">
-                <span *ngIf="!editingEmail"> {{ user?.email }}</span>
-                <input
-                  *ngIf="editingEmail"
-                  nbInput
-                  [formControl]="emailFormControl"
-                  style="margin: -1rem -1rem"
-                />
-              </td>
-              <td class="px-4 py-3">
-                <nb-icon
-                  *ngIf="!editingEmail"
-                  icon="pen"
-                  status="basic"
-                  style="cursor: pointer"
-                  (click)="startEmailEdit()"
-                ></nb-icon>
-                <button
-                  nbButton
-                  *ngIf="editingEmail"
-                  (click)="saveNewMail()"
-                  status="info"
-                  style="margin: -1rem -1rem"
-                >
-                  Save
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <td class="pr-4 pl-2 py-3 text-disabled">Role</td>
-              <td class="px-4 py-3 text-disabled text-capitalize">
-                {{ user?.role }}
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </nb-card-body>
-    </nb-card>
+		<nb-card style="background: #f5f9ff; border: none">
+			<nb-card-body class="p-0">
+				<table>
+					<tbody>
+						<tr>
+							<td class="pr-4 pl-2 py-3 text-disabled">Name</td>
+							<td class="px-4 py-3 text-disabled">
+								<span *ngIf="!editingName"> {{ user?.name }} </span>
+								<input *ngIf="editingName" nbInput [formControl]="nameFormControl" style="margin: -1rem -1rem" />
+							</td>
+							<td class="px-4 py-3">
+								<nb-icon
+									*ngIf="!editingName"
+									icon="pen"
+									status="basic"
+									style="cursor: pointer"
+									(click)="startNameEdit()"
+								></nb-icon>
+								<button nbButton *ngIf="editingName" (click)="saveNewName()" status="info" style="margin: -1rem -1rem">
+									Save
+								</button>
+							</td>
+						</tr>
+						<tr>
+							<td class="pr-4 pl-2 py-3 text-disabled">Email</td>
+							<td class="px-4 py-3 text-disabled">
+								<span *ngIf="!editingEmail"> {{ user?.email }}</span>
+								<input *ngIf="editingEmail" nbInput [formControl]="emailFormControl" style="margin: -1rem -1rem" />
+							</td>
+							<td class="px-4 py-3">
+								<nb-icon
+									*ngIf="!editingEmail"
+									icon="pen"
+									status="basic"
+									style="cursor: pointer"
+									(click)="startEmailEdit()"
+								></nb-icon>
+								<button nbButton *ngIf="editingEmail" (click)="saveNewMail()" status="info" style="margin: -1rem -1rem">
+									Save
+								</button>
+							</td>
+						</tr>
+						<tr>
+							<td class="pr-4 pl-2 py-3 text-disabled">Role</td>
+							<td class="px-4 py-3 text-disabled text-capitalize">
+								{{ user?.role }}
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</nb-card-body>
+		</nb-card>
 
-    <p class="text-disabled text-uppercase font-weight-bold">Notifications</p>
+		<p class="text-disabled text-uppercase font-weight-bold">Notifications</p>
 
-    <a
-      href="tg://resolve?domain=n0t1fyss_bot"
-      class="d-block d-lg-none"
-      target="_blank"
-    >
-      Register to telegram by sending "/register" to the bot &nbsp;
-      <img src="https://telegram.org/img/t_logo.svg?1" alt="" width="40"
-    /></a>
+		<a href="tg://resolve?domain=n0t1fyss_bot" class="d-block d-lg-none" target="_blank">
+			Register to telegram by sending "/register" to the bot &nbsp;
+			<img src="https://telegram.org/img/t_logo.svg?1" alt="" width="40"
+		/></a>
 
-    <a
-      href="https://telegram.me/n0t1fyss_bot"
-      class="d-none d-lg-block"
-      target="_blank"
-    > 
-      Register to telegram by sending "/register" to the bot &nbsp;
-      <img src="https://telegram.org/img/t_logo.svg?1" alt="" width="40"
-    /></a>
+		<a href="https://telegram.me/n0t1fyss_bot" class="d-none d-lg-block" target="_blank">
+			Register to telegram by sending "/register" to the bot &nbsp;
+			<img src="https://telegram.org/img/t_logo.svg?1" alt="" width="40"
+		/></a>
 
-    <p class="text-disabled text-uppercase font-weight-bold mt-5">
-      Change password
-    </p>
+		<p class="text-disabled text-uppercase font-weight-bold mt-5">Change password</p>
 
-    <nb-form-field>
-      <label for="newpass" class="label">New password</label>
-      <input
-        nbInput
-        id="newpass"
-        #newpass
-        [formControl]="newPassFormControl"
-        [status]="
-          newPassFormControl.touched && newPassFormControl.invalid
-            ? 'danger'
-            : 'basic'
-        "
-      />
-      <span class="text-hint" style="font-size: 11px"
-        >Password should have a minimum length of 6</span
-      >
-    </nb-form-field>
+		<nb-form-field>
+			<label for="newpass" class="label">New password</label>
+			<input
+				nbInput
+				id="newpass"
+				#newpass
+				[formControl]="newPassFormControl"
+				[status]="newPassFormControl.touched && newPassFormControl.invalid ? 'danger' : 'basic'"
+			/>
+			<span class="text-hint" style="font-size: 11px">Password should have a minimum length of 6</span>
+		</nb-form-field>
 
-    <nb-form-field>
-      <label for="newpassr" class="label mt-3">Repeat new password</label>
-      <input
-        nbInput
-        id="newpassr"
-        #newpassr
-        [formControl]="newPassRFormControl"
-        [status]="
-          newPassRFormControl.touched &&
-          (newPassFormControl.invalid || newpass.value !== newpassr.value)
-            ? 'danger'
-            : 'basic'
-        "
-      />
-    </nb-form-field>
-    <button nbButton class="mt-3" status="info" (click)="updatePassword()">
-      Update password
-    </button>
-  </nb-card-body>
+		<nb-form-field>
+			<label for="newpassr" class="label mt-3">Repeat new password</label>
+			<input
+				nbInput
+				id="newpassr"
+				#newpassr
+				[formControl]="newPassRFormControl"
+				[status]="
+					newPassRFormControl.touched && (newPassFormControl.invalid || newpass.value !== newpassr.value)
+						? 'danger'
+						: 'basic'
+				"
+			/>
+		</nb-form-field>
+		<button nbButton class="mt-3" status="info" (click)="updatePassword()">Update password</button>
+	</nb-card-body>
 </nb-card>

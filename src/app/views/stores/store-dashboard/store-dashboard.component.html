@@ -1,36 +1,33 @@
 <div class="row mb-3">
-  <div class="col">
-    <p
-      class="text-uppercase font-weight-bold m-0"
-      style="color: #3886f7; font-size: 28px"
-    >
-      {{ store?.name }}
-    </p>
-  </div>
+	<div class="col">
+		<p class="text-uppercase font-weight-bold m-0" style="color: #3886f7; font-size: 28px">
+			{{ store?.name }}
+		</p>
+	</div>
 </div>
 
 <div class="row align-items-end">
-  <div class="col-xl-4 col-lg-6 col-md-8">
-    <nb-card class="shadow">
-      <nb-card-body>
-        <div class="row">
-          <div class="col-md-6">
-            <p class="text-disabled mb-2 font-weight-bold text-uppercase">BALANCE TOT</p>
-            <p class="text-center mb-0 text-nb-info" style="font-size: 1.5rem">
-              <span>{{ store?.balance | currency: "EUR" }}</span>
-            </p>
-          </div>
-          <div class="col-md-6 mt-md-0 mt-4">
-            <p class="text-disabled mb-2 font-weight-bold text-uppercase">PROFIT TOT</p>
-            <p class="text-center mb-0 text-nb-info" style="font-size: 1.5rem">
-              <span>{{ store?.revenue_sum | currency: "EUR" }}</span>
-            </p>
-          </div>
-        </div>
-      </nb-card-body>
-    </nb-card>
-  </div>
-  <!-- <div class="col-xl-2 col-lg-3 col-md-4" *ngFor="let balance of balances">
+	<div class="col-xl-4 col-lg-6 col-md-8">
+		<nb-card class="shadow">
+			<nb-card-body>
+				<div class="row">
+					<div class="col-md-6">
+						<p class="text-disabled mb-2 font-weight-bold text-uppercase">BALANCE TOT</p>
+						<p class="text-center mb-0 text-nb-info" style="font-size: 1.5rem">
+							<span>{{ store?.balance | currency: 'EUR' }}</span>
+						</p>
+					</div>
+					<div class="col-md-6 mt-md-0 mt-4">
+						<p class="text-disabled mb-2 font-weight-bold text-uppercase">PROFIT TOT</p>
+						<p class="text-center mb-0 text-nb-info" style="font-size: 1.5rem">
+							<span>{{ store?.revenue_sum | currency: 'EUR' }}</span>
+						</p>
+					</div>
+				</div>
+			</nb-card-body>
+		</nb-card>
+	</div>
+	<!-- <div class="col-xl-2 col-lg-3 col-md-4" *ngFor="let balance of balances">
     <nb-card class="shadow">
       <nb-card-body>
         <p class="text-disabled mb-2 font-weight-bold text-uppercase">BALANCE {{ balance.name }}</p>

@@ -1,28 +1,28 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core'
+import { ActivatedRoute } from '@angular/router'
 
 @Component({
-  selector: 'app-settings',
-  templateUrl: './settings.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+	selector: 'app-settings',
+	templateUrl: './settings.component.html',
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SettingsComponent implements OnInit {
-  tabs: any[] = [
-    {
-      title: 'Users',
-      icon: 'users-cog',
-      responsive: true,
-      route: './users',
-    },
-    {
-      title: 'Currencies',
-      icon: 'euro-sign',
-      responsive: true,
-      route: './currencies',
-    },
-  ];
+	tabs: any[] = [
+		{
+			title: 'Users',
+			icon: 'users-cog',
+			responsive: true,
+			route: './users',
+		},
+		{
+			title: 'Currencies',
+			icon: 'euro-sign',
+			responsive: true,
+			route: './currencies',
+		},
+	]
 
-  constructor(public route: ActivatedRoute) {}
+	constructor(public route: ActivatedRoute) {}
 
-  ngOnInit(): void {}
+	ngOnInit(): void {}
 }

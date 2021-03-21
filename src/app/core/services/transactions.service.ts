@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import { Apollo, gql } from 'apollo-angular';
-import { AuthenticationService } from './authentication.service';
-import * as moment from 'moment'; // add this 1 of 4
-import { environment } from '@env';
+import { Injectable } from '@angular/core'
+import { Apollo, gql } from 'apollo-angular'
+import { AuthenticationService } from './authentication.service'
+import * as moment from 'moment' // add this 1 of 4
+import { environment } from '@env'
 
 const transactionOne = `{
   type
@@ -53,7 +53,7 @@ const transactionOne = `{
     _id
   }
   _id
-}`;
+}`
 
 const transactionOneForCryptos = `
 {
@@ -109,75 +109,70 @@ const transactionOneForCryptos = `
     _id
   }
   _id
-}`;
+}`
 
 const clientMany = gql`
-  {
-    clientMany {
-      _id
-      name
-      surname
-    }
-  }
-`;
+	{
+		clientMany {
+			_id
+			name
+			surname
+		}
+	}
+`
 
 const currencyMany = gql`
-  {
-    currencyMany {
-      _id
-      name
-    }
-  }
-`;
+	{
+		currencyMany {
+			_id
+			name
+		}
+	}
+`
 
 const vendorMany = gql`
-  {
-    clientMany(filter: { isVendor: true }) {
-      _id
-      name
-      surname
-      vendorType
-    }
-  }
-`;
+	{
+		clientMany(filter: { isVendor: true }) {
+			_id
+			name
+			surname
+			vendorType
+		}
+	}
+`
 
 const myStores = gql`
-  {
-    Me {
-      stores {
-        _id
-        name
-        balance
-        revenue_sum
-      }
-    }
-  }
-`;
+	{
+		Me {
+			stores {
+				_id
+				name
+				balance
+				revenue_sum
+			}
+		}
+	}
+`
 
 @Injectable({
-  providedIn: 'root',
+	providedIn: 'root',
 })
 export class TransactionsService {
-  stores: any[] = [];
-  clients: any[] = [];
-  currencies: any[] = [];
-  vendors: any[] = [];
+	stores: any[] = []
+	clients: any[] = []
+	currencies: any[] = []
+	vendors: any[] = []
 
-  constructor(
-    private apollo: Apollo,
-    private authService: AuthenticationService
-  ) {}
+	constructor(private apollo: Apollo, private authService: AuthenticationService) {}
 
-  // QUERIES
-  getTransactions(storeId?: string, clientId?: string) {
-    let storeFilter = !!storeId
-      ? `in:["${storeId}"]`
-      : `nin:["${environment.btc_store_id}"]`;
-    let clientFilter = !!clientId ? `client: "${clientId}"` : '';
-    let tStoreFilter = !!storeId ? `store: "${storeId}"` : '';
+	// QUERIES
+	getTransactions(storeId?: string, clientId?: string) {
+		let storeFilter = !!storeId ? `in:["${storeId}"]` : `nin:["${environment.btc_store_id}"]`
+		let clientFilter = !!clientId ? `client: "${clientId}"` : ''
+		let tStoreFilter = !!storeId ? `store: "${storeId}"` : ''
 
-    return this.apollo.query({
-      query: gql`
+		return this.apollo.query({
+			query: gql`
       {
         Me{
           stores(filter:{
@@ -200,12 +195,12 @@ export class TransactionsService {
         }
       }
       `,
-    });
-  }
+		})
+	}
 
-  getCryptoTransactions() {
-    return this.apollo.query({
-      query: gql`
+	getCryptoTransactions() {
+		return this.apollo.query({
+			query: gql`
       {
         Me{
           stores(filter:{
@@ -221,20 +216,20 @@ export class TransactionsService {
         }
       }
       `,
-    });
-  }
+		})
+	}
 
-  getCryptoTransactionById(transactionId: string) {
-    return this.apollo.query({
-      query: gql`{
+	getCryptoTransactionById(transactionId: string) {
+		return this.apollo.query({
+			query: gql`{
         transactionById(_id:"${transactionId}")${transactionOneForCryptos}
       }`,
-    });
-  }
+		})
+	}
 
-  getCryptoTransfers(transactionId: string) {
-    return this.apollo.query({
-      query: gql`
+	getCryptoTransfers(transactionId: string) {
+		return this.apollo.query({
+			query: gql`
         {
           Me {
             stores(filter:{
@@ -249,12 +244,12 @@ export class TransactionsService {
           }
         }
       `,
-    });
-  }
+		})
+	}
 
-  getClientCryptoPosts(clientId: string) {
-    return this.apollo.query({
-      query: gql`{
+	getClientCryptoPosts(clientId: string) {
+		return this.apollo.query({
+			query: gql`{
         clientMany(filter:{
           _id:"${clientId}"
         }){
@@ -273,91 +268,91 @@ export class TransactionsService {
           }
         }
       }`,
-    });
-  }
+		})
+	}
 
-  async getStores() {
-    if (this.stores.length > 0) {
-      return this.stores;
-    }
+	async getStores() {
+		if (this.stores.length > 0) {
+			return this.stores
+		}
 
-    await this.apollo
-      .query({
-        query: myStores,
-      })
-      .toPromise()
-      .then((res: any) => {
-        this.stores = res.data.Me.stores;
-      })
-      .catch((e) => {
-        console.error(e);
-      });
+		await this.apollo
+			.query({
+				query: myStores,
+			})
+			.toPromise()
+			.then((res: any) => {
+				this.stores = res.data.Me.stores
+			})
+			.catch((e) => {
+				console.error(e)
+			})
 
-    this.stores = this.stores.filter((store) => store.name !== 'CRYPTO STORE');
+		this.stores = this.stores.filter((store) => store.name !== 'CRYPTO STORE')
 
-    return this.stores;
-  }
+		return this.stores
+	}
 
-  async getClients() {
-    if (this.clients.length > 0) {
-      return this.clients;
-    }
+	async getClients() {
+		if (this.clients.length > 0) {
+			return this.clients
+		}
 
-    await this.apollo
-      .query({
-        query: clientMany,
-      })
-      .toPromise()
-      .then((res: any) => {
-        this.clients = res.data.clientMany;
-      })
-      .catch((e) => {
-        console.error(e);
-      });
+		await this.apollo
+			.query({
+				query: clientMany,
+			})
+			.toPromise()
+			.then((res: any) => {
+				this.clients = res.data.clientMany
+			})
+			.catch((e) => {
+				console.error(e)
+			})
 
-    return this.clients;
-  }
+		return this.clients
+	}
 
-  async getVendors() {
-    await this.apollo
-      .query({
-        query: vendorMany,
-      })
-      .toPromise()
-      .then((res: any) => {
-        this.vendors = res.data.clientMany;
-      })
-      .catch((e) => {
-        console.error(e);
-      });
+	async getVendors() {
+		await this.apollo
+			.query({
+				query: vendorMany,
+			})
+			.toPromise()
+			.then((res: any) => {
+				this.vendors = res.data.clientMany
+			})
+			.catch((e) => {
+				console.error(e)
+			})
 
-    return this.vendors;
-  }
+		return this.vendors
+	}
 
-  async getCurrencies() {
-    if (this.currencies.length > 0) {
-      return this.currencies;
-    }
+	async getCurrencies() {
+		if (this.currencies.length > 0) {
+			return this.currencies
+		}
 
-    await this.apollo
-      .query({
-        query: currencyMany,
-      })
-      .toPromise()
-      .then((res: any) => {
-        this.currencies = res.data.currencyMany;
-      })
-      .catch((e) => {
-        console.error(e);
-      });
+		await this.apollo
+			.query({
+				query: currencyMany,
+			})
+			.toPromise()
+			.then((res: any) => {
+				this.currencies = res.data.currencyMany
+			})
+			.catch((e) => {
+				console.error(e)
+			})
 
-    return this.currencies;
-  }
+		return this.currencies
+	}
 
-  // MUTATIONS //
-  addComment(transactionId: string, comment: string, issue: string) {
-    return this.apollo.mutate({
-      mutation: gql`
+	// MUTATIONS //
+	addComment(transactionId: string, comment: string, issue: string) {
+		return this.apollo.mutate({
+			mutation: gql`
       mutation{
         commentCreateOne(record:{
           transaction:"${transactionId}"
@@ -377,18 +372,16 @@ export class TransactionsService {
         }
       }
       `,
-    });
-  }
+		})
+	}
 
-  makeDeposit(deposit: any) {
-    let hasCurrency = !!deposit.currency
-      ? `currency: "${deposit.currency}"`
-      : '';
-    let hasFee = !!deposit.fee ? `fee: ${deposit.fee}` : '';
-    let hasClient = !!deposit.clientId ? `clientId: "${deposit.clientId}"` : '';
+	makeDeposit(deposit: any) {
+		let hasCurrency = !!deposit.currency ? `currency: "${deposit.currency}"` : ''
+		let hasFee = !!deposit.fee ? `fee: ${deposit.fee}` : ''
+		let hasClient = !!deposit.clientId ? `clientId: "${deposit.clientId}"` : ''
 
-    return this.apollo.mutate({
-      mutation: gql`
+		return this.apollo.mutate({
+			mutation: gql`
         mutation {
           makeDeposit(
             storeId: "${deposit.storeId}"
@@ -401,18 +394,16 @@ export class TransactionsService {
           ) ${transactionOne}
         }
       `,
-    });
-  }
+		})
+	}
 
-  makeWithdraw(deposit: any) {
-    let hasCurrency = !!deposit.currency
-      ? `currency: "${deposit.currency}"`
-      : '';
-    let hasFee = !!deposit.fee ? `fee: ${deposit.fee}` : '';
-    let hasClient = !!deposit.clientId ? `clientId: "${deposit.clientId}"` : '';
+	makeWithdraw(deposit: any) {
+		let hasCurrency = !!deposit.currency ? `currency: "${deposit.currency}"` : ''
+		let hasFee = !!deposit.fee ? `fee: ${deposit.fee}` : ''
+		let hasClient = !!deposit.clientId ? `clientId: "${deposit.clientId}"` : ''
 
-    return this.apollo.mutate({
-      mutation: gql`
+		return this.apollo.mutate({
+			mutation: gql`
         mutation {
           makeWithdraw(
             storeId: "${deposit.storeId}"
@@ -425,18 +416,16 @@ export class TransactionsService {
           ) ${transactionOne}
         }
       `,
-    });
-  }
+		})
+	}
 
-  makeLoan(deposit: any) {
-    let hasCurrency = !!deposit.currency
-      ? `currency: "${deposit.currency}"`
-      : '';
-    let hasFee = !!deposit.fee ? `fee: ${deposit.fee}` : '';
-    let hasClient = !!deposit.clientId ? `clientId: "${deposit.clientId}"` : '';
+	makeLoan(deposit: any) {
+		let hasCurrency = !!deposit.currency ? `currency: "${deposit.currency}"` : ''
+		let hasFee = !!deposit.fee ? `fee: ${deposit.fee}` : ''
+		let hasClient = !!deposit.clientId ? `clientId: "${deposit.clientId}"` : ''
 
-    return this.apollo.mutate({
-      mutation: gql`
+		return this.apollo.mutate({
+			mutation: gql`
         mutation {
           makeLoan(
             storeId: "${deposit.storeId}"
@@ -449,20 +438,16 @@ export class TransactionsService {
           ) ${transactionOne}
         }
       `,
-    });
-  }
+		})
+	}
 
-  makeTransfer(transfer: any) {
-    let hasCurrency = !!transfer.currency
-      ? `currency: "${transfer.currency}"`
-      : '';
-    let hasFee = !!transfer.fee ? `fee: ${transfer.fee}` : '';
-    let hasTransferOrigin = !!transfer.transfer_origin
-      ? `transaction_origin: "${transfer.transfer_origin}"`
-      : '';
+	makeTransfer(transfer: any) {
+		let hasCurrency = !!transfer.currency ? `currency: "${transfer.currency}"` : ''
+		let hasFee = !!transfer.fee ? `fee: ${transfer.fee}` : ''
+		let hasTransferOrigin = !!transfer.transfer_origin ? `transaction_origin: "${transfer.transfer_origin}"` : ''
 
-    return this.apollo.mutate({
-      mutation: gql`
+		return this.apollo.mutate({
+			mutation: gql`
         mutation {
           makeTransfer(
             fromStore: "${transfer.fromStore}"
@@ -476,12 +461,12 @@ export class TransactionsService {
           ) ${transactionOne}
         }
       `,
-    });
-  }
+		})
+	}
 
-  makeRepayment(repayment: any) {
-    return this.apollo.mutate({
-      mutation: gql`
+	makeRepayment(repayment: any) {
+		return this.apollo.mutate({
+			mutation: gql`
         mutation {
           repayInstallments(
             transaction: "${repayment.transaction}"
@@ -494,12 +479,12 @@ export class TransactionsService {
           }
         }
       `,
-    });
-  }
+		})
+	}
 
-  updatePost(postId: string, post: any) {
-    return this.apollo.mutate({
-      mutation: gql`
+	updatePost(postId: string, post: any) {
+		return this.apollo.mutate({
+			mutation: gql`
         mutation {
           postUpdateById(
             record: { _id: "${postId}", date: "${post.date}", details: "${post.details}", ammount: ${post.amount} }
@@ -512,41 +497,41 @@ export class TransactionsService {
           }
         }
       `,
-    });
-  }
+		})
+	}
 
-  completeTransaction(transactionId: string) {
-    return this.apollo.mutate({
-      mutation: gql`mutation{
+	completeTransaction(transactionId: string) {
+		return this.apollo.mutate({
+			mutation: gql`mutation{
         closeTransaction(
           transaction:"${transactionId}"
           )${transactionOne}
       }`,
-    });
-  }
+		})
+	}
 
-  createCryptoTransaction(transaction: any) {
-    let date = new Date(transaction.date);
-    date.setHours(12, 0, 0, 0);
+	createCryptoTransaction(transaction: any) {
+		let date = new Date(transaction.date)
+		date.setHours(12, 0, 0, 0)
 
-    return this.apollo.mutate({
-      mutation: gql`mutation{
+		return this.apollo.mutate({
+			mutation: gql`mutation{
         createCryptoTransaction(
           date:"${date.toISOString()}"
           description:"${transaction.description}"
           Store: "${transaction.Store}"
         )${transactionOne}
       }`,
-    });
-  }
+		})
+	}
 
-  makeCryptoSale(sale: any) {
-    let hasClient = !!sale.client ? `client: "${sale.client}"` : '';
-    let date = new Date(sale.date);
-    date.setHours(12, 0, 0, 0);
+	makeCryptoSale(sale: any) {
+		let hasClient = !!sale.client ? `client: "${sale.client}"` : ''
+		let date = new Date(sale.date)
+		date.setHours(12, 0, 0, 0)
 
-    return this.apollo.mutate({
-      mutation: gql`
+		return this.apollo.mutate({
+			mutation: gql`
         mutation {
           makeCryptoSale(
             transaction: "${sale.transaction}"
@@ -565,6 +550,6 @@ export class TransactionsService {
           }
         }
       `,
-    });
-  }
+		})
+	}
 }

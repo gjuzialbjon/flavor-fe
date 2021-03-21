@@ -1,60 +1,39 @@
 <div class="container-fluid p-0">
-  <div class="d-flex align-items-center justify-content-between">
-    <span>
-      <nb-icon
-        (click)="toggle()"
-        icon="bars"
-        style="cursor: pointer; margin-right: 0.8rem"
-      ></nb-icon>
-      <span
-        class="d-md-inline d-none section-title"
-        style="margin-right: 3rem"
-        >{{ sectionTitle }}</span
-      >
-      <nb-icon
-        (click)="goBack()"
-        *ngIf="routesLength > 2"
-        icon="arrow-left"
-        class="ml-2 d-md-inline d-none"
-        status="info"
-        style="cursor: pointer"
-      ></nb-icon>
-    </span>
-    <span class="d-flex align-items-center">
-      <span
-        *ngIf="!hasSecondToken && isAdmin"
-        style="font-weight: bold; color: darkorange"
-        >Act as</span
-      >
-      <nb-select
-        *ngIf="!hasSecondToken && isAdmin"
-        placeholder="Select User"
-        shape="round"
-        size="small"
-        status="basic"
-        style="margin-right: 7rem; margin-left: 1rem"
-        (selectedChange)="userSelected($event)"
-      >
-        <nb-option
-          *ngFor="let user of usersToImpersonate"
-          value="{{ user._id }}"
-          >{{ user.name }}</nb-option
-        >
-      </nb-select>
+	<div class="d-flex align-items-center justify-content-between">
+		<span>
+			<nb-icon (click)="toggle()" icon="bars" style="cursor: pointer; margin-right: 0.8rem"></nb-icon>
+			<span class="d-md-inline d-none section-title" style="margin-right: 3rem">{{ sectionTitle }}</span>
+			<nb-icon
+				(click)="goBack()"
+				*ngIf="routesLength > 2"
+				icon="arrow-left"
+				class="ml-2 d-md-inline d-none"
+				status="info"
+				style="cursor: pointer"
+			></nb-icon>
+		</span>
+		<span class="d-flex align-items-center">
+			<span *ngIf="!hasSecondToken && isAdmin" style="font-weight: bold; color: darkorange">Act as</span>
+			<nb-select
+				*ngIf="!hasSecondToken && isAdmin"
+				placeholder="Select User"
+				shape="round"
+				size="small"
+				status="basic"
+				style="margin-right: 7rem; margin-left: 1rem"
+				(selectedChange)="userSelected($event)"
+			>
+				<nb-option *ngFor="let user of usersToImpersonate" value="{{ user._id }}">{{ user.name }}</nb-option>
+			</nb-select>
 
-      <a
-        *ngIf="hasSecondToken"
-        (click)="removeImpersonate()"
-        style="
-          margin-right: 7rem;
-          cursor: pointer;
-          font-weight: bold;
-          color: darkorange;
-        "
-        >Go back to your account</a
-      >
+			<a
+				*ngIf="hasSecondToken"
+				(click)="removeImpersonate()"
+				style="margin-right: 7rem; cursor: pointer; font-weight: bold; color: darkorange"
+				>Go back to your account</a
+			>
 
-      <!-- <button
+			<!-- <button
         nbButton
         ghost
         class="d-none d-md-inline"
@@ -82,32 +61,24 @@
       >
         <nb-icon icon="user-astronaut" status="info" class="mt-1"></nb-icon>
       </button> -->
-      <nb-form-field size="small">
-        <input
-          nbInput
-          shape="round"
-          status="basic"
-          fieldSize="small"
-          (keyup)="waitForEnter($event)"
-          [formControl]="searchFormControl"
-        />
-        <button
-          nbPrefix
-          nbButton
-          status="info"
-          shape="round"
-          size="small"
-          ghost
-          (click)="search()"
-        >
-          <nb-icon icon="search"></nb-icon>
-        </button>
-      </nb-form-field>
+			<nb-form-field size="small">
+				<input
+					nbInput
+					shape="round"
+					status="basic"
+					fieldSize="small"
+					(keyup)="waitForEnter($event)"
+					[formControl]="searchFormControl"
+				/>
+				<button nbPrefix nbButton status="info" shape="round" size="small" ghost (click)="search()">
+					<nb-icon icon="search"></nb-icon>
+				</button>
+			</nb-form-field>
 
-      <span class="d-flex align-items-center ml-4" [nbContextMenu]="userMenu">
-        <a class="d-none d-md-block pr-3">{{ fullName }}</a>
-        <nb-icon icon="user" status="info"></nb-icon>
-      </span>
-    </span>
-  </div>
+			<span class="d-flex align-items-center ml-4" [nbContextMenu]="userMenu">
+				<a class="d-none d-md-block pr-3">{{ fullName }}</a>
+				<nb-icon icon="user" status="info"></nb-icon>
+			</span>
+		</span>
+	</div>
 </div>

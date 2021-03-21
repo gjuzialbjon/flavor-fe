@@ -1,166 +1,123 @@
 <div class="row mb-3">
-  <div class="col text-right">
-    <button
-      nbButton
-      status="info"
-      class="shadow"
-      (click)="openNewClientDialog(newClient)"
-    >
-      Add new client
-    </button>
-  </div>
+	<div class="col text-right">
+		<button nbButton status="info" class="shadow" (click)="openNewClientDialog(newClient)">Add new client</button>
+	</div>
 </div>
 
 <nb-card
-  class="mt-0 shadow"
-  style="border: none"
-  [nbSpinner]="loading"
-  nbSpinnerStatus="danger"
-  nbSpinnerSize="large"
-  nbSpinnerMessage="Loading clients"
+	class="mt-0 shadow"
+	style="border: none"
+	[nbSpinner]="loading"
+	nbSpinnerStatus="danger"
+	nbSpinnerSize="large"
+	nbSpinnerMessage="Loading clients"
 >
-  <nb-card-body>
-    <div class="row">
-      <div class="col-12">
-        <table
-          datatable
-          [dtTrigger]="$any(dtTrigger)"
-          [dtOptions]="dtOptions"
-          class="table table-hover"
-          width="100%"
-        >
-          <thead>
-            <tr>
-              <th width="20px">&nbsp;</th>
-              <th>Client Name</th>
-              <th>Location</th>
-              <th>Created at</th>
-              <th>Description</th>
-              <th width="20px">&nbsp;</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let client of clients" style="cursor: pointer">
-              <td [attr.data-sort]="!isFavorite(client._id)">
-                <nb-icon
-                  icon="star"
-                  [status]="isFavorite(client._id) ? 'warning' : 'basic'"
-                  style="cursor: pointer"
-                  (click)="toggleFavorite(client)"
-                  class="mr-2"
-                ></nb-icon>
-              </td>
-              <td class="text-capitalize" routerLink="{{ client._id }}">
-                {{ client.name }} {{ client.surname }}
-              </td>
-              <td class="text-capitalize" routerLink="{{ client._id }}">
-                {{ client.location }}
-              </td>
-              <td routerLink="{{ client._id }}">
-                {{ client.createdAt | date: "mediumDate" }}
-              </td>
-              <td routerLink="{{ client._id }}">{{ client.description }}</td>
-              <td routerLink="{{ client._id }}">
-                <nb-icon
-                  icon="arrow-right"
-                  style="cursor: pointer"
-                  status="danger"
-                ></nb-icon>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </nb-card-body>
+	<nb-card-body>
+		<div class="row">
+			<div class="col-12">
+				<table datatable [dtTrigger]="$any(dtTrigger)" [dtOptions]="dtOptions" class="table table-hover" width="100%">
+					<thead>
+						<tr>
+							<th width="20px">&nbsp;</th>
+							<th>Client Name</th>
+							<th>Location</th>
+							<th>Created at</th>
+							<th>Description</th>
+							<th width="20px">&nbsp;</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr *ngFor="let client of clients" style="cursor: pointer">
+							<td [attr.data-sort]="!isFavorite(client._id)">
+								<nb-icon
+									icon="star"
+									[status]="isFavorite(client._id) ? 'warning' : 'basic'"
+									style="cursor: pointer"
+									(click)="toggleFavorite(client)"
+									class="mr-2"
+								></nb-icon>
+							</td>
+							<td class="text-capitalize" routerLink="{{ client._id }}">{{ client.name }} {{ client.surname }}</td>
+							<td class="text-capitalize" routerLink="{{ client._id }}">
+								{{ client.location }}
+							</td>
+							<td routerLink="{{ client._id }}">
+								{{ client.createdAt | date: 'mediumDate' }}
+							</td>
+							<td routerLink="{{ client._id }}">{{ client.description }}</td>
+							<td routerLink="{{ client._id }}">
+								<nb-icon icon="arrow-right" style="cursor: pointer" status="danger"></nb-icon>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</nb-card-body>
 </nb-card>
 
 <ng-template #newClient let-data let-ref="dialogRef">
-  <nb-card>
-    <nb-card-header>NEW CLIENT</nb-card-header>
+	<nb-card>
+		<nb-card-header>NEW CLIENT</nb-card-header>
 
-    <form [formGroup]="newClientForm" class="p-3">
-      <div class="form-group mb-2">
-        <label class="label">Name *</label>
-        <input
-          nbInput
-          fullWidth
-          [status]="n.name.touched && n.name.errors ? 'danger' : 'basic'"
-          formControlName="name"
-          placeholder="Name *"
-        />
-        <small
-          *ngIf="n.name.touched && n.name.errors"
-          class="form-text text-danger"
-          >Please enter a name.</small
-        >
-      </div>
-      <div class="form-group mb-2">
-        <label class="label">Surname</label>
-        <input
-          nbInput
-          fullWidth
-          [status]="n.surname.touched && n.surname.errors ? 'danger' : 'basic'"
-          formControlName="surname"
-          placeholder="Surname"
-        />
-        <small
-          *ngIf="n.surname.touched && n.surname.errors"
-          class="form-text text-danger"
-          >Please enter a surname.</small
-        >
-      </div>
-      <div class="form-group mb-2">
-        <label class="label">Location</label>
-        <input
-          nbInput
-          fullWidth
-          [status]="
-            n.location.touched && n.location.errors ? 'danger' : 'basic'
-          "
-          formControlName="location"
-          placeholder="Location"
-        />
-        <small
-          *ngIf="n.location.touched && n.location.errors"
-          class="form-text text-danger"
-          >Please enter a location.</small
-        >
-      </div>
-      <div class="form-group mb-2">
-        <label class="label">Description</label>
-        <input
-          nbInput
-          fullWidth
-          [status]="
-            n.description.touched && n.description.errors ? 'danger' : 'basic'
-          "
-          formControlName="description"
-          placeholder="Description"
-        />
-        <small
-          *ngIf="n.description.touched && n.description.errors"
-          class="form-text text-danger"
-          >Please enter a description.</small
-        >
-      </div>
-    </form>
+		<form [formGroup]="newClientForm" class="p-3">
+			<div class="form-group mb-2">
+				<label class="label">Name *</label>
+				<input
+					nbInput
+					fullWidth
+					[status]="n.name.touched && n.name.errors ? 'danger' : 'basic'"
+					formControlName="name"
+					placeholder="Name *"
+				/>
+				<small *ngIf="n.name.touched && n.name.errors" class="form-text text-danger">Please enter a name.</small>
+			</div>
+			<div class="form-group mb-2">
+				<label class="label">Surname</label>
+				<input
+					nbInput
+					fullWidth
+					[status]="n.surname.touched && n.surname.errors ? 'danger' : 'basic'"
+					formControlName="surname"
+					placeholder="Surname"
+				/>
+				<small *ngIf="n.surname.touched && n.surname.errors" class="form-text text-danger"
+					>Please enter a surname.</small
+				>
+			</div>
+			<div class="form-group mb-2">
+				<label class="label">Location</label>
+				<input
+					nbInput
+					fullWidth
+					[status]="n.location.touched && n.location.errors ? 'danger' : 'basic'"
+					formControlName="location"
+					placeholder="Location"
+				/>
+				<small *ngIf="n.location.touched && n.location.errors" class="form-text text-danger"
+					>Please enter a location.</small
+				>
+			</div>
+			<div class="form-group mb-2">
+				<label class="label">Description</label>
+				<input
+					nbInput
+					fullWidth
+					[status]="n.description.touched && n.description.errors ? 'danger' : 'basic'"
+					formControlName="description"
+					placeholder="Description"
+				/>
+				<small *ngIf="n.description.touched && n.description.errors" class="form-text text-danger"
+					>Please enter a description.</small
+				>
+			</div>
+		</form>
 
-    <nb-card-footer>
-      <button type="button" nbButton class="mr-3" ghost
-       (click)="ref.close()">
-        Cancel
-      </button>
-      <button
-        type="button"
-        nbButton
-        class=""
-        status="success"
-        (click)="createClient(ref)"
-        [disabled]="loading"
-      >
-        Add
-      </button>
-    </nb-card-footer>
-  </nb-card>
+		<nb-card-footer>
+			<button type="button" nbButton class="mr-3" ghost (click)="ref.close()">Cancel</button>
+			<button type="button" nbButton class="" status="success" (click)="createClient(ref)" [disabled]="loading">
+				Add
+			</button>
+		</nb-card-footer>
+	</nb-card>
 </ng-template>

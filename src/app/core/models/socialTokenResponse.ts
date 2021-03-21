@@ -1,4 +1,4 @@
 export interface SocialTokenResponse {
-    status?: string
-    token?: string
+	status?: string
+	token?: string
 }

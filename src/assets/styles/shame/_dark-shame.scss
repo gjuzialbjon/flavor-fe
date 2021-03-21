@@ -1,95 +1,95 @@
 .nb-theme-dark {
-  .section-title {
-    color: #ffaa00;
-  }
+	.section-title {
+		color: #ffaa00;
+	}
 
-  .auth-top-bar {
-    background-color: #3886f7;
-  }
+	.auth-top-bar {
+		background-color: #3886f7;
+	}
 
-  .total-card {
-    background-color: #3886f7;
-    color: #ffffff;
-  }
+	.total-card {
+		background-color: #3886f7;
+		color: #ffffff;
+	}
 
-  .store-card {
-    background-color: #3886f7;
-    color: #ffffff;
-  }
+	.store-card {
+		background-color: #3886f7;
+		color: #ffffff;
+	}
 
-  .client-card {
-    background-color: #3886f7;
-    color: #ffffff;
-  }
+	.client-card {
+		background-color: #3886f7;
+		color: #ffffff;
+	}
 
-  .transactions-bg {
-    background-color: #151a30;
-  }
+	.transactions-bg {
+		background-color: #151a30;
+	}
 
-  .text-nb-info {
-    color: #3886f7;
-  }
+	.text-nb-info {
+		color: #3886f7;
+	}
 
-  .bg-nb-info {
-    background-color: #3886f7;
-  }
+	.bg-nb-info {
+		background-color: #3886f7;
+	}
 
-  .text-nb-white {
-    color: #ffffff;
-  }
+	.text-nb-white {
+		color: #ffffff;
+	}
 
-  .bg-nb-white {
-    background-color: #ffffff;
-  }
+	.bg-nb-white {
+		background-color: #ffffff;
+	}
 
-  .back-to-login {
-    color: #284693;
-  }
+	.back-to-login {
+		color: #284693;
+	}
 
-  .table-hover {
-    tbody {
-      tr.row-issued:hover {
-        background-color: rgba(255, 0, 0, 0.2);
-      }
-      tr.row-pending:hover {
-        background-color: rgba(0, 0, 255, 0.2);
-      }
-      tr.row-closed:hover {
-        background-color: rgba(0, 255, 0, 0.2);
-      }
-    }
+	.table-hover {
+		tbody {
+			tr.row-issued:hover {
+				background-color: rgba(255, 0, 0, 0.2);
+			}
+			tr.row-pending:hover {
+				background-color: rgba(0, 0, 255, 0.2);
+			}
+			tr.row-closed:hover {
+				background-color: rgba(0, 255, 0, 0.2);
+			}
+		}
 
-    th,
-    td {
-      color: white;
-    }
-  }
+		th,
+		td {
+			color: white;
+		}
+	}
 
-  button.dt-button {
-    background-color: #222b45;
-    color: rgb(241, 229, 229);
-  }
+	button.dt-button {
+		background-color: #222b45;
+		color: rgb(241, 229, 229);
+	}
 
-  nb-option:focus {
-    color: white;
-  }
+	nb-option:focus {
+		color: white;
+	}
 
-  .ng-select.my-ng-select.ng-select-single .ng-select-container,
-  .ng-select.my-ng-select.ng-select-multiple .ng-select-container {
-    background-color: #192038;
-    color: white;
-    border-color: #101426;
+	.ng-select.my-ng-select.ng-select-single .ng-select-container,
+	.ng-select.my-ng-select.ng-select-multiple .ng-select-container {
+		background-color: #192038;
+		color: white;
+		border-color: #101426;
 
-    .ng-value{
-        color: #1f2024;
-    }
+		.ng-value {
+			color: #1f2024;
+		}
 
-    .ng-input>input{
-      color: white
-    }
-  }
+		.ng-input > input {
+			color: white;
+		}
+	}
 
-  .ng-select.my-ng-select.ng-select-single .ng-select-container .ng-value{
-    color: #ffffff;
-  }
+	.ng-select.my-ng-select.ng-select-single .ng-select-container .ng-value {
+		color: #ffffff;
+	}
 }

@@ -1,21 +1,19 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { SearchComponent } from './search/search.component';
-import { RouterModule } from '@angular/router';
-
-
+import { NgModule } from '@angular/core'
+import { CommonModule } from '@angular/common'
+import { SearchComponent } from './search/search.component'
+import { RouterModule } from '@angular/router'
 
 @NgModule({
-  declarations: [SearchComponent],
-  imports: [
-    CommonModule,
-    RouterModule.forChild([
-      {
-        path: '',
-        component: SearchComponent,
-        pathMatch: 'full'
-      }
-    ])
-  ]
+	declarations: [SearchComponent],
+	imports: [
+		CommonModule,
+		RouterModule.forChild([
+			{
+				path: '',
+				component: SearchComponent,
+				pathMatch: 'full',
+			},
+		]),
+	],
 })
-export class SearchModule { }
+export class SearchModule {}

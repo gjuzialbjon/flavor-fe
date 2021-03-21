@@ -1,102 +1,91 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  OnInit,
-} from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { environment } from '@env';
-import { NbDialogService } from '@nebular/theme';
-import { Apollo } from 'apollo-angular';
-import { MessageService } from 'src/app/core/helper-services/message.service';
-import { SocialTokenResponse } from 'src/app/core/models/socialTokenResponse';
-import { AuthenticationService } from 'src/app/core/services/authentication.service';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core'
+import { FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { Router } from '@angular/router'
+import { environment } from '@env'
+import { NbDialogService } from '@nebular/theme'
+import { Apollo } from 'apollo-angular'
+import { MessageService } from 'src/app/core/helper-services/message.service'
+import { SocialTokenResponse } from 'src/app/core/models/socialTokenResponse'
+import { AuthenticationService } from 'src/app/core/services/authentication.service'
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+	selector: 'app-login',
+	templateUrl: './login.component.html',
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginComponent implements OnInit {
-  loginForm: FormGroup;
-  showPassword = false;
-  loading = false;
+	loginForm: FormGroup
+	showPassword = false
+	loading = false
 
-  constructor(
-    private router: Router,
-    private fb: FormBuilder,
-    private authService: AuthenticationService,
-    private msg: MessageService,
-    private dialogService: NbDialogService,
-    private chRef: ChangeDetectorRef,
-    private apollo: Apollo
-  ) {
-    this.loginForm = this.fb.group({
-      email: [
-        environment.production ? '' : 'albjon.gjuzi@gmail.com',
-        [Validators.required, Validators.email],
-      ],
-      password: [
-        environment.production ? '' : '123123',
-        [Validators.required, Validators.minLength(6)],
-      ],
-    });
-  }
+	constructor(
+		private router: Router,
+		private fb: FormBuilder,
+		private authService: AuthenticationService,
+		private msg: MessageService,
+		private dialogService: NbDialogService,
+		private chRef: ChangeDetectorRef,
+		private apollo: Apollo
+	) {
+		this.loginForm = this.fb.group({
+			email: [environment.production ? '' : 'albjon.gjuzi@gmail.com', [Validators.required, Validators.email]],
+			password: [environment.production ? '' : '123123', [Validators.required, Validators.minLength(6)]],
+		})
+	}
 
-  ngOnInit(): void {
-    localStorage.clear();
-    this.apollo.client.resetStore();
-  }
+	ngOnInit(): void {
+		localStorage.clear()
+		this.apollo.client.resetStore()
+	}
 
-  login() {
-    console.log('Login');
-    if (this.loginForm.invalid) {
-      this.msg.error('Please enter your email and password', 'Error!');
-      return;
-    }
+	login() {
+		console.log('Login')
+		if (this.loginForm.invalid) {
+			this.msg.error('Please enter your email and password', 'Error!')
+			return
+		}
 
-    this.loading = true;
-    const { email, password } = this.loginForm.value;
-    this.authService.login(email, password).subscribe(
-      (res: SocialTokenResponse) => {
-        localStorage.setItem('flavorToken', res.token + '');
-        this.authService.initUserFromToken();
-        console.log('User ', this.authService.user);
-        if (this.authService.user.confirmed) {
-          this.router.navigate(['/']);
-        } else {
-          this.router.navigate(['/auth/not-authorized']);
-          console.error('User unconfirmed');
-        }
-        this.loading = false;
-        this.chRef.detectChanges();
-      },
-      (e) => {
-        console.error(e);
-        this.msg.error('Something went wrong. Please try again.', 'Error!');
-        this.loading = false;
-        this.chRef.detectChanges();
-      }
-    );
-  }
+		this.loading = true
+		const { email, password } = this.loginForm.value
+		this.authService.login(email, password).subscribe(
+			(res: SocialTokenResponse) => {
+				localStorage.setItem('flavorToken', res.token + '')
+				this.authService.initUserFromToken()
+				console.log('User ', this.authService.user)
+				if (this.authService.user.confirmed) {
+					this.router.navigate(['/'])
+				} else {
+					this.router.navigate(['/auth/not-authorized'])
+					console.error('User unconfirmed')
+				}
+				this.loading = false
+				this.chRef.detectChanges()
+			},
+			(e) => {
+				console.error(e)
+				this.msg.error('Something went wrong. Please try again.', 'Error!')
+				this.loading = false
+				this.chRef.detectChanges()
+			}
+		)
+	}
 
-  openForgotDialog(content: any) {
-    this.dialogService.open(content);
-  }
+	openForgotDialog(content: any) {
+		this.dialogService.open(content)
+	}
 
-  getInputType() {
-    if (this.showPassword) {
-      return 'text';
-    }
-    return 'password';
-  }
+	getInputType() {
+		if (this.showPassword) {
+			return 'text'
+		}
+		return 'password'
+	}
 
-  toggleShowPassword() {
-    this.showPassword = !this.showPassword;
-  }
+	toggleShowPassword() {
+		this.showPassword = !this.showPassword
+	}
 
-  get l() {
-    return this.loginForm.controls;
-  }
+	get l() {
+		return this.loginForm.controls
+	}
 }

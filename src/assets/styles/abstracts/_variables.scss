@@ -5,20 +5,20 @@
 /* RESPONSIVE TYPOGRAPHY */
 $enable-responsive-font-sizes: true;
 
-/* CONTAINER SIZES */ 
+/* CONTAINER SIZES */
 $grid-breakpoints: (
-  xs: 0,
-  sm: 576px,
-  md: 768px,
-  lg: 1092px,
-  xl: 1450px
+	xs: 0,
+	sm: 576px,
+	md: 768px,
+	lg: 1092px,
+	xl: 1450px,
 );
 
 $container-max-widths: (
-  sm: 540px,
-  md: 720px,
-  lg: 1090px,
-  xl: 2040px
+	sm: 540px,
+	md: 720px,
+	lg: 1090px,
+	xl: 2040px,
 );
 
 /* OVERALL RADIUS OF COMPONENTS */
@@ -26,12 +26,7 @@ $border-radius: 6px;
 
 // COLORS
 $cyan: #3886f7;
-$primary:#3886f7;
+$primary: #3886f7;
 
 // SHADOW
-$box-shadow: 4px 4px 8px #0000002D;
-
-
-
-
-
+$box-shadow: 4px 4px 8px #0000002d;
