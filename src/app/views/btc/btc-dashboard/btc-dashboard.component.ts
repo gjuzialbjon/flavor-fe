@@ -45,7 +45,7 @@ export class BtcDashboardComponent implements OnInit {
 	remainingTotalMinusFee = 0
 	grandTotalMinusFee = 0
 
-	tradeType = 'USDT'
+	tradeType = 'BTC'
 
 	constructor(
 		private configsService: ConfigsService,
