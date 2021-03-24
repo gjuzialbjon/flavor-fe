@@ -13,13 +13,16 @@
 			></nb-icon>
 		</span>
 		<span class="d-flex align-items-center">
-			<span *ngIf="!hasSecondToken && isAdmin" style="font-weight: bold; color: darkorange">Act as</span>
+			<span *ngIf="!hasSecondToken && isAdmin" class="d-md-inline d-none" style="font-weight: bold; color: darkorange"
+				>Act as</span
+			>
 			<nb-select
 				*ngIf="!hasSecondToken && isAdmin"
 				placeholder="Select User"
 				shape="round"
 				size="small"
 				status="basic"
+				class="d-md-inline d-none"
 				style="margin-right: 7rem; margin-left: 1rem"
 				(selectedChange)="userSelected($event)"
 			>
@@ -29,38 +32,39 @@
 			<a
 				*ngIf="hasSecondToken"
 				(click)="removeImpersonate()"
+				class="d-md-inline d-none"
 				style="margin-right: 7rem; cursor: pointer; font-weight: bold; color: darkorange"
 				>Go back to your account</a
 			>
 
 			<!-- <button
-        nbButton
-        ghost
-        class="d-none d-md-inline"
-        *ngIf="!production"
-        (click)="changeTheme('dark')"
-      >
-        <nb-icon icon="moon" status="info" class="mt-1"></nb-icon>
-      </button>
-      <button
-        nbButton
-        ghost
-        class="d-none d-md-inline"
-        *ngIf="!production"
-        (click)="changeTheme('corporate')"
-      >
-        <nb-icon icon="sun" status="info" class="mt-1"></nb-icon>
-      </button>
-      <button
-        nbButton
-        ghost
-        class="d-none d-md-inline"
-        style="margin-right: 7rem"
-        *ngIf="!production"
-        (click)="changeTheme('cosmic')"
-      >
-        <nb-icon icon="user-astronaut" status="info" class="mt-1"></nb-icon>
-      </button> -->
+					nbButton
+					ghost
+					class="d-none d-md-inline"
+					*ngIf="!production"
+					(click)="changeTheme('dark')"
+				>
+					<nb-icon icon="moon" status="info" class="mt-1"></nb-icon>
+				</button>
+				<button
+					nbButton
+					ghost
+					class="d-none d-md-inline"
+					*ngIf="!production"
+					(click)="changeTheme('corporate')"
+				>
+					<nb-icon icon="sun" status="info" class="mt-1"></nb-icon>
+				</button>
+				<button
+					nbButton
+					ghost
+					class="d-none d-md-inline"
+					style="margin-right: 7rem"
+					*ngIf="!production"
+					(click)="changeTheme('cosmic')"
+				>
+					<nb-icon icon="user-astronaut" status="info" class="mt-1"></nb-icon>
+				</button> -->
 			<nb-form-field size="small">
 				<input
 					nbInput

@@ -45,8 +45,7 @@ export class BtcDashboardComponent implements OnInit {
 	remainingTotalMinusFee = 0
 	grandTotalMinusFee = 0
 
-	from_account = ''
-	tradeType = 'BTC'
+	tradeType = 'USDT'
 
 	constructor(
 		private configsService: ConfigsService,
@@ -72,6 +71,7 @@ export class BtcDashboardComponent implements OnInit {
 
 	async ngOnInit() {
 		this.initBtcForm()
+		this.initUsdtForm()
 		this.initTransferForm()
 		this.getTransactionDetails()
 		this.clients = await this.transactionsService.getClients()
@@ -169,6 +169,30 @@ export class BtcDashboardComponent implements OnInit {
 			this.usdtForm.markAllAsTouched()
 			return
 		}
+
+		let req = JSON.parse(JSON.stringify(this.usdtForm.value))
+		req.conversion_fee = (req.conversion_fee / 100) * req.total_bought
+		req.service_fee = (req.service_fee / 100) * req.total_bought
+
+		this.makingBtc = true
+		this.transactionsService.makeCryptoSale(req).subscribe(
+			(res: any) => {
+				// console.log(res);
+				this.makingBtc = false
+				if (res.data.makeCryptoSale) {
+					window.location.reload()
+				} else {
+					console.error(res)
+					this.msg.error('Could not make sale', 'Error!')
+					this.makingBtc = false
+				}
+			},
+			(e) => {
+				console.error(e)
+				this.msg.error('Could not make sale', 'Error!')
+				this.makingBtc = false
+			}
+		)
 	}
 
 	makeTransfer() {
@@ -219,7 +243,8 @@ export class BtcDashboardComponent implements OnInit {
 				[Validators.required, Validators.pattern(/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/), Validators.max(100)],
 			],
 			client: [null, []],
-			date: [null, [Validators.required]],
+			date: [new Date(), [Validators.required]],
+			description: ['BTC']
 		})
 
 		this.btcForm.get('crypto_ammount')?.valueChanges.subscribe((res) => {
@@ -264,7 +289,7 @@ export class BtcDashboardComponent implements OnInit {
 			from_account: ['USDT'],
 			transaction: [this.transactionId, [Validators.required]],
 			crypto_ammount: [null, [Validators.required, Validators.pattern(/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/)]],
-			price_current: [null, [Validators.required, Validators.pattern(/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/)]],
+			price_current: [1, [Validators.required, Validators.pattern(/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/)]],
 			total_bought: [0, [Validators.required, Validators.pattern(/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/)]],
 			ammount_sold: [0, [Validators.required, Validators.pattern(/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/)]],
 			conversion_fee: [0, [Validators.required, Validators.pattern(/[+-]?\d+\.?\d*/), Validators.max(100)]],
@@ -273,18 +298,13 @@ export class BtcDashboardComponent implements OnInit {
 				[Validators.required, Validators.pattern(/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/), Validators.max(100)],
 			],
 			client: [null, []],
-			date: [null, [Validators.required]],
+			date: [new Date(), [Validators.required]],
+			description: ['USDT']
 		})
 
 		this.usdtForm.get('crypto_ammount')?.valueChanges.subscribe((res) => {
 			if (typeof +res === 'number' && typeof +this.usdtForm.get('price_current')?.value === 'number') {
-				this.usdtForm.get('total_bought')?.setValue(+res * +this.usdtForm.get('price_current')?.value)
-			}
-		})
-
-		this.usdtForm.get('price_current')?.valueChanges.subscribe((res) => {
-			if (typeof +res === 'number' && typeof +this.usdtForm.get('crypto_ammount')?.value === 'number') {
-				this.usdtForm.get('total_bought')?.setValue(+res * +this.usdtForm.get('crypto_ammount')?.value)
+				this.usdtForm.get('total_bought')?.setValue(+res)
 			}
 		})
 

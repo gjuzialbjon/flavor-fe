@@ -59,13 +59,13 @@
 								>
 							</div>
 							<div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-2">
-								<label class="label">Price Current *</label>
+								<label class="label">Current Price *</label>
 								<nb-form-field
 									><input
 										nbInput
 										fullWidth
 										type="number"
-										placeholder="Price Current"
+										placeholder="Current Price *"
 										formControlName="price_current"
 										[status]="btrade.price_current.touched && btrade.price_current.errors ? 'danger' : 'basic'"
 									/>
@@ -73,7 +73,7 @@
 								</nb-form-field>
 
 								<small *ngIf="btrade.price_current.touched && btrade.price_current.errors" class="form-text text-danger"
-									>Please enter Price Current</small
+									>Please enter Current Price</small
 								>
 							</div>
 							<div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-2">
@@ -182,7 +182,7 @@
 							</div>
 							<div class="col-md-4 col-sm-6 pt-4">
 								<button nbButton status="info" class="ml-3" (click)="makeBtc()" [disabled]="makingBtc">
-									make sale
+									make BTC sale
 								</button>
 								<button nbButton ghost class="ml-4" (click)="initBtcForm()">Reset</button>
 							</div>
@@ -195,38 +195,20 @@
 					<div class="col-12 py-3 px-lg-5 px-3">
 						<form [formGroup]="usdtForm" class="form-row">
 							<div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-2">
-								<label class="label">Crypto Ammount *</label>
+								<label class="label">USDT Ammount *</label>
 								<input
 									nbInput
 									fullWidth
 									type="number"
 									min="0"
-									placeholder="Crypto Ammount"
+									placeholder="USDT Ammount"
 									formControlName="crypto_ammount"
 									[status]="utrade.crypto_ammount.touched && utrade.crypto_ammount.errors ? 'danger' : 'basic'"
 								/>
 								<small
 									*ngIf="utrade.crypto_ammount.touched && utrade.crypto_ammount.errors"
 									class="form-text text-danger"
-									>Please enter Crypto Ammount</small
-								>
-							</div>
-							<div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-2">
-								<label class="label">Price Current *</label>
-								<nb-form-field
-									><input
-										nbInput
-										fullWidth
-										type="number"
-										placeholder="Price Current"
-										formControlName="price_current"
-										[status]="utrade.price_current.touched && utrade.price_current.errors ? 'danger' : 'basic'"
-									/>
-									<nb-icon nbSuffix icon="euro-sign"></nb-icon>
-								</nb-form-field>
-
-								<small *ngIf="utrade.price_current.touched && utrade.price_current.errors" class="form-text text-danger"
-									>Please enter Price Current</small
+									>Please enter USDT Ammount</small
 								>
 							</div>
 							<div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-2">
@@ -297,7 +279,6 @@
 										type="number"
 										placeholder="Amount Sold"
 										formControlName="ammount_sold"
-										[readonly]="true"
 										[status]="utrade.ammount_sold.touched && utrade.ammount_sold.errors ? 'danger' : 'basic'"
 									/>
 									<nb-icon nbSuffix icon="euro-sign"></nb-icon>
@@ -333,9 +314,15 @@
 									>Please select a client</small
 								>
 							</div>
-							<div class="col-md-4 col-sm-6 pt-4">
+							<div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-2">
+								<label class="label">Description</label>
+								<nb-form-field>
+									<input nbInput fullWidth placeholder="Description" formControlName="description" />
+								</nb-form-field>
+							</div>
+							<div class="col-md-5 col-sm-6 pt-4">
 								<button nbButton status="info" class="ml-3" (click)="makeUsdt()" [disabled]="makingUsdt">
-									make btcsde sale
+									make usdt sale
 								</button>
 								<button nbButton ghost class="ml-4" (click)="initUsdtForm()">Reset</button>
 							</div>
@@ -483,27 +470,27 @@
 							</div>
 
 							<!-- <div class="col-lg-3 col-md-4 col-sm-6 mb-2">
-                <label class="label">Fee (optional)</label>
-                <nb-form-field>
-                  <input
-                    nbInput
-                    fullWidth
-                    formControlName="fee"
-                    placeholder="Fee"
-                    [status]="
-                      t.fee.touched && t.fee.errors ? 'danger' : 'basic'
-                    "
-                  />
-                  <nb-icon nbSuffix icon="euro-sign"></nb-icon>
-                </nb-form-field>
+									<label class="label">Fee (optional)</label>
+									<nb-form-field>
+									<input
+										nbInput
+										fullWidth
+										formControlName="fee"
+										placeholder="Fee"
+										[status]="
+										t.fee.touched && t.fee.errors ? 'danger' : 'basic'
+										"
+									/>
+									<nb-icon nbSuffix icon="euro-sign"></nb-icon>
+									</nb-form-field>
 
-                <small
-                  *ngIf="t.fee.touched && t.fee.errors"
-                  class="form-text text-danger"
-                  >Please enter a valid fee or leave this field empty (Only
-                  numbers allowed)</small
-                >
-              </div> -->
+									<small
+									*ngIf="t.fee.touched && t.fee.errors"
+									class="form-text text-danger"
+									>Please enter a valid fee or leave this field empty (Only
+									numbers allowed)</small
+									>
+								</div> -->
 						</form>
 					</div>
 					<div class="col-12 text-right mb-3">

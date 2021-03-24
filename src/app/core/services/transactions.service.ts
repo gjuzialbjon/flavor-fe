@@ -543,7 +543,7 @@ export class TransactionsService {
             conversion_fee: ${sale.conversion_fee}
             service_fee: ${sale.service_fee}
             ${hasClient}
-            description: "BTC trade"
+            description: "${sale.description}"
             date:"${date.toISOString()}"
           ) {
             createdAt
