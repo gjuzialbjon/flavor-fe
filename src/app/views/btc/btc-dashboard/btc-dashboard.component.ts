@@ -143,6 +143,7 @@ export class BtcDashboardComponent implements OnInit {
 		req.service_fee = (req.service_fee / 100) * req.total_bought
 
 		this.makingBtc = true
+		console.log(req)
 		this.transactionsService.makeCryptoSale(req).subscribe(
 			(res: any) => {
 				// console.log(res);
@@ -244,7 +245,7 @@ export class BtcDashboardComponent implements OnInit {
 			],
 			client: [null, []],
 			date: [new Date(), [Validators.required]],
-			description: ['BTC']
+			description: ['BTC'],
 		})
 
 		this.btcForm.get('crypto_ammount')?.valueChanges.subscribe((res) => {
@@ -259,27 +260,11 @@ export class BtcDashboardComponent implements OnInit {
 			}
 		})
 
-		this.btcForm.get('conversion_fee')?.valueChanges.subscribe((res) => {
-			if (typeof res === 'number' && typeof this.btcForm.get('total_bought')?.value === 'number') {
-				this.btcForm
-					.get('ammount_sold')
-					?.setValue(
-						+this.btcForm.get('total_bought')?.value -
-							(+res / 100) * +this.btcForm.get('total_bought')?.value -
-							(+this.btcForm.get('service_fee')?.value / 100) * +this.btcForm.get('total_bought')?.value
-					)
-			}
-		})
-
 		this.btcForm.get('service_fee')?.valueChanges.subscribe((res) => {
 			if (typeof res === 'number' && typeof this.btcForm.get('total_bought')?.value === 'number') {
 				this.btcForm
 					.get('ammount_sold')
-					?.setValue(
-						+this.btcForm.get('total_bought')?.value -
-							(+res / 100) * +this.btcForm.get('total_bought')?.value -
-							(+this.btcForm.get('conversion_fee')?.value / 100) * +this.btcForm.get('total_bought')?.value
-					)
+					?.setValue(+this.btcForm.get('total_bought')?.value - (+res / 100) * +this.btcForm.get('total_bought')?.value)
 			}
 		})
 	}
@@ -299,7 +284,7 @@ export class BtcDashboardComponent implements OnInit {
 			],
 			client: [null, []],
 			date: [new Date(), [Validators.required]],
-			description: ['USDT']
+			description: ['USDT'],
 		})
 
 		this.usdtForm.get('crypto_ammount')?.valueChanges.subscribe((res) => {
@@ -308,26 +293,12 @@ export class BtcDashboardComponent implements OnInit {
 			}
 		})
 
-		this.usdtForm.get('conversion_fee')?.valueChanges.subscribe((res) => {
-			if (typeof res === 'number' && typeof this.usdtForm.get('total_bought')?.value === 'number') {
-				this.usdtForm
-					.get('ammount_sold')
-					?.setValue(
-						+this.usdtForm.get('total_bought')?.value -
-							(+res / 100) * +this.usdtForm.get('total_bought')?.value -
-							(+this.usdtForm.get('service_fee')?.value / 100) * +this.usdtForm.get('total_bought')?.value
-					)
-			}
-		})
-
 		this.usdtForm.get('service_fee')?.valueChanges.subscribe((res) => {
 			if (typeof res === 'number' && typeof this.usdtForm.get('total_bought')?.value === 'number') {
 				this.usdtForm
 					.get('ammount_sold')
 					?.setValue(
-						+this.usdtForm.get('total_bought')?.value -
-							(+res / 100) * +this.usdtForm.get('total_bought')?.value -
-							(+this.usdtForm.get('conversion_fee')?.value / 100) * +this.usdtForm.get('total_bought')?.value
+						+this.usdtForm.get('total_bought')?.value - (+res / 100) * +this.usdtForm.get('total_bought')?.value
 					)
 			}
 		})
