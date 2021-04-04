@@ -39,6 +39,24 @@
 							>Please enter a valid date</small
 						>
 					</div>
+					<div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-2">
+						<label class="label">Default Fee % *</label>
+						<nb-form-field>
+							<input
+								nbInput
+								fullWidth
+								type="number"
+								placeholder="Default Fee"
+								formControlName="default_fee"
+								[status]="t.default_fee.touched && t.default_fee.errors ? 'danger' : 'basic'"
+							/>
+							<nb-icon nbSuffix icon="percent"></nb-icon>
+						</nb-form-field>
+
+						<small *ngIf="t.default_fee.touched && t.default_fee.errors" class="form-text text-danger"
+							>Please enter Default Fee</small
+						>
+					</div>
 					<div class="col-md-4 col-sm-6 pt-4">
 						<button nbButton status="info" class="ml-3" [disabled]="makingTrade" (click)="makeTransaction()">
 							start trade
@@ -55,6 +73,7 @@
 					<th>date</th>
 					<th>status</th>
 					<th>amount</th>
+					<th>default fee</th>
 					<th>description</th>
 					<th width="20px">&nbsp;</th>
 				</tr>
@@ -69,6 +88,9 @@
 					</td>
 					<td routerLink="{{ row._id }}">
 						{{ row.amount_in | currency }}
+					</td>
+					<td routerLink="{{ row._id }}">
+						{{ row.default_fee || 0 }}&#37;
 					</td>
 					<td routerLink="{{ row._id }}">{{ row.description }}</td>
 					<td routerLink="{{ row._id }}">

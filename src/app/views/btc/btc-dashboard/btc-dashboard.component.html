@@ -349,7 +349,7 @@
 							<th>service fee</th>
 							<th>profit</th>
 							<th>client</th>
-							<th width="20px">&nbsp;</th>
+							<!-- <th width="20px">&nbsp;</th> -->
 						</tr>
 					</thead>
 					<tbody>
@@ -365,9 +365,9 @@
 								{{ row.service_fee - row.conversion_fee | currency: 'EUR' }}
 							</td>
 							<td class="text-uppercase">{{ row.client?.name }}</td>
-							<td>
+							<!-- <td>
 								<nb-icon icon="edit" style="cursor: pointer" status="basic"></nb-icon>
-							</td>
+							</td> -->
 						</tr>
 					</tbody>
 					<tfoot class="bitcoin-table-footer">
@@ -381,7 +381,7 @@
 							<td></td>
 							<td>{{ totalProfit | currency: 'EUR' }}</td>
 							<td></td>
-							<td></td>
+							<!-- <td></td> -->
 						</tr>
 						<tr>
 							<td class="text-uppercase text-right post-first-td">Remaining Total</td>
@@ -395,7 +395,7 @@
 							<td></td>
 							<td></td>
 							<td></td>
-							<td></td>
+							<!-- <td></td> -->
 						</tr>
 						<tr>
 							<td class="text-uppercase text-right post-first-td" style="border-bottom-left-radius: 0.7rem">
@@ -411,7 +411,7 @@
 							<td></td>
 							<td></td>
 							<td></td>
-							<td style="border-bottom-right-radius: 0.7rem"></td>
+							<!-- <td style="border-bottom-right-radius: 0.7rem"></td> -->
 						</tr>
 					</tfoot>
 				</table>

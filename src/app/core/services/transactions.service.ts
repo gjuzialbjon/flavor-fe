@@ -11,6 +11,7 @@ const transactionOne = `{
   direction
   revenue
   issue
+  default_fee
   amount_in
   amount_out
   description
@@ -62,6 +63,7 @@ const transactionOneForCryptos = `
   status
   direction
   revenue
+  default_fee
   issue
   amount_in
   amount_out
@@ -520,6 +522,7 @@ export class TransactionsService {
           date:"${date.toISOString()}"
           description:"${transaction.description}"
           Store: "${transaction.Store}"
+          default_fee: ${transaction.default_fee}
         )${transactionOne}
       }`,
 		})

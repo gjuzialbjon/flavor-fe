@@ -5,6 +5,7 @@ import { Store } from './store'
 import { User } from './user'
 
 export interface Transaction {
+	default_fee: number
 	type: string
 	status: string
 	direction: string

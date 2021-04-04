@@ -46,6 +46,7 @@ export class BtcDashboardComponent implements OnInit {
 	grandTotalMinusFee = 0
 
 	tradeType = 'BTC'
+	defaultConversionFee = 0
 
 	constructor(
 		private configsService: ConfigsService,
@@ -71,7 +72,7 @@ export class BtcDashboardComponent implements OnInit {
 
 	async ngOnInit() {
 		this.initBtcForm()
-		this.initUsdtForm()
+		// this.initUsdtForm()
 		this.initTransferForm()
 		this.getTransactionDetails()
 		this.clients = await this.transactionsService.getClients()
@@ -85,6 +86,9 @@ export class BtcDashboardComponent implements OnInit {
 			(res: any) => {
 				this.transaction = res.data.transactionById
 				console.log(this.transaction)
+				this.defaultConversionFee = this.transaction.default_fee || 0
+				this.btcForm.get('conversion_fee')?.setValue(this.defaultConversionFee)
+				// this.usdtForm.get('conversion_fee')?.setValue(this.defaultConversionFee)
 
 				this.posts = this.transaction.posts.filter((p) => p.type !== 'fee')
 				for (const post of this.posts) {
@@ -238,7 +242,10 @@ export class BtcDashboardComponent implements OnInit {
 			price_current: [null, [Validators.required, Validators.pattern(/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/)]],
 			total_bought: [0, [Validators.required, Validators.pattern(/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/)]],
 			ammount_sold: [0, [Validators.required, Validators.pattern(/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/)]],
-			conversion_fee: [0, [Validators.required, Validators.pattern(/[+-]?\d+\.?\d*/), Validators.max(100)]],
+			conversion_fee: [
+				this.defaultConversionFee,
+				[Validators.required, Validators.pattern(/[+-]?\d+\.?\d*/), Validators.max(100)],
+			],
 			service_fee: [
 				0,
 				[Validators.required, Validators.pattern(/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/), Validators.max(100)],
@@ -277,7 +284,10 @@ export class BtcDashboardComponent implements OnInit {
 			price_current: [1, [Validators.required, Validators.pattern(/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/)]],
 			total_bought: [0, [Validators.required, Validators.pattern(/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/)]],
 			ammount_sold: [0, [Validators.required, Validators.pattern(/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/)]],
-			conversion_fee: [0, [Validators.required, Validators.pattern(/[+-]?\d+\.?\d*/), Validators.max(100)]],
+			conversion_fee: [
+				this.defaultConversionFee,
+				[Validators.required, Validators.pattern(/[+-]?\d+\.?\d*/), Validators.max(100)],
+			],
 			service_fee: [
 				0,
 				[Validators.required, Validators.pattern(/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/), Validators.max(100)],
