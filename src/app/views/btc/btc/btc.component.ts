@@ -1,5 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy, ViewChild, ChangeDetectorRef } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { Router } from '@angular/router'
 import { environment } from '@env'
 import { DataTableDirective } from 'angular-datatables'
 import { Subject } from 'rxjs'
@@ -28,13 +29,15 @@ export class BtcComponent implements OnInit {
 		private chRef: ChangeDetectorRef,
 		private transactionsService: TransactionsService,
 		private fb: FormBuilder,
-		private msg: MessageService
+		private msg: MessageService,
+		private router: Router
 	) {
 		this.dtOptions = this.configsService.getDTOptions()
 		this.dtOptions.columnDefs = [
 			// @ts-ignore
 			{ responsivePriority: 100, targets: [0, 3] },
 		]
+		this.dtOptions.order = [0,'desc']
 	}
 
 	cryptoForm!: FormGroup
@@ -55,7 +58,7 @@ export class BtcComponent implements OnInit {
 				}
 			}
 
-			console.log(this.transactions)
+			// console.log(this.transactions)
 
 			this.dtTrigger.next()
 			this.chRef.detectChanges()
@@ -77,9 +80,8 @@ export class BtcComponent implements OnInit {
 				this.initForm()
 				this.makingTrade = false
 
-				// NEEDS TO RELOAD TABLE
-				window.location.reload()
-				// this.chRef.detectChanges();
+				// NEEDS TO ENTER TRANSACTION	
+				this.router.navigateByUrl('btc/' + res.data.createCryptoTransaction._id)
 			},
 			(e: any) => {
 				console.error(e)

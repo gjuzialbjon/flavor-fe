@@ -80,7 +80,7 @@
 			</thead>
 			<tbody>
 				<tr *ngFor="let row of transactions" style="cursor: pointer">
-					<td class="text-capitalize">
+					<td class="text-capitalize" [attr.data-sort]="row.date">
 						{{ row.date | date: 'MMM d, y' }}
 					</td>
 					<td class="text-capitalize" routerLink="{{ row._id }}">
