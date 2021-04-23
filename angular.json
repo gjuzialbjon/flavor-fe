@@ -3,7 +3,7 @@
 	"version": 1,
 	"newProjectRoot": "projects",
 	"projects": {
-		"Bank2": {
+		"Flavor": {
 			"projectType": "application",
 			"schematics": {
 				"@schematics/angular:component": {
@@ -43,7 +43,7 @@
 				"build": {
 					"builder": "@angular-devkit/build-angular:browser",
 					"options": {
-						"outputPath": "dist/Bank2",
+						"outputPath": "dist/Flavor",
 						"index": "src/index.html",
 						"main": "src/main.ts",
 						"polyfills": "src/polyfills.ts",
@@ -114,18 +114,18 @@
 				"serve": {
 					"builder": "@angular-devkit/build-angular:dev-server",
 					"options": {
-						"browserTarget": "Bank2:build"
+						"browserTarget": "Flavor:build"
 					},
 					"configurations": {
 						"production": {
-							"browserTarget": "Bank2:build:production"
+							"browserTarget": "Flavor:build:production"
 						}
 					}
 				},
 				"extract-i18n": {
 					"builder": "@angular-devkit/build-angular:extract-i18n",
 					"options": {
-						"browserTarget": "Bank2:build"
+						"browserTarget": "Flavor:build"
 					}
 				},
 				"test": {
@@ -151,18 +151,18 @@
 					"builder": "@angular-devkit/build-angular:protractor",
 					"options": {
 						"protractorConfig": "e2e/protractor.conf.js",
-						"devServerTarget": "Bank2:serve"
+						"devServerTarget": "Flavor:serve"
 					},
 					"configurations": {
 						"production": {
-							"devServerTarget": "Bank2:serve:production"
+							"devServerTarget": "Flavor:serve:production"
 						}
 					}
 				}
 			}
 		}
 	},
-	"defaultProject": "Bank2",
+	"defaultProject": "Flavor",
 	"cli": {
 		"analytics": false
 	}
