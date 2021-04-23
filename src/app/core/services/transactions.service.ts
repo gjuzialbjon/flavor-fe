@@ -519,8 +519,8 @@ export class TransactionsService {
 		return this.apollo.mutate({
 			mutation: gql`mutation{
         createCryptoTransaction(
-          date:"${date.toISOString()}"
-          description:"${transaction.description}"
+          date:"${date.toISOString().split('T')[0]}"
+          description:""
           Store: "${transaction.Store}"
           default_fee: ${transaction.default_fee}
         )${transactionOne}

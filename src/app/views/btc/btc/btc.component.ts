@@ -93,7 +93,6 @@ export class BtcComponent implements OnInit {
 
 	initForm() {
 		this.cryptoForm = this.fb.group({
-			description: ['', [Validators.required]],
 			date: [new Date(), [Validators.required]],
 			Store: [environment.btc_store_id],
 			default_fee: [0, [Validators.required, Validators.pattern(/[+-]?\d+\.?\d*/)]],
