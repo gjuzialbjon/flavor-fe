@@ -10,8 +10,8 @@
 		>
 			<nb-card-body>
 				<!-- MAKING A TRANSACTION SECTION -->
-				<div class="row mb-3">
-					<div class="col-12">
+				<div class="row mb-3 align-items-center">
+					<div class="col-6">
 						<div ngbDropdown class="d-inline-block mr-5 mb-xl-0 mb-3">
 							<button
 								nbButton
@@ -34,6 +34,9 @@
 								<!-- <button ngbDropdownItem (click)="make('USDT')">USDT</button> -->
 							</div>
 						</div>
+					</div>
+					<div class="col-6 text-right" style="font-size: 1.5rem; color: #ff8c00">
+						Remaining: <strong>{{ remaining | currency: 'EUR' }}</strong>
 					</div>
 				</div>
 
