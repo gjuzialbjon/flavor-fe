@@ -31,6 +31,9 @@ const transactionOne = `{
       name
     }
   }
+  toStore {
+    name
+  }
   posts {
     _id
     date
@@ -84,6 +87,7 @@ const transactionOneForCryptos = `
     }
   }
   posts {
+    _id
     date
     type
     details

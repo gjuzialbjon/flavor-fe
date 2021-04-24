@@ -31,7 +31,7 @@
 							</button>
 							<div ngbDropdownMenu aria-labelledby="dropdownBasic3">
 								<button ngbDropdownItem (click)="make('BTC')">BTC</button>
-								<!-- <button ngbDropdownItem (click)="make('USDT')">USDT</button> -->
+								<button ngbDropdownItem (click)="make('Other')">Other</button>
 							</div>
 						</div>
 					</div>
@@ -45,20 +45,20 @@
 					<div class="col-12 py-3 px-lg-5 px-3">
 						<form [formGroup]="btcForm" class="form-row">
 							<div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-2">
-								<label class="label">Crypto Ammount *</label>
+								<label class="label">BTC Amount *</label>
 								<input
 									nbInput
 									fullWidth
 									type="number"
 									min="0"
-									placeholder="Crypto Ammount"
+									placeholder="BTC Amount"
 									formControlName="crypto_ammount"
 									[status]="btrade.crypto_ammount.touched && btrade.crypto_ammount.errors ? 'danger' : 'basic'"
 								/>
 								<small
 									*ngIf="btrade.crypto_ammount.touched && btrade.crypto_ammount.errors"
 									class="form-text text-danger"
-									>Please enter Crypto Ammount</small
+									>Please enter BTC Ammount</small
 								>
 							</div>
 							<div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-2">
@@ -193,25 +193,41 @@
 					</div>
 				</div>
 
-				<!-- USDT -->
-				<div *ngIf="tradeType === 'USDT'" class="row transactions-bg mb-3" style="margin: 0rem -1rem">
+				<!-- OTHER -->
+				<div *ngIf="tradeType === 'Other'" class="row transactions-bg mb-3" style="margin: 0rem -1rem">
 					<div class="col-12 py-3 px-lg-5 px-3">
-						<form [formGroup]="usdtForm" class="form-row">
+						<form [formGroup]="otherForm" class="form-row">
 							<div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-2">
-								<label class="label">USDT Ammount *</label>
+								<label class="label">Type *</label>
+								<input
+									nbInput
+									fullWidth
+									type="text"
+									placeholder="Crypto type"
+									formControlName="from_account"
+									[status]="otrade.from_account.touched && otrade.from_account.errors ? 'danger' : 'basic'"
+								/>
+								<small
+									*ngIf="otrade.from_account.touched && otrade.from_account.errors"
+									class="form-text text-danger"
+									>Please enter Type</small
+								>
+							</div>
+							<div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-2">
+								<label class="label">Ammount *</label>
 								<input
 									nbInput
 									fullWidth
 									type="number"
 									min="0"
-									placeholder="USDT Ammount"
+									placeholder="Ammount"
 									formControlName="crypto_ammount"
-									[status]="utrade.crypto_ammount.touched && utrade.crypto_ammount.errors ? 'danger' : 'basic'"
+									[status]="otrade.crypto_ammount.touched && otrade.crypto_ammount.errors ? 'danger' : 'basic'"
 								/>
 								<small
-									*ngIf="utrade.crypto_ammount.touched && utrade.crypto_ammount.errors"
+									*ngIf="otrade.crypto_ammount.touched && otrade.crypto_ammount.errors"
 									class="form-text text-danger"
-									>Please enter USDT Ammount</small
+									>Please enter Ammount</small
 								>
 							</div>
 							<div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-2">
@@ -223,13 +239,13 @@
 										type="number"
 										placeholder="Fee"
 										formControlName="conversion_fee"
-										[status]="utrade.conversion_fee.touched && utrade.conversion_fee.errors ? 'danger' : 'basic'"
+										[status]="otrade.conversion_fee.touched && otrade.conversion_fee.errors ? 'danger' : 'basic'"
 									/>
 									<nb-icon nbSuffix icon="percent"></nb-icon>
 								</nb-form-field>
 
 								<small
-									*ngIf="utrade.conversion_fee.touched && utrade.conversion_fee.errors"
+									*ngIf="otrade.conversion_fee.touched && otrade.conversion_fee.errors"
 									class="form-text text-danger"
 									>Please enter Conversion Fee</small
 								>
@@ -245,12 +261,12 @@
 										max="100"
 										placeholder="Fee"
 										formControlName="service_fee"
-										[status]="utrade.service_fee.touched && utrade.service_fee.errors ? 'danger' : 'basic'"
+										[status]="otrade.service_fee.touched && otrade.service_fee.errors ? 'danger' : 'basic'"
 									/>
 									<nb-icon nbSuffix icon="percent"></nb-icon>
 								</nb-form-field>
 
-								<small *ngIf="utrade.service_fee.touched && utrade.service_fee.errors" class="form-text text-danger"
+								<small *ngIf="otrade.service_fee.touched && otrade.service_fee.errors" class="form-text text-danger"
 									>Please enter Fee</small
 								>
 							</div>
@@ -264,12 +280,12 @@
 										placeholder="Total Bought"
 										formControlName="total_bought"
 										[readonly]="true"
-										[status]="utrade.total_bought.touched && utrade.total_bought.errors ? 'danger' : 'basic'"
+										[status]="otrade.total_bought.touched && otrade.total_bought.errors ? 'danger' : 'basic'"
 									/>
 									<nb-icon nbSuffix icon="euro-sign"></nb-icon>
 								</nb-form-field>
 
-								<small *ngIf="utrade.total_bought.touched && utrade.total_bought.errors" class="form-text text-danger"
+								<small *ngIf="otrade.total_bought.touched && otrade.total_bought.errors" class="form-text text-danger"
 									>Please enter Total Bought</small
 								>
 							</div>
@@ -282,12 +298,12 @@
 										type="number"
 										placeholder="Amount Sold"
 										formControlName="ammount_sold"
-										[status]="utrade.ammount_sold.touched && utrade.ammount_sold.errors ? 'danger' : 'basic'"
+										[status]="otrade.ammount_sold.touched && otrade.ammount_sold.errors ? 'danger' : 'basic'"
 									/>
 									<nb-icon nbSuffix icon="euro-sign"></nb-icon>
 								</nb-form-field>
 
-								<small *ngIf="utrade.ammount_sold.touched && utrade.ammount_sold.errors" class="form-text text-danger"
+								<small *ngIf="otrade.ammount_sold.touched && otrade.ammount_sold.errors" class="form-text text-danger"
 									>Please enter Amount Sold</small
 								>
 							</div>
@@ -299,10 +315,10 @@
 									placeholder="Date"
 									formControlName="date"
 									[nbDatepicker]="dateTimePicker"
-									[status]="utrade.date.touched && utrade.date.errors ? 'danger' : 'basic'"
+									[status]="otrade.date.touched && otrade.date.errors ? 'danger' : 'basic'"
 								/>
 								<nb-datepicker #dateTimePicker></nb-datepicker>
-								<small *ngIf="utrade.date.touched && utrade.date.errors" class="form-text text-danger"
+								<small *ngIf="otrade.date.touched && otrade.date.errors" class="form-text text-danger"
 									>Please enter Date</small
 								>
 							</div>
@@ -313,7 +329,7 @@
 										client.name | uppercase
 									}}</ng-option>
 								</ng-select>
-								<small *ngIf="utrade.client.touched && utrade.client.errors" class="form-text text-danger"
+								<small *ngIf="otrade.client.touched && otrade.client.errors" class="form-text text-danger"
 									>Please select a client</small
 								>
 							</div>
@@ -325,14 +341,14 @@
 							</div>
 							<div class="col-md-5 col-sm-6 pt-4">
 								<button nbButton status="info" class="ml-3" (click)="makeUsdt()" [disabled]="makingUsdt">
-									make usdt sale
+									make sale
 								</button>
-								<button nbButton ghost class="ml-4" (click)="initUsdtForm()">Reset</button>
+								<button nbButton ghost class="ml-4" (click)="initOtherForm()">Reset</button>
 							</div>
 						</form>
 					</div>
 				</div>
-				<!-- END MAKING A TRANSACTION -->
+				<!-- END MAKING OTHER TRANSACTION -->
 
 				<table
 					datatable
@@ -471,29 +487,6 @@
 									>Please enter a valid amount</small
 								>
 							</div>
-
-							<!-- <div class="col-lg-3 col-md-4 col-sm-6 mb-2">
-									<label class="label">Fee (optional)</label>
-									<nb-form-field>
-									<input
-										nbInput
-										fullWidth
-										formControlName="fee"
-										placeholder="Fee"
-										[status]="
-										t.fee.touched && t.fee.errors ? 'danger' : 'basic'
-										"
-									/>
-									<nb-icon nbSuffix icon="euro-sign"></nb-icon>
-									</nb-form-field>
-
-									<small
-									*ngIf="t.fee.touched && t.fee.errors"
-									class="form-text text-danger"
-									>Please enter a valid fee or leave this field empty (Only
-									numbers allowed)</small
-									>
-								</div> -->
 						</form>
 					</div>
 					<div class="col-12 text-right mb-3">
@@ -506,18 +499,19 @@
 				<table class="table table-hover table-sm" width="100%">
 					<thead>
 						<tr>
-							<th>bill</th>
-							<th>paid</th>
+							<th>to</th>
+							<th>amount</th>
 							<th>description</th>
-							<th>remaining</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr *ngFor="let row of transfers" style="cursor: pointer">
-							<td class="post-first-td">{{ row.total | currency: 'EUR' }}</td>
+						<tr *ngFor="let row of transfers; trackBy:trackByFunction"  style="cursor: pointer">
+							<td class="post-first-td">
+								<div *ngIf="row.client; else toStore">{{ row.client?.name }}</div>
+								<ng-template #toStore>{{ row.toStore?.name }}</ng-template>
+							</td>
 							<td>{{ row.amount_in | currency: 'EUR' }}</td>
 							<td>{{ row.description }}</td>
-							<td>{{ row.total - row.amount_in | currency: 'EUR' }}</td>
 						</tr>
 					</tbody>
 				</table>

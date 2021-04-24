@@ -34,7 +34,7 @@ export class BtcDashboardComponent implements OnInit {
 
 	transferForm!: FormGroup;
 	btcForm!: FormGroup;
-	usdtForm!: FormGroup;
+	otherForm!: FormGroup;
 
 	makingBtc = false;
 	makingUsdt = false;
@@ -74,7 +74,7 @@ export class BtcDashboardComponent implements OnInit {
 
 	async ngOnInit() {
 		this.initBtcForm();
-		// this.initUsdtForm()
+		this.initOtherForm();
 		this.initTransferForm();
 		this.getTransactionDetails();
 		this.clients = await this.transactionsService.getClients();
@@ -87,10 +87,10 @@ export class BtcDashboardComponent implements OnInit {
 		this.transactionsService.getCryptoTransactionById(this.transactionId).subscribe(
 			(res: any) => {
 				this.transaction = res.data.transactionById;
-				console.log(this.transaction);
+				// console.log(this.transaction);
 				this.defaultConversionFee = this.transaction.default_fee || 0;
 				this.btcForm.get('conversion_fee')?.setValue(this.defaultConversionFee);
-				// this.usdtForm.get('conversion_fee')?.setValue(this.defaultConversionFee)
+				this.otherForm.get('conversion_fee')?.setValue(this.defaultConversionFee);
 
 				this.posts = this.transaction.posts.filter((p) => p.type !== 'fee');
 				for (const post of this.posts) {
@@ -98,24 +98,7 @@ export class BtcDashboardComponent implements OnInit {
 					this.totalProfit += post.service_fee - post.conversion_fee;
 				}
 
-				this.transactionsService.getCryptoTransfers(this.transactionId).subscribe(
-					(res: any) => {
-						console.log(res);
-						this.transfers = JSON.parse(JSON.stringify(res.data.Me.stores[0].transactions));
-						this.transfers = this.transfers.reverse();
-
-						this.remaining = this.totalMinusFee;
-
-						for (let i = 0; i < this.transfers.length; i++) {
-							this.remaining -= this.transfers[i].amount_in
-						}
-						
-						this.chRef.detectChanges();
-					},
-					(e) => {
-						console.error(e);
-					}
-				);
+				this.getTransfers();
 
 				this.dtTrigger.next();
 				this.chRef.detectChanges();
@@ -130,7 +113,7 @@ export class BtcDashboardComponent implements OnInit {
 		if (tradeType === 'BTC') {
 			this.initBtcForm();
 		} else {
-			this.initUsdtForm();
+			this.initOtherForm();
 		}
 		this.tradeType = tradeType;
 		this.chRef.detectChanges();
@@ -151,7 +134,7 @@ export class BtcDashboardComponent implements OnInit {
 		console.log(req);
 		this.transactionsService.makeCryptoSale(req).subscribe(
 			(res: any) => {
-				// console.log(res);
+				console.log(res);
 				this.makingBtc = false;
 				if (res.data.makeCryptoSale) {
 					window.location.reload();
@@ -170,20 +153,20 @@ export class BtcDashboardComponent implements OnInit {
 	}
 
 	makeUsdt() {
-		if (this.usdtForm.invalid) {
+		if (this.otherForm.invalid) {
 			this.msg.error('Invalid inputs, cannot perform sale', 'Error!');
-			this.usdtForm.markAllAsTouched();
+			this.otherForm.markAllAsTouched();
 			return;
 		}
 
-		let req = JSON.parse(JSON.stringify(this.usdtForm.value));
+		let req = JSON.parse(JSON.stringify(this.otherForm.value));
 		req.conversion_fee = (req.conversion_fee / 100) * req.total_bought;
 		req.service_fee = (req.service_fee / 100) * req.total_bought;
 
 		this.makingBtc = true;
 		this.transactionsService.makeCryptoSale(req).subscribe(
 			(res: any) => {
-				// console.log(res);
+				console.log(res);
 				this.makingBtc = false;
 				if (res.data.makeCryptoSale) {
 					window.location.reload();
@@ -211,9 +194,8 @@ export class BtcDashboardComponent implements OnInit {
 		this.makingTransfer = true;
 		this.transactionsService.makeTransfer(this.transferForm.value).subscribe(
 			(res: any) => {
-				console.log(res);
 				this.makingTransfer = false;
-				window.location.reload();
+				this.getTransfers()
 			},
 			(e) => {
 				console.error(e);
@@ -279,9 +261,9 @@ export class BtcDashboardComponent implements OnInit {
 		});
 	}
 
-	initUsdtForm() {
-		this.usdtForm = this.fb.group({
-			from_account: ['USDT'],
+	initOtherForm() {
+		this.otherForm = this.fb.group({
+			from_account: [''],
 			transaction: [this.transactionId, [Validators.required]],
 			crypto_ammount: [null, [Validators.required, Validators.pattern(/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/)]],
 			price_current: [1, [Validators.required, Validators.pattern(/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/)]],
@@ -297,31 +279,56 @@ export class BtcDashboardComponent implements OnInit {
 			],
 			client: [null, []],
 			date: [new Date(), [Validators.required]],
-			description: ['USDT'],
+			description: ['Other', [Validators.required]],
 		});
 
-		this.usdtForm.get('crypto_ammount')?.valueChanges.subscribe((res) => {
-			if (typeof +res === 'number' && typeof +this.usdtForm.get('price_current')?.value === 'number') {
-				this.usdtForm.get('total_bought')?.setValue(+res);
+		this.otherForm.get('crypto_ammount')?.valueChanges.subscribe((res) => {
+			if (typeof +res === 'number' && typeof +this.otherForm.get('price_current')?.value === 'number') {
+				this.otherForm.get('total_bought')?.setValue(+res);
 			}
 		});
 
-		this.usdtForm.get('service_fee')?.valueChanges.subscribe((res) => {
-			if (typeof res === 'number' && typeof this.usdtForm.get('total_bought')?.value === 'number') {
-				this.usdtForm
+		this.otherForm.get('service_fee')?.valueChanges.subscribe((res) => {
+			if (typeof res === 'number' && typeof this.otherForm.get('total_bought')?.value === 'number') {
+				this.otherForm
 					.get('ammount_sold')
 					?.setValue(
-						+this.usdtForm.get('total_bought')?.value - (+res / 100) * +this.usdtForm.get('total_bought')?.value
+						+this.otherForm.get('total_bought')?.value - (+res / 100) * +this.otherForm.get('total_bought')?.value
 					);
 			}
 		});
 	}
 
+	getTransfers() {
+		this.transactionsService.getCryptoTransfers(this.transactionId).subscribe(
+			(res: any) => {
+				console.log(res);
+				this.transfers = JSON.parse(JSON.stringify(res.data.Me.stores[0].transactions));
+				this.transfers = this.transfers.reverse();
+
+				this.remaining = this.totalMinusFee;
+
+				for (let i = 0; i < this.transfers.length; i++) {
+					this.remaining -= this.transfers[i].amount_in;
+				}
+
+				this.initTransferForm()
+				this.chRef.detectChanges();
+			},
+			(e) => {
+				console.error(e);
+			}
+		);
+	}
+
+	trackByFunction(index: number, item: any) {
+		return item._id
+	}
 	get btrade() {
 		return this.btcForm.controls;
 	}
-	get utrade() {
-		return this.usdtForm.controls;
+	get otrade() {
+		return this.otherForm.controls;
 	}
 	get t() {
 		return this.transferForm.controls;
