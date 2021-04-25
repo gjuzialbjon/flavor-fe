@@ -43,7 +43,7 @@
 				<!-- BTC -->
 				<div *ngIf="tradeType === 'BTC'" class="row transactions-bg mb-3" style="margin: 0rem -1rem">
 					<div class="col-12 py-3 px-lg-5 px-3">
-						<form [formGroup]="btcForm" class="form-row">
+						<form [formGroup]="btcForm" class="form-row" (keyup)="onBtcFormUpdate()">
 							<div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-2">
 								<label class="label">BTC Amount *</label>
 								<input
@@ -196,9 +196,9 @@
 				<!-- OTHER -->
 				<div *ngIf="tradeType === 'Other'" class="row transactions-bg mb-3" style="margin: 0rem -1rem">
 					<div class="col-12 py-3 px-lg-5 px-3">
-						<form [formGroup]="otherForm" class="form-row">
+						<form [formGroup]="otherForm" class="form-row" (keyup)="onOtherFormUpdate()">
 							<div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-2">
-								<label class="label">Type *</label>
+								<label class="label">Crypto Type *</label>
 								<input
 									nbInput
 									fullWidth
@@ -207,27 +207,25 @@
 									formControlName="from_account"
 									[status]="otrade.from_account.touched && otrade.from_account.errors ? 'danger' : 'basic'"
 								/>
-								<small
-									*ngIf="otrade.from_account.touched && otrade.from_account.errors"
-									class="form-text text-danger"
+								<small *ngIf="otrade.from_account.touched && otrade.from_account.errors" class="form-text text-danger"
 									>Please enter Type</small
 								>
 							</div>
 							<div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-2">
-								<label class="label">Ammount *</label>
+								<label class="label">Amount *</label>
 								<input
 									nbInput
 									fullWidth
 									type="number"
 									min="0"
-									placeholder="Ammount"
+									placeholder="Amount"
 									formControlName="crypto_ammount"
 									[status]="otrade.crypto_ammount.touched && otrade.crypto_ammount.errors ? 'danger' : 'basic'"
 								/>
 								<small
 									*ngIf="otrade.crypto_ammount.touched && otrade.crypto_ammount.errors"
 									class="form-text text-danger"
-									>Please enter Ammount</small
+									>Please enter Amount</small
 								>
 							</div>
 							<div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-2">
@@ -333,14 +331,8 @@
 									>Please select a client</small
 								>
 							</div>
-							<div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-2">
-								<label class="label">Description</label>
-								<nb-form-field>
-									<input nbInput fullWidth placeholder="Description" formControlName="description" />
-								</nb-form-field>
-							</div>
 							<div class="col-md-5 col-sm-6 pt-4">
-								<button nbButton status="info" class="ml-3" (click)="makeUsdt()" [disabled]="makingUsdt">
+								<button nbButton status="info" class="ml-3" (click)="makeOther()" [disabled]="makingOther">
 									make sale
 								</button>
 								<button nbButton ghost class="ml-4" (click)="initOtherForm()">Reset</button>
@@ -372,7 +364,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr *ngFor="let row of posts" style="cursor: pointer">
+						<tr *ngFor="let row of tablePosts" style="cursor: pointer">
 							<td class="post-first-td">{{ row.from_account }}</td>
 							<td>{{ row.crypto_ammount }}</td>
 							<td>{{ row.price_current | currency: 'EUR' }}</td>
@@ -383,7 +375,13 @@
 							<td>
 								{{ row.service_fee - row.conversion_fee | currency: 'EUR' }}
 							</td>
-							<td class="text-uppercase">{{ row.client?.name }}</td>
+							<td class="text-uppercase" [attr.data-sort]="row.client?.name" [attr.data-search]="row.client?.name">
+								<select (change)="onClientChange(row._id, $event.target)">
+									<option *ngFor="let client of clients" value="{{ client._id }}" [selected]="client._id === row.client?._id">
+										{{ client.name | uppercase }}
+									</option>
+								</select>
+							</td>
 							<!-- <td>
 								<nb-icon icon="edit" style="cursor: pointer" status="basic"></nb-icon>
 							</td> -->
@@ -505,7 +503,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr *ngFor="let row of transfers; trackBy:trackByFunction"  style="cursor: pointer">
+						<tr *ngFor="let row of transfers; trackBy: trackByFunction" style="cursor: pointer">
 							<td class="post-first-td">
 								<div *ngIf="row.client; else toStore">{{ row.client?.name }}</div>
 								<ng-template #toStore>{{ row.toStore?.name }}</ng-template>

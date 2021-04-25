@@ -24,6 +24,7 @@ export class ConfigsService {
 			processing: true,
 			responsive: true,
 			dom: 'ft',
+			order: []
 		}
 	}
 

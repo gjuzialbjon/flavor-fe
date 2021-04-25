@@ -14,7 +14,7 @@ import {
 	NbDatepickerModule,
 	NbDialogModule,
 	NbSelectModule,
-	NB_TIME_PICKER_CONFIG,
+	NbOptionModule,
 } from '@nebular/theme'
 import { DataTablesModule } from 'angular-datatables'
 import { BtcDashboardComponent } from './btc-dashboard/btc-dashboard.component'
@@ -51,6 +51,7 @@ import { NgSelectModule } from '@ng-select/ng-select'
 		NbButtonModule,
 		NbDatepickerModule,
 		NbSelectModule,
+		NbOptionModule,
 		NgSelectModule,
 		FormsModule,
 		ReactiveFormsModule,
