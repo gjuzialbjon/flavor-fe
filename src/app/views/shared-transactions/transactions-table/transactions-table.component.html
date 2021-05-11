@@ -147,12 +147,12 @@
 							<th>Amount Out</th>
 							<th>Fee</th>
 							<th>Payment type</th>
+							<th *ngIf="!isInStore">from</th>
+							<th *ngIf="!isInClient">to</th>
 							<th>Direction</th>
-							<th *ngIf="!isInClient">Client</th>
-							<th *ngIf="!isInStore">Store</th>
 							<th *ngIf="!isInClient">Created By</th>
 							<th *ngIf="!isInClient">Description</th>
-							<th>Status</th>
+							<th>Actions</th>
 							<th width="20px">&nbsp;</th>
 						</tr>
 					</thead>
@@ -165,6 +165,7 @@
 								'row-pending': transaction.status === 'Open' && !transaction.issue,
 								'row-closed': transaction.status === 'Closed' && !transaction.issue
 							}"
+							trackBy="trackByFunction"
 						>
 							<td [attr.data-sort]="transaction.issue ? 'a' : 'b'">
 								<nb-icon icon="flag" [status]="transaction.issue ? 'danger' : 'basic'"></nb-icon>
@@ -205,23 +206,6 @@
 									{{ transaction.type }}
 								</div>
 							</td>
-							<td class="text-capitalize" (click)="openEditTransaction(transactionDialog, transaction)">
-								{{ transaction.direction }}
-							</td>
-
-							<td
-								*ngIf="!isInClient"
-								class="text-capitalize"
-								(click)="openEditTransaction(transactionDialog, transaction)"
-							>
-								<span *ngIf="isAdminOrAgent">
-									{{ transaction.client?.name }}
-									{{ transaction.client?.surname }}
-								</span>
-								<span *ngIf="!isAdminOrAgent">
-									{{ transaction.client?._id }}
-								</span>
-							</td>
 							<td
 								*ngIf="!isInStore"
 								class="text-capitalize"
@@ -229,7 +213,33 @@
 							>
 								{{ transaction.store?.name }}
 							</td>
+							<td
+								*ngIf="!isInClient"
+								class="text-capitalize"
+								(click)="openEditTransaction(transactionDialog, transaction)"
+							>
+								<span *ngIf="transaction.client">
+									<span *ngIf="isAdminOrAgent">
+										{{ transaction.client?.name }}
+										{{ transaction.client?.surname }}
+									</span>
+									<span *ngIf="!isAdminOrAgent">
+										{{ transaction.client?._id }}
+									</span>
+								</span>
 
+								<span *ngIf="transaction.toStore">
+									<span *ngIf="isAdminOrAgent">
+										{{ transaction.toStore?.name }}
+									</span>
+									<span *ngIf="!isAdminOrAgent">
+										{{ transaction.toStore?._id }}
+									</span>
+								</span>
+							</td>
+							<td class="text-capitalize" (click)="openEditTransaction(transactionDialog, transaction)">
+								{{ transaction.direction }}
+							</td>
 							<td
 								*ngIf="!isInClient"
 								class="text-capitalize"
@@ -245,17 +255,36 @@
 							>
 								{{ transaction.description }}
 							</td>
-							<td
-								class="text-capitalize"
-								[ngClass]="{
-									'text-danger font-weight-bold': transaction.status === 'Open'
-								}"
-								(click)="openEditTransaction(transactionDialog, transaction)"
-							>
-								{{ transaction.status === 'Open' ? 'Pending' : 'Completed' }}
-								({{ transaction.posts?.length }})
+							<td>
+								<button
+									nbButton
+									*ngIf="
+										transaction.status === 'Open' &&
+										transaction.store._id === '603d48daeab0d70008bbc19f' &&
+										transaction.client
+									"
+									(click)="markApproved(transaction)"
+									title="Approved"
+									status="info"
+									style="padding: 0.1rem; margin-right: 0.2rem"
+								>
+									<nb-icon icon="check" class="mt-1"></nb-icon>
+								</button>
+								<button
+									nbButton
+									*ngIf="
+										transaction.status === 'Open' &&
+										transaction.store._id === '603d48daeab0d70008bbc19f' &&
+										transaction.client
+									"
+									(click)="markApprovedPlusPaid(transaction)"
+									title="Approved + Paid"
+									status="success"
+									style="padding: 0.1rem"
+								>
+									<nb-icon icon="check" class="mt-1"></nb-icon> + <nb-icon class="mt-1" icon="euro-sign"></nb-icon>
+								</button>
 							</td>
-
 							<td (click)="openEditTransaction(transactionDialog, transaction)">
 								<nb-icon icon="edit" style="cursor: pointer" status="basic"></nb-icon>
 							</td>

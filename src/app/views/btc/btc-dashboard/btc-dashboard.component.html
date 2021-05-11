@@ -8,7 +8,7 @@
 			nbSpinnerSize="large"
 			nbSpinnerMessage="Loading"
 		>
-			<nb-card-body>
+			<nb-card-body style="min-height: 520px;">
 				<!-- MAKING A TRANSACTION SECTION -->
 				<div class="row mb-3 align-items-center">
 					<div class="col-6">
@@ -155,6 +155,17 @@
 
 								<small *ngIf="btrade.ammount_sold.touched && btrade.ammount_sold.errors" class="form-text text-danger"
 									>Please enter Amount Sold</small
+								>
+							</div>
+							<div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-2">
+								<label class="label">Store *</label>
+								<ng-select formControlName="toStore" class="my-ng-select" placeholder="Select store...">
+									<ng-option *ngFor="let store of stores" [value]="store._id">{{
+										store.name | uppercase
+									}}</ng-option>
+								</ng-select>
+								<small *ngIf="btrade.toStore.touched && btrade.toStore.errors" class="form-text text-danger"
+									>Please enter Store</small
 								>
 							</div>
 							<div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-2">
@@ -306,6 +317,17 @@
 								>
 							</div>
 							<div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-2">
+								<label class="label">Store *</label>
+								<ng-select formControlName="toStore" class="my-ng-select" placeholder="Select store...">
+									<ng-option *ngFor="let store of stores" [value]="store._id">{{
+										store.name | uppercase
+									}}</ng-option>
+								</ng-select>
+								<small *ngIf="otrade.toStore.touched && otrade.toStore.errors" class="form-text text-danger"
+									>Please enter Store</small
+								>
+							</div>
+							<div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 mb-2">
 								<label class="label">Date *</label>
 								<input
 									nbInput
@@ -327,9 +349,6 @@
 										client.name | uppercase
 									}}</ng-option>
 								</ng-select>
-								<small *ngIf="otrade.client.touched && otrade.client.errors" class="form-text text-danger"
-									>Please select a client</small
-								>
 							</div>
 							<div class="col-md-5 col-sm-6 pt-4">
 								<button nbButton status="info" class="ml-3" (click)="makeOther()" [disabled]="makingOther">
@@ -360,7 +379,7 @@
 							<th>service fee</th>
 							<th>profit</th>
 							<th>client</th>
-							<!-- <th width="20px">&nbsp;</th> -->
+							<th>store</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -376,15 +395,13 @@
 								{{ row.service_fee - row.conversion_fee | currency: 'EUR' }}
 							</td>
 							<td class="text-uppercase" [attr.data-sort]="row.client?.name" [attr.data-search]="row.client?.name">
-								<select (change)="onClientChange(row._id, $event.target)">
-									<option *ngFor="let client of clients" value="{{ client._id }}" [selected]="client._id === row.client?._id">
-										{{ client.name | uppercase }}
-									</option>
-								</select>
+								<!-- <select (change)="onClientChange(row._id, $event.target)">
+									<option *ngFor="let client of clients" value="{{ client._id }}" [selected]="client._id === row.client?._id"> -->
+										{{ row.client?.name | uppercase }}
+									<!-- </option>
+								</select> -->
 							</td>
-							<!-- <td>
-								<nb-icon icon="edit" style="cursor: pointer" status="basic"></nb-icon>
-							</td> -->
+							<td>{{ row.toStore?.name | uppercase }}</td>
 						</tr>
 					</tbody>
 					<tfoot class="bitcoin-table-footer">
@@ -398,23 +415,9 @@
 							<td></td>
 							<td>{{ totalProfit | currency: 'EUR' }}</td>
 							<td></td>
-							<!-- <td></td> -->
+							<td></td>
 						</tr>
-						<tr>
-							<td class="text-uppercase text-right post-first-td">Remaining Total</td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td class="text-right">
-								{{ remainingTotalMinusFee | currency: 'EUR' }}
-							</td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<!-- <td></td> -->
-						</tr>
-						<tr>
+						<!-- <tr>
 							<td class="text-uppercase text-right post-first-td" style="border-bottom-left-radius: 0.7rem">
 								Grand Total
 							</td>
@@ -428,8 +431,8 @@
 							<td></td>
 							<td></td>
 							<td></td>
-							<!-- <td style="border-bottom-right-radius: 0.7rem"></td> -->
-						</tr>
+							<td></td>
+						</tr> -->
 					</tfoot>
 				</table>
 			</nb-card-body>
@@ -438,7 +441,7 @@
 
 	<div class="col-xl-4">
 		<nb-card class="bitcoin-second-card shadow">
-			<nb-card-body>
+			<nb-card-body style="min-height: 520px;">
 				<!-- MAKING A TRANSACTION SECTION -->
 				<div class="row transactions-bg mb-3" style="margin: 0rem -1rem">
 					<div class="col-12 py-3 px-3">
@@ -494,7 +497,7 @@
 				</div>
 				<!-- END MAKING A TRANSACTION -->
 
-				<table class="table table-hover table-sm" width="100%">
+				<table class="table table-hover table-sm" width="100%" >
 					<thead>
 						<tr>
 							<th>to</th>
@@ -503,7 +506,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr *ngFor="let row of transfers; trackBy: trackByFunction" style="cursor: pointer">
+						<tr *ngFor="let row of transfers; trackBy: trackByFunction">
 							<td class="post-first-td">
 								<div *ngIf="row.client; else toStore">{{ row.client?.name }}</div>
 								<ng-template #toStore>{{ row.toStore?.name }}</ng-template>

@@ -19,7 +19,6 @@ export class TransferComponent implements OnInit {
 	stores: any[] = []
 	clients: any[] = []
 	entities: any[] = []
-	currencies: any[] = []
 
 	transactionForm!: FormGroup
 
@@ -39,7 +38,6 @@ export class TransferComponent implements OnInit {
 
 		this.stores = await this.transactionsService.getStores()
 		this.clients = await this.transactionsService.getClients()
-		this.currencies = await this.transactionsService.getCurrencies()
 		this.entities = [...this.stores, ...this.clients]
 		this.chRef.detectChanges()
 	}
@@ -83,7 +81,6 @@ export class TransferComponent implements OnInit {
 			amount: ['', [Validators.required, Validators.pattern(/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/)]],
 			fee: ['', [Validators.pattern(/^(?:[1-9]\d*|0)?(?:\.\d+)?$/)]],
 			date: [new Date().toISOString()],
-			currency: [null],
 		})
 	}
 

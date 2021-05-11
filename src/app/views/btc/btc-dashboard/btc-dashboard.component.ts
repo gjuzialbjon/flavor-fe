@@ -106,6 +106,8 @@ export class BtcDashboardComponent implements OnInit {
 				this.posts = this.transaction.posts.filter((p) => p.type !== 'fee');
 				this.posts = this.posts.reverse();
 
+				console.log(this.posts);
+
 				for (const post of this.posts) {
 					this.totalMinusFee += post.ammount;
 					this.totalProfit += post.service_fee - post.conversion_fee;
@@ -115,7 +117,7 @@ export class BtcDashboardComponent implements OnInit {
 					this.getTransfers();
 					this.tablePosts = JSON.parse(JSON.stringify(this.posts));
 					this.dtTrigger.next();
-				} 
+				}
 				this.chRef.detectChanges();
 			},
 			(e) => {
@@ -145,6 +147,8 @@ export class BtcDashboardComponent implements OnInit {
 		req.conversion_fee = (req.conversion_fee / 100) * (req.crypto_ammount * req.price_current);
 		req.service_fee = (req.service_fee / 100) * (req.crypto_ammount * req.price_current);
 
+		req.client = req.client ? req.client : environment.unknown_client_id;
+
 		this.makingBtc = true;
 		console.log(req);
 		this.transactionsService.makeCryptoSale(req).subscribe(
@@ -152,7 +156,7 @@ export class BtcDashboardComponent implements OnInit {
 				console.log(res);
 				this.makingBtc = false;
 				if (res.data.makeCryptoSale) {
-					// window.location.reload();
+					window.location.reload();
 				} else {
 					console.error(res);
 					this.msg.error('Could not make sale', 'Error!');
@@ -177,6 +181,8 @@ export class BtcDashboardComponent implements OnInit {
 		let req = JSON.parse(JSON.stringify(this.otherForm.value));
 		req.conversion_fee = (req.conversion_fee / 100) * req.crypto_ammount;
 		req.service_fee = (req.service_fee / 100) * req.crypto_ammount;
+
+		req.client = req.client ? req.client : environment.unknown_client_id;
 
 		this.makingOther = true;
 		this.transactionsService.makeCryptoSale(req).subscribe(
@@ -249,6 +255,7 @@ export class BtcDashboardComponent implements OnInit {
 				[Validators.required, Validators.pattern(/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/), Validators.max(100)],
 			],
 			client: [null, []],
+			toStore: [null, [Validators.required]],
 			date: [new Date(), [Validators.required]],
 			description: ['BTC'],
 		});
@@ -284,7 +291,7 @@ export class BtcDashboardComponent implements OnInit {
 
 		this.transactionsService.updatePostClient(postId, newClient).subscribe(
 			(res) => {
-				window.location.reload()
+				window.location.reload();
 			},
 			(e) => {
 				console.error(e);
@@ -310,6 +317,7 @@ export class BtcDashboardComponent implements OnInit {
 				[Validators.required, Validators.pattern(/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/), Validators.max(100)],
 			],
 			client: [null, []],
+			toStore: [null, [Validators.required]],
 			date: [new Date(), [Validators.required]],
 			description: ['Other', [Validators.required]],
 		});

@@ -4,7 +4,6 @@ import {
 	ChangeDetectionStrategy,
 	EventEmitter,
 	Output,
-	Input,
 	ChangeDetectorRef,
 } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
@@ -26,7 +25,6 @@ export class DepositComponent implements OnInit {
 
 	stores: any[] = []
 	clients: any[] = []
-	currencies: any[] = []
 
 	transactionForm!: FormGroup
 
@@ -46,7 +44,6 @@ export class DepositComponent implements OnInit {
 
 		this.stores = await this.transactionsService.getStores()
 		this.clients = await this.transactionsService.getClients()
-		this.currencies = await this.transactionsService.getCurrencies()
 		this.chRef.detectChanges()
 	}
 
@@ -83,7 +80,6 @@ export class DepositComponent implements OnInit {
 			amount: ['', [Validators.required, Validators.pattern(/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/)]],
 			fee: ['', [Validators.pattern(/^(?:[1-9]\d*|0)?(?:\.\d+)?$/)]],
 			date: [new Date().toISOString()],
-			currency: [null],
 		})
 	}
 

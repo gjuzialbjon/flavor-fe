@@ -16,6 +16,7 @@ export interface Transaction {
 	user: User
 	createdAt: string
 	store: Store
+	toStore: Store
 	comments: any[]
 	posts: [Post]
 	issue: boolean

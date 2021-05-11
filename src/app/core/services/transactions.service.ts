@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Apollo, gql } from 'apollo-angular';
 import { AuthenticationService } from './authentication.service';
-import * as moment from 'moment'; // add this 1 of 4
 import { environment } from '@env';
 
 const transactionOne = `{
@@ -33,6 +32,7 @@ const transactionOne = `{
   }
   toStore {
     name
+    _id
   }
   posts {
     _id
@@ -102,6 +102,10 @@ const transactionOneForCryptos = `
     client{
       name
       surname
+      _id
+    }
+    toStore {
+      name
       _id
     }
     createdAt
@@ -534,6 +538,8 @@ export class TransactionsService {
 
 	makeCryptoSale(sale: any) {
 		let hasClient = !!sale.client ? `client: "${sale.client}"` : '';
+		let hasToStore = !!sale.toStore ? `toStore: "${sale.toStore}"` : '';
+
 		let date = new Date(sale.date);
 		date.setHours(12, 0, 0, 0);
 
@@ -549,9 +555,10 @@ export class TransactionsService {
             ammount_sold: ${sale.ammount_sold}
             conversion_fee: ${sale.conversion_fee}
             service_fee: ${sale.service_fee}
-            ${hasClient}
             description: "${sale.description}"
             date:"${date.toISOString()}"
+            ${hasClient}
+            ${hasToStore}
           ) {
             createdAt
           }
