@@ -390,20 +390,37 @@
 							<span>{{ transaction.createdAt | date: 'mediumDate' }}</span>
 						</div>
 						<div *ngIf="isAdminOrAgent" class="d-flex align-items-center justify-content-between mb-2">
-							<strong class="mr-2 text-disabled">Store</strong>
+							<strong class="mr-2 text-disabled">From</strong>
 							<span>{{ transaction.store?.name || '-' }}</span>
 						</div>
 						<div *ngIf="isAdminOrAgent" class="d-flex align-items-center justify-content-between mb-2">
-							<strong class="mr-2 text-disabled">Client</strong>
-							<span>{{ transaction.client?.name || '-' }} {{ transaction.client?.surname }}</span>
-						</div>
-						<div class="d-flex align-items-center justify-content-between mb-2">
-							<strong class="mr-2 text-disabled">Payment type</strong>
-							<span class="text-capitalize">{{ transaction.type }}</span>
+							<strong class="mr-2 text-disabled">To</strong>
+							<span *ngIf="transaction.client">
+								<span *ngIf="isAdminOrAgent">
+									{{ transaction.client?.name }}
+									{{ transaction.client?.surname }}
+								</span>
+								<span *ngIf="!isAdminOrAgent">
+									{{ transaction.client?._id }}
+								</span>
+							</span>
+
+							<span *ngIf="transaction.toStore">
+								<span *ngIf="isAdminOrAgent">
+									{{ transaction.toStore?.name }}
+								</span>
+								<span *ngIf="!isAdminOrAgent">
+									{{ transaction.toStore?._id }}
+								</span>
+							</span>
 						</div>
 						<div class="d-flex align-items-center justify-content-between mb-2">
 							<strong class="mr-2 text-disabled">Direction</strong>
 							<span class="text-capitalize">{{ transaction.direction }}</span>
+						</div>
+						<div class="d-flex align-items-center justify-content-between mb-2">
+							<strong class="mr-2 text-disabled">Payment type</strong>
+							<span class="text-capitalize">{{ transaction.type }}</span>
 						</div>
 						<div *ngIf="!isInClient" class="d-flex align-items-center justify-content-between mb-2">
 							<strong class="mr-2 text-disabled">Created By</strong>
