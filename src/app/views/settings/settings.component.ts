@@ -14,12 +14,12 @@ export class SettingsComponent implements OnInit {
 			responsive: true,
 			route: './users',
 		},
-		{
-			title: 'Currencies',
-			icon: 'euro-sign',
-			responsive: true,
-			route: './currencies',
-		},
+		// {
+		// 	title: 'Currencies',
+		// 	icon: 'euro-sign',
+		// 	responsive: true,
+		// 	route: './currencies',
+		// },
 	]
 
 	constructor(public route: ActivatedRoute) {}

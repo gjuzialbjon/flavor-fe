@@ -454,6 +454,7 @@ export class TransactionsService {
 	makeTransfer(transfer: any) {
 		let hasCurrency = !!transfer.currency ? `currency: "${transfer.currency}"` : '';
 		let hasFee = !!transfer.fee ? `fee: ${transfer.fee}` : '';
+		let hasToStore = !!transfer.toStore ? `toStore: "${transfer.toStore}"` : '';
 		let hasTransferOrigin = !!transfer.transfer_origin ? `transaction_origin: "${transfer.transfer_origin}"` : '';
 
 		return this.apollo.mutate({
@@ -467,6 +468,7 @@ export class TransactionsService {
             amount: ${transfer.amount}
             ${hasFee}
             ${hasCurrency}
+            ${hasToStore}
             ${hasTransferOrigin}
           ) ${transactionOne}
         }

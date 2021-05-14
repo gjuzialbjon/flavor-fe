@@ -23,6 +23,7 @@ import { Post } from 'src/app/core/models/post';
 import { Store } from 'src/app/core/models/store';
 import { Client } from 'src/app/core/models/client';
 import { ThisReceiver } from '@angular/compiler';
+import { environment } from '@env';
 
 @Component({
 	selector: 'app-transactions-table',
@@ -156,8 +157,8 @@ export class TransactionsTableComponent implements OnInit {
 	}
 
 	updateTransactions() {
-		this.loadingTransactions = true
-		this.chRef.detectChanges()
+		this.loadingTransactions = true;
+		this.chRef.detectChanges();
 		this.transactionsService.getTransactions(this.storeId, this.clientId).subscribe(
 			(res: any) => {
 				this.transactionsTable.dtInstance.then((dtInstance: DataTables.Api) => {
@@ -184,11 +185,11 @@ export class TransactionsTableComponent implements OnInit {
 					// Call the dtTrigger to rerender again
 					this.dtTrigger.next();
 				});
-				this.loadingTransactions = false
+				this.loadingTransactions = false;
 				this.chRef.detectChanges();
 			},
 			(e) => {
-				this.loadingTransactions = false
+				this.loadingTransactions = false;
 				console.error(e);
 				this.msg.defaultError();
 			}
@@ -212,10 +213,26 @@ export class TransactionsTableComponent implements OnInit {
 	}
 
 	markApprovedPlusPaid(transaction: Transaction) {
-		console.log(transaction);
+		if (transaction.status === 'Open') {
+			this.transactionsService.completeTransaction(transaction._id).subscribe(
+				(res: any) => {
+					console.log(res);
+					if (res.data.closeTransaction) {
+						this.msg.success('Transaction approved successfully', 'Success!');
+						this.updateTransactions();
+					}
+				},
+				(e) => {
+					console.error(e);
+					this.msg.error('Could not approve transaction', 'Error!');
+				}
+			);
+		}
 	}
 
 	openEditTransaction(content: TemplateRef<any>, transaction: Transaction) {
+		if (transaction.store._id === environment.btc_store_id) return;
+
 		this.transaction = transaction;
 		this.commentFormControl.setValue('');
 		// console.log(transaction);

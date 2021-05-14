@@ -11,6 +11,7 @@ export interface User {
 	password: string
 	confirmed: Boolean
 	stores: [Store]
+	rstores: [Store]
 	accounts: [Account]
 	_id: string
 }

@@ -228,7 +228,7 @@
 									</span>
 								</span>
 
-								<span *ngIf="transaction.toStore">
+								<span *ngIf="transaction.toStore && transaction.store._id !== '603d48daeab0d70008bbc19f'">
 									<span *ngIf="isAdminOrAgent">
 										{{ transaction.toStore?.name }}
 									</span>
@@ -273,7 +273,6 @@
 								<button
 									nbButton
 									*ngIf="
-										transaction.status === 'Open' &&
 										transaction.store._id === '603d48daeab0d70008bbc19f' &&
 										transaction.client
 									"
@@ -286,7 +285,12 @@
 								</button>
 							</td>
 							<td (click)="openEditTransaction(transactionDialog, transaction)">
-								<nb-icon icon="edit" style="cursor: pointer" status="basic"></nb-icon>
+								<nb-icon
+									*ngIf="transaction.store._id !== '603d48daeab0d70008bbc19f'"
+									icon="edit"
+									style="cursor: pointer"
+									status="basic"
+								></nb-icon>
 							</td>
 						</tr>
 					</tbody>

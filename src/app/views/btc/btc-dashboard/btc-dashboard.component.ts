@@ -106,7 +106,7 @@ export class BtcDashboardComponent implements OnInit {
 				this.posts = this.transaction.posts.filter((p) => p.type !== 'fee');
 				this.posts = this.posts.reverse();
 
-				console.log(this.posts);
+				// console.log(this.posts);
 
 				for (const post of this.posts) {
 					this.totalMinusFee += post.ammount;
@@ -156,7 +156,28 @@ export class BtcDashboardComponent implements OnInit {
 				console.log(res);
 				this.makingBtc = false;
 				if (res.data.makeCryptoSale) {
-					window.location.reload();
+					// CREATE TRANSFER
+					this.transactionsService
+						.makeTransfer({
+							fromStore: environment.btc_store_id,
+							toEntity: this.btcForm.value.client,
+							date: this.btcForm.value.date,
+							description: this.btcForm.value.from_account,
+							amount: this.btcForm.value.ammount_sold,
+							transaction_origin: this.transactionId,
+							toStore: this.btcForm.value.toStore
+						})
+						.subscribe(
+							(res: any) => {
+								console.log(res)
+								// window.location.reload();
+							},
+							(e) => {
+								console.error(e);
+								this.makingTransfer = false;
+								this.msg.error('Could not perform transfer', 'Error');
+							}
+						);
 				} else {
 					console.error(res);
 					this.msg.error('Could not make sale', 'Error!');
@@ -190,7 +211,28 @@ export class BtcDashboardComponent implements OnInit {
 				console.log(res);
 				this.makingOther = false;
 				if (res.data.makeCryptoSale) {
-					window.location.reload();
+					// CREATE TRANSFER
+					this.transactionsService
+						.makeTransfer({
+							fromStore: environment.btc_store_id,
+							toEntity: this.otherForm.value.client,
+							date: this.otherForm.value.date,
+							description: this.otherForm.value.from_account,
+							amount: this.otherForm.value.ammount_sold,
+							transaction_origin: this.transactionId,
+							toStore: this.otherForm.value.toStore
+						})
+						.subscribe(
+							(res: any) => {
+								console.log(res)
+								// window.location.reload();
+							},
+							(e) => {
+								console.error(e);
+								this.makingTransfer = false;
+								this.msg.error('Could not perform transfer', 'Error');
+							}
+						);
 				} else {
 					console.error(res);
 					this.msg.error('Could not make sale', 'Error!');
@@ -262,8 +304,6 @@ export class BtcDashboardComponent implements OnInit {
 	}
 
 	onBtcFormUpdate() {
-		console.log('on BTC update');
-
 		const form = this.btcForm.value;
 		const total = form.crypto_ammount * (form.price_current || 1);
 		const conv_fee = (form.conversion_fee / 100) * total;
@@ -274,8 +314,6 @@ export class BtcDashboardComponent implements OnInit {
 	}
 
 	onOtherFormUpdate() {
-		console.log('on Other update');
-
 		const form = this.otherForm.value;
 		const total = form.crypto_ammount;
 		const conv_fee = (form.conversion_fee / 100) * total;

@@ -15,7 +15,7 @@ const userMany = gql`
 				name
 				_id
 			}
-			stores {
+			rstores {
 				_id
 				name
 			}
@@ -63,7 +63,7 @@ export class UserService {
 					name:"${user.name}"
 					email:"${user.email}"
 					role:${user.role}
-					stores:${JSON.stringify(user.stores)}
+					stores:${JSON.stringify(user.rstores)}
 					confirmed:${user.confirmed}
 					telegram:{
 					id:${user.telegramId}
@@ -79,7 +79,7 @@ export class UserService {
 						id
 						name
 					}
-					stores{
+					rstores{
 						_id
 						name
 					}
