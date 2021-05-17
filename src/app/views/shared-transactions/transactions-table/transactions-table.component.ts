@@ -213,13 +213,28 @@ export class TransactionsTableComponent implements OnInit {
 	}
 
 	markApprovedPlusPaid(transaction: Transaction) {
-		if (transaction.status === 'Open') {
-			this.transactionsService.completeTransaction(transaction._id).subscribe(
+		if (transaction.status === 'Open' || transaction.status === 'Closed') {
+			let newWithdraw = {
+				storeId: transaction.toStore._id,
+				date: new Date().toISOString(),
+				description: 'Crypto withdraw',
+				amount: transaction.amount_in,
+				clientId: transaction.client._id 
+			}
+
+			this.transactionsService.makeWithdraw(newWithdraw).subscribe(
 				(res: any) => {
-					console.log(res);
-					if (res.data.closeTransaction) {
-						this.msg.success('Transaction approved successfully', 'Success!');
-						this.updateTransactions();
+					if (res.data.makeWithdraw) {
+						this.msg.success('Withdraw created successfully', 'Success!');
+						this.transactionsService.withdrawTransaction(transaction._id).subscribe(
+							(res: any) => {
+								if(res.data.withdrawTransaction){
+									this.msg.success('Status updated successfully', 'Success!');
+									this.updateTransactions()
+								}
+							}
+						)
+
 					}
 				},
 				(e) => {

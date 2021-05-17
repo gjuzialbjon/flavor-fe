@@ -386,7 +386,6 @@ export class TransactionsService {
 	}
 
 	makeDeposit(deposit: any) {
-		let hasCurrency = !!deposit.currency ? `currency: "${deposit.currency}"` : '';
 		let hasFee = !!deposit.fee ? `fee: ${deposit.fee}` : '';
 		let hasClient = !!deposit.clientId ? `clientId: "${deposit.clientId}"` : '';
 
@@ -400,7 +399,6 @@ export class TransactionsService {
             amount: ${deposit.amount}
             ${hasClient}
             ${hasFee}
-            ${hasCurrency}
           ) ${transactionOne}
         }
       `,
@@ -408,7 +406,6 @@ export class TransactionsService {
 	}
 
 	makeWithdraw(deposit: any) {
-		let hasCurrency = !!deposit.currency ? `currency: "${deposit.currency}"` : '';
 		let hasFee = !!deposit.fee ? `fee: ${deposit.fee}` : '';
 		let hasClient = !!deposit.clientId ? `clientId: "${deposit.clientId}"` : '';
 
@@ -422,7 +419,6 @@ export class TransactionsService {
             amount: ${deposit.amount}
             ${hasClient}
             ${hasFee}
-            ${hasCurrency}
           ) ${transactionOne}
         }
       `,
@@ -516,6 +512,16 @@ export class TransactionsService {
 		return this.apollo.mutate({
 			mutation: gql`mutation{
         closeTransaction(
+          transaction:"${transactionId}"
+          )${transactionOne}
+      }`,
+		});
+	}
+
+	withdrawTransaction(transactionId: string) {
+		return this.apollo.mutate({
+			mutation: gql`mutation{
+        withdrawTransaction(
           transaction:"${transactionId}"
           )${transactionOne}
       }`,

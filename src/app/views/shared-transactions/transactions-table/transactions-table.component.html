@@ -274,7 +274,8 @@
 									nbButton
 									*ngIf="
 										transaction.store._id === '603d48daeab0d70008bbc19f' &&
-										transaction.client
+										transaction.client &&
+										transaction.status !== 'Withdrawn'
 									"
 									(click)="markApprovedPlusPaid(transaction)"
 									title="Approved + Paid"
