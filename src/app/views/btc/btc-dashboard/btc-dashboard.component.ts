@@ -170,7 +170,7 @@ export class BtcDashboardComponent implements OnInit {
 						.subscribe(
 							(res: any) => {
 								console.log(res)
-								// window.location.reload();
+								window.location.reload();
 							},
 							(e) => {
 								console.error(e);
@@ -225,7 +225,7 @@ export class BtcDashboardComponent implements OnInit {
 						.subscribe(
 							(res: any) => {
 								console.log(res)
-								// window.location.reload();
+								window.location.reload();
 							},
 							(e) => {
 								console.error(e);
