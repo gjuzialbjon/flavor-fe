@@ -139,6 +139,8 @@ export class TransactionsTableComponent implements OnInit {
 					allTransactions = [...allTransactions, ...store.transactions];
 				}
 
+				allTransactions = allTransactions.filter(val => val.type !== "crypto" )
+
 				for (const t of allTransactions) {
 					this.transactions.push(t);
 				}
@@ -172,6 +174,8 @@ export class TransactionsTableComponent implements OnInit {
 					for (const store of stores) {
 						allTransactions = [...allTransactions, ...store.transactions];
 					}
+
+					allTransactions = allTransactions.filter(val => val.type !== "crypto" )
 
 					for (const t of allTransactions) {
 						this.transactions.push(t);

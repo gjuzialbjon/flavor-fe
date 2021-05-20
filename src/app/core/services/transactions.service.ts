@@ -177,9 +177,8 @@ export class TransactionsService {
 
 	// QUERIES
 	getTransactions(storeId?: string, clientId?: string) {
-		let storeFilter = !!storeId ? `in:["${storeId}"]` : `nin:["${environment.btc_store_id}"]`;
+		let storeFilter = !!storeId ? `in:["${storeId}"]` : ``;
 		let clientFilter = !!clientId ? `client: "${clientId}"` : '';
-		let tStoreFilter = !!storeId ? `store: "${storeId}"` : '';
 
 		return this.apollo.query({
 			query: gql`
