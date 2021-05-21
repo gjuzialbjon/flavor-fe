@@ -231,7 +231,7 @@ export class TransactionsTableComponent implements OnInit {
 	}
 
 	markApprovedPlusPaid(transaction: Transaction) {
-		console.log(transaction)
+		// console.log(transaction)
 		if (!!transaction.toStore) {
 			if (!!transaction.client) {
 				if (transaction.status === 'Open' || transaction.status === 'Closed') {
