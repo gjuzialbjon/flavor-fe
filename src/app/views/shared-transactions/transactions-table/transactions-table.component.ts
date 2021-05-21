@@ -136,10 +136,12 @@ export class TransactionsTableComponent implements OnInit {
 				let stores = JSON.parse(JSON.stringify(res.data.Me.stores)) as Store[];
 
 				for (const store of stores) {
-					allTransactions = [...allTransactions, ...store.transactions];
+					if (store.transactions) {
+						allTransactions = [...allTransactions, ...store.transactions];
+					}
 				}
 
-				allTransactions = allTransactions.filter(val => val.type !== "crypto" )
+				allTransactions = allTransactions.filter((val) => val.type !== 'crypto');
 
 				for (const t of allTransactions) {
 					this.transactions.push(t);
@@ -172,10 +174,12 @@ export class TransactionsTableComponent implements OnInit {
 					let stores = JSON.parse(JSON.stringify(res.data.Me.stores)) as Store[];
 
 					for (const store of stores) {
-						allTransactions = [...allTransactions, ...store.transactions];
+						if (store.transactions) {
+							allTransactions = [...allTransactions, ...store.transactions];
+						}
 					}
 
-					allTransactions = allTransactions.filter(val => val.type !== "crypto" )
+					allTransactions = allTransactions.filter((val) => val.type !== 'crypto');
 
 					for (const t of allTransactions) {
 						this.transactions.push(t);
@@ -223,22 +227,19 @@ export class TransactionsTableComponent implements OnInit {
 				date: new Date().toISOString(),
 				description: 'Crypto withdraw',
 				amount: transaction.amount_in,
-				clientId: transaction.client._id 
-			}
+				clientId: transaction.client._id,
+			};
 
 			this.transactionsService.makeWithdraw(newWithdraw).subscribe(
 				(res: any) => {
 					if (res.data.makeWithdraw) {
 						this.msg.success('Withdraw created successfully', 'Success!');
-						this.transactionsService.withdrawTransaction(transaction._id).subscribe(
-							(res: any) => {
-								if(res.data.withdrawTransaction){
-									this.msg.success('Status updated successfully', 'Success!');
-									this.updateTransactions()
-								}
+						this.transactionsService.withdrawTransaction(transaction._id).subscribe((res: any) => {
+							if (res.data.withdrawTransaction) {
+								this.msg.success('Status updated successfully', 'Success!');
+								this.updateTransactions();
 							}
-						)
-
+						});
 					}
 				},
 				(e) => {
