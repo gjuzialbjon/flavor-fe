@@ -130,7 +130,7 @@ export class TransactionsTableComponent implements OnInit {
 	getTransactions() {
 		this.transactionsService.getTransactions(this.storeId, this.clientId).subscribe(
 			(res: any) => {
-				console.log(res);
+				// console.log(res);
 				this.transactions = [];
 				let allTransactions: any[] = [];
 				let stores = JSON.parse(JSON.stringify(res.data.Me.stores)) as Store[];
@@ -142,6 +142,10 @@ export class TransactionsTableComponent implements OnInit {
 				}
 
 				allTransactions = allTransactions.filter((val) => val.type !== 'crypto');
+				allTransactions = Array.from(new Set(allTransactions.map((a) => a._id))).map((_id) => {
+					return allTransactions.find((a) => a._id === _id);
+				});
+				console.log(allTransactions);
 
 				for (const t of allTransactions) {
 					this.transactions.push(t);
@@ -180,6 +184,11 @@ export class TransactionsTableComponent implements OnInit {
 					}
 
 					allTransactions = allTransactions.filter((val) => val.type !== 'crypto');
+					allTransactions = Array.from(new Set(allTransactions.map((a) => a._id))).map((_id) => {
+						return allTransactions.find((a) => a._id === _id);
+					});
+
+					console.log(allTransactions);
 
 					for (const t of allTransactions) {
 						this.transactions.push(t);
@@ -195,6 +204,7 @@ export class TransactionsTableComponent implements OnInit {
 				});
 				this.loadingTransactions = false;
 				this.chRef.detectChanges();
+				this.onTransactionUpdate.emit();
 			},
 			(e) => {
 				this.loadingTransactions = false;
@@ -221,32 +231,41 @@ export class TransactionsTableComponent implements OnInit {
 	}
 
 	markApprovedPlusPaid(transaction: Transaction) {
-		if (transaction.status === 'Open' || transaction.status === 'Closed') {
-			let newWithdraw = {
-				storeId: transaction.toStore._id,
-				date: new Date().toISOString(),
-				description: 'Crypto withdraw',
-				amount: transaction.amount_in,
-				clientId: transaction.client._id,
-			};
+		console.log(transaction)
+		if (!!transaction.toStore) {
+			if (!!transaction.client) {
+				if (transaction.status === 'Open' || transaction.status === 'Closed') {
+					let newWithdraw = {
+						storeId: transaction.toStore._id,
+						date: new Date().toISOString(),
+						description: 'Crypto withdraw',
+						amount: transaction.amount_in,
+						clientId: transaction.client._id,
+					};
 
-			this.transactionsService.makeWithdraw(newWithdraw).subscribe(
-				(res: any) => {
-					if (res.data.makeWithdraw) {
-						this.msg.success('Withdraw created successfully', 'Success!');
-						this.transactionsService.withdrawTransaction(transaction._id).subscribe((res: any) => {
-							if (res.data.withdrawTransaction) {
-								this.msg.success('Status updated successfully', 'Success!');
-								this.updateTransactions();
+					this.transactionsService.makeWithdraw(newWithdraw).subscribe(
+						(res: any) => {
+							if (res.data.makeWithdraw) {
+								this.msg.success('Withdraw created successfully', 'Success!');
+								this.transactionsService.withdrawTransaction(transaction._id).subscribe((res: any) => {
+									if (res.data.withdrawTransaction) {
+										this.msg.success('Status updated successfully', 'Success!');
+										this.updateTransactions();
+									}
+								});
 							}
-						});
-					}
-				},
-				(e) => {
-					console.error(e);
-					this.msg.error('Could not approve transaction', 'Error!');
+						},
+						(e) => {
+							console.error(e);
+							this.msg.error('Could not approve transaction', 'Error!');
+						}
+					);
 				}
-			);
+			} else {
+				console.error('No client selected for this transfer');
+			}
+		} else {
+			console.error('No store selected for this transfer');
 		}
 	}
 
