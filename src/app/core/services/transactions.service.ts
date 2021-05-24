@@ -192,14 +192,8 @@ export class TransactionsService {
             }
           }){
             _id
-            transactions(filter:{
-              _operators:{
-                type:{
-                  nin: crypto
-                }
-              }
-              ${clientFilter}
-            })${transactionOne}
+            transactions 
+              ${transactionOne}
           }
         }
       }

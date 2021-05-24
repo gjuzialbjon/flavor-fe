@@ -181,16 +181,16 @@
 								[attr.data-sort]="transaction.amount_in"
 								(click)="openEditTransaction(transactionDialog, transaction)"
 							>
-								{{ transaction.amount_in | currency: transaction.currency?.symbol }}
+								{{ transaction.amount_in | currency: 'EUR' }}
 							</td>
 							<td
 								[attr.data-sort]="transaction.amount_out"
 								(click)="openEditTransaction(transactionDialog, transaction)"
 							>
-								{{ transaction.amount_out | currency: transaction.currency?.symbol }}
+								{{ transaction.amount_out | currency: 'EUR' }}
 							</td>
 							<td [attr.data-sort]="transaction.revenue" (click)="openEditTransaction(transactionDialog, transaction)">
-								{{ transaction.revenue | currency: transaction.currency?.symbol }}
+								{{ transaction.revenue | currency: 'EUR' }}
 							</td>
 							<td
 								class="text-capitalize"
@@ -311,7 +311,7 @@
 				{{ transaction.description }}</span
 			>
 			<span class="">
-				{{ transaction.status === 'Open' ? 'Pending' : 'Completed' }}
+				{{ transaction.status | uppercase }}
 			</span>
 			<span class="mx-4">
 				{{ transaction.createdAt | date: 'MMM d, y HH:mm' }}
@@ -367,7 +367,7 @@
 									{{ post.details }}
 								</td>
 								<td>{{ post.date | date: 'MMM d, y HH:mm' }}</td>
-								<td>{{ post.ammount | currency: post.currency.symbol }}</td>
+								<td>{{ post.ammount | currency: 'EUR' }}</td>
 								<td class="text-capitalize">{{ post.type }}</td>
 								<td *ngIf="!isInClient">{{ post.user?.name }}</td>
 								<td *ngIf="isAdmin" (click)="openEditPost(postContent, post)">

@@ -83,7 +83,7 @@ export function createApollo(httpLink: HttpLink) {
 
 	const defaultOptions = {
 		watchQuery: {
-			fetchPolicy: 'cache-and-network',
+			fetchPolicy: 'network-only',
 			errorPolicy: 'all',
 		},
 		query: {

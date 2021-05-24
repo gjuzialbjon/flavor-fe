@@ -130,7 +130,7 @@ export class TransactionsTableComponent implements OnInit {
 	getTransactions() {
 		this.transactionsService.getTransactions(this.storeId, this.clientId).subscribe(
 			(res: any) => {
-				// console.log(res);
+				console.log(res);
 				this.transactions = [];
 				let allTransactions: any[] = [];
 				let stores = JSON.parse(JSON.stringify(res.data.Me.stores)) as Store[];
