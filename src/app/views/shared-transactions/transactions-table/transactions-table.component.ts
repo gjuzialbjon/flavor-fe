@@ -145,7 +145,8 @@ export class TransactionsTableComponent implements OnInit {
 				allTransactions = Array.from(new Set(allTransactions.map((a) => a._id))).map((_id) => {
 					return allTransactions.find((a) => a._id === _id);
 				});
-				console.log(allTransactions);
+				
+				// console.log(allTransactions);
 
 				for (const t of allTransactions) {
 					this.transactions.push(t);

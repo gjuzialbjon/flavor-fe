@@ -58,7 +58,7 @@ export class BtcComponent implements OnInit {
 				}
 			}
 
-			// console.log(this.transactions)
+			console.log(this.transactions)
 
 			this.dtTrigger.next()
 			this.chRef.detectChanges()
@@ -72,21 +72,31 @@ export class BtcComponent implements OnInit {
 			return
 		}
 
+		for (const transaction of this.transactions) {
+			console.log(transaction)
+		}
+
 		this.makingTrade = true
 		this.transactionsService.createCryptoTransaction(this.cryptoForm.value).subscribe(
 			(res: any) => {
 				console.log(res)
 
-				this.initForm()
-				this.makingTrade = false
+				if(res.data.createCryptoTransaction) {
+					this.initForm()	
+					// NEEDS TO ENTER TRANSACTION	
+					this.router.navigateByUrl('btc/' + res.data.createCryptoTransaction._id)
+				} else {
+					this.msg.error('Could not create transaction. Maybe there exists a transaction for this date!!!', 'Error!')
+				}
 
-				// NEEDS TO ENTER TRANSACTION	
-				this.router.navigateByUrl('btc/' + res.data.createCryptoTransaction._id)
+				this.makingTrade = false
+				this.chRef.detectChanges()
 			},
 			(e: any) => {
 				console.error(e)
 				this.makingTrade = false
-				this.msg.error('Sorry, its not your fault, its ours. Please contact page developers :)', 'Error!')
+				this.chRef.detectChanges()
+				this.msg.error('Could not create transaction. Maybe there exists a transaction for this date!!!', 'Error!')
 			}
 		)
 	}

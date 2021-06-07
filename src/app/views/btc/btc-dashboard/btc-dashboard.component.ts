@@ -96,8 +96,6 @@ export class BtcDashboardComponent implements OnInit {
 
 		this.transactionsService.getCryptoTransactionById(this.transactionId).subscribe(
 			(res: any) => {
-				// console.log(this.transaction);
-
 				this.transaction = res.data.transactionById;
 				this.defaultConversionFee = this.transaction.default_fee || 0;
 				this.btcForm.get('conversion_fee')?.setValue(this.defaultConversionFee);
@@ -106,7 +104,7 @@ export class BtcDashboardComponent implements OnInit {
 				this.posts = this.transaction.posts.filter((p) => p.type !== 'fee');
 				this.posts = this.posts.reverse();
 
-				// console.log(this.posts);
+				console.log(this.posts);
 
 				for (const post of this.posts) {
 					this.totalMinusFee += post.ammount;

@@ -228,7 +228,7 @@
 									</span>
 								</span>
 
-								<span *ngIf="transaction.toStore && transaction.store._id !== '603d48daeab0d70008bbc19f'">
+								<span *ngIf="transaction.toStore">
 									<span *ngIf="isAdminOrAgent">
 										{{ transaction.toStore?.name }}
 									</span>
