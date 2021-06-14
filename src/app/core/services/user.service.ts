@@ -75,14 +75,14 @@ export class UserService {
 					name
 					role
 					confirmed
-					telegram{
+					telegram {
 						id
 						name
 					}
-					rstores{
+					rstores {
 						_id
 						name
-					}
+					  }
 					}
 				}
 			}

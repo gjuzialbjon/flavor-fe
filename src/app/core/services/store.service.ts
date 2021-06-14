@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core'
-import { Apollo, gql } from 'apollo-angular'
+import { Injectable } from '@angular/core';
+import { Apollo, gql } from 'apollo-angular';
 
 const storeOne = gql`
-	query($_id: MongoID!) {
+	query ($_id: MongoID!) {
 		storeById(_id: $_id) {
 			_id
 			name
@@ -13,12 +13,12 @@ const storeOne = gql`
 			createdAt
 		}
 	}
-`
+`;
 
 const myStores = gql`
 	{
 		Me {
-			stores(filter: { _operators: { _id: { nin: ["603d48daeab0d70008bbc19f"] } } }) {
+			rstores {
 				_id
 				name
 				balance
@@ -26,7 +26,7 @@ const myStores = gql`
 			}
 		}
 	}
-`
+`;
 
 @Injectable({
 	providedIn: 'root',
@@ -37,7 +37,7 @@ export class StoreService {
 	getMyStores() {
 		return this.apollo.query({
 			query: myStores,
-		})
+		});
 	}
 
 	getStoreById(storeId: string) {
@@ -46,29 +46,27 @@ export class StoreService {
 			variables: {
 				_id: storeId,
 			},
-		})
+		});
 	}
 
 	createStore(store: any) {
-		var currency = store.default_currency ? `currencyID:"${store.default_currency}"` : '' // ADD CURRENCY OR NOT
-
 		var mut = ` mutation{
-      createStore(
-        name:"${store.name}",
-        location:"${store.location}",
-        description:"${store.description}"
-        ${currency}){
-          name
-          location
-          description
-      }
-    }`
+			createStore(
+				name:"${store.name}",
+				location:"${store.location}",
+				description:""
+				){
+				name
+				location
+				description
+			}
+		}`;
 
 		// console.log(mut)
 		return this.apollo.mutate({
 			mutation: gql`
 				${mut}
 			`,
-		})
+		});
 	}
 }

@@ -363,7 +363,7 @@ export class BtcDashboardComponent implements OnInit {
 		this.transactionsService.getCryptoTransfers(this.transactionId).subscribe(
 			(res: any) => {
 				// console.log(res);
-				this.transfers = JSON.parse(JSON.stringify(res.data.Me.stores[0].transactions));
+				this.transfers = JSON.parse(JSON.stringify(res.data.transactionMany));
 				this.transfers = this.transfers.reverse();
 
 				this.remaining = this.totalMinusFee;

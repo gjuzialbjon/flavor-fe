@@ -133,7 +133,7 @@ export class TransactionsTableComponent implements OnInit {
 				console.log(res);
 				this.transactions = [];
 				let allTransactions: any[] = [];
-				let stores = JSON.parse(JSON.stringify(res.data.Me.stores)) as Store[];
+				let stores = JSON.parse(JSON.stringify(res.data.Me.rstores)) as Store[];
 
 				for (const store of stores) {
 					if (store.transactions) {
@@ -142,11 +142,11 @@ export class TransactionsTableComponent implements OnInit {
 				}
 
 				allTransactions = allTransactions.filter((val) => val.type !== 'crypto');
-				allTransactions = Array.from(new Set(allTransactions.map((a) => a._id))).map((_id) => {
-					return allTransactions.find((a) => a._id === _id);
-				});
+				// allTransactions = Array.from(new Set(allTransactions.map((a) => a._id))).map((_id) => {
+				// 	return allTransactions.find((a) => a._id === _id);
+				// });
 				
-				// console.log(allTransactions);
+				console.log(allTransactions);
 
 				for (const t of allTransactions) {
 					this.transactions.push(t);
@@ -176,7 +176,7 @@ export class TransactionsTableComponent implements OnInit {
 
 					this.transactions = [];
 					let allTransactions: any[] = [];
-					let stores = JSON.parse(JSON.stringify(res.data.Me.stores)) as Store[];
+					let stores = JSON.parse(JSON.stringify(res.data.Me.rstores)) as Store[];
 
 					for (const store of stores) {
 						if (store.transactions) {
@@ -185,9 +185,9 @@ export class TransactionsTableComponent implements OnInit {
 					}
 
 					allTransactions = allTransactions.filter((val) => val.type !== 'crypto');
-					allTransactions = Array.from(new Set(allTransactions.map((a) => a._id))).map((_id) => {
-						return allTransactions.find((a) => a._id === _id);
-					});
+					// allTransactions = Array.from(new Set(allTransactions.map((a) => a._id))).map((_id) => {
+					// 	return allTransactions.find((a) => a._id === _id);
+					// });
 
 					console.log(allTransactions);
 

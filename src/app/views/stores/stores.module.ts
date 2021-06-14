@@ -21,7 +21,6 @@ import { StoreCardComponent } from './store-card/store-card.component'
 import { DataTablesModule } from 'angular-datatables'
 import { SharedTransactionsModule } from '../shared-transactions/shared-transactions.module'
 import { ClientCardComponent } from './client-card/client-card.component'
-import { TransactionsModule } from '../transactions/transactions.module'
 
 @NgModule({
 	declarations: [StoresComponent, StoreDashboardComponent, StoreCardComponent, ClientCardComponent],

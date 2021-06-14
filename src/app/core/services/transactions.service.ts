@@ -154,7 +154,7 @@ const vendorMany = gql`
 const myStores = gql`
 	{
 		Me {
-			stores {
+			rstores {
 				_id
 				name
 				balance
@@ -184,13 +184,7 @@ export class TransactionsService {
 			query: gql`
       {
         Me{
-          stores(filter:{
-            _operators:{
-              _id:{
-                ${storeFilter}
-              }
-            }
-          }){
+          rstores{
             _id
             transactions 
               ${transactionOne}
@@ -205,18 +199,9 @@ export class TransactionsService {
 		return this.apollo.query({
 			query: gql`
       {
-        Me{
-          stores(filter:{
-              _operators:{
-                _id:{
-                  in:["${environment.btc_store_id}"]
-                }
-              }
-            }){
-            transactions(filter: { type: crypto }) 
-            ${transactionOne}
-          }
-        }
+        myTransactions(
+          esclude_types:["transfer","purchase","loan","withdraw","deposit","sell","fee","trade"])
+          ${transactionOne}
       }
       `,
 		});
@@ -233,20 +218,11 @@ export class TransactionsService {
 	getCryptoTransfers(transactionId: string) {
 		return this.apollo.query({
 			query: gql`
-        {
-          Me {
-            stores(filter:{
-              _operators:{
-                _id:{
-                  in:["${environment.btc_store_id}"]
-                }
-              }
-            }) {
-              transactions(filter: { type: transfer  cryptoOrigin:"${transactionId}" }) ${transactionOne}
-            }
-          }
-        }
-      `,
+				{
+					transactionMany(filter: { cryptoOrigin: "${transactionId}" }) 
+					${transactionOne}
+				}
+			`,
 		});
 	}
 
@@ -285,7 +261,7 @@ export class TransactionsService {
 			})
 			.toPromise()
 			.then((res: any) => {
-				this.stores = res.data.Me.stores;
+				this.stores = res.data.Me.rstores;
 			})
 			.catch((e) => {
 				console.error(e);

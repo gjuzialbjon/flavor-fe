@@ -45,14 +45,14 @@ export class StoresComponent implements OnInit {
 		this.isAdmin = this.authService.user.role === 'admin'
 		this.getStores()
 		this.getFavoriteClients()
-		this.getCurrencies()
+		// this.getCurrencies()
 		this.initNewStoreForm()
 	}
 
 	getStores() {
 		this.storeService.getMyStores().subscribe(
 			(res: any) => {
-				this.stores = res.data.Me.stores as Store[]
+				this.stores = res.data.Me.rstores as Store[]
 
 				// IF ADMIN PRIVILEGES ARE REQUIRED FOR CRYPTO STORE MANAGEMENT
 				this.stores = this.stores.filter((store) => store.name !== 'CRYPTO STORE')
@@ -90,16 +90,16 @@ export class StoresComponent implements OnInit {
 		)
 	}
 
-	getCurrencies() {
-		this.currencyService.getCurrencies().subscribe(
-			(res: any) => {
-				this.currencies = res.data.currencyMany as Currency[]
-			},
-			(e) => {
-				console.error(e)
-			}
-		)
-	}
+	// getCurrencies() {
+	// 	this.currencyService.getCurrencies().subscribe(
+	// 		(res: any) => {
+	// 			this.currencies = res.data.currencyMany as Currency[]
+	// 		},
+	// 		(e) => {
+	// 			console.error(e)
+	// 		}
+	// 	)
+	// }
 
 	openNewStoreModal(content: TemplateRef<any>) {
 		this.initNewStoreForm()
@@ -133,7 +133,7 @@ export class StoresComponent implements OnInit {
 		this.newStoreForm = this.fb.group({
 			name: ['', [Validators.required]],
 			location: ['', []],
-			description: ['', []],
+			// description: ['', []],
 			default_currency: [null, []],
 		})
 	}

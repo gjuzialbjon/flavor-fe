@@ -23,6 +23,7 @@ export class BtcComponent implements OnInit {
 	loadingTransactions = false
 
 	makingTrade = false
+	cryptoForm!: FormGroup
 
 	constructor(
 		private configsService: ConfigsService,
@@ -40,25 +41,14 @@ export class BtcComponent implements OnInit {
 		this.dtOptions.order = [0,'desc']
 	}
 
-	cryptoForm!: FormGroup
-
 	ngOnInit() {
-		this.getCryptoTransactions()
 		this.initForm()
+		this.getCryptoTransactions()
 	}
 
 	getCryptoTransactions() {
 		this.transactionsService.getCryptoTransactions().subscribe((res: any) => {
-			console.log(res)
-			let stores = res.data.Me.stores
-			this.transactions = []
-			for (const store of stores) {
-				for (const t of store.transactions) {
-					this.transactions.push(t)
-				}
-			}
-
-			console.log(this.transactions)
+			this.transactions = res.data.myTransactions
 
 			this.dtTrigger.next()
 			this.chRef.detectChanges()

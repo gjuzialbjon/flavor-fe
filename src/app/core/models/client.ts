@@ -18,7 +18,7 @@ export interface Client {
 	favorite: boolean
 	createdAt: Date
 	user: User
-	stores: [Store]
+	rstores: [Store]
 	accounts: [Account]
 	_id: string
 }

@@ -164,9 +164,7 @@ export class AuthenticationService {
 			query: gql`
 			{
 				userById(_id:"${this.user._id}"){
-				  stores(filter:{
-					_id:"xczx"
-				  }){
+				  rstores{
 					_id
 				  }
 				}
