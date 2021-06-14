@@ -182,16 +182,13 @@ export class TransactionsService {
 
 		return this.apollo.query({
 			query: gql`
-      {
-        Me{
-          rstores{
-            _id
-            transactions 
-              ${transactionOne}
-          }
-        }
-      }
-      `,
+				{
+					myTransactions(
+						esclude_types: ["crypto", "purchase", "sell", "fee"]
+					) 
+					${transactionOne}
+				}
+			`,
 		});
 	}
 
@@ -563,4 +560,13 @@ export class TransactionsService {
       `,
 		});
 	}
+
+  unflagTransaction(transactionId: string) {
+    return this.apollo.mutate({
+      mutation: gql`
+      mutation {
+        unFlagTransaction(transactionId:"${transactionId}")
+      }`
+    })
+  }
 }

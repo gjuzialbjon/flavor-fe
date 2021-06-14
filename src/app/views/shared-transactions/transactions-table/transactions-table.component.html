@@ -69,73 +69,6 @@
 		</div>
 		<!-- END MAKING A TRANSACTION -->
 
-		<!-- <div class="row mt-3 mb-md-n5 mb-0">
-      <div class="col-12 text-center align-items-center">
-        <nb-select
-          *ngIf="!isInStore"
-          placeholder="Store"
-          [formControl]="storeFormControl"
-          filled
-          shape="round"
-          size="small"
-          status="info"
-          class="mr-4 mb-2"
-          (selectedChange)="changedFilters()"
-        >
-          <nb-option value="all">Store</nb-option>
-          <nb-option *ngFor="let store of stores" [value]="store._id">{{
-            store.name
-          }}</nb-option>
-        </nb-select>
-        <nb-select
-          placeholder="Type"
-          [formControl]="typeFormControl"
-          filled
-          shape="round"
-          size="small"
-          status="info"
-          class="mr-4 mb-2"
-          (selectedChange)="changedFilters()"
-        >
-          <nb-option value="all">Type</nb-option>
-          <nb-option *ngFor="let type of transactionTypes" [value]="type._id">{{
-            type.name
-          }}</nb-option>
-        </nb-select>
-        <span
-          *ngIf="hasFilters"
-          style="
-            text-decoration: underline;
-            color: rgb(55, 102, 204);
-            cursor: pointer;
-          "
-          (click)="resetFilters(true)"
-          >Reset filters</span
-        >
-        <nb-icon
-          nbSuffix
-          icon="calendar-alt"
-          status="info"
-          class="mt-1"
-          style="cursor: pointer; font-size: 1.4rem"
-          (click)="dateInput.click()"
-        ></nb-icon>
-        <input
-          #dateInput
-          style="width: 0px; padding: 0; border: none"
-          nbInput
-          placeholder="Pick Date"
-          [nbDatepicker]="rangepicker"
-          [formControl]="periodFormControl"
-        />
-        <nb-rangepicker
-          #rangepicker
-          (rangeChange)="[periodFormControl.setValue($event), changedFilters()]"
-          name="periodFormControl"
-        ></nb-rangepicker>
-      </div>
-    </div> -->
-
 		<div class="row pt-2">
 			<div class="col-12">
 				<table [dtTrigger]="$any(dtTrigger)" [dtOptions]="dtOptions" datatable class="table table-hover" width="100%">
@@ -167,7 +100,7 @@
 							}"
 							trackBy="trackByFunction"
 						>
-							<td [attr.data-sort]="transaction.issue ? 'a' : 'b'">
+							<td [attr.data-sort]="transaction.issue ? 'a' : 'b'" (click)="toggleFlag(transaction)">
 								<nb-icon icon="flag" [status]="transaction.issue ? 'danger' : 'basic'"></nb-icon>
 							</td>
 							<td

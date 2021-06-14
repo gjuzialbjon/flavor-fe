@@ -25,14 +25,6 @@ import { StoreService } from 'src/app/core/services/store.service'
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StoreDashboardComponent implements OnInit, OnDestroy {
-	// balances = [
-	//   {
-	//     name: 'DOLLAR',
-	//     amount: 5433,
-	//     symbol: 'USD'
-	//   }
-	// ];
-
 	storeId: string
 	store!: Store
 	loading = false

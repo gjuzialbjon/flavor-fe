@@ -130,32 +130,20 @@ export class TransactionsTableComponent implements OnInit {
 	getTransactions() {
 		this.transactionsService.getTransactions(this.storeId, this.clientId).subscribe(
 			(res: any) => {
-				console.log(res);
-				this.transactions = [];
-				let allTransactions: any[] = [];
-				let stores = JSON.parse(JSON.stringify(res.data.Me.rstores)) as Store[];
+				// console.log(res);
+				this.transactions = JSON.parse(JSON.stringify(res.data.myTransactions)) as Transaction[];
 
-				for (const store of stores) {
-					if (store.transactions) {
-						allTransactions = [...allTransactions, ...store.transactions];
-					}
+				if (this.storeId) {
+					this.transactions = this.transactions.filter((t) => t.store?._id === this.storeId || t.toStore?._id === this.storeId);
 				}
 
-				allTransactions = allTransactions.filter((val) => val.type !== 'crypto');
-				// allTransactions = Array.from(new Set(allTransactions.map((a) => a._id))).map((_id) => {
-				// 	return allTransactions.find((a) => a._id === _id);
-				// });
-				
-				console.log(allTransactions);
-
-				for (const t of allTransactions) {
-					this.transactions.push(t);
+				if (this.clientId) {
+					this.transactions = this.transactions.filter((t) => t.client?._id === this.clientId);
 				}
 
 				this.tableTransactions = JSON.parse(JSON.stringify(this.transactions));
 				this.loadingTransactions = false;
 				this.dtTrigger.next();
-
 				this.chRef.detectChanges();
 			},
 			(e) => {
@@ -174,25 +162,14 @@ export class TransactionsTableComponent implements OnInit {
 					// Destroy the table first
 					dtInstance.destroy();
 
-					this.transactions = [];
-					let allTransactions: any[] = [];
-					let stores = JSON.parse(JSON.stringify(res.data.Me.rstores)) as Store[];
+					this.transactions = JSON.parse(JSON.stringify(res.data.myTransactions)) as Transaction[];
 
-					for (const store of stores) {
-						if (store.transactions) {
-							allTransactions = [...allTransactions, ...store.transactions];
-						}
+					if (this.storeId) {
+						this.transactions = this.transactions.filter((t) => t.store?._id === this.storeId || t.toStore?._id === this.storeId);
 					}
 
-					allTransactions = allTransactions.filter((val) => val.type !== 'crypto');
-					// allTransactions = Array.from(new Set(allTransactions.map((a) => a._id))).map((_id) => {
-					// 	return allTransactions.find((a) => a._id === _id);
-					// });
-
-					console.log(allTransactions);
-
-					for (const t of allTransactions) {
-						this.transactions.push(t);
+					if (this.clientId) {
+						this.transactions = this.transactions.filter((t) => t.client?._id === this.clientId);
 					}
 
 					this.tableTransactions = JSON.parse(JSON.stringify(this.transactions));
@@ -205,7 +182,7 @@ export class TransactionsTableComponent implements OnInit {
 				});
 				this.loadingTransactions = false;
 				this.chRef.detectChanges();
-				this.onTransactionUpdate.emit();
+				this.onTransactionUpdate.next();
 			},
 			(e) => {
 				this.loadingTransactions = false;
@@ -407,7 +384,7 @@ export class TransactionsTableComponent implements OnInit {
 				console.log(res);
 				this.transaction.comments.push(res.data.commentCreateOne.record);
 				this.commentFormControl.setValue('');
-				this.chRef.detectChanges();
+				this.updateTransactions()
 			},
 			(e) => {
 				console.error(e);
@@ -479,6 +456,25 @@ export class TransactionsTableComponent implements OnInit {
 			this.rerenderFilteredTransactions(this.transactions);
 		}
 	}
+
+	toggleFlag(transaction: Transaction) {
+		console.log(transaction)
+		this.transaction = transaction
+
+		if(transaction.issue) {
+			this.transactionsService.unflagTransaction(transaction._id).subscribe((res:any) => {
+				this.updateTransactions()
+			}, e => {
+				console.error('Could not unflag transaction')
+				this.msg.error('Could not unflag transaction', 'Error!')
+			})
+		} else {
+			this.commentFormControl.setValue('Issue')
+			this.addComment('Open')
+		}
+
+	}
+
 
 	get p() {
 		return this.postForm.controls;
