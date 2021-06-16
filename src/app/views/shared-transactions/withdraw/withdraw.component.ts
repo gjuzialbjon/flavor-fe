@@ -55,7 +55,12 @@ export class WithdrawComponent implements OnInit {
 		this.transactionsService.makeWithdraw(this.transactionForm.value).subscribe(
 			(res: any) => {
 				console.log(res)
-				this.onTransactionCreate.emit(JSON.parse(JSON.stringify(res.data.makeWithdraw)))
+				if(this.transactionForm.value.clientId) {
+					this.onTransactionCreate.emit(JSON.parse(JSON.stringify(res.data.makeWithdrawFromClient)))
+				} else {
+					this.onTransactionCreate.emit(JSON.parse(JSON.stringify(res.data.makeWithdraw)))
+				}
+
 				this.initForm()
 				this.chRef.detectChanges()
 			},

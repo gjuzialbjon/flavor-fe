@@ -378,7 +378,7 @@ export class TransactionsService {
 		return this.apollo.mutate({
 			mutation: gql`
         mutation {
-          makeWithdraw(
+          ${!!hasClient ? 'makeWithdrawFromClient' : 'makeWithdraw'}(
             storeId: "${deposit.storeId}"
             date: "${deposit.date}"
             description: "${deposit.description}"
