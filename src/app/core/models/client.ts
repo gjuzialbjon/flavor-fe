@@ -3,6 +3,7 @@ import { User } from './user'
 import { Account } from './account'
 
 export interface Client {
+	role: string
 	name: string
 	surname: string
 	location: string

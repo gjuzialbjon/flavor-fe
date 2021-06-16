@@ -5,6 +5,7 @@ import { User } from './user'
 import { Transaction } from './transaction'
 
 export interface Store {
+	role: string
 	name: string
 	location: string
 	description: string

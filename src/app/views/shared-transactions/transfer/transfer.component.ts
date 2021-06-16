@@ -37,7 +37,15 @@ export class TransferComponent implements OnInit {
 		this.initForm()
 
 		this.stores = await this.transactionsService.getStores()
+		this.stores = JSON.parse(JSON.stringify(this.stores))
+		for (const store of this.stores) {
+			store.role = 'Stores'
+		}
 		this.clients = await this.transactionsService.getClients()
+		this.clients = JSON.parse(JSON.stringify(this.clients))
+		for (const client of this.clients) {
+			client.role = 'Clients'
+		}
 		this.entities = [...this.stores, ...this.clients]
 		this.chRef.detectChanges()
 	}

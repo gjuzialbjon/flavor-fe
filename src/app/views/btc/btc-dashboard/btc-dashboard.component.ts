@@ -81,8 +81,16 @@ export class BtcDashboardComponent implements OnInit {
 		this.initOtherForm();
 		this.initTransferForm();
 		this.getTransactionDetails(true);
-		this.clients = await this.transactionsService.getClients();
-		this.stores = await this.transactionsService.getStores();
+		this.stores = await this.transactionsService.getStores()
+		this.stores = JSON.parse(JSON.stringify(this.stores))
+		for (const store of this.stores) {
+			store.role = 'Stores'
+		}
+		this.clients = await this.transactionsService.getClients()
+		this.clients = JSON.parse(JSON.stringify(this.clients))
+		for (const client of this.clients) {
+			client.role = 'Clients'
+		}
 		this.entities = [...this.stores, ...this.clients];
 		this.chRef.detectChanges();
 	}

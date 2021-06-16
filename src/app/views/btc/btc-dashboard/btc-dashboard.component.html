@@ -448,11 +448,19 @@
 						<form [formGroup]="transferForm" class="form-row">
 							<div class="col-md-4 col-sm-6 mb-2">
 								<label class="label">To *</label>
-								<ng-select formControlName="toEntity" class="my-ng-select" placeholder="Select entity...">
-									<ng-option *ngFor="let entity of entities" [value]="entity._id">{{
-										entity.name | uppercase
-									}}</ng-option>
-								</ng-select>
+    <ng-select
+      formControlName="toEntity"
+      class="my-ng-select"
+      placeholder="Select entity..."
+      groupBy="role"
+			[items]="entities"
+			bindLabel="name" 
+			bindValue="_id" 
+    >
+      <ng-template ng-optgroup-tmp let-item="item">
+        {{ item.role || "Unnamed role" }}
+      </ng-template>
+    </ng-select>
 								<small *ngIf="t.toEntity.touched && t.toEntity.errors" class="form-text text-danger"
 									>Please select an entity</small
 								>
