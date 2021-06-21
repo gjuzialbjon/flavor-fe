@@ -195,7 +195,7 @@ export class TransactionsTableComponent implements OnInit {
 	markApproved(transaction: Transaction) {
 		this.transactionsService.completeTransaction(transaction._id).subscribe(
 			(res: any) => {
-				console.log(res);
+				// console.log(res);
 				if (res.data.closeTransaction) {
 					this.msg.success('Transaction approved successfully', 'Success!');
 					this.updateTransactions();
@@ -223,12 +223,14 @@ export class TransactionsTableComponent implements OnInit {
 
 					this.transactionsService.makeWithdraw(newWithdraw).subscribe(
 						(res: any) => {
-							if (res.data.makeWithdraw) {
+							if (res.data.makeWithdrawFromClient) {
 								this.msg.success('Withdraw created successfully', 'Success!');
 								this.transactionsService.withdrawTransaction(transaction._id).subscribe((res: any) => {
 									if (res.data.withdrawTransaction) {
 										this.msg.success('Status updated successfully', 'Success!');
 										this.updateTransactions();
+									} else {
+										console.error('Could not make withdraw')
 									}
 								});
 							}
