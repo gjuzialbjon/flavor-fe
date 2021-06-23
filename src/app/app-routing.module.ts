@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common'
 import { NgModule } from '@angular/core'
 import { Routes, RouterModule } from '@angular/router'
 import { AuthGuard } from './core/guards/auth.guard'
+import { CryptoGuard } from './core/guards/crypto.guard'
 import { BaseComponent } from './theme/base/base.component'
 
 const routes: Routes = [
@@ -39,7 +40,7 @@ const routes: Routes = [
 			{
 				path: 'btc',
 				loadChildren: () => import('./views/btc/btc.module').then((m) => m.BtcModule),
-				canActivate: [AuthGuard],
+				canActivate: [AuthGuard, CryptoGuard],
 				data: {
 					roles: ['admin'],
 					breadcrumb: 'BTC',

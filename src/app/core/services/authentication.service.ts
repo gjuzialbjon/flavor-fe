@@ -169,6 +169,6 @@ export class AuthenticationService {
 				  }
 				}
 			  }`,
-		});
+		}).toPromise()
 	}
 }
