@@ -42,7 +42,7 @@ const routes: Routes = [
 				loadChildren: () => import('./views/btc/btc.module').then((m) => m.BtcModule),
 				canActivate: [AuthGuard, CryptoGuard],
 				data: {
-					roles: ['admin'],
+					roles: ['admin', 'agent'],
 					breadcrumb: 'BTC',
 				},
 			},

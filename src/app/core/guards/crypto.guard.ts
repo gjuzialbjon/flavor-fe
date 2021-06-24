@@ -28,43 +28,6 @@ export class CryptoGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    return new Promise((resolve, reject) => {
-      this.authService
-        .hasCryptoStore()
-        .then((res) => {
-          let userStores = (res as any).data.userById.rstores as Store[];
-          console.log(userStores);
-
-          let hasCrypto = userStores.find(
-            (v) => v._id === environment.btc_store_id
-          );
-          if (!!hasCrypto) {
-            resolve(true);
-          } else {
-            resolve(false);
-            this.returnToOtherPage();
-          }
-        })
-        .catch((e) => {
-          console.error(e);
-          this.returnToOtherPage();
-          resolve(false);
-        });
-    });
-  }
-
-  returnToOtherPage() {
-    if (this.router.url.length < 3) {
-      if (
-        this.authService.user.role === "admin" ||
-        this.authService.user.role === "agent"
-      ) {
-        this.router.navigateByUrl("/stores");
-      } else if (this.authService.user.role === "finance") {
-        this.router.navigateByUrl("/reports");
-      } else {
-        console.error("Unknown role in base component");
-      }
-    }
+    return this.authService.hasCryptoStore();
   }
 }

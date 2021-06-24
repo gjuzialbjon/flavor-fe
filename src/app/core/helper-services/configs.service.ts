@@ -119,15 +119,6 @@ export class ConfigsService {
 					pathMatch: 'prefix',
 				},
 				{
-					title: 'BTC',
-					link: '/btc',
-					icon: {
-						icon: 'btc',
-						pack: 'brand',
-					},
-					pathMatch: 'prefix',
-				},
-				{
 					title: 'Reports',
 					link: '/reports',
 					icon: {

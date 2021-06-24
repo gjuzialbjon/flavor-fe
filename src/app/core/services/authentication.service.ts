@@ -5,7 +5,9 @@ import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { environment } from '@env';
 import { Apollo, gql } from 'apollo-angular';
+import { retry } from 'rxjs/operators';
 import { MessageService } from '../helper-services/message.service';
+import { Store } from '../models/store';
 
 const myData = gql`
 	{
@@ -158,17 +160,16 @@ export class AuthenticationService {
 		});
 	}
 
-	hasCryptoStore() {
-		console.log(this.user, this.username)
-		return this.apollo.query({
-			query: gql`
-			{
-				userById(_id:"${this.user._id}"){
-				  rstores{
-					_id
-				  }
-				}
-			  }`,
-		}).toPromise()
+	hasCryptoStore(): boolean {
+		if(this.user){
+			if(this.user.stores){
+				let store = (this.user.stores as string[]).find(sId => sId === environment.btc_store_id)
+				if(store) {
+					return true
+				} 
+			} 
+		} 
+
+		return false
 	}
 }
