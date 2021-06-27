@@ -22,5 +22,6 @@ export interface Transaction {
 	issue: boolean
 	currency: Currency
 	client: Client
+	post_origin: string
 	_id: string
 }

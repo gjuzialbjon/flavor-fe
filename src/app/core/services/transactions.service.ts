@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Apollo, gql } from 'apollo-angular';
 import { AuthenticationService } from './authentication.service';
-import { environment } from '@env';
 
 const transactionOne = `{
   type
@@ -15,6 +14,7 @@ const transactionOne = `{
   amount_out
   description
   date
+  postOrigin
   user {
     name
   }
@@ -71,6 +71,7 @@ const transactionOneForCryptos = `
   amount_in
   amount_out
   description
+  postOrigin
   user {
     name
   }
@@ -418,6 +419,7 @@ export class TransactionsService {
 		let hasFee = !!transfer.fee ? `fee: ${transfer.fee}` : '';
 		let hasToStore = !!transfer.toStore ? `toStore: "${transfer.toStore}"` : '';
 		let hasTransferOrigin = !!transfer.transfer_origin ? `transaction_origin: "${transfer.transfer_origin}"` : '';
+    let postOrigin = !!transfer.post_origin ? `post_origin: "${transfer.post_origin}"` : ''
 
 		return this.apollo.mutate({
 			mutation: gql`
@@ -432,6 +434,7 @@ export class TransactionsService {
             ${hasCurrency}
             ${hasToStore}
             ${hasTransferOrigin}
+            ${postOrigin}
           ) ${transactionOne}
         }
       `,
@@ -535,6 +538,11 @@ export class TransactionsService {
             ${hasToStore}
           ) {
             createdAt
+            posts{
+              _id
+              date
+              createdAt
+            }
           }
         }
       `,
