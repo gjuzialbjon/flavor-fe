@@ -425,8 +425,8 @@ export class TransactionsService {
       : "";
     let hasFee = !!transfer.fee ? `fee: ${transfer.fee}` : "";
     let hasToStore = !!transfer.toStore ? `toStore: "${transfer.toStore}"` : "";
-    let hasTransferOrigin = !!transfer.transfer_origin
-      ? `transaction_origin: "${transfer.transfer_origin}"`
+    let hasTransferOrigin = !!transfer.transaction_origin
+      ? `transaction_origin: "${transfer.transaction_origin}"`
       : "";
     let postOrigin = !!transfer.post_origin
       ? `post_origin: "${transfer.post_origin}"`

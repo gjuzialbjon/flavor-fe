@@ -255,7 +255,7 @@
                   nbButton
                   *ngIf="
                     transaction.store._id === '603d48daeab0d70008bbc19f' &&
-                    transaction.client
+                    transaction.client && transaction.status === 'Open'
                   "
                   status="danger"
                   style="padding: 0.1rem; "

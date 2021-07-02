@@ -69,6 +69,8 @@ export class BtcDashboardComponent implements OnInit {
     private msg: MessageService
   ) {
     this.transactionId = this.route.snapshot.params.id;
+    console.log(this.transactionId)
+
     this.dtOptions = this.configsService.getBTCDTOptions();
     this.dtOptions2 = this.configsService.getBTCDTOptions();
 
@@ -196,7 +198,7 @@ export class BtcDashboardComponent implements OnInit {
             .subscribe(
               (res: any) => {
                 console.log(res);
-                window.location.reload();
+                // window.location.reload();
               },
               (e) => {
                 console.error(e);
@@ -257,7 +259,7 @@ export class BtcDashboardComponent implements OnInit {
             .subscribe(
               (res: any) => {
                 console.log(res);
-                window.location.reload();
+                // window.location.reload();
               },
               (e) => {
                 console.error(e);
