@@ -102,6 +102,8 @@ export class TransactionsTableComponent implements OnInit {
       [0, "asc"],
       [1, "desc"],
     ];
+    // this.dtOptions.
+
     this.dialogDtOptions = this.configsService.getDTOptions();
     let routes = this.router.url.split("/");
     this.isInClient = routes.includes("clients");

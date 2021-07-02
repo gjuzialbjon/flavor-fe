@@ -118,9 +118,9 @@
             >
               <td
                 [attr.data-sort]="transaction.issue ? 'a' : 'b'"
-                (click)="toggleFlag(transaction)"
               >
                 <nb-icon
+                  (click)="toggleFlag(transaction)"
                   icon="flag"
                   [status]="transaction.issue ? 'danger' : 'basic'"
                 ></nb-icon>
@@ -241,7 +241,7 @@
                   *ngIf="
                     transaction.store._id === '603d48daeab0d70008bbc19f' &&
                     transaction.client &&
-                    transaction.status !== 'Withdrawn'
+                    transaction.status === 'Open'
                   "
                   (click)="markApprovedPlusPaid(transaction)"
                   title="Approved + Paid"
