@@ -102,8 +102,10 @@ export class TransactionsTableComponent implements OnInit {
       [0, "asc"],
       [1, "desc"],
     ];
-    // this.dtOptions.
-
+    this.dtOptions.columnDefs = [
+			// @ts-ignore
+			{ responsivePriority: 100, targets: [0, 11, 12] },
+		]
     this.dialogDtOptions = this.configsService.getDTOptions();
     let routes = this.router.url.split("/");
     this.isInClient = routes.includes("clients");
