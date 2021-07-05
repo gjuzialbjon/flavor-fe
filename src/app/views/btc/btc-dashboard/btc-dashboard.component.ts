@@ -187,7 +187,7 @@ export class BtcDashboardComponent implements OnInit {
           this.transactionsService
             .makeTransfer({
               fromStore: environment.btc_store_id,
-              toEntity: this.btcForm.value.client,
+              toEntity: req.client ? req.client : environment.unknown_client_id,
               date: this.btcForm.value.date,
               description: this.btcForm.value.from_account,
               amount: this.btcForm.value.ammount_sold,
@@ -248,7 +248,7 @@ export class BtcDashboardComponent implements OnInit {
           this.transactionsService
             .makeTransfer({
               fromStore: environment.btc_store_id,
-              toEntity: this.otherForm.value.client,
+              toEntity: req.client ? req.client : environment.unknown_client_id,
               date: this.otherForm.value.date,
               description: this.otherForm.value.from_account,
               amount: this.otherForm.value.ammount_sold,
