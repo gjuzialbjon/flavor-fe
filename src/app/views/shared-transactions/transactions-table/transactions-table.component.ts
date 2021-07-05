@@ -29,6 +29,7 @@ import { Store } from "src/app/core/models/store";
 import { Client } from "src/app/core/models/client";
 import { ThisReceiver } from "@angular/compiler";
 import { environment } from "@env";
+import { THIS_EXPR } from "@angular/compiler/src/output/output_ast";
 
 @Component({
   selector: "app-transactions-table",
@@ -102,16 +103,30 @@ export class TransactionsTableComponent implements OnInit {
       [0, "asc"],
       [1, "desc"],
     ];
-    this.dtOptions.columnDefs = [
-			// @ts-ignore
-			{ responsivePriority: 100, targets: [0, 11, 12] },
-		]
+
     this.dialogDtOptions = this.configsService.getDTOptions();
     let routes = this.router.url.split("/");
     this.isInClient = routes.includes("clients");
     this.isInStore = routes.includes("stores");
     this.storeId = this.route.snapshot.params.storeId;
     this.clientId = this.route.snapshot.params.clientId;
+
+    if (!this.isInClient && !this.isInStore) {
+      this.dtOptions.columnDefs = [
+        // @ts-ignore
+        { responsivePriority: 100, targets: [0, 11, 12] },
+      ];
+    } else if(this.isInClient && !this.isInStore) {
+      this.dtOptions.columnDefs = [
+        // @ts-ignore
+        { responsivePriority: 100, targets: [0, 8, 9] },
+      ];
+    } else if(this.isInStore && !this.isInClient) {
+      this.dtOptions.columnDefs = [
+        // @ts-ignore
+        { responsivePriority: 100, targets: [0, 10, 11] },
+      ];
+    }
   }
 
   async ngOnInit() {
@@ -307,20 +322,20 @@ export class TransactionsTableComponent implements OnInit {
         .deleteTransactionByPost(transaction.postOrigin)
         .subscribe(
           (res: any) => {
-            if(res.data.deleteTransactionByPost.message === 'OK') {
-							this.msg.success("Removed successfully...");
-							this.updateTransactions();
-						} else {
-							this.msg.error("Something went wrong"), console.error(res);
-							this.updateTransactions();
-						}
+            if (res.data.deleteTransactionByPost.message === "OK") {
+              this.msg.success("Removed successfully...");
+              this.updateTransactions();
+            } else {
+              this.msg.error("Something went wrong"), console.error(res);
+              this.updateTransactions();
+            }
           },
           (e) => {
             this.msg.error("Something went wrong"), console.error(e);
           }
         );
     } else {
-      this.msg.warning("No post origin for this transaction", 'Cannot remove!');
+      this.msg.warning("No post origin for this transaction", "Cannot remove!");
     }
   }
 
