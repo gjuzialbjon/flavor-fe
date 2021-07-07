@@ -55,7 +55,6 @@ export class ClientDashboardComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.getClientInfo()
-		this.getClientCryptoPosts()
 	}
 
 	getClientInfo() {
@@ -72,20 +71,6 @@ export class ClientDashboardComponent implements OnInit {
 		)
 	}
 
-	getClientCryptoPosts() {
-		this.transactionsService.getClientCryptoPosts(this.clientId).subscribe(
-			(res: any) => {
-				this.posts = res.data.clientMany[0].crypto_posts
-				console.log(this.posts)
-				this.dtTrigger.next()
-				this.chRef.detectChanges()
-			},
-			(e: any) => {
-				console.error(e)
-				this.msg.defaultError()
-			}
-		)
-	}
 
 	openMakeVendor(vendorContent: any) {
 		this.vendorTypeFormControl.setValue('')

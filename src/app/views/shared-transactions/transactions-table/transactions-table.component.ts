@@ -179,6 +179,7 @@ export class TransactionsTableComponent implements OnInit {
           this.tableTransactions = JSON.parse(
             JSON.stringify(this.transactions)
           );
+
           this.loadingTransactions = false;
           this.dtTrigger.next();
           this.chRef.detectChanges();
