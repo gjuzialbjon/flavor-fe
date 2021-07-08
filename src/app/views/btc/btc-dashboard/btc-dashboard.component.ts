@@ -291,6 +291,7 @@ export class BtcDashboardComponent implements OnInit {
     this.makingTransfer = true;
     this.transactionsService.makeTransfer(this.transferForm.value).subscribe(
       (res: any) => {
+        console.log(res)
         this.makingTransfer = false;
         this.getTransfers();
       },
@@ -304,7 +305,7 @@ export class BtcDashboardComponent implements OnInit {
 
   initTransferForm() {
     this.transferForm = this.fb.group({
-      transfer_origin: [this.transactionId, []],
+      transaction_origin: [this.transactionId, []],
       fromStore: [environment.btc_store_id, [Validators.required]],
       toEntity: [null, [Validators.required]],
       description: ["", [Validators.required]],
@@ -471,7 +472,7 @@ export class BtcDashboardComponent implements OnInit {
   getTransfers() {
     this.transactionsService.getCryptoTransfers(this.transactionId).subscribe(
       (res: any) => {
-        // console.log(res);
+        console.log(res);
         this.transfers = JSON.parse(JSON.stringify(res.data.transactionMany));
         this.transfers = this.transfers.reverse();
 

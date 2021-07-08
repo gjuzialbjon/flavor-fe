@@ -124,7 +124,7 @@ export class TransactionsTableComponent implements OnInit {
     } else if(this.isInStore && !this.isInClient) {
       this.dtOptions.columnDefs = [
         // @ts-ignore
-        { responsivePriority: 100, targets: [0, 10, 11] },
+        { responsivePriority: 100, targets: [0, 11, 12] },
       ];
     }
   }

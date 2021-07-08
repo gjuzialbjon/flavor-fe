@@ -94,7 +94,7 @@
               <th>Amount Out</th>
               <th>Fee</th>
               <th>Payment type</th>
-              <th *ngIf="!isInStore">from</th>
+              <th>from</th>
               <th *ngIf="!isInClient">to</th>
               <th>Direction</th>
               <th *ngIf="!isInClient">Created By</th>
@@ -165,7 +165,6 @@
                 </div>
               </td>
               <td
-                *ngIf="!isInStore"
                 class="text-capitalize"
                 (click)="openEditTransaction(transactionDialog, transaction)"
               >
