@@ -69,7 +69,6 @@ export class BtcDashboardComponent implements OnInit {
     private msg: MessageService
   ) {
     this.transactionId = this.route.snapshot.params.id;
-    console.log(this.transactionId)
 
     this.dtOptions = this.configsService.getBTCDTOptions();
     this.dtOptions2 = this.configsService.getBTCDTOptions();
@@ -126,7 +125,7 @@ export class BtcDashboardComponent implements OnInit {
           this.posts = this.transaction.posts.filter((p) => p.type !== "fee");
           this.posts = this.posts.reverse();
 
-          console.log(this.posts);
+          // console.log(this.posts);
 
           for (const post of this.posts) {
             this.totalMinusFee += post.ammount;
@@ -470,17 +469,12 @@ export class BtcDashboardComponent implements OnInit {
   }
 
   getTransfers() {
+    this.getRemainingBalance()
     this.transactionsService.getCryptoTransfers(this.transactionId).subscribe(
       (res: any) => {
-        console.log(res);
+        // console.log(res);
         this.transfers = JSON.parse(JSON.stringify(res.data.transactionMany));
         this.transfers = this.transfers.reverse();
-
-        this.remaining = this.totalMinusFee;
-
-        for (let i = 0; i < this.transfers.length; i++) {
-          this.remaining -= this.transfers[i].amount_in;
-        }
 
         this.initTransferForm();
         this.chRef.detectChanges();
@@ -489,6 +483,21 @@ export class BtcDashboardComponent implements OnInit {
         console.error(e);
       }
     );
+  }
+
+  getRemainingBalance(){
+    this.transactionsService.getStoreRemainingBalance(environment.btc_store_id).subscribe(
+      (res: any) => {
+        // console.log(res)
+        if(res.data?.remainingBalance?.sum) {
+          this.remaining = res.data.remainingBalance.sum
+        } else {
+          this.remaining = 0
+        }
+        this.chRef.detectChanges()
+      },
+      e => console.error(e)
+    )
   }
 
   trackByFunction(index: number, item: any) {

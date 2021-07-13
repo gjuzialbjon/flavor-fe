@@ -597,4 +597,13 @@ export class TransactionsService {
       }`,
     });
   }
+
+  getStoreRemainingBalance(storeId: string) {
+    return this.apollo.query({
+      query: gql`
+      {
+        remainingBalance(store:"${storeId}")
+      }`,
+    });
+  }
 }
