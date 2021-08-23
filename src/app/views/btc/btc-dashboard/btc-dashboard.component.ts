@@ -253,7 +253,7 @@ export class BtcDashboardComponent implements OnInit {
               amount: this.otherForm.value.ammount_sold,
               transaction_origin: this.transactionId,
               toStore: this.otherForm.value.toStore,
-							post_origin: latestPostId,
+							posd2awsdwadawsdawsdwadawsdwasdt_origin: latestPostId,
             })
             .subscribe(
               (res: any) => {
@@ -288,7 +288,16 @@ export class BtcDashboardComponent implements OnInit {
     }
 
     this.makingTransfer = true;
-    this.transactionsService.makeTransfer(this.transferForm.value).subscribe(
+    let isGoingToStore = false
+
+    for (const store of this.stores) {
+      if(this.transferForm.value.toEntity === store._id){
+        isGoingToStore = true
+        break
+      }
+    }
+
+    this.transactionsService.makeTransfer(this.transferForm.value, isGoingToStore).subscribe(
       (res: any) => {
         console.log(res)
         this.makingTransfer = false;

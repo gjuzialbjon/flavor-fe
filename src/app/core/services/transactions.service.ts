@@ -419,7 +419,7 @@ export class TransactionsService {
     });
   }
 
-  makeTransfer(transfer: any) {
+  makeTransfer(transfer: any, toStoreOrNot: boolean = false) {
     let hasCurrency = !!transfer.currency
       ? `currency: "${transfer.currency}"`
       : "";
@@ -435,7 +435,7 @@ export class TransactionsService {
     return this.apollo.mutate({
       mutation: gql`
         mutation {
-          makeTransfer(
+          ${toStoreOrNot ? 'makeTransferToStore' : 'makeTransfer'}(
             fromStore: "${transfer.fromStore}"
             toEntity: "${transfer.toEntity}"
             date: "${transfer.date}"

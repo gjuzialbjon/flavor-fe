@@ -67,10 +67,19 @@ export class TransferComponent implements OnInit {
 		}
 
 		this.onTransactionLock.emit(true)
-		this.transactionsService.makeTransfer(this.transactionForm.value).subscribe(
+		let isGoingToStore = false
+
+    for (const store of this.stores) {
+      if(this.transactionForm.value.toEntity === store._id){
+        isGoingToStore = true
+        break
+      }
+    }
+		this.transactionsService.makeTransfer(this.transactionForm.value, isGoingToStore).subscribe(
 			(res: any) => {
 				console.log(res)
-				this.onTransactionCreate.emit(JSON.parse(JSON.stringify(res.data.makeTransfer)))
+				let result = isGoingToStore ? res.data.makeTransferToStore : res.data.makeTransfer
+				this.onTransactionCreate.emit(JSON.parse(JSON.stringify(result)))
 				this.initForm()
 				this.chRef.detectChanges()
 			},
