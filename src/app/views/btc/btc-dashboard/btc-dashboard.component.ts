@@ -15,6 +15,7 @@ import { MessageService } from "src/app/core/helper-services/message.service";
 import { Client } from "src/app/core/models/client";
 import { Store } from "src/app/core/models/store";
 import { Transaction } from "src/app/core/models/transaction";
+import { StoreService } from "src/app/core/services/store.service";
 import { TransactionsService } from "src/app/core/services/transactions.service";
 
 @Component({
@@ -55,7 +56,7 @@ export class BtcDashboardComponent implements OnInit {
   remainingTotalMinusFee = 0;
   grandTotalMinusFee = 0;
 
-  remaining: number = 0;
+  balance: number = 0;
 
   tradeType = "BTC";
   defaultConversionFee = 0;
@@ -66,7 +67,8 @@ export class BtcDashboardComponent implements OnInit {
     private transactionsService: TransactionsService,
     private route: ActivatedRoute,
     private fb: FormBuilder,
-    private msg: MessageService
+    private msg: MessageService,
+    private storeService: StoreService
   ) {
     this.transactionId = this.route.snapshot.params.id;
 
@@ -107,8 +109,6 @@ export class BtcDashboardComponent implements OnInit {
     this.totalProfit = 0;
     this.remainingTotalMinusFee = 0;
     this.grandTotalMinusFee = 0;
-    this.remaining = 0;
-
     this.transactionsService
       .getCryptoTransactionById(this.transactionId)
       .subscribe(
@@ -143,6 +143,16 @@ export class BtcDashboardComponent implements OnInit {
           console.error(e);
         }
       );
+  }
+
+  getStoreBalance() {
+    this.storeService.getStoreById(environment.btc_store_id).subscribe( (res: any) => {
+      console.log(res)
+      this.balance = res.data.storeById.balance || 0
+    }, e => {
+      console.error(e)
+      this.msg.error('Could not get correct balance!')
+    })
   }
 
   make(tradeType: string) {
@@ -478,7 +488,7 @@ export class BtcDashboardComponent implements OnInit {
   }
 
   getTransfers() {
-    this.getRemainingBalance()
+    this.getStoreBalance()
     this.transactionsService.getCryptoTransfers(this.transactionId).subscribe(
       (res: any) => {
         // console.log(res);
@@ -494,20 +504,20 @@ export class BtcDashboardComponent implements OnInit {
     );
   }
 
-  getRemainingBalance(){
-    this.transactionsService.getStoreRemainingBalance(environment.btc_store_id).subscribe(
-      (res: any) => {
-        // console.log(res)
-        if(res.data?.remainingBalance?.sum) {
-          this.remaining = res.data.remainingBalance.sum
-        } else {
-          this.remaining = 0
-        }
-        this.chRef.detectChanges()
-      },
-      e => console.error(e)
-    )
-  }
+  // getRemainingBalance(){
+  //   this.transactionsService.getStoreRemainingBalance(environment.btc_store_id).subscribe(
+  //     (res: any) => {
+  //       // console.log(res)
+  //       if(res.data?.remainingBalance?.sum) {
+  //         this.remaining = res.data.remainingBalance.sum
+  //       } else {
+  //         this.remaining = 0
+  //       }
+  //       this.chRef.detectChanges()
+  //     },
+  //     e => console.error(e)
+  //   )
+  // }
 
   trackByFunction(index: number, item: any) {
     return item._id;

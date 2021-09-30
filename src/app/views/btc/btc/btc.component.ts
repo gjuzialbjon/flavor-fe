@@ -69,7 +69,7 @@ export class BtcComponent implements OnInit {
 		this.makingTrade = true
 		this.transactionsService.createCryptoTransaction(this.cryptoForm.value).subscribe(
 			(res: any) => {
-				console.log(res)
+				// console.log(res)
 
 				if(res.data.createCryptoTransaction) {
 					this.initForm()	
