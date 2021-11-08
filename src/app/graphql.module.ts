@@ -9,7 +9,7 @@ import { WebSocketLink } from '@apollo/client/link/ws'
 import { getMainDefinition } from '@apollo/client/utilities'
 import { onError } from '@apollo/client/link/error'
 
-const httpsUri = 'https' + environment.API_URL + 'graphql' // URL TO ENDPOINT FOR HTTPS REQUESTS
+const httpsUri = 'http' + environment.API_URL + 'graphql' // URL TO ENDPOINT FOR HTTPS REQUESTS
 
 const wsUri = new WebSocketLink({
 	uri: `wss${environment.API_URL}graphql`,

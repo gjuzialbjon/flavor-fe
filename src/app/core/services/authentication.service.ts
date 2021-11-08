@@ -77,7 +77,7 @@ export class AuthenticationService {
 	}
 
 	login(email: string, password: string) {
-		return this.http.post(`https${environment.API_URL}login`, {
+		return this.http.post(`http${environment.API_URL}login`, {
 			email: `${email}`,
 			password: `${password}`,
 		});
