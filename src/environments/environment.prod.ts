@@ -1,6 +1,6 @@
 export const environment = {
 	production: true,
-	API_URL: '://35.197.192.204:30001/',
+	API_URL: '://thisisthebackendofmappo.xyz/',
 	theme: 'corporate',
 	btc_store_id: '603d48daeab0d70008bbc19f',
 	unknown_client_id: '6093b08678a78e00085bad9a',
