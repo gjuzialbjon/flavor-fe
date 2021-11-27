@@ -100,7 +100,8 @@ export class BtcDashboardComponent implements OnInit {
     for (const client of this.clients) {
       client.role = "Clients";
     }
-    this.entities = [...this.stores, ...this.clients];
+    this.entities = [...this.stores];
+    console.log(this.entities)
     this.chRef.detectChanges();
   }
 
@@ -493,6 +494,7 @@ export class BtcDashboardComponent implements OnInit {
       (res: any) => {
         // console.log(res);
         this.transfers = JSON.parse(JSON.stringify(res.data.transactionMany));
+        this.transfers = this.transfers.filter( t => !t.client)
         this.transfers = this.transfers.reverse();
 
         this.initTransferForm();
